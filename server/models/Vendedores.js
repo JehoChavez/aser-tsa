@@ -5,6 +5,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
+    comentarios: {
+      type: DataTypes.STRING,
+    },
   });
   // debe tener 1 persona asignada
   // puede tener polizas asignadas
