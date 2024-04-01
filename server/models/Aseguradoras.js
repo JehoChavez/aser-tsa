@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Aseguradoras = sequelize.define("Aseguradoras", {
+  const Aseguradoras = sequelize.define("aseguradoras", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -9,15 +9,27 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    plazo_primer: {
+    plazoPrimer: {
       type: DataTypes.INTEGER,
     },
-    plazo_subsecuentes: {
+    plazoSubsecuentes: {
       type: DataTypes.INTEGER,
     },
     comentarios: {
       type: DataTypes.STRING,
     },
   });
-  // Puede tener varios agentes
+
+  Aseguradoras.associate = (models) => {
+    Aseguradoras.hasMany(models.agentes, {
+      as: "agentes",
+      onDelete: "CASCADE",
+    });
+    Aseguradoras.hasMany(models.polizas, {
+      as: "polizas",
+      onDelete: "CASCADE",
+    });
+  };
+
+  return Aseguradoras;
 };

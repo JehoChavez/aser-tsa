@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Pagos = sequelize.define("Pagos", {
+  const Recibos = sequelize.define("recibos", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -9,18 +9,30 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    fecha_inicio: {
+    fechaInicio: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    fecha_limite: {
+    fechaLimite: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    fecha_pago: {
+    fechaPago: {
       type: DataTypes.DATEONLY,
     },
   });
-  // 1 poliza
-  // 1 endoso
+
+  Recibos.associate = (models) => {
+    Recibos.belongsTo(models.polizas, {
+      as: "poliza",
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+    Recibos.belongsTo(models.endosos, {
+      as: "endoso",
+    });
+  };
+
+  return Recibos;
 };

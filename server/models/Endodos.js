@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Endosos = sequelize.define("Endosos", {
+  const Endosos = sequelize.define("endosos", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     emision: {
       type: DataTypes.DATEONLY,
     },
-    inicio_vigencia: {
+    inicioVigencia: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    fin_vigencia: {
+    finVigencia: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         isIn: [["A", "B", "D"]],
       },
     },
-    prima_neta: {
+    primaNeta: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     iva: {
       type: DataTypes.FLOAT,
     },
-    prima_total: {
+    primaTotal: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
@@ -47,6 +47,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
   });
-  // 1 poliza
-  // puede tener pagos
+
+  Endosos.associate = (models) => {
+    Endosos.belongsTo(models.polizas, {
+      as: "poliza",
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+    Endosos.hasMany(models.recibos, {
+      as: "recibos",
+      onDelete: "CASCADE",
+    });
+  };
+
+  return Endosos;
 };

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Polizas = sequelize.define("Polizas", {
+  const Polizas = sequelize.define("polizas", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -12,19 +12,19 @@ module.exports = (sequelize, DataTypes) => {
     emision: {
       type: DataTypes.DATEONLY,
     },
-    inicio_vigencia: {
+    inicioVigencia: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    fin_vigencia: {
+    finVigencia: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    bien_asegurado: {
+    bienAsegurado: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    prima_neta: {
+    primaNeta: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     iva: {
       type: DataTypes.FLOAT,
     },
-    prima_total: {
+    primaTotal: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
@@ -46,8 +46,9 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isIn: [["MXN", "USD", "UDI"]],
       },
+      allowNull: false,
     },
-    forma_pago: {
+    formaPago: {
       type: DataTypes.STRING,
       validate: {
         isIn: [["c", "s", "t", "m"]],
@@ -56,14 +57,59 @@ module.exports = (sequelize, DataTypes) => {
     comentarios: {
       type: DataTypes.STRING,
     },
+    fechaCancelacion: {
+      type: DataTypes.DATEONLY,
+    },
   });
-  // 1 cliente
-  // 1 aseguradora
-  // 1 producto
-  // 1 agente
-  // puede tener endosos
-  // 1 o mas pagos
-  // puede tener renovaciones
 
-  // Eliminar polizas luego de 5 años
+  Polizas.associate = (models) => {
+    Polizas.belongsTo(models.clientes, {
+      as: "cliente",
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+    Polizas.belongsTo(models.aseguradoras, {
+      as: "aseguradora",
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+    Polizas.belongsTo(models.agentes, {
+      as: "agente",
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+    Polizas.belongsTo(models.vendedores, {
+      as: "vendedor",
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+    Polizas.belongsTo(models.productos, {
+      as: "producto",
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+    Polizas.hasMany(models.endosos, {
+      as: "endosos",
+      onDelete: "CASCADE",
+    });
+    Polizas.hasMany(models.recibos, {
+      as: "recibos",
+      onDelete: "CASCADE",
+    });
+    Polizas.hasOne(models.polizas, {
+      as: "renovacion",
+      onDelete: "SET NULL",
+    });
+    Polizas.hasOne(models.polizas, {
+      as: "reexpedicion",
+      onDelete: "SET NULL",
+    });
+  };
+
+  return Polizas;
 };

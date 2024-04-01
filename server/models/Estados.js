@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Estados = sequelize.define(
-    "Estados",
+    "estados",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -18,5 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     }
   );
+
+  Estados.associate = (models) => {
+    Estados.hasMany(models.municipios, {
+      as: "municipios",
+    });
+  };
+
   return Estados;
 };

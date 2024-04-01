@@ -1,13 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
   const Personas = sequelize.define(
-    "Personas",
+    "personas",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      persona: {
+      tipoPersona: {
         type: DataTypes.STRING,
         validate: {
           isIn: [["fisica", "moral"]],
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      fecha_de_nacimiento: {
+      fechaDeNacimiento: {
         type: DataTypes.DATEONLY,
       },
       rfc: {
@@ -26,33 +26,19 @@ module.exports = (sequelize, DataTypes) => {
       calle: {
         type: DataTypes.STRING,
       },
-      numero_exterior: {
+      numeroExterior: {
         type: DataTypes.STRING,
       },
-      numero_interior: {
+      numeroInterior: {
         type: DataTypes.STRING,
       },
       colonia: {
         type: DataTypes.STRING,
       },
-      codigo_postal: {
+      codigoPostal: {
         type: DataTypes.STRING,
       },
-      id_estado: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: "Estados",
-          key: "id",
-        },
-      },
-      id_municipio: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: "Municipios",
-          key: "id",
-        },
-      },
-      correo_electronico: {
+      correoElectronico: {
         type: DataTypes.STRING,
       },
       telefono: {
@@ -69,7 +55,27 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     }
   );
-  // 1 cliente
-  // 1 agente
-  // 1 vendedor
+
+  Personas.associate = (models) => {
+    Personas.hasOne(models.clientes, {
+      as: "cliente",
+      onDelete: "CASCADE",
+    });
+    Personas.hasOne(models.agentes, {
+      as: "agente",
+      onDelete: "CASCADE",
+    });
+    Personas.hasOne(models.vendedores, {
+      as: "vendedor",
+      onDelete: "CASCADE",
+    });
+    Personas.belongsTo(models.estados, {
+      as: "estado",
+    });
+    Personas.belongsTo(models.municipios, {
+      as: "municipio",
+    });
+  };
+
+  return Personas;
 };

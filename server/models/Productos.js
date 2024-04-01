@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Productos = sequelize.define(
-    "Productos",
+    "productos",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -16,4 +16,13 @@ module.exports = (sequelize, DataTypes) => {
       timeStamps: false,
     }
   );
+
+  Productos.associate = (models) => {
+    Productos.hasMany(models.polizas, {
+      as: "polizas",
+      onDelete: "CASCADE",
+    });
+  };
+
+  return Productos;
 };

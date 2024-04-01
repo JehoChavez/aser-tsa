@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Vendedores = sequelize.define("Vendedores", {
+  const Vendedores = sequelize.define("vendedores", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -9,6 +9,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
   });
-  // debe tener 1 persona asignada
-  // puede tener polizas asignadas
+
+  Vendedores.associate = (models) => {
+    Vendedores.belongsTo(models.personas, {
+      as: "persona",
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+    Vendedores.hasMany(models.polizas, {
+      as: "polizas",
+      onDelete: "CASCADE",
+    });
+  };
+
+  return Vendedores;
 };

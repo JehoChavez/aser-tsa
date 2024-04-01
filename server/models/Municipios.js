@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Municipios = sequelize.define(
-    "Municipios",
+    "municipios",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -12,18 +12,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      id_estado: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: "Estados",
-          key: "id",
-        },
-      },
     },
     {
       timestamps: false,
     }
   );
+
+  Municipios.associate = (models) => {
+    Municipios.belongsTo(models.estados, {
+      as: "estado",
+    });
+  };
+
   return Municipios;
 };
