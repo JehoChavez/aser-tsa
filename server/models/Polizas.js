@@ -66,39 +66,46 @@ module.exports = (sequelize, DataTypes) => {
     Polizas.belongsTo(models.clientes, {
       as: "cliente",
       foreignKey: {
+        field: "clienteId",
         allowNull: false,
       },
     });
     Polizas.belongsTo(models.aseguradoras, {
       as: "aseguradora",
       foreignKey: {
+        field: "aseguradoraId",
         allowNull: false,
       },
     });
     Polizas.belongsTo(models.agentes, {
       as: "agente",
       foreignKey: {
+        field: "agenteId",
         allowNull: false,
       },
     });
     Polizas.belongsTo(models.vendedores, {
       as: "vendedor",
       foreignKey: {
+        field: "vendedorId",
         allowNull: false,
       },
     });
     Polizas.belongsTo(models.productos, {
       as: "producto",
       foreignKey: {
+        field: "productoId",
         allowNull: false,
       },
     });
     Polizas.hasMany(models.endosos, {
       as: "endosos",
+      foreignKey: "polizaId",
       onDelete: "CASCADE",
     });
     Polizas.hasMany(models.recibos, {
       as: "recibos",
+      foreignKey: "polizaId",
       onDelete: "CASCADE",
     });
     Polizas.hasOne(models.polizas, {

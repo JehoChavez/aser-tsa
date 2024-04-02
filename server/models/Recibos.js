@@ -26,11 +26,13 @@ module.exports = (sequelize, DataTypes) => {
     Recibos.belongsTo(models.polizas, {
       as: "poliza",
       foreignKey: {
+        field: "polizaId",
         allowNull: false,
       },
     });
     Recibos.belongsTo(models.endosos, {
       as: "endoso",
+      foreignKey: "endosoId",
     });
   };
 

@@ -18,17 +18,20 @@ module.exports = (sequelize, DataTypes) => {
     Agentes.belongsTo(models.personas, {
       as: "persona",
       foreignKey: {
+        field: "personaId",
         allowNull: false,
       },
     });
     Agentes.belongsTo(models.aseguradoras, {
       as: "aseguradora",
       foreignKey: {
+        field: "aseguradoraId",
         allowNull: false,
       },
     });
     Agentes.hasMany(models.polizas, {
       as: "polizas",
+      foreignKey: "agenteId",
       onDelete: "CASCADE",
     });
   };

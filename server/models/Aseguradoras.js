@@ -23,10 +23,12 @@ module.exports = (sequelize, DataTypes) => {
   Aseguradoras.associate = (models) => {
     Aseguradoras.hasMany(models.agentes, {
       as: "agentes",
+      foreignKey: "aseguradoraId",
       onDelete: "CASCADE",
     });
     Aseguradoras.hasMany(models.polizas, {
       as: "polizas",
+      foreignKey: "aseguradoraId",
       onDelete: "CASCADE",
     });
   };

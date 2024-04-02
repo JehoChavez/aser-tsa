@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   Municipios.associate = (models) => {
     Municipios.belongsTo(models.estados, {
       as: "estado",
+      foreignKey: "estadoId",
     });
   };
 

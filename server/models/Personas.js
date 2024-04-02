@@ -59,21 +59,26 @@ module.exports = (sequelize, DataTypes) => {
   Personas.associate = (models) => {
     Personas.hasOne(models.clientes, {
       as: "cliente",
+      foreignKey: "personaId",
       onDelete: "CASCADE",
     });
     Personas.hasOne(models.agentes, {
       as: "agente",
+      foreignKey: "personaId",
       onDelete: "CASCADE",
     });
     Personas.hasOne(models.vendedores, {
       as: "vendedor",
+      foreignKey: "personaId",
       onDelete: "CASCADE",
     });
     Personas.belongsTo(models.estados, {
       as: "estado",
+      foreignKey: "estadoId",
     });
     Personas.belongsTo(models.municipios, {
       as: "municipio",
+      foreignKey: "municipioId",
     });
   };
 

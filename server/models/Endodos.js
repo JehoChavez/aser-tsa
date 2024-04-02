@@ -52,11 +52,13 @@ module.exports = (sequelize, DataTypes) => {
     Endosos.belongsTo(models.polizas, {
       as: "poliza",
       foreignKey: {
+        field: "polizaId",
         allowNull: false,
       },
     });
     Endosos.hasMany(models.recibos, {
       as: "recibos",
+      foreignKey: "endosoId",
       onDelete: "CASCADE",
     });
   };

@@ -14,11 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     Clientes.belongsTo(models.personas, {
       as: "persona",
       foreignKey: {
+        field: "personaId",
         allowNull: false,
       },
     });
     Clientes.hasMany(models.polizas, {
       as: "polizas",
+      foreignKey: "clienteId",
       onDelete: "CASCADE",
     });
   };

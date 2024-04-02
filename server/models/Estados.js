@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   Estados.associate = (models) => {
     Estados.hasMany(models.municipios, {
       as: "municipios",
+      foreignKey: "estadoId",
     });
   };
 
