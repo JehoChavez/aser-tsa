@@ -17,19 +17,19 @@ module.exports = [
   },
   {
     id: 5,
-    estado: "Chiapas",
-  },
-  {
-    id: 6,
-    estado: "Chihuahua",
-  },
-  {
-    id: 7,
     estado: "Coahuila",
   },
   {
-    id: 8,
+    id: 6,
     estado: "Colima",
+  },
+  {
+    id: 7,
+    estado: "Chiapas",
+  },
+  {
+    id: 8,
+    estado: "Chihuahua",
   },
   {
     id: 9,
@@ -41,23 +41,23 @@ module.exports = [
   },
   {
     id: 11,
-    estado: "Estado de México",
-  },
-  {
-    id: 12,
     estado: "Guanajuato",
   },
   {
-    id: 13,
+    id: 12,
     estado: "Guerrero",
   },
   {
-    id: 14,
+    id: 13,
     estado: "Hidalgo",
   },
   {
-    id: 15,
+    id: 14,
     estado: "Jalisco",
+  },
+  {
+    id: 15,
+    estado: "México",
   },
   {
     id: 16,
