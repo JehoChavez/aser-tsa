@@ -46,7 +46,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isIn: [["MXN", "USD", "UDI"]],
       },
-      allowNull: false,
     },
     formaPago: {
       type: DataTypes.STRING,
