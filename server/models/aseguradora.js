@@ -21,8 +21,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      plazoPrimer: DataTypes.INTEGER,
-      plazoSubsecuentes: DataTypes.INTEGER,
+      plazoPrimer: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      plazoSubsecuentes: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
       comentarios: DataTypes.STRING,
     },
     {
