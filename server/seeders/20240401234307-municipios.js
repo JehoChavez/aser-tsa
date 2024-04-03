@@ -1,5 +1,5 @@
 "use strict";
-const municipios = require("./municipios.json");
+const municipios = require("./data/municipios.json");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
