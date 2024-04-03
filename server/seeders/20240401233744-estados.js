@@ -1,5 +1,5 @@
 "use strict";
-const estados = require("./estados");
+const estados = require("./estados.json");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
