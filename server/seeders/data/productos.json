@@ -1,0 +1,62 @@
+[
+  {
+    "producto": "autos individual"
+  },
+  {
+    "producto": "autos flotilla"
+  },
+  {
+    "producto": "camiones individual"
+  },
+  {
+    "producto": "camiones flotilla"
+  },
+  {
+    "producto": "pick up individual"
+  },
+  {
+    "producto": "pick up flotilla"
+  },
+  {
+    "producto": "moto individual"
+  },
+  {
+    "producto": "moto flotilla"
+  },
+  {
+    "producto": "gastos medicos mayores individual"
+  },
+  {
+    "producto": "gastos medicos mayores colectivo"
+  },
+  {
+    "producto": "gastos medicos menores individual"
+  },
+  {
+    "producto": "gastos medicos menores colectivo"
+  },
+  {
+    "producto": "vida individual"
+  },
+  {
+    "producto": "vida colectivo"
+  },
+  {
+    "producto": "hogar"
+  },
+  {
+    "producto": "daños empresarial"
+  },
+  {
+    "producto": "viaje"
+  },
+  {
+    "producto": "construccion"
+  },
+  {
+    "producto": "rc profesional"
+  },
+  {
+    "producto": "otro"
+  }
+]
