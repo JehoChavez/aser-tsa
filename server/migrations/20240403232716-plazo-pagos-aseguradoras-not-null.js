@@ -5,21 +5,25 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.changeColumn("aseguradoras", "plazoPrimer", {
       type: Sequelize.INTEGER,
+      allowNull: false,
       defaultValue: 0,
     });
 
     await queryInterface.changeColumn("aseguradoras", "plazoSubsecuentes", {
       type: Sequelize.INTEGER,
+      allowNull: false,
       defaultValue: 0,
     });
   },
 
   async down(queryInterface, Sequelize) {
     await queryInterface.changeColumn("aseguradoras", "plazoPrimer", {
+      allowNull: true,
       defaultValue: null,
     });
 
     await queryInterface.changeColumn("aseguradoras", "plazoSubsecuentes", {
+      allowNull: true,
       defaultValue: null,
     });
   },
