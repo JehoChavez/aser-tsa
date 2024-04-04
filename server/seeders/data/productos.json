@@ -1,62 +1,62 @@
 [
   {
-    "producto": "autos individual"
+    "producto": "Autos Individual"
   },
   {
-    "producto": "autos flotilla"
+    "producto": "Autos Flotilla"
   },
   {
-    "producto": "camiones individual"
+    "producto": "Camiones Individual"
   },
   {
-    "producto": "camiones flotilla"
+    "producto": "Camiones Flotilla"
   },
   {
-    "producto": "pick up individual"
+    "producto": "Pick Up Individual"
   },
   {
-    "producto": "pick up flotilla"
+    "producto": "Pick Up Flotilla"
   },
   {
-    "producto": "moto individual"
+    "producto": "Moto Individual"
   },
   {
-    "producto": "moto flotilla"
+    "producto": "Moto Flotilla"
   },
   {
-    "producto": "gastos medicos mayores individual"
+    "producto": "Gastos Médicos Mayores Individual"
   },
   {
-    "producto": "gastos medicos mayores colectivo"
+    "producto": "Gastos Médicos Mayores Colectivo"
   },
   {
-    "producto": "gastos medicos menores individual"
+    "producto": "Gastos Médicos Menores Individual"
   },
   {
-    "producto": "gastos medicos menores colectivo"
+    "producto": "Gastos Médicos Menores Colectivo"
   },
   {
-    "producto": "vida individual"
+    "producto": "Vida Individual"
   },
   {
-    "producto": "vida colectivo"
+    "producto": "Vida Colectivo"
   },
   {
-    "producto": "hogar"
+    "producto": "Hogar"
   },
   {
-    "producto": "daños empresarial"
+    "producto": "Daños Empresarial"
   },
   {
-    "producto": "viaje"
+    "producto": "Viaje"
   },
   {
-    "producto": "construccion"
+    "producto": "Construcción"
   },
   {
-    "producto": "rc profesional"
+    "producto": "RC Profesional"
   },
   {
-    "producto": "otro"
+    "producto": "Otro"
   }
 ]
