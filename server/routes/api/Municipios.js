@@ -14,6 +14,9 @@ router.get("/:estado", async (req, res) => {
     where: {
       estadoId: req.params.estado,
     },
+    attributes: {
+      exclude: ["createdAt", "updatedAt"],
+    },
   });
 
   if (!listOfMunicipios[0]) {
