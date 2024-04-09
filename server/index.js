@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const ExpressError = require("./utils/ExpressError");
 
 const db = require("./models");
 
@@ -13,9 +14,15 @@ app.use("/api/estados", estadosRouter);
 app.use("/api/municipios", municipiosRouter);
 app.use("/api/productos", productosRouter);
 
+// Handling not specified routes
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Not Found", 404));
+});
+
 // Error handler
 app.use((err, req, res, next) => {
-  res.send("Oh boy, something went wrong!");
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  res.status(statusCode).send(message);
 });
 
 db.sequelize.sync().then(() => {
