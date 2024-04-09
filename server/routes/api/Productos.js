@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Producto } = require("../../models");
 const catchAsync = require("../../utils/catchAsync");
+const ExpressError = require("../../utils/ExpressError");
 
 router.get(
   "/",
@@ -31,6 +32,8 @@ router.delete(
   "/:id",
   catchAsync(async (req, res) => {
     const producto = await Producto.findByPk(req.params.id);
+
+    if (!producto) throw new ExpressError("Product Not Found", 404);
 
     await producto.destroy();
 
