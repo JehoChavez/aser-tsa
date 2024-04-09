@@ -1,15 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const { Estado } = require("../../models");
+const catchAsync = require("../../utils/catchAsync");
 
-router.get("/", async (req, res) => {
-  const listOfEstados = await Estado.findAll({
-    attributes: {
-      exclude: ["createdAt", "updatedAt"],
-    },
-  });
+router.get(
+  "/",
+  catchAsync(async (req, res) => {
+    const listOfEstados = await Estado.findAll({
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
 
-  res.json(listOfEstados);
-});
+    res.json(listOfEstados);
+  })
+);
 
 module.exports = router;
