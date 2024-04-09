@@ -33,7 +33,7 @@ router.delete(
   catchAsync(async (req, res) => {
     const producto = await Producto.findByPk(req.params.id);
 
-    if (!producto) throw new ExpressError("Product Not Found", 404);
+    if (!producto) throw new ExpressError("Producto No Encontrado", 404);
 
     await producto.destroy();
 
