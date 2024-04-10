@@ -1,7 +1,7 @@
 class CustomResponse {
-  constructor(data, status = "success", code = 200) {
+  constructor(data, message = "success", status = 200) {
+    this.message = message;
     this.status = status;
-    this.code = code;
     this.data = data;
   }
 }
