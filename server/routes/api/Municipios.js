@@ -23,7 +23,13 @@ router.get(
     if (!listOfMunicipios[0]) {
       throw new ExpressError("ID de estado no es válido (1-32)", 400);
     } else {
-      res.json(listOfMunicipios);
+      const response = {
+        status: "Success",
+        code: 200,
+        data: listOfMunicipios,
+      };
+
+      res.json(response);
     }
   })
 );

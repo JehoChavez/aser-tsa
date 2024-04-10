@@ -13,7 +13,15 @@ router.get(
       },
     });
 
-    res.json(listOfProductos);
+    const response = {
+      status: "Success",
+      code: 200,
+      data: {
+        productos: listOfProductos,
+      },
+    };
+
+    res.json(response);
   })
 );
 
@@ -22,9 +30,19 @@ router.post(
   catchAsync(async (req, res) => {
     const producto = req.body;
 
-    await Producto.create(producto);
+    const nuevoProducto = await Producto.create(producto);
 
-    res.json(producto);
+    const response = {
+      status: "Success",
+      code: 200,
+      data: {
+        id: nuevoProducto.id,
+        producto: nuevoProducto.producto,
+        createdAt: nuevoProducto.createdAt,
+      },
+    };
+
+    res.json(response);
   })
 );
 
@@ -37,9 +55,15 @@ router.delete(
 
     await producto.destroy();
 
-    res.json({
-      message: "Producto eliminado exitosamente",
-    });
+    const response = {
+      status: "Success",
+      code: 200,
+      data: {
+        message: "Producto eliminado exitosamente",
+      },
+    };
+
+    res.json(response);
   })
 );
 

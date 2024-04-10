@@ -12,7 +12,13 @@ router.get(
       },
     });
 
-    res.json(listOfEstados);
+    const response = {
+      status: "Success",
+      code: 200,
+      data: listOfEstados,
+    };
+
+    res.json(response);
   })
 );
 
