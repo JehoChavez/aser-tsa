@@ -22,9 +22,9 @@ app.all("*", (req, res, next) => {
 
 // Error handler
 app.use((err, req, res, next) => {
-  const { statusCode = 500, message = "Something went wrong" } = err;
-  const response = new CustomResponse([], message, statusCode);
-  res.status(statusCode).send(response);
+  const { status = 500, message = "Something went wrong" } = err;
+  const response = new CustomResponse([], message, status);
+  res.status(status).send(response);
 });
 
 db.sequelize.sync().then(() => {
