@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 const estadosRouter = require("./routes/api/Estados");
 const municipiosRouter = require("./routes/api/Municipios");
 const productosRouter = require("./routes/api/Productos");
+const CustomResponse = require("./utils/CustomResponse");
 app.use("/api/estados", estadosRouter);
 app.use("/api/municipios", municipiosRouter);
 app.use("/api/productos", productosRouter);
@@ -22,7 +23,8 @@ app.all("*", (req, res, next) => {
 // Error handler
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Something went wrong" } = err;
-  res.status(statusCode).send(message);
+  const response = new CustomResponse([], message, statusCode);
+  res.status(statusCode).send(response);
 });
 
 db.sequelize.sync().then(() => {
