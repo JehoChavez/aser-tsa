@@ -3,32 +3,10 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.addColumn("agentes", "personaId", {
-      type: Sequelize.INTEGER,
-      references: {
-        model: "personas",
-        key: "id",
-      },
-      allowNull: false,
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-    });
-
     await queryInterface.addColumn("agentes", "aseguradoraId", {
       type: Sequelize.INTEGER,
       references: {
         model: "aseguradoras",
-        key: "id",
-      },
-      allowNull: false,
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-    });
-
-    await queryInterface.addColumn("clientes", "personaId", {
-      type: Sequelize.INTEGER,
-      references: {
-        model: "personas",
         key: "id",
       },
       allowNull: false,
@@ -58,7 +36,7 @@ module.exports = {
       onDelete: "CASCADE",
     });
 
-    await queryInterface.addColumn("personas", "estadoId", {
+    await queryInterface.addColumn("clientes", "estadoId", {
       type: Sequelize.INTEGER,
       references: {
         model: "estados",
@@ -68,7 +46,7 @@ module.exports = {
       onDelete: "CASCADE",
     });
 
-    await queryInterface.addColumn("personas", "municipioId", {
+    await queryInterface.addColumn("clientes", "municipioId", {
       type: Sequelize.INTEGER,
       references: {
         model: "municipios",
@@ -153,27 +131,14 @@ module.exports = {
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     });
-
-    await queryInterface.addColumn("vendedores", "personaId", {
-      type: Sequelize.INTEGER,
-      references: {
-        model: "personas",
-        key: "id",
-      },
-      allowNull: false,
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-    });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeColumn("agentes", "personaId");
     await queryInterface.removeColumn("agentes", "aseguradoraId");
-    await queryInterface.removeColumn("clientes", "personaId");
     await queryInterface.removeColumn("endosos", "polizaId");
     await queryInterface.removeColumn("municipios", "estadoId");
-    await queryInterface.removeColumn("personas", "estadoId");
-    await queryInterface.removeColumn("personas", "municipioId");
+    await queryInterface.removeColumn("clientes", "estadoId");
+    await queryInterface.removeColumn("clientes", "municipioId");
     await queryInterface.removeColumn("polizas", "clienteId");
     await queryInterface.removeColumn("polizas", "aseguradoraId");
     await queryInterface.removeColumn("polizas", "agenteId");
@@ -181,6 +146,5 @@ module.exports = {
     await queryInterface.removeColumn("polizas", "productoId");
     await queryInterface.removeColumn("recibos", "polizaId");
     await queryInterface.removeColumn("recibos", "endosoId");
-    await queryInterface.removeColumn("vendedores", "personaId");
   },
 };

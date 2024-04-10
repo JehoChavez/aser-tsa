@@ -3,22 +3,48 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Cliente extends Model {
     static associate(models) {
-      Cliente.belongsTo(models.Persona, {
-        as: "persona",
-        foreignKey: {
-          field: "personaId",
-          allowNull: false,
-        },
-      });
-      Cliente.hasMany(models.Poliza, {
-        as: "polizas",
-        foreignKey: "clienteId",
+      Cliente.hasOne(models.Agente, {
+        as: "agente",
+        foreignKey: "personaId",
         onDelete: "CASCADE",
+      });
+      Cliente.hasOne(models.Vendedor, {
+        as: "vendedor",
+        foreignKey: "personaId",
+        onDelete: "CASCADE",
+      });
+      Cliente.belongsTo(models.Estado, {
+        as: "estado",
+        foreignKey: "estadoId",
+      });
+      Cliente.belongsTo(models.Municipio, {
+        as: "municipio",
+        foreignKey: "municipioId",
       });
     }
   }
   Cliente.init(
     {
+      tipoPersona: {
+        type: DataTypes.STRING,
+        validate: {
+          isIn: [["fisica", "moral"]],
+        },
+      },
+      nombre: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      nacimiento: DataTypes.DATEONLY,
+      rfc: DataTypes.STRING,
+      calle: DataTypes.STRING,
+      exterior: DataTypes.STRING,
+      interior: DataTypes.STRING,
+      colonia: DataTypes.STRING,
+      codigoPostal: DataTypes.STRING,
+      correo: DataTypes.STRING,
+      telefono: DataTypes.STRING,
+      empresa: DataTypes.STRING,
       comentarios: DataTypes.STRING,
     },
     {

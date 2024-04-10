@@ -13,6 +13,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      nombre: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       comentarios: {
         type: Sequelize.STRING,
       },

@@ -3,13 +3,6 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Vendedor extends Model {
     static associate(models) {
-      Vendedor.belongsTo(models.Persona, {
-        as: "persona",
-        foreignKey: {
-          field: "personaId",
-          allowNull: false,
-        },
-      });
       Vendedor.hasMany(models.Poliza, {
         as: "polizas",
         foreignKey: "vendedorId",
@@ -19,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Vendedor.init(
     {
+      nombre: {
+        allowNull: false,
+        unique: true,
+        type: DataTypes.STRING,
+      },
       comentarios: DataTypes.STRING,
     },
     {
