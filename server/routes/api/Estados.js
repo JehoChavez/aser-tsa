@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Estado } = require("../../models");
 const catchAsync = require("../../utils/catchAsync");
+const CustomResponse = require("../../utils/CustomResponse");
 
 router.get(
   "/",
@@ -12,11 +13,7 @@ router.get(
       },
     });
 
-    const response = {
-      status: "Success",
-      code: 200,
-      data: listOfEstados,
-    };
+    const response = new CustomResponse(listOfEstados);
 
     res.json(response);
   })

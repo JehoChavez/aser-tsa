@@ -3,6 +3,7 @@ const router = express.Router();
 const { Producto } = require("../../models");
 const catchAsync = require("../../utils/catchAsync");
 const ExpressError = require("../../utils/ExpressError");
+const CustomResponse = require("../../utils/CustomResponse");
 
 router.get(
   "/",
@@ -13,13 +14,7 @@ router.get(
       },
     });
 
-    const response = {
-      status: "Success",
-      code: 200,
-      data: {
-        productos: listOfProductos,
-      },
-    };
+    const response = new CustomResponse({ productos: listOfProductos });
 
     res.json(response);
   })
@@ -32,15 +27,13 @@ router.post(
 
     const nuevoProducto = await Producto.create(producto);
 
-    const response = {
-      status: "Success",
-      code: 200,
-      data: {
-        id: nuevoProducto.id,
-        producto: nuevoProducto.producto,
-        createdAt: nuevoProducto.createdAt,
-      },
+    const data = {
+      id: nuevoProducto.id,
+      producto: nuevoProducto.producto,
+      createdAt: nuevoProducto.createdAt,
     };
+
+    const response = new CustomResponse(data);
 
     res.json(response);
   })
@@ -55,13 +48,11 @@ router.delete(
 
     await producto.destroy();
 
-    const response = {
-      status: "Success",
-      code: 200,
-      data: {
-        message: "Producto eliminado exitosamente",
-      },
+    const data = {
+      message: "Producto eliminado exitosamente",
     };
+
+    const response = CustomResponse(data);
 
     res.json(response);
   })

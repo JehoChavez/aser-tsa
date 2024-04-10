@@ -3,6 +3,7 @@ const router = express.Router();
 const { Municipio } = require("../../models");
 const catchAsync = require("../../utils/catchAsync");
 const ExpressError = require("../../utils/ExpressError");
+const CustomResponse = require("../../utils/CustomResponse");
 
 router.get("/", (req, res) => {
   throw new ExpressError("ID de estado es necesario", 400);
@@ -23,11 +24,7 @@ router.get(
     if (!listOfMunicipios[0]) {
       throw new ExpressError("ID de estado no es válido (1-32)", 400);
     } else {
-      const response = {
-        status: "Success",
-        code: 200,
-        data: listOfMunicipios,
-      };
+      const response = new CustomResponse(listOfMunicipios);
 
       res.json(response);
     }
