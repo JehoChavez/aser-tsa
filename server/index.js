@@ -7,9 +7,9 @@ const db = require("./models");
 app.use(express.urlencoded({ extended: true }));
 
 // Routers
-const estadosRouter = require("./routes/api/Estados");
-const municipiosRouter = require("./routes/api/Municipios");
-const productosRouter = require("./routes/api/Productos");
+const estadosRouter = require("./routes/api/estados");
+const municipiosRouter = require("./routes/api/municipios");
+const productosRouter = require("./routes/api/productos");
 const CustomResponse = require("./utils/CustomResponse");
 app.use("/api/estados", estadosRouter);
 app.use("/api/municipios", municipiosRouter);
