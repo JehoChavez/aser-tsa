@@ -3,6 +3,8 @@ const router = express.Router();
 const catchAsync = require("../../utils/catchAsync");
 const municipios = require("../../controllers/municipios");
 
-router.route("/").get(catchAsync(municipios.getMunicipio));
+router.route("/").get(municipios.noId);
+
+router.route("/:estadoId").get(catchAsync(municipios.getMunicipio));
 
 module.exports = router;
