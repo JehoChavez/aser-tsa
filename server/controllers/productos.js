@@ -19,7 +19,7 @@ module.exports.postProducto = async (req, res) => {
 
   const nuevoProducto = await Producto.create(producto);
 
-  const response = new CustomResponse(producto);
+  const response = new CustomResponse(nuevoProducto);
 
   res.json(response);
 };
