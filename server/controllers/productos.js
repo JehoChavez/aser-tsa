@@ -19,13 +19,7 @@ module.exports.postProducto = async (req, res) => {
 
   const nuevoProducto = await Producto.create(producto);
 
-  const data = {
-    id: nuevoProducto.id,
-    producto: nuevoProducto.producto,
-    createdAt: nuevoProducto.createdAt,
-  };
-
-  const response = new CustomResponse(data);
+  const response = new CustomResponse(producto);
 
   res.json(response);
 };
@@ -37,11 +31,7 @@ module.exports.deleteProducto = async (req, res) => {
 
   await producto.destroy();
 
-  const data = {
-    message: "Producto eliminado exitosamente",
-  };
-
-  const response = new CustomResponse(data);
+  const response = new CustomResponse(producto);
 
   res.json(response);
 };
