@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const ExpressError = require("./utils/ExpressError");
+const CustomResponse = require("./utils/CustomResponse");
 
 const db = require("./models");
 
@@ -10,10 +11,11 @@ app.use(express.urlencoded({ extended: true }));
 const estadosRouter = require("./routes/api/estados");
 const municipiosRouter = require("./routes/api/municipios");
 const productosRouter = require("./routes/api/productos");
-const CustomResponse = require("./utils/CustomResponse");
+const aseguradorasRouter = require("./routes/api/aseguradoras");
 app.use("/api/estados", estadosRouter);
 app.use("/api/municipios", municipiosRouter);
 app.use("/api/productos", productosRouter);
+app.use("/api/aseguradoras", aseguradorasRouter);
 
 // Handling not specified routes
 app.all("*", (req, res, next) => {
