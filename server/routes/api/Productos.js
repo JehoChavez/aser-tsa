@@ -1,9 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Producto } = require("../../models");
 const catchAsync = require("../../utils/catchAsync");
-const ExpressError = require("../../utils/ExpressError");
-const CustomResponse = require("../../utils/CustomResponse");
 const productos = require("../../controllers/productos");
 
 router
