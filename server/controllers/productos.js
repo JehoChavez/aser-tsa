@@ -45,3 +45,18 @@ module.exports.deleteProducto = async (req, res) => {
 
   res.json(response);
 };
+
+module.exports.updateProducto = async (req, res) => {
+  const productoData = req.body.producto;
+  const producto = await Producto.findByPk(req.params.id);
+
+  if (!producto) throw new ExpressError("Producto No Encontrado", 404);
+
+  producto.producto = productoData;
+
+  const updated = await producto.save();
+
+  const response = new CustomResponse(updated);
+
+  res.json(response);
+};

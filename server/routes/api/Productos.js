@@ -8,6 +8,9 @@ router
   .get(catchAsync(productos.getProductos))
   .post(productos.postProducto);
 
-router.route("/:id").delete(catchAsync(productos.deleteProducto));
+router
+  .route("/:id")
+  .delete(catchAsync(productos.deleteProducto))
+  .put(catchAsync(productos.updateProducto));
 
 module.exports = router;
