@@ -12,10 +12,12 @@ const estadosRouter = require("./routes/api/estados");
 const municipiosRouter = require("./routes/api/municipios");
 const productosRouter = require("./routes/api/productos");
 const aseguradorasRouter = require("./routes/api/aseguradoras");
+const agentesRouter = require("./routes/api/agentes");
 app.use("/api/estados", estadosRouter);
 app.use("/api/municipios", municipiosRouter);
 app.use("/api/productos", productosRouter);
 app.use("/api/aseguradoras", aseguradorasRouter);
+app.use("/api/agentes", agentesRouter);
 
 // Handling not specified routes
 app.all("*", (req, res, next) => {
