@@ -26,7 +26,7 @@ module.exports.postAseguradora = async (req, res) => {
   res.json(response);
 };
 
-module.exports.deleteProducto = async (req, res) => {
+module.exports.deleteAseguradora = async (req, res) => {
   const aseguradora = await Aseguradora.findByPk(req.params.id);
 
   if (!aseguradora) throw new ExpressError("aseguradora no encontrada", 404);
