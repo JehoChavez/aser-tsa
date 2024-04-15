@@ -3,16 +3,6 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Cliente extends Model {
     static associate(models) {
-      Cliente.hasOne(models.Agente, {
-        as: "agente",
-        foreignKey: "personaId",
-        onDelete: "CASCADE",
-      });
-      Cliente.hasOne(models.Vendedor, {
-        as: "vendedor",
-        foreignKey: "personaId",
-        onDelete: "CASCADE",
-      });
       Cliente.belongsTo(models.Estado, {
         as: "estado",
         foreignKey: "estadoId",
