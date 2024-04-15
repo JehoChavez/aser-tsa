@@ -8,5 +8,8 @@ router
   .get(catchAsync(aseguradoras.getAseguradoras))
   .post(catchAsync(aseguradoras.postAseguradora));
 
-router.route("/:id").delete(catchAsync(aseguradoras.deleteAseguradora));
+router
+  .route("/:id")
+  .delete(catchAsync(aseguradoras.deleteAseguradora))
+  .put(catchAsync(aseguradoras.updateAseguradora));
 module.exports = router;

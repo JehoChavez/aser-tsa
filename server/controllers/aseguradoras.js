@@ -37,3 +37,24 @@ module.exports.deleteAseguradora = async (req, res) => {
 
   res.json(response);
 };
+
+module.exports.updateAseguradora = async (req, res) => {
+  const aseguradoraUpdate = await Aseguradora.findByPk(req.params.id);
+  const { aseguradora, plazoPrimer, plazoSubsecuentes, comentarios } = req.body;
+
+  if (!aseguradoraUpdate)
+    throw new ExpressError("aseguradora no encontrada", 404);
+
+  aseguradoraUpdate.set({
+    aseguradora: aseguradora,
+    plazoPrimer: plazoPrimer,
+    plazoSubsecuentes: plazoSubsecuentes,
+    comentarios: comentarios,
+  });
+
+  const updated = await aseguradoraUpdate.save();
+
+  const response = new CustomResponse(updated);
+
+  res.json(response);
+};
