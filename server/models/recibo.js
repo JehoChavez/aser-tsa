@@ -18,6 +18,14 @@ module.exports = (sequelize, DataTypes) => {
   }
   Recibo.init(
     {
+      exhibicion: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      de: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       monto: {
         type: DataTypes.FLOAT,
         allowNull: false,

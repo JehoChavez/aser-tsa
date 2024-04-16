@@ -9,6 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      exhibicion: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      de: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       monto: {
         type: Sequelize.FLOAT,
         allowNull: false,
