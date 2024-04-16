@@ -2,15 +2,14 @@ const { Municipio } = require("../models");
 const ExpressError = require("../utils/ExpressError");
 const CustomResponse = require("../utils/CustomResponse");
 
-module.exports.noId = (req, res) => {
-  throw new ExpressError("ID de estado es necesario", 400);
-};
-
 module.exports.getMunicipio = async (req, res) => {
-  const { estadoId } = req.params;
+  const { estado } = req.query;
+
+  if (!estado) throw new ExpressError("Estado es necesario", 400);
+
   const listOfMunicipios = await Municipio.findAll({
     where: {
-      estadoId: estadoId,
+      estadoId: estado,
     },
     attributes: {
       exclude: ["createdAt", "updatedAt"],
