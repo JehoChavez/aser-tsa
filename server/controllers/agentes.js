@@ -27,3 +27,14 @@ module.exports.getAgentes = async (req, res) => {
 
   res.json(response);
 };
+
+module.exports.postAgente = async (req, res) => {
+  const { clave, nombre, aseguradoraId, comentarios } = req.body;
+  const agenteObj = { clave, nombre, aseguradoraId, comentarios };
+
+  const newAgente = await Agente.create(agenteObj);
+
+  const response = new CustomResponse(newAgente);
+
+  res.json(response);
+};
