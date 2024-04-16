@@ -19,12 +19,9 @@ module.exports = {
       indexName: "reciboPolizaIdIndex",
     });
 
-    await queryInterface.addIndex("recibos", [
-      "fechaInicio",
-      {
-        indexName: "reciboInicioIndex",
-      },
-    ]);
+    await queryInterface.addIndex("recibos", ["fechaInicio"], {
+      indexName: "reciboInicioIndex",
+    });
   },
 
   async down(queryInterface, Sequelize) {
