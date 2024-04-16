@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Poliza.init(
     {
-      poliza: {
+      noPoliza: {
         type: DataTypes.STRING,
         allowNull: false,
       },
