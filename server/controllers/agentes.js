@@ -38,3 +38,24 @@ module.exports.postAgente = async (req, res) => {
 
   res.json(response);
 };
+
+module.exports.updateAgente = async (req, res) => {
+  const { agenteId } = req.params;
+  const { clave, nombre, aseguradoraId, comentarios } = req.body;
+
+  const agenteUpdate = await Agente.findByPk(agenteId);
+  if (!agenteUpdate) throw new ExpressError("Agente no encontrado", 404);
+
+  agenteUpdate.set({
+    clave,
+    nombre,
+    aseguradoraId,
+    comentarios,
+  });
+
+  const updated = await agenteUpdate.save();
+
+  const response = new CustomResponse(updated);
+
+  res.json(response);
+};
