@@ -6,7 +6,7 @@ const productos = require("../../controllers/productos");
 router
   .route("/")
   .get(catchAsync(productos.getProductos))
-  .post(productos.postProducto);
+  .post(catchAsync(productos.postProducto));
 
 router
   .route("/:id")
