@@ -10,7 +10,7 @@ const productoSchema = joi.object({
   producto: joi.string().required(),
 });
 
-const productoIdSchema = joi.object({
+const genericIdSchema = joi.object({
   id: joi.number().required(),
 });
 
@@ -18,4 +18,4 @@ module.exports.validateEstadoId = validator(estadoIdSchema);
 
 module.exports.validateProducto = validator(productoSchema);
 
-module.exports.validateProductoId = validator(productoIdSchema);
+module.exports.validateGenericIdSchema = validator(genericIdSchema);
