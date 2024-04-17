@@ -14,8 +14,14 @@ const genericIdSchema = joi.object({
   id: joi.number().required(),
 });
 
+const idArraySchema = joi
+  .array()
+  .items(joi.number().positive().integer().min(1).required());
+
 module.exports.validateEstadoId = validator(estadoIdSchema);
 
 module.exports.validateProducto = validator(productoSchema);
 
 module.exports.validateGenericIdSchema = validator(genericIdSchema);
+
+module.exports.validateIdArray = validator(idArraySchema);
