@@ -1,6 +1,7 @@
 const { Producto } = require("../models");
 const ExpressError = require("../utils/ExpressError");
 const CustomResponse = require("../utils/CustomResponse");
+const { validateProducto, validateProductoId } = require("../utils/validator");
 
 module.exports.getProductos = async (req, res) => {
   const listOfProductos = await Producto.findAll({
@@ -15,9 +16,13 @@ module.exports.getProductos = async (req, res) => {
 };
 
 module.exports.postProducto = async (req, res) => {
-  const producto = req.body;
+  const { error, value } = validateProducto(req.body);
 
-  const nuevoProducto = await Producto.create(producto);
+  if (error) {
+    throw new ExpressError(error.details[0].message, 500);
+  }
+
+  const nuevoProducto = await Producto.create(value);
 
   const response = new CustomResponse(nuevoProducto);
 
@@ -25,7 +30,13 @@ module.exports.postProducto = async (req, res) => {
 };
 
 module.exports.deleteProducto = async (req, res) => {
-  const producto = await Producto.findByPk(req.params.id);
+  const { error, value } = validateProductoId(req.params);
+
+  if (error) {
+    throw new ExpressError(error.details[0].message, 500);
+  }
+
+  const producto = await Producto.findByPk(value.id);
 
   if (!producto) throw new ExpressError("Producto No Encontrado", 404);
 
@@ -37,12 +48,26 @@ module.exports.deleteProducto = async (req, res) => {
 };
 
 module.exports.updateProducto = async (req, res) => {
-  const productoData = req.body.producto;
-  const producto = await Producto.findByPk(req.params.id);
+  const { error: productoDataError, value: productoData } = validateProducto(
+    req.body
+  );
+
+  if (productoDataError) {
+    throw new ExpressError(productoDataError.details[0].message, 500);
+  }
+
+  const { error: productoUpdateIdError, value: productoUpdateId } =
+    validateProductoId(req.params);
+
+  if (productoUpdateIdError) {
+    throw new ExpressError(productoUpdateIdError.details[0].message, 500);
+  }
+
+  const producto = await Producto.findByPk(productoUpdateId.id);
 
   if (!producto) throw new ExpressError("Producto No Encontrado", 404);
 
-  producto.producto = productoData;
+  producto.producto = productoData.producto;
 
   const updated = await producto.save();
 
