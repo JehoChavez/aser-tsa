@@ -22,6 +22,6 @@ module.exports.validateEstadoId = validator(estadoIdSchema);
 
 module.exports.validateProducto = validator(productoSchema);
 
-module.exports.validateGenericIdSchema = validator(genericIdSchema);
+module.exports.validateGenericId = validator(genericIdSchema);
 
 module.exports.validateIdArray = validator(idArraySchema);

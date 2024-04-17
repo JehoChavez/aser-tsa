@@ -1,10 +1,7 @@
 const { Producto } = require("../models");
 const ExpressError = require("../utils/ExpressError");
 const CustomResponse = require("../utils/CustomResponse");
-const {
-  validateProducto,
-  validateGenericIdSchema,
-} = require("../utils/validator");
+const { validateProducto, validateGenericId } = require("../utils/validator");
 
 module.exports.getProductos = async (req, res) => {
   const listOfProductos = await Producto.findAll({
@@ -33,7 +30,7 @@ module.exports.postProducto = async (req, res) => {
 };
 
 module.exports.deleteProducto = async (req, res) => {
-  const { error, value } = validateGenericIdSchema(req.params);
+  const { error, value } = validateGenericId(req.params);
 
   if (error) {
     throw new ExpressError(error.details[0].message, 500);
@@ -60,7 +57,7 @@ module.exports.updateProducto = async (req, res) => {
   }
 
   const { error: productoUpdateIdError, value: productoUpdateId } =
-    validateGenericIdSchema(req.params);
+    validateGenericId(req.params);
 
   if (productoUpdateIdError) {
     throw new ExpressError(productoUpdateIdError.details[0].message, 500);
