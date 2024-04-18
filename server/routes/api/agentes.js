@@ -8,6 +8,6 @@ router
   .get(catchAsync(agentes.getAgentes))
   .post(catchAsync(agentes.postAgente));
 
-router.route("/:agenteId").put(catchAsync(agentes.updateAgente));
+router.route("/:id").put(catchAsync(agentes.updateAgente));
 
 module.exports = router;
