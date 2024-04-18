@@ -18,9 +18,7 @@ module.exports.getProductos = async (req, res) => {
 module.exports.postProducto = async (req, res) => {
   const { error, value } = validateProducto(req.body);
 
-  if (error) {
-    throw new ExpressError(error.details[0].message, 500);
-  }
+  if (error) throw new ExpressError(error.details[0].message, 400);
 
   const nuevoProducto = await Producto.create(value);
 
@@ -32,9 +30,7 @@ module.exports.postProducto = async (req, res) => {
 module.exports.deleteProducto = async (req, res) => {
   const { error, value } = validateGenericId(req.params);
 
-  if (error) {
-    throw new ExpressError(error.details[0].message, 500);
-  }
+  if (error) throw new ExpressError(error.details[0].message, 400);
 
   const producto = await Producto.findByPk(value.id);
 
@@ -52,16 +48,14 @@ module.exports.updateProducto = async (req, res) => {
     req.body
   );
 
-  if (productoDataError) {
-    throw new ExpressError(productoDataError.details[0].message, 500);
-  }
+  if (productoDataError)
+    throw new ExpressError(productoDataError.details[0].message, 400);
 
   const { error: productoUpdateIdError, value: productoUpdateId } =
     validateGenericId(req.params);
 
-  if (productoUpdateIdError) {
-    throw new ExpressError(productoUpdateIdError.details[0].message, 500);
-  }
+  if (productoUpdateIdError)
+    throw new ExpressError(productoUpdateIdError.details[0].message, 400);
 
   const producto = await Producto.findByPk(productoUpdateId.id);
 
