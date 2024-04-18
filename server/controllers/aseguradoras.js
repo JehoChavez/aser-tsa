@@ -1,6 +1,10 @@
 const { Aseguradora } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
+const {
+  validateAseguradora,
+  validateGenericId,
+} = require("../utils/validator");
 
 module.exports.getAseguradoras = async (req, res) => {
   const listOfAseguradoras = await Aseguradora.findAll();
@@ -11,13 +15,9 @@ module.exports.getAseguradoras = async (req, res) => {
 };
 
 module.exports.postAseguradora = async (req, res) => {
-  const { aseguradora, plazoPrimer, plazoSubsecuentes, comentarios } = req.body;
-  const aseguradoraObj = {
-    aseguradora,
-    plazoPrimer,
-    plazoSubsecuentes,
-    comentarios,
-  };
+  const { error, value: aseguradoraObj } = validateAseguradora(req.body);
+
+  if (error) throw new ExpressError(error.details[0].message, 400);
 
   const newAseguradora = await Aseguradora.create(aseguradoraObj);
 
@@ -27,7 +27,11 @@ module.exports.postAseguradora = async (req, res) => {
 };
 
 module.exports.deleteAseguradora = async (req, res) => {
-  const aseguradora = await Aseguradora.findByPk(req.params.id);
+  const { error, value: aseguradoraId } = validateGenericId(req.params);
+
+  if (error) throw new ExpressError(error.details[0].message, 400);
+
+  const aseguradora = await Aseguradora.findByPk(aseguradoraId.id);
 
   if (!aseguradora) throw new ExpressError("aseguradora no encontrada", 404);
 
@@ -39,17 +43,25 @@ module.exports.deleteAseguradora = async (req, res) => {
 };
 
 module.exports.updateAseguradora = async (req, res) => {
-  const aseguradoraUpdate = await Aseguradora.findByPk(req.params.id);
-  const { aseguradora, plazoPrimer, plazoSubsecuentes, comentarios } = req.body;
+  const { error: idError, value: aseguradoraId } = validateGenericId(
+    req.params
+  );
+
+  if (idError) throw new ExpressError(idError.details[0].message, 400);
+
+  const { error: aseguradoraError, value: aseguradoraData } =
+    validateAseguradora(req.body);
+
+  if (aseguradoraError)
+    throw new ExpressError(aseguradoraError.details[0].message, 400);
+
+  const aseguradoraUpdate = await Aseguradora.findByPk(aseguradoraId.id);
 
   if (!aseguradoraUpdate)
     throw new ExpressError("aseguradora no encontrada", 404);
 
   aseguradoraUpdate.set({
-    aseguradora: aseguradora,
-    plazoPrimer: plazoPrimer,
-    plazoSubsecuentes: plazoSubsecuentes,
-    comentarios: comentarios,
+    aseguradoraData,
   });
 
   const updated = await aseguradoraUpdate.save();
