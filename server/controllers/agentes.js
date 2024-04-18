@@ -2,18 +2,28 @@ const { Op } = require("sequelize");
 const { Agente } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
+const {
+  validateIdArray,
+  validateAgent,
+  validateGenericId,
+} = require("../utils/validator");
 
 module.exports.getAgentes = async (req, res) => {
-  const { aseguradoras } = req.query;
+  const { aseguradoraIds } = req.query;
 
   let listOfAgentes = [];
 
-  if (aseguradoras) {
-    const aseguradoraIds = aseguradoras.split(",");
+  if (aseguradoraIds) {
+    const { error, value: aseguradoras } = validateIdArray(aseguradoraIds);
+
+    if (error) {
+      throw new ExpressError(error.details[0].message, 400);
+    }
+
     listOfAgentes = await Agente.findAll({
       where: {
         aseguradoraId: {
-          [Op.in]: aseguradoraIds,
+          [Op.in]: aseguradoras,
         },
       },
     });
@@ -29,8 +39,11 @@ module.exports.getAgentes = async (req, res) => {
 };
 
 module.exports.postAgente = async (req, res) => {
-  const { clave, nombre, aseguradoraId, comentarios } = req.body;
-  const agenteObj = { clave, nombre, aseguradoraId, comentarios };
+  const { error, value: agenteObj } = validateAgent(req.body);
+
+  if (error) {
+    throw new ExpressError(error.details[0].message, 400);
+  }
 
   const newAgente = await Agente.create(agenteObj);
 
@@ -40,17 +53,18 @@ module.exports.postAgente = async (req, res) => {
 };
 
 module.exports.updateAgente = async (req, res) => {
-  const { agenteId } = req.params;
-  const { clave, nombre, aseguradoraId, comentarios } = req.body;
+  const { error: idError, value: agenteId } = validateGenericId(req.params);
 
-  const agenteUpdate = await Agente.findByPk(agenteId);
+  if (idError) throw new ExpressError(idError.details[0].message, 400);
+
+  const { error: agenteError, value: agenteData } = validateAgent(req.body);
+  if (agenteError) throw new ExpressError(agenteError.details[0].message, 400);
+
+  const agenteUpdate = await Agente.findByPk(agenteId.id);
   if (!agenteUpdate) throw new ExpressError("Agente no encontrado", 404);
 
   agenteUpdate.set({
-    clave,
-    nombre,
-    aseguradoraId,
-    comentarios,
+    agenteData,
   });
 
   const updated = await agenteUpdate.save();

@@ -18,6 +18,13 @@ const idArraySchema = joi
   .array()
   .items(joi.number().positive().integer().min(1).required());
 
+const agenteSchema = joi.object({
+  clave: joi.number().positive().integer().min(1).required(),
+  nombre: joi.string().required(),
+  comentarios: joi.string(),
+  aseguradoraId: joi.number().positive().integer().min(1).required(),
+});
+
 module.exports.validateEstadoId = validator(estadoIdSchema);
 
 module.exports.validateProducto = validator(productoSchema);
@@ -25,3 +32,5 @@ module.exports.validateProducto = validator(productoSchema);
 module.exports.validateGenericId = validator(genericIdSchema);
 
 module.exports.validateIdArray = validator(idArraySchema);
+
+module.exports.validateAgent = validator(agenteSchema);
