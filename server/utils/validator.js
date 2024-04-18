@@ -3,7 +3,7 @@ const joi = require("joi");
 const validator = (schema) => (payload) => schema.validate(payload);
 
 const estadoIdSchema = joi.object({
-  estado: joi.number().min(1).max(32).required(),
+  estado: joi.number().positive().integer().min(1).max(32).required(),
 });
 
 const productoSchema = joi.object({
@@ -11,7 +11,7 @@ const productoSchema = joi.object({
 });
 
 const genericIdSchema = joi.object({
-  id: joi.number().required(),
+  id: joi.number().positive().integer().required(),
 });
 
 const idArraySchema = joi
