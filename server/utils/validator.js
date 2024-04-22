@@ -32,6 +32,11 @@ const aseguradoraSchema = joi.object({
   comentarios: joi.string(),
 });
 
+const vendedorSchema = joi.object({
+  nombre: joi.string().required(),
+  comentarios: joi.string(),
+});
+
 module.exports.validateEstadoId = validator(estadoIdSchema);
 
 module.exports.validateProducto = validator(productoSchema);
@@ -43,3 +48,5 @@ module.exports.validateIdArray = validator(idArraySchema);
 module.exports.validateAgent = validator(agenteSchema);
 
 module.exports.validateAseguradora = validator(aseguradoraSchema);
+
+module.exports.validateVendedor = validator(vendedorSchema);
