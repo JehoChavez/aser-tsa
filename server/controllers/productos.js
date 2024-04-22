@@ -4,11 +4,7 @@ const CustomResponse = require("../utils/CustomResponse");
 const { validateProducto, validateGenericId } = require("../utils/validator");
 
 module.exports.getProductos = async (req, res) => {
-  const listOfProductos = await Producto.findAll({
-    attributes: {
-      exclude: ["createdAt", "updatedAt"],
-    },
-  });
+  const listOfProductos = await Producto.findAll();
 
   const response = new CustomResponse({ productos: listOfProductos });
 
