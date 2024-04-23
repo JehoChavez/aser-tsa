@@ -5,10 +5,14 @@ const {
   getVendedores,
   postVendedor,
   deleteVendedor,
+  updateVendedor,
 } = require("../../controllers/vendedores");
 
 router.route("/").get(catchAsync(getVendedores)).post(catchAsync(postVendedor));
 
-router.route("/:id").delete(catchAsync(deleteVendedor));
+router
+  .route("/:id")
+  .delete(catchAsync(deleteVendedor))
+  .put(catchAsync(updateVendedor));
 
 module.exports = router;
