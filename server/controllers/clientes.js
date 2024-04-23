@@ -50,3 +50,19 @@ module.exports.postCliente = async (req, res) => {
 
   res.json(response);
 };
+
+module.exports.deleteCliente = async (req, res) => {
+  const { error, value } = validateGenericId(req.params);
+
+  if (error) throw new ExpressError(error.details[0].message, 400);
+
+  const cliente = await Cliente.findByPk(value.id);
+
+  await cliente.destroy();
+
+  if (!cliente) throw new ExpressError("Cliente no encontrado", 404);
+
+  const response = new CustomResponse(cliente);
+
+  res.json(response);
+};
