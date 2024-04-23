@@ -1,7 +1,7 @@
 const { Vendedor } = require("../models");
 const ExpressError = require("../utils/ExpressError");
 const CustomResponse = require("../utils/CustomResponse");
-const { validateVendedor } = require("../utils/validator");
+const { validateVendedor, validateGenericId } = require("../utils/validator");
 
 module.exports.getVendedores = async (req, res) => {
   const listOfVendedores = await Vendedor.findAll();
@@ -22,6 +22,22 @@ module.exports.postVendedor = async (req, res) => {
   const nuevoVendedor = await Vendedor.create(value);
 
   const response = new CustomResponse(nuevoVendedor);
+
+  res.json(response);
+};
+
+module.exports.deleteVendedor = async (req, res) => {
+  const { error, value } = validateGenericId(req.params);
+
+  if (error) throw new ExpressError(error.details[0].message, 400);
+
+  const vendedor = await Vendedor.findByPk(value.id);
+
+  if (!vendedor) throw new ExpressError("Vendedor no encontrado", 404);
+
+  await vendedor.destroy();
+
+  const response = new CustomResponse(vendedor);
 
   res.json(response);
 };
