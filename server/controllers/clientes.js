@@ -9,3 +9,8 @@ module.exports.getClientes = async (req, res) => {
 
   res.json(response);
 };
+
+module.exports.getCliente = async (req, res) => {
+  const id = req.params.id;
+  res.send(`Cliente ${id}`);
+};
