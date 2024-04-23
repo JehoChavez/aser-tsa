@@ -37,6 +37,24 @@ const vendedorSchema = joi.object({
   comentarios: joi.string(),
 });
 
+const clienteSchema = joi.object({
+  tipoPersona: joi.string().valid("fisica", "moral"),
+  nombre: joi.string().required(),
+  nacimiento: joi.string().isoDate(),
+  rfc: joi.string(),
+  calle: joi.string(),
+  exterior: joi.string(),
+  interior: joi.string(),
+  colonia: joi.string(),
+  codigoPostal: joi.number().integer().positive(),
+  correo: joi.string().email(),
+  telefono: joi.string(),
+  empresa: joi.string(),
+  comentarios: joi.string(),
+  estadoId: joi.number().positive().integer().max(32),
+  municipioId: joi.number().positive().integer(),
+});
+
 module.exports.validateEstadoId = validator(estadoIdSchema);
 
 module.exports.validateProducto = validator(productoSchema);
@@ -50,3 +68,5 @@ module.exports.validateAgent = validator(agenteSchema);
 module.exports.validateAseguradora = validator(aseguradoraSchema);
 
 module.exports.validateVendedor = validator(vendedorSchema);
+
+module.exports.validateCliente = validator(clienteSchema);
