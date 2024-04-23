@@ -1,7 +1,7 @@
-const { Cliente } = require("../models");
+const { Cliente, Estado, Municipio } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
-const { validateCliente } = require("../utils/validator");
+const { validateCliente, validateGenericId } = require("../utils/validator");
 
 module.exports.getClientes = async (req, res) => {
   const listOfClientes = await Cliente.findAll();
@@ -12,8 +12,31 @@ module.exports.getClientes = async (req, res) => {
 };
 
 module.exports.getCliente = async (req, res) => {
-  const id = req.params.id;
-  res.send(`Cliente ${id}`);
+  const { error, value } = validateGenericId(req.params);
+
+  if (error) throw new ExpressError(error.details[0].message, 400);
+
+  const cliente = await Cliente.findByPk(value.id, {
+    include: [
+      {
+        model: Estado,
+        as: "estado",
+      },
+      {
+        model: Municipio,
+        as: "municipio",
+      },
+    ],
+    attributes: {
+      exclude: ["estadoId", "municipioId"],
+    },
+  });
+
+  if (!cliente) throw new ExpressError("Cliente no encontrado", 404);
+
+  const response = new CustomResponse(cliente);
+
+  res.json(response);
 };
 
 module.exports.postCliente = async (req, res) => {
