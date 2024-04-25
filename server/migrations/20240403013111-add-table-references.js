@@ -131,20 +131,38 @@ module.exports = {
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     });
+
+    await queryInterface.addColumn("polizas", "renovacionId", {
+      type: Sequelize.INTEGER,
+      references: {
+        model: "polizas",
+        key: "id",
+      },
+    });
+
+    await queryInterface.addColumn("polizas", "reexpedicionId", {
+      type: Sequelize.INTEGER,
+      references: {
+        model: "polizas",
+        key: "model",
+      },
+    });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeColumn("agentes", "aseguradoraId");
-    await queryInterface.removeColumn("endosos", "polizaId");
-    await queryInterface.removeColumn("municipios", "estadoId");
-    await queryInterface.removeColumn("clientes", "estadoId");
-    await queryInterface.removeColumn("clientes", "municipioId");
-    await queryInterface.removeColumn("polizas", "clienteId");
-    await queryInterface.removeColumn("polizas", "aseguradoraId");
-    await queryInterface.removeColumn("polizas", "agenteId");
-    await queryInterface.removeColumn("polizas", "vendedorId");
-    await queryInterface.removeColumn("polizas", "productoId");
-    await queryInterface.removeColumn("recibos", "polizaId");
+    await queryInterface.removeColumn("polizas", "reexpedicionId");
+    await queryInterface.removeColumn("polizas", "renovacionId");
     await queryInterface.removeColumn("recibos", "endosoId");
+    await queryInterface.removeColumn("recibos", "polizaId");
+    await queryInterface.removeColumn("polizas", "productoId");
+    await queryInterface.removeColumn("polizas", "vendedorId");
+    await queryInterface.removeColumn("polizas", "agenteId");
+    await queryInterface.removeColumn("polizas", "aseguradoraId");
+    await queryInterface.removeColumn("polizas", "clienteId");
+    await queryInterface.removeColumn("clientes", "municipioId");
+    await queryInterface.removeColumn("clientes", "estadoId");
+    await queryInterface.removeColumn("municipios", "estadoId");
+    await queryInterface.removeColumn("endosos", "polizaId");
+    await queryInterface.removeColumn("agentes", "aseguradoraId");
   },
 };
