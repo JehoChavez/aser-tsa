@@ -49,16 +49,16 @@ module.exports.updateAseguradora = async (req, res) => {
 
   if (idError) throw new ExpressError(idError.details[0].message, 400);
 
+  const aseguradoraUpdate = await Aseguradora.findByPk(aseguradoraId.id);
+
+  if (!aseguradoraUpdate)
+    throw new ExpressError("aseguradora no encontrada", 404);
+
   const { error: aseguradoraError, value: aseguradoraData } =
     validateAseguradora(req.body);
 
   if (aseguradoraError)
     throw new ExpressError(aseguradoraError.details[0].message, 400);
-
-  const aseguradoraUpdate = await Aseguradora.findByPk(aseguradoraId.id);
-
-  if (!aseguradoraUpdate)
-    throw new ExpressError("aseguradora no encontrada", 404);
 
   aseguradoraUpdate.set({
     aseguradoraData,

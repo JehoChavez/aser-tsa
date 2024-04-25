@@ -40,13 +40,6 @@ module.exports.deleteProducto = async (req, res) => {
 };
 
 module.exports.updateProducto = async (req, res) => {
-  const { error: productoDataError, value: productoData } = validateProducto(
-    req.body
-  );
-
-  if (productoDataError)
-    throw new ExpressError(productoDataError.details[0].message, 400);
-
   const { error: productoUpdateIdError, value: productoUpdateId } =
     validateGenericId(req.params);
 
@@ -56,6 +49,13 @@ module.exports.updateProducto = async (req, res) => {
   const producto = await Producto.findByPk(productoUpdateId.id);
 
   if (!producto) throw new ExpressError("Producto No Encontrado", 404);
+
+  const { error: productoDataError, value: productoData } = validateProducto(
+    req.body
+  );
+
+  if (productoDataError)
+    throw new ExpressError(productoDataError.details[0].message, 400);
 
   producto.producto = productoData.producto;
 

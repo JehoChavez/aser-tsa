@@ -43,13 +43,6 @@ module.exports.deleteVendedor = async (req, res) => {
 };
 
 module.exports.updateVendedor = async (req, res) => {
-  const { error: vendedorError, value: vendedorData } = validateVendedor(
-    req.body
-  );
-
-  if (vendedorError)
-    throw new ExpressError(vendedorError.details[0].message, 400);
-
   const { error: idError, value: idData } = validateGenericId(req.params);
 
   if (idError) throw new ExpressError(idError.details[0].message, 400);
@@ -57,6 +50,13 @@ module.exports.updateVendedor = async (req, res) => {
   const vendedor = await Vendedor.findByPk(idData.id);
 
   if (!vendedor) throw new ExpressError("Vendedor no encontrado", 404);
+
+  const { error: vendedorError, value: vendedorData } = validateVendedor(
+    req.body
+  );
+
+  if (vendedorError)
+    throw new ExpressError(vendedorError.details[0].message, 400);
 
   vendedor.set({ vendedorData });
 

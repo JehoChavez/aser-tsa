@@ -57,11 +57,11 @@ module.exports.updateAgente = async (req, res) => {
 
   if (idError) throw new ExpressError(idError.details[0].message, 400);
 
-  const { error: agenteError, value: agenteData } = validateAgent(req.body);
-  if (agenteError) throw new ExpressError(agenteError.details[0].message, 400);
-
   const agenteUpdate = await Agente.findByPk(agenteId.id);
   if (!agenteUpdate) throw new ExpressError("Agente no encontrado", 404);
+
+  const { error: agenteError, value: agenteData } = validateAgent(req.body);
+  if (agenteError) throw new ExpressError(agenteError.details[0].message, 400);
 
   agenteUpdate.set({
     agenteData,
