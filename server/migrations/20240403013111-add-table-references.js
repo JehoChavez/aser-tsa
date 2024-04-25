@@ -144,7 +144,7 @@ module.exports = {
       type: Sequelize.INTEGER,
       references: {
         model: "polizas",
-        key: "model",
+        key: "id",
       },
     });
   },
