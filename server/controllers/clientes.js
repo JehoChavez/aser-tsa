@@ -66,3 +66,28 @@ module.exports.deleteCliente = async (req, res) => {
 
   res.json(response);
 };
+
+module.exports.updateCliente = async (req, res) => {
+  const { error: idError, value: idValue } = validateGenericId(req.params);
+
+  if (idError) throw new ExpressError(idError.details[0].message, 400);
+
+  const cliente = await Cliente.findByPk(idValue.id);
+
+  if (!cliente) throw new ExpressError("Cliente no encontrado", 404);
+
+  const { error: clienteError, value: clienteValue } = validateCliente(
+    req.body
+  );
+
+  if (clienteError)
+    throw new ExpressError(clienteError.details[0].message, 400);
+
+  cliente.set(clienteValue);
+
+  const updated = await cliente.save();
+
+  const response = new CustomResponse(updated);
+
+  res.json(response);
+};
