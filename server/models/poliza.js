@@ -49,12 +49,28 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       });
       Poliza.hasOne(models.Poliza, {
-        as: "renovacion",
-        onDelete: "SET NULL",
+        as: "renueva",
+        foreignKey: {
+          field: "renovacionId",
+        },
       });
       Poliza.hasOne(models.Poliza, {
+        as: "reexpide",
+        foreignKey: {
+          field: "reexpedicionId",
+        },
+      });
+      Poliza.belongsTo(models.Poliza, {
+        as: "renovacion",
+        foreignKey: {
+          field: "renovacionId",
+        },
+      });
+      Poliza.belongsTo(models.Poliza, {
         as: "reexpedicion",
-        onDelete: "SET NULL",
+        foreignKey: {
+          field: "reexpedicionId",
+        },
       });
     }
   }
