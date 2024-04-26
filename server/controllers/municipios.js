@@ -14,9 +14,6 @@ module.exports.getMunicipio = async (req, res) => {
     where: {
       estadoId: value.estado,
     },
-    attributes: {
-      exclude: ["createdAt", "updatedAt"],
-    },
   });
 
   if (!listOfMunicipios[0]) {
