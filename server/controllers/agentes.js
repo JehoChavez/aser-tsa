@@ -31,8 +31,6 @@ module.exports.getAgentes = async (req, res) => {
     listOfAgentes = await Agente.findAll();
   }
 
-  if (!listOfAgentes[0]) throw new ExpressError("Agentes no encontrados", 404);
-
   const response = new CustomResponse(listOfAgentes);
 
   res.json(response);
