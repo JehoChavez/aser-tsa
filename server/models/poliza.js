@@ -111,9 +111,9 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       formaPago: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         validate: {
-          isIn: [["c", "s", "t", "m"]],
+          isIn: [[1, 2, 4, 12]],
         },
       },
       comentarios: DataTypes.STRING,

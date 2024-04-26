@@ -52,9 +52,9 @@ module.exports = {
         },
       },
       formaPago: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         validate: {
-          isIn: [["c", "s", "t", "m"]],
+          isIn: [[1, 2, 4, 12]],
         },
       },
       comentarios: {
