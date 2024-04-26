@@ -15,6 +15,7 @@ const aseguradorasRouter = require("./routes/api/aseguradoras");
 const agentesRouter = require("./routes/api/agentes");
 const vendedoresRouter = require("./routes/api/vendedores");
 const clientesRouter = require("./routes/api/clientes");
+const polizasRouter = require("./routes/api/polizas");
 app.use("/api/estados", estadosRouter);
 app.use("/api/municipios", municipiosRouter);
 app.use("/api/productos", productosRouter);
@@ -22,6 +23,7 @@ app.use("/api/aseguradoras", aseguradorasRouter);
 app.use("/api/agentes", agentesRouter);
 app.use("/api/vendedores", vendedoresRouter);
 app.use("/api/clientes", clientesRouter);
+app.use("/api/polizas", polizasRouter);
 
 // Handling not specified routes
 app.all("*", (req, res, next) => {
