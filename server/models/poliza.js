@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      emision: DataTypes.STRING,
+      emision: DataTypes.DATEONLY,
       inicioVigencia: {
         type: DataTypes.DATEONLY,
         allowNull: false,

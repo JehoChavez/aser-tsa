@@ -14,7 +14,7 @@ module.exports = {
         allowNull: false,
       },
       emision: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATEONLY,
       },
       inicioVigencia: {
         type: Sequelize.DATEONLY,
