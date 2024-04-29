@@ -55,6 +55,30 @@ const clienteSchema = joi.object({
   municipioId: joi.number().positive().integer(),
 });
 
+const polizaSchema = joi.object({
+  noPoliza: joi.string().required(),
+  emision: joi.string().isoDate(),
+  inicioVigencia: joi.string().isoDate().required(),
+  finVigencia: joi.string().isoDate().required(),
+  bienAsegurado: joi.string().required(),
+  primaNeta: joi.number().required(),
+  expedicion: joi.number(),
+  financiamiento: joi.number(),
+  iva: joi.number(),
+  primaTotal: joi.number().required(),
+  moneda: joi.string().valid("MXN", "USD", "UDI"),
+  formaPago: joi.number().valid(1, 2, 4, 12),
+  comentarios: joi.string(),
+  fechaCancelacion: joi.string().isoDate(),
+  clienteId: joi.number().positive().integer().required(),
+  aseguradoraId: joi.number().positive().integer().required(),
+  agenteId: joi.number().integer().positive().required(),
+  vendedorId: joi.number().integer().positive().required(),
+  productoId: joi.number().integer().positive().required(),
+  renovacionId: joi.number().integer().positive(),
+  reexpedicioId: joi.number().integer().positive(),
+});
+
 module.exports.validateEstadoId = validator(estadoIdSchema);
 
 module.exports.validateProducto = validator(productoSchema);
