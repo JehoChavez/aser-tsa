@@ -11,7 +11,45 @@ const ExpressError = require("../utils/ExpressError");
 const { validatePoliza } = require("../utils/validator");
 
 module.exports.getPolizas = async (req, res) => {
-  const listOfPolizas = await Poliza.findAll();
+  const listOfPolizas = await Poliza.findAll({
+    attributes: [
+      "id",
+      "noPoliza",
+      "emision",
+      "inicioVigencia",
+      "finVigencia",
+      "bienAsegurado",
+      "primaNeta",
+      "primaTotal",
+      "moneda",
+    ],
+    include: [
+      {
+        model: Agente,
+        as: "agente",
+        attributes: ["clave", "nombre"],
+      },
+      {
+        model: Aseguradora,
+        as: "aseguradora",
+        attributes: ["id", "aseguradora"],
+      },
+      {
+        model: Cliente,
+        as: "cliente",
+        attributes: ["id", "tipoPersona", "nombre"],
+      },
+      {
+        model: Vendedor,
+        as: "vendedor",
+        attributes: ["id", "nombre"],
+      },
+      {
+        model: Producto,
+        as: "producto",
+      },
+    ],
+  });
 
   const response = new CustomResponse(listOfPolizas);
 
