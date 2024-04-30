@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const {
   Poliza,
   Cliente,
@@ -11,7 +12,7 @@ const ExpressError = require("../utils/ExpressError");
 const { validatePoliza, validateGenericId } = require("../utils/validator");
 
 module.exports.getPolizas = async (req, res) => {
-  const listOfPolizas = await Poliza.findAll({
+  const options = {
     attributes: [
       "id",
       "noPoliza",
@@ -49,7 +50,17 @@ module.exports.getPolizas = async (req, res) => {
         as: "producto",
       },
     ],
-  });
+  };
+
+  if (req.query.noPoliza) {
+    options.where = {
+      noPoliza: {
+        [Op.like]: `%${req.query.noPoliza}%%`,
+      },
+    };
+  }
+
+  const listOfPolizas = await Poliza.findAll(options);
 
   const response = new CustomResponse(listOfPolizas);
 
