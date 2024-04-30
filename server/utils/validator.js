@@ -55,6 +55,17 @@ const clienteSchema = joi.object({
   municipioId: joi.number().positive().integer(),
 });
 
+const reciboSchema = joi.object({
+  exhibicion: joi.number().integer().required(),
+  de: joi.number().integer().required(),
+  monto: joi.number().required(),
+  fechaInicio: joi.string().isoDate().required(),
+  fechaLimite: joi.string().isoDate().required(),
+  fechaPago: joi.string().isoDate(),
+  polizaId: joi.number().positive(),
+  endosoId: joi.number().positive(),
+});
+
 const polizaSchema = joi.object({
   noPoliza: joi.string().required(),
   emision: joi.string().isoDate(),
@@ -77,6 +88,7 @@ const polizaSchema = joi.object({
   ramoId: joi.number().integer().positive().required(),
   renovacionId: joi.number().integer().positive(),
   reexpedicioId: joi.number().integer().positive(),
+  recibos: joi.array().items(reciboSchema).required(),
 });
 
 module.exports.validateEstadoId = validator(estadoIdSchema);
