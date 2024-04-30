@@ -1,0 +1,65 @@
+[
+  {
+    "ramo": "Default"
+  },
+  {
+    "ramo": "Autos Individual"
+  },
+  {
+    "ramo": "Autos Flotilla"
+  },
+  {
+    "ramo": "Camiones Individual"
+  },
+  {
+    "ramo": "Camiones Flotilla"
+  },
+  {
+    "ramo": "Pick Up Individual"
+  },
+  {
+    "ramo": "Pick Up Flotilla"
+  },
+  {
+    "ramo": "Moto Individual"
+  },
+  {
+    "ramo": "Moto Flotilla"
+  },
+  {
+    "ramo": "Gastos Médicos Mayores Individual"
+  },
+  {
+    "ramo": "Gastos Médicos Mayores Colectivo"
+  },
+  {
+    "ramo": "Gastos Médicos Menores Individual"
+  },
+  {
+    "ramo": "Gastos Médicos Menores Colectivo"
+  },
+  {
+    "ramo": "Vida Individual"
+  },
+  {
+    "ramo": "Vida Colectivo"
+  },
+  {
+    "ramo": "Hogar"
+  },
+  {
+    "ramo": "Daños Empresarial"
+  },
+  {
+    "ramo": "Viaje"
+  },
+  {
+    "ramo": "Construcción"
+  },
+  {
+    "ramo": "RC Profesional"
+  },
+  {
+    "ramo": "Otro"
+  }
+]

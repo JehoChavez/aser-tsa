@@ -100,10 +100,10 @@ module.exports = {
       onDelete: "CASCADE",
     });
 
-    await queryInterface.addColumn("polizas", "productoId", {
+    await queryInterface.addColumn("polizas", "ramoId", {
       type: Sequelize.INTEGER,
       references: {
-        model: "productos",
+        model: "ramos",
         key: "id",
       },
       allowNull: false,
@@ -154,7 +154,7 @@ module.exports = {
     await queryInterface.removeColumn("polizas", "renovacionId");
     await queryInterface.removeColumn("recibos", "endosoId");
     await queryInterface.removeColumn("recibos", "polizaId");
-    await queryInterface.removeColumn("polizas", "productoId");
+    await queryInterface.removeColumn("polizas", "ramoId");
     await queryInterface.removeColumn("polizas", "vendedorId");
     await queryInterface.removeColumn("polizas", "agenteId");
     await queryInterface.removeColumn("polizas", "aseguradoraId");

@@ -5,7 +5,7 @@ const {
   Aseguradora,
   Agente,
   Vendedor,
-  Producto,
+  Ramo,
 } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
@@ -46,8 +46,8 @@ module.exports.getPolizas = async (req, res) => {
         attributes: ["id", "nombre"],
       },
       {
-        model: Producto,
-        as: "producto",
+        model: Ramo,
+        as: "ramo",
       },
     ],
   };
@@ -112,9 +112,9 @@ module.exports.postPoliza = async (req, res) => {
 
   if (!vendedor) throw new ExpressError("vendedor no encontrado", 404);
 
-  const producto = await Producto.findByPk(value.productoId);
+  const ramo = await Ramo.findByPk(value.ramoId);
 
-  if (!producto) throw new ExpressError("producto no encontrado", 404);
+  if (!ramo) throw new ExpressError("ramo no encontrado", 404);
 
   const poliza = await Poliza.create(value);
 

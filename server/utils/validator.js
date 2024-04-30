@@ -6,8 +6,8 @@ const estadoIdSchema = joi.object({
   estado: joi.number().positive().integer().min(1).max(32).required(),
 });
 
-const productoSchema = joi.object({
-  producto: joi.string().required(),
+const ramoSchema = joi.object({
+  ramo: joi.string().required(),
 });
 
 const genericIdSchema = joi.object({
@@ -74,14 +74,14 @@ const polizaSchema = joi.object({
   aseguradoraId: joi.number().positive().integer().required(),
   agenteId: joi.number().integer().positive().required(),
   vendedorId: joi.number().integer().positive().required(),
-  productoId: joi.number().integer().positive().required(),
+  ramoId: joi.number().integer().positive().required(),
   renovacionId: joi.number().integer().positive(),
   reexpedicioId: joi.number().integer().positive(),
 });
 
 module.exports.validateEstadoId = validator(estadoIdSchema);
 
-module.exports.validateProducto = validator(productoSchema);
+module.exports.validateRamo = validator(ramoSchema);
 
 module.exports.validateGenericId = validator(genericIdSchema);
 
