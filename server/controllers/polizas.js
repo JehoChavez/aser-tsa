@@ -61,6 +61,14 @@ module.exports.postPoliza = async (req, res) => {
 
   if (error) throw new ExpressError(error.details[0].message, 400);
 
+  const existingPoliza = await Poliza.findAll({
+    where: {
+      noPoliza: value.noPoliza,
+    },
+  });
+
+  if (existingPoliza) throw new ExpressError("poliza ya existente", 400);
+
   const cliente = await Cliente.findByPk(value.clienteId);
 
   if (!cliente) throw new ExpressError("cliente no encontrado", 404);
