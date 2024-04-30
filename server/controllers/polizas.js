@@ -94,7 +94,7 @@ module.exports.postPoliza = async (req, res) => {
     },
   });
 
-  if (existingPoliza) throw new ExpressError("poliza ya existente", 400);
+  if (existingPoliza[0]) throw new ExpressError("poliza ya existente", 400);
 
   const cliente = await Cliente.findByPk(value.clienteId);
 
