@@ -8,7 +8,7 @@ const {
 } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
-const { validatePoliza } = require("../utils/validator");
+const { validatePoliza, validateGenericId } = require("../utils/validator");
 
 module.exports.getPolizas = async (req, res) => {
   const listOfPolizas = await Poliza.findAll({
@@ -52,6 +52,22 @@ module.exports.getPolizas = async (req, res) => {
   });
 
   const response = new CustomResponse(listOfPolizas);
+
+  res.json(response);
+};
+
+module.exports.getPoliza = async (req, res) => {
+  const { error, value } = validateGenericId(req.params);
+
+  if (error) throw new ExpressError(error.details[0].message, 400);
+
+  const poliza = await Poliza.findByPk(value.id, {
+    include: { all: true },
+  });
+
+  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+  const response = new CustomResponse(poliza);
 
   res.json(response);
 };
