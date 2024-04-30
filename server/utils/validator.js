@@ -94,3 +94,5 @@ module.exports.validateAseguradora = validator(aseguradoraSchema);
 module.exports.validateVendedor = validator(vendedorSchema);
 
 module.exports.validateCliente = validator(clienteSchema);
+
+module.exports.validatePoliza = validator(polizaSchema);
