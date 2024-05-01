@@ -9,6 +9,8 @@ const {
 } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
+const { verifyPolizaAssociations } = require("../utils/verifyAssociations");
+
 const { validatePoliza, validateGenericId } = require("../utils/validator");
 
 module.exports.getPolizas = async (req, res) => {
@@ -95,26 +97,6 @@ module.exports.postPoliza = async (req, res) => {
   });
 
   if (existingPoliza[0]) throw new ExpressError("poliza ya existente", 400);
-
-  const cliente = await Cliente.findByPk(value.clienteId);
-
-  if (!cliente) throw new ExpressError("cliente no encontrado", 404);
-
-  const aseguradora = await Aseguradora.findByPk(value.aseguradoraId);
-
-  if (!aseguradora) throw new ExpressError("aseguradora no encontrada", 404);
-
-  const agente = await Agente.findByPk(value.agenteId);
-
-  if (!agente) throw new ExpressError("agente no encontrado", 404);
-
-  const vendedor = await Vendedor.findByPk(value.vendedorId);
-
-  if (!vendedor) throw new ExpressError("vendedor no encontrado", 404);
-
-  const ramo = await Ramo.findByPk(value.ramoId);
-
-  if (!ramo) throw new ExpressError("ramo no encontrado", 404);
 
   const poliza = await Poliza.create(value);
 
