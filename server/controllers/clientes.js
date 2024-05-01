@@ -58,9 +58,9 @@ module.exports.deleteCliente = async (req, res) => {
 
   const cliente = await Cliente.findByPk(value.id);
 
-  await cliente.destroy();
-
   if (!cliente) throw new ExpressError("Cliente no encontrado", 404);
+
+  await cliente.destroy();
 
   const response = new CustomResponse(cliente);
 
