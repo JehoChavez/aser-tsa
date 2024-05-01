@@ -54,6 +54,7 @@ module.exports.getPolizas = async (req, res) => {
         as: "ramo",
       },
     ],
+    order: [["createdAt", "DESC"]],
   };
 
   if (req.query.noPoliza) {
@@ -62,6 +63,15 @@ module.exports.getPolizas = async (req, res) => {
         [Op.like]: `%${req.query.noPoliza}%%`,
       },
     };
+  }
+
+  if (req.query.page) {
+    req.query.limit = 10;
+    options.offset = (parseInt(req.query.page) - 1) * parseInt(req.query.limit);
+  }
+
+  if (req.query.limit) {
+    options.limit = parseInt(req.query.limit);
   }
 
   const listOfPolizas = await Poliza.findAll(options);
