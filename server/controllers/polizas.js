@@ -6,10 +6,11 @@ const {
   Agente,
   Vendedor,
   Ramo,
+  Recibo,
+  sequelize,
 } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
-const { verifyPolizaAssociations } = require("../utils/verifyAssociations");
 
 const { validatePoliza, validateGenericId } = require("../utils/validator");
 
@@ -90,17 +91,40 @@ module.exports.postPoliza = async (req, res) => {
 
   if (error) throw new ExpressError(error.details[0].message, 400);
 
+  const { poliza: polizaData } = value;
+  const { recibos: recibosData } = value;
+
   const existingPoliza = await Poliza.findAll({
     where: {
-      noPoliza: value.noPoliza,
+      noPoliza: polizaData.noPoliza,
     },
   });
 
   if (existingPoliza[0]) throw new ExpressError("poliza ya existente", 400);
 
-  const poliza = await Poliza.create(value);
+  const t = await sequelize.transaction();
 
-  const response = new CustomResponse(poliza);
+  try {
+    const poliza = await Poliza.create(polizaData, { transaction: t });
 
-  res.json(response);
+    const recibos = await Promise.all(
+      recibosData.map(async (reciboData) => {
+        const recibo = await Recibo.create(
+          { ...reciboData, polizaId: poliza.id },
+          { transaction: t }
+        );
+        return recibo;
+      })
+    );
+
+    await t.commit();
+
+    const response = new CustomResponse({ poliza, recibos });
+
+    res.json(response);
+  } catch (error) {
+    await t.rollback();
+
+    throw new ExpressError(error);
+  }
 };
