@@ -239,3 +239,19 @@ module.exports.updatePoliza = async (req, res) => {
     throw new ExpressError(error);
   }
 };
+
+module.exports.deletePoliza = async (req, res) => {
+  const { error, value } = validateGenericId(req.params);
+
+  if (error) throw new ExpressError(error.details[0].message, 404);
+
+  const poliza = await Poliza.findByPk(value.id);
+
+  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+  const deleted = await poliza.destroy();
+
+  const response = new CustomResponse(deleted);
+
+  res.json(response);
+};
