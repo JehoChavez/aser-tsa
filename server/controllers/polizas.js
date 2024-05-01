@@ -7,6 +7,7 @@ const {
   Vendedor,
   Ramo,
   Recibo,
+  Endoso,
   sequelize,
 } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
@@ -76,7 +77,64 @@ module.exports.getPoliza = async (req, res) => {
   if (error) throw new ExpressError(error.details[0].message, 400);
 
   const poliza = await Poliza.findByPk(value.id, {
-    include: { all: true },
+    include: [
+      {
+        model: Cliente,
+        as: "cliente",
+        attributes: ["id", "tipoPersona", "nombre", "rfc"],
+      },
+      {
+        model: Aseguradora,
+        as: "aseguradora",
+        attributes: ["id", "aseguradora"],
+      },
+      {
+        model: Agente,
+        as: "agente",
+        attributes: ["id", "clave", "nombre"],
+      },
+      {
+        model: Vendedor,
+        as: "vendedor",
+        attributes: ["id", "nombre"],
+      },
+      {
+        model: Ramo,
+        as: "ramo",
+      },
+      {
+        model: Endoso,
+        as: "endosos",
+      },
+      {
+        model: Recibo,
+        as: "recibos",
+      },
+      {
+        model: Poliza,
+        as: "renovacion",
+        attributes: [
+          "id",
+          "noPoliza",
+          "inicioVigencia",
+          "finVigencia",
+          "primaNeta",
+          "primaTotal",
+        ],
+      },
+      {
+        model: Poliza,
+        as: "reexpedicion",
+        attributes: [
+          "id",
+          "noPoliza",
+          "inicioVigencia",
+          "finVigencia",
+          "primaNeta",
+          "primaTotal",
+        ],
+      },
+    ],
   });
 
   if (!poliza) throw new ExpressError("poliza no encontrada", 404);
