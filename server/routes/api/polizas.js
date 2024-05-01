@@ -6,6 +6,7 @@ const {
   getPolizas,
   postPoliza,
   getPoliza,
+  updatePoliza,
 } = require("../../controllers/polizas");
 const { verifyPolizaAssociations } = require("../../utils/verifyAssociations");
 
@@ -14,6 +15,12 @@ router
   .get(catchAsync(getPolizas))
   .post(catchAsyncMiddleware(verifyPolizaAssociations), catchAsync(postPoliza));
 
-router.route("/:id").get(catchAsync(getPoliza));
+router
+  .route("/:id")
+  .get(catchAsync(getPoliza))
+  .put(
+    catchAsyncMiddleware(verifyPolizaAssociations),
+    catchAsync(updatePoliza)
+  );
 
 module.exports = router;

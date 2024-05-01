@@ -186,3 +186,56 @@ module.exports.postPoliza = async (req, res) => {
     throw new ExpressError(error);
   }
 };
+
+module.exports.updatePoliza = async (req, res) => {
+  const { error: idError, value: idValue } = validateGenericId(req.params);
+
+  if (idError) throw new ExpressError(idError.details[0].message, 400);
+
+  const poliza = await Poliza.findByPk(idValue.id);
+
+  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+  const { error: polizaError, value: polizaValue } = validatePoliza(req.body);
+
+  if (polizaError) throw new ExpressError(polizaError.details[0].message, 400);
+
+  const { poliza: polizaData } = polizaValue;
+  const { recibos: recibosData } = polizaValue;
+
+  const t = await sequelize.transaction();
+
+  try {
+    await Recibo.destroy(
+      {
+        where: {
+          polizaId: poliza.id,
+        },
+      },
+      { transaction: t }
+    );
+
+    poliza.set(polizaData);
+    const updatedPoliza = await poliza.save();
+
+    const recibos = await Promise.all(
+      recibosData.map(async (reciboData) => {
+        const recibo = await Recibo.create(
+          { ...reciboData, polizaId: updatedPoliza.id },
+          { transaction: t }
+        );
+        return recibo;
+      })
+    );
+
+    await t.commit();
+
+    const response = new CustomResponse({ updatedPoliza, recibos });
+
+    res.json(response);
+  } catch (error) {
+    await t.rollback();
+
+    throw new ExpressError(error);
+  }
+};
