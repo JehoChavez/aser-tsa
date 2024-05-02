@@ -13,8 +13,6 @@ const {
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
-const { validatePoliza, validateGenericId } = require("../utils/validator");
-
 module.exports.getPolizas = async (req, res) => {
   const options = {
     attributes: [
@@ -55,6 +53,7 @@ module.exports.getPolizas = async (req, res) => {
       },
     ],
     order: [["createdAt", "DESC"]],
+    limit: 10,
   };
 
   if (req.query.noPoliza) {
@@ -66,8 +65,9 @@ module.exports.getPolizas = async (req, res) => {
   }
 
   if (req.query.page) {
-    req.query.limit = 10;
-    options.offset = (parseInt(req.query.page) - 1) * parseInt(req.query.limit);
+    options.offset =
+      (parseInt(req.query.page) - 1) *
+      (parseInt(req.query.limit) || options.limit);
   }
 
   if (req.query.limit) {
@@ -82,11 +82,7 @@ module.exports.getPolizas = async (req, res) => {
 };
 
 module.exports.getPoliza = async (req, res) => {
-  const { error, value } = validateGenericId(req.params);
-
-  if (error) throw new ExpressError(error.details[0].message, 400);
-
-  const poliza = await Poliza.findByPk(value.id, {
+  const poliza = await Poliza.findByPk(req.params.id, {
     include: [
       {
         model: Cliente,
@@ -155,12 +151,8 @@ module.exports.getPoliza = async (req, res) => {
 };
 
 module.exports.postPoliza = async (req, res) => {
-  const { error, value } = validatePoliza(req.body);
-
-  if (error) throw new ExpressError(error.details[0].message, 400);
-
-  const { poliza: polizaData } = value;
-  const { recibos: recibosData } = value;
+  const { poliza: polizaData } = req.body;
+  const { recibos: recibosData } = req.body;
 
   const existingPoliza = await Poliza.findAll({
     where: {
@@ -198,20 +190,12 @@ module.exports.postPoliza = async (req, res) => {
 };
 
 module.exports.updatePoliza = async (req, res) => {
-  const { error: idError, value: idValue } = validateGenericId(req.params);
-
-  if (idError) throw new ExpressError(idError.details[0].message, 400);
-
-  const poliza = await Poliza.findByPk(idValue.id);
+  const poliza = await Poliza.findByPk(req.params.id);
 
   if (!poliza) throw new ExpressError("poliza no encontrada", 404);
 
-  const { error: polizaError, value: polizaValue } = validatePoliza(req.body);
-
-  if (polizaError) throw new ExpressError(polizaError.details[0].message, 400);
-
-  const { poliza: polizaData } = polizaValue;
-  const { recibos: recibosData } = polizaValue;
+  const { poliza: polizaData } = req.body;
+  const { recibos: recibosData } = req.body;
 
   const t = await sequelize.transaction();
 
@@ -251,11 +235,7 @@ module.exports.updatePoliza = async (req, res) => {
 };
 
 module.exports.deletePoliza = async (req, res) => {
-  const { error, value } = validateGenericId(req.params);
-
-  if (error) throw new ExpressError(error.details[0].message, 404);
-
-  const poliza = await Poliza.findByPk(value.id);
+  const poliza = await Poliza.findByPk(req.params.id);
 
   if (!poliza) throw new ExpressError("poliza no encontrada", 404);
 

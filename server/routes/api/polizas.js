@@ -10,16 +10,30 @@ const {
   deletePoliza,
 } = require("../../controllers/polizas");
 const { verifyPolizaAssociations } = require("../../utils/verifyAssociations");
+const {
+  validatePoliza,
+  validateGenericId,
+  validateQueryPolizas,
+} = require("../../utils/validator");
 
 router
   .route("/")
-  .get(catchAsync(getPolizas))
-  .post(catchAsyncMiddleware(verifyPolizaAssociations), catchAsync(postPoliza));
+  .get(validateQueryPolizas, catchAsync(getPolizas))
+  .post(
+    validatePoliza,
+    catchAsyncMiddleware(verifyPolizaAssociations),
+    catchAsync(postPoliza)
+  );
 
 router
   .route("/:id")
-  .get(catchAsync(getPoliza))
-  .put(catchAsyncMiddleware(verifyPolizaAssociations), catchAsync(updatePoliza))
-  .delete(catchAsync(deletePoliza));
+  .get(validateGenericId, catchAsync(getPoliza))
+  .put(
+    validateGenericId,
+    validatePoliza,
+    catchAsyncMiddleware(verifyPolizaAssociations),
+    catchAsync(updatePoliza)
+  )
+  .delete(validateGenericId, catchAsync(deletePoliza));
 
 module.exports = router;
