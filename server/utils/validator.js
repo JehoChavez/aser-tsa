@@ -37,9 +37,11 @@ const genericIdSchema = joi.object({
   id: joi.number().positive().integer().required(),
 });
 
-const idArraySchema = joi
-  .array()
-  .items(joi.number().positive().integer().min(1).required());
+const idArraySchema = joi.object({
+  aseguradoraIds: joi
+    .array()
+    .items(joi.number().positive().integer().min(1).required()),
+});
 
 const agenteSchema = joi.object({
   clave: joi.number().positive().integer().min(1).required(),
