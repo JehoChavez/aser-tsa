@@ -15,11 +15,7 @@ module.exports.getAseguradoras = async (req, res) => {
 };
 
 module.exports.postAseguradora = async (req, res) => {
-  const { error, value: aseguradoraObj } = validateAseguradora(req.body);
-
-  if (error) throw new ExpressError(error.details[0].message, 400);
-
-  const newAseguradora = await Aseguradora.create(aseguradoraObj);
+  const newAseguradora = await Aseguradora.create(req.body);
 
   const response = new CustomResponse(newAseguradora);
 
@@ -27,11 +23,7 @@ module.exports.postAseguradora = async (req, res) => {
 };
 
 module.exports.deleteAseguradora = async (req, res) => {
-  const { error, value: aseguradoraId } = validateGenericId(req.params);
-
-  if (error) throw new ExpressError(error.details[0].message, 400);
-
-  const aseguradora = await Aseguradora.findByPk(aseguradoraId.id);
+  const aseguradora = await Aseguradora.findByPk(req.params.id);
 
   if (!aseguradora) throw new ExpressError("aseguradora no encontrada", 404);
 
@@ -43,26 +35,12 @@ module.exports.deleteAseguradora = async (req, res) => {
 };
 
 module.exports.updateAseguradora = async (req, res) => {
-  const { error: idError, value: aseguradoraId } = validateGenericId(
-    req.params
-  );
-
-  if (idError) throw new ExpressError(idError.details[0].message, 400);
-
-  const aseguradoraUpdate = await Aseguradora.findByPk(aseguradoraId.id);
+  const aseguradoraUpdate = await Aseguradora.findByPk(req.params.id);
 
   if (!aseguradoraUpdate)
     throw new ExpressError("aseguradora no encontrada", 404);
 
-  const { error: aseguradoraError, value: aseguradoraData } =
-    validateAseguradora(req.body);
-
-  if (aseguradoraError)
-    throw new ExpressError(aseguradoraError.details[0].message, 400);
-
-  aseguradoraUpdate.set({
-    aseguradoraData,
-  });
+  aseguradoraUpdate.set(req.body);
 
   const updated = await aseguradoraUpdate.save();
 
