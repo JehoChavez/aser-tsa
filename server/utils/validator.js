@@ -1,6 +1,29 @@
 const joi = require("joi");
+const ExpressError = require("./ExpressError");
 
-const validator = (schema) => (payload) => schema.validate(payload);
+const idValidator = (schema) => (req, res, next) => {
+  const { error, value } = schema.validate(req.params);
+
+  if (error) throw new ExpressError(error.details[0].message, 400);
+
+  next();
+};
+
+const bodyValidator = (schema) => (req, res, next) => {
+  const { error, value } = schema.validate(req.body);
+
+  if (error) throw new ExpressError(error.details[0].message, 400);
+
+  next();
+};
+
+const queryValidator = (schema) => (req, res, next) => {
+  const { error, value } = schema.validate(req.query);
+
+  if (error) throw new ExpressError(error.details[0].message, 400);
+
+  next();
+};
 
 const estadoIdSchema = joi.object({
   estado: joi.number().positive().integer().min(1).max(32).required(),
@@ -93,20 +116,28 @@ const polizaSchema = joi.object({
   recibos: joi.array().items(reciboSchema).required(),
 });
 
-module.exports.validateEstadoId = validator(estadoIdSchema);
+const queryPolizasSchema = joi.object({
+  noPoliza: joi.string(),
+  page: joi.number(),
+  limit: joi.number(),
+});
 
-module.exports.validateRamo = validator(ramoSchema);
+module.exports.validateEstadoId = idValidator(estadoIdSchema);
 
-module.exports.validateGenericId = validator(genericIdSchema);
+module.exports.validateRamo = bodyValidator(ramoSchema);
 
-module.exports.validateIdArray = validator(idArraySchema);
+module.exports.validateGenericId = idValidator(genericIdSchema);
 
-module.exports.validateAgent = validator(agenteSchema);
+module.exports.validateIdArray = bodyValidator(idArraySchema);
 
-module.exports.validateAseguradora = validator(aseguradoraSchema);
+module.exports.validateAgent = bodyValidator(agenteSchema);
 
-module.exports.validateVendedor = validator(vendedorSchema);
+module.exports.validateAseguradora = bodyValidator(aseguradoraSchema);
 
-module.exports.validateCliente = validator(clienteSchema);
+module.exports.validateVendedor = bodyValidator(vendedorSchema);
 
-module.exports.validatePoliza = validator(polizaSchema);
+module.exports.validateCliente = bodyValidator(clienteSchema);
+
+module.exports.validatePoliza = bodyValidator(polizaSchema);
+
+module.exports.validateQueryPolizas = queryValidator(queryPolizasSchema);
