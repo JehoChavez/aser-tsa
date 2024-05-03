@@ -2,27 +2,39 @@ const joi = require("joi");
 const ExpressError = require("./ExpressError");
 
 const idValidator = (schema) => (req, res, next) => {
-  const { error, value } = schema.validate(req.params);
+  try {
+    const { error, value } = schema.validate(req.params);
 
-  if (error) throw new ExpressError(error.details[0].message, 400);
+    if (error) throw new ExpressError(error.details[0].message, 400);
 
-  next();
+    next();
+  } catch (error) {
+    next(error);
+  }
 };
 
 const bodyValidator = (schema) => (req, res, next) => {
-  const { error, value } = schema.validate(req.body);
+  try {
+    const { error, value } = schema.validate(req.body);
 
-  if (error) throw new ExpressError(error.details[0].message, 400);
+    if (error) throw new ExpressError(error.details[0].message, 400);
 
-  next();
+    next();
+  } catch (error) {
+    next(error);
+  }
 };
 
 const queryValidator = (schema) => (req, res, next) => {
-  const { error, value } = schema.validate(req.query);
+  try {
+    const { error, value } = schema.validate(req.query);
 
-  if (error) throw new ExpressError(error.details[0].message, 400);
+    if (error) throw new ExpressError(error.details[0].message, 400);
 
-  next();
+    next();
+  } catch (error) {
+    next(error);
+  }
 };
 
 const estadoIdSchema = joi.object({
