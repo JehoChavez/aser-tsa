@@ -4,15 +4,9 @@ const CustomResponse = require("../utils/CustomResponse");
 const { validateEstadoId } = require("../utils/validator");
 
 module.exports.getMunicipio = async (req, res) => {
-  const { error, value } = validateEstadoId(req.query);
-
-  if (error) {
-    throw new ExpressError(error.details[0].message, 500);
-  }
-
   const listOfMunicipios = await Municipio.findAll({
     where: {
-      estadoId: value.estado,
+      estadoId: req.query.estado,
     },
   });
 

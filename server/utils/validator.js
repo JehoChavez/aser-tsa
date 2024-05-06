@@ -136,7 +136,7 @@ const queryPolizasSchema = joi.object({
   limit: joi.number(),
 });
 
-module.exports.validateEstadoId = idValidator(estadoIdSchema);
+module.exports.validateEstadoId = queryValidator(estadoIdSchema);
 
 module.exports.validateRamo = bodyValidator(ramoSchema);
 
