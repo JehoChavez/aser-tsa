@@ -8,13 +8,17 @@ const {
   deleteCliente,
   updateCliente,
 } = require("../../controllers/clientes");
+const { validateGenericId, validateCliente } = require("../../utils/validator");
 
-router.route("/").get(catchAsync(getClientes)).post(catchAsync(postCliente));
+router
+  .route("/")
+  .get(catchAsync(getClientes))
+  .post(validateCliente, catchAsync(postCliente));
 
 router
   .route("/:id")
-  .get(catchAsync(getCliente))
-  .delete(catchAsync(deleteCliente))
-  .put(catchAsync(updateCliente));
+  .get(validateGenericId, catchAsync(getCliente))
+  .delete(validateGenericId, catchAsync(deleteCliente))
+  .put(validateGenericId, validateCliente, catchAsync(updateCliente));
 
 module.exports = router;

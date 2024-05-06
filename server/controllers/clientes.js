@@ -1,7 +1,6 @@
 const { Cliente, Estado, Municipio } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
-const { validateCliente, validateGenericId } = require("../utils/validator");
 
 module.exports.getClientes = async (req, res) => {
   const listOfClientes = await Cliente.findAll();
@@ -12,11 +11,7 @@ module.exports.getClientes = async (req, res) => {
 };
 
 module.exports.getCliente = async (req, res) => {
-  const { error, value } = validateGenericId(req.params);
-
-  if (error) throw new ExpressError(error.details[0].message, 400);
-
-  const cliente = await Cliente.findByPk(value.id, {
+  const cliente = await Cliente.findByPk(req.params.id, {
     include: [
       {
         model: Estado,
@@ -40,11 +35,7 @@ module.exports.getCliente = async (req, res) => {
 };
 
 module.exports.postCliente = async (req, res) => {
-  const { error, value } = validateCliente(req.body);
-
-  if (error) throw new ExpressError(error.details[0].message, 400);
-
-  const cliente = await Cliente.create(value);
+  const cliente = await Cliente.create(req.body);
 
   const response = new CustomResponse(cliente);
 
@@ -52,11 +43,7 @@ module.exports.postCliente = async (req, res) => {
 };
 
 module.exports.deleteCliente = async (req, res) => {
-  const { error, value } = validateGenericId(req.params);
-
-  if (error) throw new ExpressError(error.details[0].message, 400);
-
-  const cliente = await Cliente.findByPk(value.id);
+  const cliente = await Cliente.findByPk(req.params.id);
 
   if (!cliente) throw new ExpressError("Cliente no encontrado", 404);
 
@@ -68,22 +55,11 @@ module.exports.deleteCliente = async (req, res) => {
 };
 
 module.exports.updateCliente = async (req, res) => {
-  const { error: idError, value: idValue } = validateGenericId(req.params);
-
-  if (idError) throw new ExpressError(idError.details[0].message, 400);
-
-  const cliente = await Cliente.findByPk(idValue.id);
+  const cliente = await Cliente.findByPk(req.params.id);
 
   if (!cliente) throw new ExpressError("Cliente no encontrado", 404);
 
-  const { error: clienteError, value: clienteValue } = validateCliente(
-    req.body
-  );
-
-  if (clienteError)
-    throw new ExpressError(clienteError.details[0].message, 400);
-
-  cliente.set(clienteValue);
+  cliente.set(req.body);
 
   const updated = await cliente.save();
 
