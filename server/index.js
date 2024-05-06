@@ -9,7 +9,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routers
 const estadosRouter = require("./routes/api/estados");
-const municipiosRouter = require("./routes/api/municipios");
 const ramosRouter = require("./routes/api/ramos");
 const aseguradorasRouter = require("./routes/api/aseguradoras");
 const agentesRouter = require("./routes/api/agentes");
@@ -17,7 +16,6 @@ const vendedoresRouter = require("./routes/api/vendedores");
 const clientesRouter = require("./routes/api/clientes");
 const polizasRouter = require("./routes/api/polizas");
 app.use("/api/estados", estadosRouter);
-app.use("/api/municipios", municipiosRouter);
 app.use("/api/ramos", ramosRouter);
 app.use("/api/aseguradoras", aseguradorasRouter);
 app.use("/api/agentes", agentesRouter);
