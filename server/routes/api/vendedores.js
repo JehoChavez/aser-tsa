@@ -7,12 +7,19 @@ const {
   deleteVendedor,
   updateVendedor,
 } = require("../../controllers/vendedores");
+const {
+  validateVendedor,
+  validateGenericId,
+} = require("../../utils/validator");
 
-router.route("/").get(catchAsync(getVendedores)).post(catchAsync(postVendedor));
+router
+  .route("/")
+  .get(catchAsync(getVendedores))
+  .post(validateVendedor, catchAsync(postVendedor));
 
 router
   .route("/:id")
-  .delete(catchAsync(deleteVendedor))
-  .put(catchAsync(updateVendedor));
+  .delete(validateGenericId, catchAsync(deleteVendedor))
+  .put(validateGenericId, validateVendedor, catchAsync(updateVendedor));
 
 module.exports = router;

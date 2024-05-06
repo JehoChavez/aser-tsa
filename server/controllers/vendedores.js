@@ -12,11 +12,7 @@ module.exports.getVendedores = async (req, res) => {
 };
 
 module.exports.postVendedor = async (req, res) => {
-  const { error, value } = validateVendedor(req.body);
-
-  if (error) throw new ExpressError(error.details[0].message, 400);
-
-  const nuevoVendedor = await Vendedor.create(value);
+  const nuevoVendedor = await Vendedor.create(req.body);
 
   const response = new CustomResponse(nuevoVendedor);
 
@@ -24,11 +20,7 @@ module.exports.postVendedor = async (req, res) => {
 };
 
 module.exports.deleteVendedor = async (req, res) => {
-  const { error, value } = validateGenericId(req.params);
-
-  if (error) throw new ExpressError(error.details[0].message, 400);
-
-  const vendedor = await Vendedor.findByPk(value.id);
+  const vendedor = await Vendedor.findByPk(req.params.id);
 
   if (!vendedor) throw new ExpressError("Vendedor no encontrado", 404);
 
@@ -40,22 +32,11 @@ module.exports.deleteVendedor = async (req, res) => {
 };
 
 module.exports.updateVendedor = async (req, res) => {
-  const { error: idError, value: idData } = validateGenericId(req.params);
-
-  if (idError) throw new ExpressError(idError.details[0].message, 400);
-
-  const vendedor = await Vendedor.findByPk(idData.id);
+  const vendedor = await Vendedor.findByPk(req.params.id);
 
   if (!vendedor) throw new ExpressError("Vendedor no encontrado", 404);
 
-  const { error: vendedorError, value: vendedorData } = validateVendedor(
-    req.body
-  );
-
-  if (vendedorError)
-    throw new ExpressError(vendedorError.details[0].message, 400);
-
-  vendedor.set({ vendedorData });
+  vendedor.set(req.body);
 
   const updated = await vendedor.save();
 
