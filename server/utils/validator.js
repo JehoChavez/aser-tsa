@@ -41,6 +41,11 @@ const estadoIdSchema = joi.object({
   estado: joi.number().positive().integer().min(1).max(32).required(),
 });
 
+const estadoMunicipioIdSchema = joi.object({
+  id: joi.number().positive().integer().min(1).max(32).required(),
+  municipioId: joi.number().positive().integer(),
+});
+
 const ramoSchema = joi.object({
   ramo: joi.string().required(),
 });
@@ -155,3 +160,5 @@ module.exports.validateCliente = bodyValidator(clienteSchema);
 module.exports.validatePoliza = bodyValidator(polizaSchema);
 
 module.exports.validateQueryPolizas = queryValidator(queryPolizasSchema);
+
+module.exports.validateEstadoMunicipioId = idValidator(estadoMunicipioIdSchema);
