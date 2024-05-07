@@ -26,6 +26,15 @@ module.exports.getAgentes = async (req, res) => {
 };
 
 module.exports.postAgente = async (req, res) => {
+  const existingAgent = await Agente.findOne({
+    where: {
+      clave: req.body.clave,
+      aseguradoraId: req.body.aseguradoraId,
+    },
+  });
+
+  if (existingAgent) throw new ExpressError("agente ya existente", 400);
+
   const newAgente = await Agente.create(req.body);
 
   const response = new CustomResponse(newAgente, 201);
