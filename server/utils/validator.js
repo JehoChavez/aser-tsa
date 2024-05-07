@@ -142,19 +142,24 @@ const queryPolizasSchema = joi.object({
 });
 
 const endosoSchema = joi.object({
-  endoso: joi.string().required(),
-  emision: joi.string().isoDate(),
-  inicioVigencia: joi.string().isoDate().required(),
-  finVigencia: joi.string().isoDate().required(),
-  tipo: joi.string().valid("A", "B", "D"),
-  primaNeta: joi.number().required(),
-  expedicion: joi.number(),
-  financiamiento: joi.number(),
-  iva: joi.number(),
-  primaTotal: joi.number().required(),
-  comentarios: joi.string(),
-  fechaCancelacion: joi.string().isoDate(),
-  polizaId: joi.number().integer().positive().required(),
+  endoso: joi
+    .object({
+      endoso: joi.string().required(),
+      emision: joi.string().isoDate(),
+      inicioVigencia: joi.string().isoDate().required(),
+      finVigencia: joi.string().isoDate().required(),
+      tipo: joi.string().valid("A", "B", "D"),
+      primaNeta: joi.number().required(),
+      expedicion: joi.number(),
+      financiamiento: joi.number(),
+      iva: joi.number(),
+      primaTotal: joi.number().required(),
+      comentarios: joi.string(),
+      fechaCancelacion: joi.string().isoDate(),
+      polizaId: joi.number().integer().positive().required(),
+    })
+    .required(),
+  recibos: joi.array().items(reciboSchema).required(),
 });
 
 module.exports.validateEstadoId = queryValidator(estadoIdSchema);
