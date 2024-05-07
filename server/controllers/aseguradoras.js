@@ -14,6 +14,16 @@ module.exports.getAseguradoras = async (req, res) => {
   res.json(response);
 };
 
+module.exports.getAseguradora = async (req, res) => {
+  const aseguradora = await Aseguradora.findByPk(req.params.id);
+
+  if (!aseguradora) throw new ExpressError("aseguradora no encontrada", 404);
+
+  const response = new CustomResponse(aseguradora);
+
+  res.json(response);
+};
+
 module.exports.postAseguradora = async (req, res) => {
   const newAseguradora = await Aseguradora.create(req.body);
 

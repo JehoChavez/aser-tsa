@@ -1,7 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const catchAsync = require("../../utils/catchAsync");
-const aseguradoras = require("../../controllers/aseguradoras");
+const {
+  getAseguradora,
+  getAseguradoras,
+  postAseguradora,
+  updateAseguradora,
+  deleteAseguradora,
+} = require("../../controllers/aseguradoras");
 const {
   validateGenericId,
   validateAseguradora,
@@ -9,15 +15,12 @@ const {
 
 router
   .route("/")
-  .get(catchAsync(aseguradoras.getAseguradoras))
-  .post(validateAseguradora, catchAsync(aseguradoras.postAseguradora));
+  .get(catchAsync(getAseguradoras))
+  .post(validateAseguradora, catchAsync(postAseguradora));
 
 router
   .route("/:id")
-  .delete(validateGenericId, catchAsync(aseguradoras.deleteAseguradora))
-  .put(
-    validateGenericId,
-    validateAseguradora,
-    catchAsync(aseguradoras.updateAseguradora)
-  );
+  .get(validateGenericId, catchAsync(getAseguradora))
+  .delete(validateGenericId, catchAsync(deleteAseguradora))
+  .put(validateGenericId, validateAseguradora, catchAsync(updateAseguradora));
 module.exports = router;
