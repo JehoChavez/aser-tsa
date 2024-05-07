@@ -1,10 +1,6 @@
 const { Aseguradora } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
-const {
-  validateAseguradora,
-  validateGenericId,
-} = require("../utils/validator");
 
 module.exports.getAseguradoras = async (req, res) => {
   const listOfAseguradoras = await Aseguradora.findAll();

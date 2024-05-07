@@ -1,7 +1,6 @@
 const { Vendedor } = require("../models");
 const ExpressError = require("../utils/ExpressError");
 const CustomResponse = require("../utils/CustomResponse");
-const { validateVendedor, validateGenericId } = require("../utils/validator");
 
 module.exports.getVendedores = async (req, res) => {
   const listOfVendedores = await Vendedor.findAll();
