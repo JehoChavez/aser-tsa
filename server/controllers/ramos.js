@@ -10,6 +10,16 @@ module.exports.getRamos = async (req, res) => {
   res.json(response);
 };
 
+module.exports.getRamo = async (req, res) => {
+  const ramo = await Ramo.findByPk(req.params.id);
+
+  if (!ramo) throw new ExpressError("ramo no encontrado", 404);
+
+  const response = new CustomResponse(ramo);
+
+  res.json(response);
+};
+
 module.exports.postRamo = async (req, res) => {
   const nuevoRamo = await Ramo.create(req.body);
 

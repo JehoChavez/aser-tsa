@@ -6,6 +6,7 @@ const {
   postRamo,
   deleteRamo,
   updateRamo,
+  getRamo,
 } = require("../../controllers/ramos");
 const { validateRamo, validateGenericId } = require("../../utils/validator");
 
@@ -16,6 +17,7 @@ router
 
 router
   .route("/:id")
+  .get(validateGenericId, catchAsync(getRamo))
   .delete(validateGenericId, catchAsync(deleteRamo))
   .put(validateGenericId, validateRamo, catchAsync(updateRamo));
 
