@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
         as: "vendedor",
         foreignKey: {
           field: "vendedorId",
-          allowNull: false,
         },
       });
       Poliza.belongsTo(models.Ramo, {

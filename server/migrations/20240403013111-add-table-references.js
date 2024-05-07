@@ -95,9 +95,8 @@ module.exports = {
         model: "vendedores",
         key: "id",
       },
-      allowNull: false,
       onUpdate: "CASCADE",
-      onDelete: "CASCADE",
+      onDelete: "SET NULL",
     });
 
     await queryInterface.addColumn("polizas", "ramoId", {
