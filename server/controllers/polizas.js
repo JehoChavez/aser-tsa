@@ -154,13 +154,13 @@ module.exports.postPoliza = async (req, res) => {
   const { poliza: polizaData } = req.body;
   const { recibos: recibosData } = req.body;
 
-  const existingPoliza = await Poliza.findAll({
+  const existingPoliza = await Poliza.findOne({
     where: {
       noPoliza: polizaData.noPoliza,
     },
   });
 
-  if (existingPoliza[0]) throw new ExpressError("poliza ya existente", 400);
+  if (existingPoliza) throw new ExpressError("poliza ya existente", 400);
 
   const t = await sequelize.transaction();
 
