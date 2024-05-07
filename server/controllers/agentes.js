@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Agente } = require("../models");
+const { Agente, Aseguradora } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
@@ -21,6 +21,24 @@ module.exports.getAgentes = async (req, res) => {
   }
 
   const response = new CustomResponse(listOfAgentes);
+
+  res.json(response);
+};
+
+module.exports.getAgente = async (req, res) => {
+  const agente = await Agente.findByPk(req.params.id, {
+    include: [
+      {
+        model: Aseguradora,
+        as: "aseguradora",
+        attributes: ["id", "aseguradora"],
+      },
+    ],
+  });
+
+  if (!agente) throw new ExpressError("agente no encontrado", 404);
+
+  const response = new CustomResponse(agente);
 
   res.json(response);
 };

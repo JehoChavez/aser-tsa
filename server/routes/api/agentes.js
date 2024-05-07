@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const catchAsync = require("../../utils/catchAsync");
-const agentes = require("../../controllers/agentes");
+const {
+  getAgente,
+  getAgentes,
+  postAgente,
+  updateAgente,
+} = require("../../controllers/agentes");
 const {
   validateIdArray,
   validateAgent,
@@ -10,11 +15,12 @@ const {
 
 router
   .route("/")
-  .get(validateIdArray, catchAsync(agentes.getAgentes))
-  .post(validateAgent, catchAsync(agentes.postAgente));
+  .get(validateIdArray, catchAsync(getAgentes))
+  .post(validateAgent, catchAsync(postAgente));
 
 router
   .route("/:id")
-  .put(validateGenericId, validateAgent, catchAsync(agentes.updateAgente));
+  .get(validateGenericId, catchAsync(getAgente))
+  .put(validateGenericId, validateAgent, catchAsync(updateAgente));
 
 module.exports = router;
