@@ -37,7 +37,7 @@ module.exports.getCliente = async (req, res) => {
 module.exports.postCliente = async (req, res) => {
   const cliente = await Cliente.create(req.body);
 
-  const response = new CustomResponse(cliente);
+  const response = new CustomResponse(cliente, 201);
 
   res.json(response);
 };

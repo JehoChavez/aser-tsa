@@ -28,7 +28,7 @@ module.exports.getAgentes = async (req, res) => {
 module.exports.postAgente = async (req, res) => {
   const newAgente = await Agente.create(req.body);
 
-  const response = new CustomResponse(newAgente);
+  const response = new CustomResponse(newAgente, 201);
 
   res.json(response);
 };

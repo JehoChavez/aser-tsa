@@ -13,7 +13,7 @@ module.exports.getRamos = async (req, res) => {
 module.exports.postRamo = async (req, res) => {
   const nuevoRamo = await Ramo.create(req.body);
 
-  const response = new CustomResponse(nuevoRamo);
+  const response = new CustomResponse(nuevoRamo, 201);
 
   res.json(response);
 };

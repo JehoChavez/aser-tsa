@@ -179,7 +179,7 @@ module.exports.postPoliza = async (req, res) => {
 
     await t.commit();
 
-    const response = new CustomResponse({ poliza, recibos });
+    const response = new CustomResponse({ poliza, recibos }, 201);
 
     res.json(response);
   } catch (error) {

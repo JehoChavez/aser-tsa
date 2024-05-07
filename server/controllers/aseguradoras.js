@@ -17,7 +17,7 @@ module.exports.getAseguradoras = async (req, res) => {
 module.exports.postAseguradora = async (req, res) => {
   const newAseguradora = await Aseguradora.create(req.body);
 
-  const response = new CustomResponse(newAseguradora);
+  const response = new CustomResponse(newAseguradora, 201);
 
   res.json(response);
 };

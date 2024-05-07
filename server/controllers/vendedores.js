@@ -14,7 +14,7 @@ module.exports.getVendedores = async (req, res) => {
 module.exports.postVendedor = async (req, res) => {
   const nuevoVendedor = await Vendedor.create(req.body);
 
-  const response = new CustomResponse(nuevoVendedor);
+  const response = new CustomResponse(nuevoVendedor, 201);
 
   res.json(response);
 };
