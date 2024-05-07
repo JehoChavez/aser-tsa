@@ -11,6 +11,16 @@ module.exports.getVendedores = async (req, res) => {
   res.json(response);
 };
 
+module.exports.getVendedor = async (req, res) => {
+  const vendedor = await Vendedor.findByPk(req.params.id);
+
+  if (!vendedor) throw new ExpressError("vendedor no encontrado", 404);
+
+  const response = new CustomResponse(vendedor);
+
+  res.json(response);
+};
+
 module.exports.postVendedor = async (req, res) => {
   const nuevoVendedor = await Vendedor.create(req.body);
 

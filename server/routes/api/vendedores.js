@@ -6,6 +6,7 @@ const {
   postVendedor,
   deleteVendedor,
   updateVendedor,
+  getVendedor,
 } = require("../../controllers/vendedores");
 const {
   validateVendedor,
@@ -19,6 +20,7 @@ router
 
 router
   .route("/:id")
+  .get(validateGenericId, catchAsync(getVendedor))
   .delete(validateGenericId, catchAsync(deleteVendedor))
   .put(validateGenericId, validateVendedor, catchAsync(updateVendedor));
 
