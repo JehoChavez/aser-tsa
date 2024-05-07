@@ -161,7 +161,7 @@ const endosoSchema = joi.object({
       polizaId: joi.number().integer().positive().required(),
     })
     .required(),
-  recibos: joi.array().items(reciboSchema).required(),
+  recibos: joi.array().items(reciboSchema),
 });
 
 module.exports.validateEstadoId = queryValidator(estadoIdSchema);
