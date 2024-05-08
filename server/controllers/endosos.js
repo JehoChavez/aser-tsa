@@ -65,7 +65,7 @@ module.exports.postEndoso = async (req, res) => {
 
     await t.commit();
 
-    const response = new CustomResponse(responseBody, 200);
+    const response = new CustomResponse(responseBody, 201);
 
     res.json(response);
   } catch (error) {
