@@ -193,4 +193,4 @@ module.exports.validateEstadoMunicipioId = idValidator(estadoMunicipioIdSchema);
 
 module.exports.validateEndoso = bodyValidator(endosoSchema);
 
-module.exports.validateRecibosQuery = queryValidator(reciboQuerySchema);
+module.exports.validateRecibosQuery = queryValidator(recibosQuerySchema);
