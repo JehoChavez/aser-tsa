@@ -164,6 +164,11 @@ const endosoSchema = joi.object({
   recibos: joi.array().items(reciboSchema),
 });
 
+const reciboQuerySchema = joi.object({
+  desde: joi.string().isoDate(),
+  hasta: joi.string().isoDate(),
+});
+
 module.exports.validateEstadoId = queryValidator(estadoIdSchema);
 
 module.exports.validateRamo = bodyValidator(ramoSchema);
@@ -187,3 +192,5 @@ module.exports.validateQueryPolizas = queryValidator(queryPolizasSchema);
 module.exports.validateEstadoMunicipioId = idValidator(estadoMunicipioIdSchema);
 
 module.exports.validateEndoso = bodyValidator(endosoSchema);
+
+module.exports.validateReciboQuery = queryValidator(reciboQuerySchema);
