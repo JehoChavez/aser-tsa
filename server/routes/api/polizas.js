@@ -8,8 +8,8 @@ const {
   getPoliza,
   updatePoliza,
   deletePoliza,
-  getPolizaRecibos,
 } = require("../../controllers/polizas");
+const { getPolizaRecibos } = require("../../controllers/recibos");
 const { getEndosos } = require("../../controllers/endosos");
 const { verifyPolizaAssociations } = require("../../utils/verifyAssociations");
 const {
