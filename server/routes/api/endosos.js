@@ -5,7 +5,7 @@ const {
   getEndoso,
   postEndoso,
   deleteEndoso,
-  updateRecibo,
+  updateEndoso,
 } = require("../../controllers/endosos");
 const { validateGenericId, validateEndoso } = require("../../utils/validator");
 
@@ -15,6 +15,6 @@ router
   .route("/:id")
   .get(validateGenericId, catchAsync(getEndoso))
   .delete(validateGenericId, catchAsync(deleteEndoso))
-  .put(validateGenericId, validateEndoso, catchAsync(updateRecibo));
+  .put(validateGenericId, validateEndoso, catchAsync(updateEndoso));
 
 module.exports = router;

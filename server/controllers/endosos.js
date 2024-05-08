@@ -94,7 +94,7 @@ module.exports.deleteEndoso = async (req, res) => {
   res.json(response);
 };
 
-module.exports.updateRecibo = async (req, res) => {
+module.exports.updateEndoso = async (req, res) => {
   const endosoData = req.body.endoso;
   const recibosData = req.body.recibos;
 
