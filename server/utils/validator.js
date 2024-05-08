@@ -137,7 +137,7 @@ const polizaSchema = joi.object({
   recibos: joi.array().items(reciboSchema).required(),
 });
 
-const queryPolizasSchema = joi.object({
+const polizasQuerySchema = joi.object({
   noPoliza: joi.string(),
   page: joi.number(),
   limit: joi.number(),
@@ -187,7 +187,7 @@ module.exports.validateCliente = bodyValidator(clienteSchema);
 
 module.exports.validatePoliza = bodyValidator(polizaSchema);
 
-module.exports.validateQueryPolizas = queryValidator(queryPolizasSchema);
+module.exports.validatePolizasQuery = queryValidator(polizasQuerySchema);
 
 module.exports.validateEstadoMunicipioId = idValidator(estadoMunicipioIdSchema);
 

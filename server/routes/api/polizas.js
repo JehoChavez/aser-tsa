@@ -15,12 +15,12 @@ const { verifyPolizaAssociations } = require("../../utils/verifyAssociations");
 const {
   validatePoliza,
   validateGenericId,
-  validateQueryPolizas,
+  validatePolizasQuery,
 } = require("../../utils/validator");
 
 router
   .route("/")
-  .get(validateQueryPolizas, catchAsync(getPolizas))
+  .get(validatePolizasQuery, catchAsync(getPolizas))
   .post(
     validatePoliza,
     catchAsyncMiddleware(verifyPolizaAssociations),
