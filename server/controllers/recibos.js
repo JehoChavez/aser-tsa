@@ -1,8 +1,9 @@
 const { Recibo, Poliza, Endoso, Cliente, Aseguradora } = require("../models");
+const { Op } = require("sequelize");
 const CustomResponse = require("../utils/CustomResponse");
 
 module.exports.getRecibos = async (req, res) => {
-  const listOfRecibos = await Recibo.findAll({
+  const query = {
     include: [
       {
         model: Poliza,
@@ -27,7 +28,21 @@ module.exports.getRecibos = async (req, res) => {
         attributes: ["endoso"],
       },
     ],
-  });
+    order: [["fechaInicio", "ASC"]],
+  };
+
+  if (req.query.desde && req.query.hasta) {
+    query.where = {
+      fechaInicio: {
+        [Op.and]: {
+          [Op.gte]: req.query.desde,
+          [Op.lte]: req.query.hasta,
+        },
+      },
+    };
+  }
+
+  const listOfRecibos = await Recibo.findAll(query);
 
   const response = new CustomResponse(listOfRecibos, 200);
 
