@@ -150,6 +150,21 @@ module.exports.getPoliza = async (req, res) => {
   res.json(response);
 };
 
+module.exports.getPolizaRecibos = async (req, res) => {
+  const poliza = await Poliza.findByPk(req.params.id, {
+    include: {
+      model: Recibo,
+      as: "recibos",
+    },
+  });
+
+  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+  const response = new CustomResponse(poliza.recibos);
+
+  res.json(response);
+};
+
 module.exports.postPoliza = async (req, res) => {
   const { poliza: polizaData } = req.body;
   const { recibos: recibosData } = req.body;

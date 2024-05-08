@@ -8,6 +8,7 @@ const {
   getPoliza,
   updatePoliza,
   deletePoliza,
+  getPolizaRecibos,
 } = require("../../controllers/polizas");
 const { getEndosos } = require("../../controllers/endosos");
 const { verifyPolizaAssociations } = require("../../utils/verifyAssociations");
@@ -38,5 +39,9 @@ router
   .delete(validateGenericId, catchAsync(deletePoliza));
 
 router.route("/:id/endosos").get(validateGenericId, catchAsync(getEndosos));
+
+router
+  .route("/:id/recibos")
+  .get(validateGenericId, catchAsync(getPolizaRecibos));
 
 module.exports = router;
