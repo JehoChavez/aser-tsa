@@ -74,3 +74,15 @@ module.exports.postEndoso = async (req, res) => {
     throw new ExpressError(error);
   }
 };
+
+module.exports.deleteEndoso = async (req, res) => {
+  const endoso = await Endoso.findByPk(req.params.id);
+
+  if (!endoso) throw new ExpressError("endoso no encontrado", 404);
+
+  const deleted = await endoso.destroy();
+
+  const response = new CustomResponse(deleted);
+
+  res.json(response);
+};
