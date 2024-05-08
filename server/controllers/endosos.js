@@ -17,7 +17,14 @@ module.exports.getEndosos = async (req, res) => {
 };
 
 module.exports.getEndoso = async (req, res) => {
-  const endoso = await Endoso.findByPk(req.params.id);
+  const endoso = await Endoso.findByPk(req.params.id, {
+    include: [
+      {
+        model: Recibo,
+        as: "recibos",
+      },
+    ],
+  });
 
   if (!endoso) throw new ExpressError("endoso no encontrado", 404);
 
