@@ -86,3 +86,57 @@ module.exports.deleteEndoso = async (req, res) => {
 
   res.json(response);
 };
+
+module.exports.updateRecibo = async (req, res) => {
+  const endosoData = req.body.endoso;
+  const recibosData = req.body.recibos;
+
+  const endoso = await Endoso.findByPk(req.params.id);
+
+  if (!endoso) throw new ExpressError("endoso no encontrado", 404);
+
+  const poliza = await Poliza.findByPk(endosoData.polizaId);
+
+  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+  const t = await sequelize.transaction();
+
+  try {
+    await Recibo.destroy(
+      {
+        where: {
+          endosoId: endoso.id,
+        },
+      },
+      { transaction: t }
+    );
+
+    endoso.set(endosoData);
+
+    const updatedEndoso = await endoso.save();
+
+    const recibos = await Promise.all(
+      recibosData.map(async (reciboData) => {
+        const recibo = await Recibo.create(
+          {
+            ...reciboData,
+            polizaId: poliza.id,
+            endosoId: updatedEndoso.id,
+          },
+          { transaction: t }
+        );
+        return recibo;
+      })
+    );
+
+    await t.commit();
+
+    const response = new CustomResponse({ updatedEndoso, recibos });
+
+    res.json(response);
+  } catch (error) {
+    await t.rollback();
+
+    throw new ExpressError();
+  }
+};
