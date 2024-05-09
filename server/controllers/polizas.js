@@ -14,12 +14,36 @@ const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
 module.exports.getPolizas = async (req, res) => {
+  const {
+    noPoliza,
+    page,
+    limit,
+    tipoFecha = "inicioVigencia",
+    desde,
+    hasta,
+    estado,
+    aseguradora,
+    agente,
+    vendedor,
+  } = req.query;
+
   const filter = {};
 
-  if (req.query.noPoliza) {
+  if (noPoliza) {
     filter.noPoliza = {
-      [Op.like]: `%${req.query.noPoliza}%%`,
+      [Op.like]: `%${noPoliza}%%`,
     };
+  }
+
+  if (desde && hasta) {
+    filter[tipoFecha] = {
+      [Op.and]: {
+        [Op.gte]: desde,
+        [Op.lte]: hasta,
+      },
+    };
+  } else if ((desde && !hasta) || (hasta && !desde)) {
+    throw new ExpressError("desde y hasta deben ser incluidos", 400);
   }
 
   const options = {
@@ -65,14 +89,12 @@ module.exports.getPolizas = async (req, res) => {
     limit: 10,
   };
 
-  if (req.query.page) {
-    options.offset =
-      (parseInt(req.query.page) - 1) *
-      (parseInt(req.query.limit) || options.limit);
+  if (page) {
+    options.offset = (parseInt(page) - 1) * (parseInt(limit) || options.limit);
   }
 
-  if (req.query.limit) {
-    options.limit = parseInt(req.query.limit);
+  if (limit) {
+    options.limit = parseInt(limit);
   }
 
   const listOfPolizas = await Poliza.findAll(options);
