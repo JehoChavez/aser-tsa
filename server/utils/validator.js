@@ -143,7 +143,13 @@ const polizasQuerySchema = joi.object({
   limit: joi.number(),
   tipoFecha: joi
     .string()
-    .valid("inicio", "fin", "emision", "captura", "cancelacion"),
+    .valid(
+      "inicioVigencia",
+      "finVigencia",
+      "emision",
+      "createdAt",
+      "fechaCancelacion"
+    ),
   desde: joi.string().isoDate(),
   hasta: joi.string().isoDate(),
   estado: joi.string().valid("vigente", "cancelada", "renovada", "reexpedida"),
