@@ -14,7 +14,16 @@ const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
 module.exports.getPolizas = async (req, res) => {
+  const filter = {};
+
+  if (req.query.noPoliza) {
+    filter.noPoliza = {
+      [Op.like]: `%${req.query.noPoliza}%%`,
+    };
+  }
+
   const options = {
+    where: filter,
     attributes: [
       "id",
       "noPoliza",
@@ -55,14 +64,6 @@ module.exports.getPolizas = async (req, res) => {
     order: [["createdAt", "DESC"]],
     limit: 10,
   };
-
-  if (req.query.noPoliza) {
-    options.where = {
-      noPoliza: {
-        [Op.like]: `%${req.query.noPoliza}%%`,
-      },
-    };
-  }
 
   if (req.query.page) {
     options.offset =
