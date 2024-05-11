@@ -152,7 +152,6 @@ const polizasQuerySchema = joi.object({
     ),
   desde: joi.string().isoDate(),
   hasta: joi.string().isoDate(),
-  estado: joi.string().valid("vigente", "cancelada", "renovada", "reexpedida"),
   aseguradora: joi.number().integer().positive(),
   agente: joi.number().integer().positive(),
   vendedor: joi.number().integer().positive(),
