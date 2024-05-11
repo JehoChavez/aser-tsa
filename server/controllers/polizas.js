@@ -24,6 +24,7 @@ module.exports.getPolizas = async (req, res) => {
     aseguradora,
     agente,
     vendedor,
+    ramo,
   } = req.query;
 
   const filter = {};
@@ -55,6 +56,10 @@ module.exports.getPolizas = async (req, res) => {
 
   if (vendedor) {
     filter.vendedorId = vendedor;
+  }
+
+  if (ramo) {
+    filter.ramoId = ramo;
   }
 
   const options = {

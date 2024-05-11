@@ -155,6 +155,7 @@ const polizasQuerySchema = joi.object({
   aseguradora: joi.number().integer().positive(),
   agente: joi.number().integer().positive(),
   vendedor: joi.number().integer().positive(),
+  ramo: joi.string(),
 });
 
 const endosoSchema = joi.object({
