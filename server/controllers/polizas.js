@@ -21,7 +21,6 @@ module.exports.getPolizas = async (req, res) => {
     tipoFecha = "inicioVigencia",
     desde,
     hasta,
-    estado,
     aseguradora,
     agente,
     vendedor,
@@ -46,6 +45,18 @@ module.exports.getPolizas = async (req, res) => {
     throw new ExpressError("desde y hasta deben ser incluidos", 400);
   }
 
+  if (aseguradora) {
+    filter.aseguradoraId = aseguradora;
+  }
+
+  if (agente) {
+    filter.agenteId = agente;
+  }
+
+  if (vendedor) {
+    filter.vendedorId = vendedor;
+  }
+
   const options = {
     where: filter,
     attributes: [
@@ -63,7 +74,7 @@ module.exports.getPolizas = async (req, res) => {
       {
         model: Agente,
         as: "agente",
-        attributes: ["clave", "nombre"],
+        attributes: ["id", "clave", "nombre"],
       },
       {
         model: Aseguradora,
