@@ -156,6 +156,16 @@ const polizasQuerySchema = joi.object({
   agente: joi.number().integer().positive(),
   vendedor: joi.number().integer().positive(),
   ramo: joi.string(),
+  orden: joi.string().valid("ASC", "DESC"),
+  por: joi
+    .string()
+    .valid(
+      "inicioVigencia",
+      "finVigencia",
+      "emision",
+      "createdAt",
+      "fechaCancelacion"
+    ),
 });
 
 const endosoSchema = joi.object({

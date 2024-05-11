@@ -25,6 +25,8 @@ module.exports.getPolizas = async (req, res) => {
     agente,
     vendedor,
     ramo,
+    orden = "DESC",
+    por = "inicioVigencia",
   } = req.query;
 
   const filter = {};
@@ -61,6 +63,8 @@ module.exports.getPolizas = async (req, res) => {
   if (ramo) {
     filter.ramoId = ramo;
   }
+
+  const order = [por, orden];
 
   const options = {
     where: filter,
@@ -101,7 +105,7 @@ module.exports.getPolizas = async (req, res) => {
         as: "ramo",
       },
     ],
-    order: [["createdAt", "DESC"]],
+    order: [order],
     limit: 10,
   };
 
