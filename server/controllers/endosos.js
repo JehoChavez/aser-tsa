@@ -41,6 +41,13 @@ module.exports.postEndoso = async (req, res) => {
 
   if (!poliza) throw new ExpressError("poliza no encontrada", 404);
 
+  if (recibosData) {
+    endosoData.recibos = recibosData.map((recibo) => {
+      recibo.polizaId = poliza.id;
+      return recibo;
+    });
+  }
+
   const existingEndoso = await Endoso.findOne({
     where: {
       endoso: endosoData.endoso,
@@ -50,36 +57,31 @@ module.exports.postEndoso = async (req, res) => {
 
   if (existingEndoso) throw new ExpressError("endoso ya existe", 400);
 
-  const t = await sequelize.transaction();
+  const endoso = await Endoso.create(endosoData, {
+    include: {
+      model: Recibo,
+      as: "recibos",
+    },
+  });
 
-  try {
-    const endoso = await Endoso.create(endosoData, { transaction: t });
+  // const responseBody = { endoso };
 
-    const responseBody = { endoso };
+  // if (recibosData) {
+  //   const recibos = await Promise.all(
+  //     recibosData.map(async (reciboData) => {
+  //       const recibo = await Recibo.create(
+  //         { ...reciboData, polizaId: poliza.id, endosoId: endoso.id },
+  //         { transaction: t }
+  //       );
+  //       return recibo;
+  //     })
+  //   );
+  //   responseBody.recibos = recibos;
+  // }
 
-    if (recibosData) {
-      const recibos = await Promise.all(
-        recibosData.map(async (reciboData) => {
-          const recibo = await Recibo.create(
-            { ...reciboData, polizaId: poliza.id, endosoId: endoso.id },
-            { transaction: t }
-          );
-          return recibo;
-        })
-      );
-      responseBody.recibos = recibos;
-    }
+  const response = new CustomResponse(endoso, 201);
 
-    await t.commit();
-
-    const response = new CustomResponse(responseBody, 201);
-
-    res.json(response);
-  } catch (error) {
-    await t.rollback();
-
-    throw new ExpressError(error);
-  }
+  res.json(response);
 };
 
 module.exports.deleteEndoso = async (req, res) => {
