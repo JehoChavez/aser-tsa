@@ -197,6 +197,8 @@ module.exports.postPoliza = async (req, res) => {
   const { poliza: polizaData } = req.body;
   const { recibos: recibosData } = req.body;
 
+  polizaData.recibos = recibosData;
+
   const existingPoliza = await Poliza.findOne({
     where: {
       noPoliza: polizaData.noPoliza,
@@ -205,31 +207,16 @@ module.exports.postPoliza = async (req, res) => {
 
   if (existingPoliza) throw new ExpressError("poliza ya existente", 400);
 
-  const t = await sequelize.transaction();
+  const poliza = await Poliza.create(polizaData, {
+    include: {
+      model: Recibo,
+      as: "recibos",
+    },
+  });
 
-  try {
-    const poliza = await Poliza.create(polizaData, { transaction: t });
+  const response = new CustomResponse({ poliza }, 201);
 
-    const recibos = await Promise.all(
-      recibosData.map(async (reciboData) => {
-        const recibo = await Recibo.create(
-          { ...reciboData, polizaId: poliza.id },
-          { transaction: t }
-        );
-        return recibo;
-      })
-    );
-
-    await t.commit();
-
-    const response = new CustomResponse({ poliza, recibos }, 201);
-
-    res.json(response);
-  } catch (error) {
-    await t.rollback();
-
-    throw new ExpressError(error);
-  }
+  res.json(response);
 };
 
 module.exports.updatePoliza = async (req, res) => {
