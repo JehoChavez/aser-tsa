@@ -275,3 +275,39 @@ module.exports.deletePoliza = async (req, res) => {
 
   res.json(response);
 };
+
+module.exports.reexpedirPoliza = async (req, res) => {
+  const poliza = await Poliza.findByPk(req.params.id);
+
+  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+  await Endoso.destroy({
+    where: {
+      polizaId: req.params.id,
+    },
+  });
+
+  await Recibo.destroy({
+    where: {
+      polizaId: req.params.id,
+    },
+  });
+
+  const { poliza: polizaData, recibos: recibosData } = req.body;
+
+  polizaData.recibos = recibosData;
+
+  const reexpedicion = await Poliza.create(polizaData, {
+    include: {
+      model: Recibo,
+      as: "recibos",
+    },
+  });
+
+  poliza.reexpedicionId = reexpedicion.id;
+  poliza.save();
+
+  const response = new CustomResponse(reexpedicion, 201);
+
+  res.json(response);
+};
