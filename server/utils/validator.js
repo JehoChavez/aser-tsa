@@ -192,6 +192,7 @@ const endosoSchema = joi.object({
 const recibosQuerySchema = joi.object({
   desde: joi.string().isoDate(),
   hasta: joi.string().isoDate(),
+  pendientes: joi.bool(),
 });
 
 const clienteIdSchema = joi.object({

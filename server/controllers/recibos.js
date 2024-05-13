@@ -42,6 +42,11 @@ module.exports.getRecibos = async (req, res) => {
     };
   }
 
+  // TODO: revisar que funcione correctamente enviando desde frontend
+  if (req.query.pendientes) {
+    query.where.fechaPago = null;
+  }
+
   const listOfRecibos = await Recibo.findAll(query);
 
   const response = new CustomResponse(listOfRecibos, 200);
