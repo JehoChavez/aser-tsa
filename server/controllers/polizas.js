@@ -281,35 +281,54 @@ module.exports.reexpedirPoliza = async (req, res) => {
 
   if (!poliza) throw new ExpressError("poliza no encontrada", 404);
 
-  await Endoso.destroy({
-    where: {
-      polizaId: req.params.id,
-    },
-  });
-
-  await Recibo.destroy({
-    where: {
-      polizaId: req.params.id,
-    },
-  });
-
   const { poliza: polizaData, recibos: recibosData } = req.body;
-
   polizaData.recibos = recibosData;
 
-  const reexpedicion = await Poliza.create(polizaData, {
-    include: {
-      model: Recibo,
-      as: "recibos",
-    },
-  });
+  const t = await sequelize.transaction();
 
-  poliza.reexpedicionId = reexpedicion.id;
-  await poliza.save();
+  try {
+    await Endoso.destroy(
+      {
+        where: {
+          polizaId: req.params.id,
+        },
+      },
+      { transaction: t }
+    );
 
-  const response = new CustomResponse(reexpedicion, 201);
+    await Recibo.destroy(
+      {
+        where: {
+          polizaId: req.params.id,
+        },
+      },
+      { transaction: t }
+    );
 
-  res.json(response);
+    const reexpedicion = await Poliza.create(
+      polizaData,
+      {
+        include: {
+          model: Recibo,
+          as: "recibos",
+        },
+      },
+      { transaction: t }
+    );
+
+    poliza.reexpedicionId = reexpedicion.id;
+    await poliza.save({ transaction: t });
+
+    await t.commit();
+
+    const response = new CustomResponse(reexpedicion, 201);
+
+    res.json(response);
+  } catch (error) {
+    await t.rollback();
+
+    throw new ExpressError(error, 500);
+  }
 };
 
 module.exports.renovarPoliza = async (req, res) => {
@@ -335,14 +354,13 @@ module.exports.renovarPoliza = async (req, res) => {
     poliza.renovacionId = renovacion.id;
     await poliza.save({ transaction: t });
 
-    t.commit();
+    await t.commit();
 
     const response = new CustomResponse(renovacion, 201);
 
     res.json(response);
   } catch (error) {
-    console.log(error);
-    t.rollback();
+    await t.rollback();
 
     throw new ExpressError(error, 500);
   }
