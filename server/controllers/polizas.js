@@ -305,9 +305,45 @@ module.exports.reexpedirPoliza = async (req, res) => {
   });
 
   poliza.reexpedicionId = reexpedicion.id;
-  poliza.save();
+  await poliza.save();
 
   const response = new CustomResponse(reexpedicion, 201);
 
   res.json(response);
+};
+
+module.exports.renovarPoliza = async (req, res) => {
+  const poliza = await Poliza.findByPk(req.params.id);
+
+  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+  const { poliza: polizaData, recibos: recibosData } = req.body;
+
+  polizaData.recibos = recibosData;
+
+  const t = await sequelize.transaction();
+
+  try {
+    const renovacion = await Poliza.create(polizaData, {
+      include: {
+        model: Recibo,
+        as: "recibos",
+      },
+      transaction: t,
+    });
+
+    poliza.renovacionId = renovacion.id;
+    await poliza.save({ transaction: t });
+
+    t.commit();
+
+    const response = new CustomResponse(renovacion, 201);
+
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    t.rollback();
+
+    throw new ExpressError(error, 500);
+  }
 };

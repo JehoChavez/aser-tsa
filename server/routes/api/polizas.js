@@ -9,6 +9,7 @@ const {
   updatePoliza,
   deletePoliza,
   reexpedirPoliza,
+  renovarPoliza,
 } = require("../../controllers/polizas");
 const { getPolizaRecibos } = require("../../controllers/recibos");
 const { getEndosos } = require("../../controllers/endosos");
@@ -48,5 +49,9 @@ router
 router
   .route("/:id/reexpedir")
   .post(validateGenericId, validatePoliza, catchAsync(reexpedirPoliza));
+
+router
+  .route("/:id/renovar")
+  .post(validateGenericId, validatePoliza, catchAsync(renovarPoliza));
 
 module.exports = router;
