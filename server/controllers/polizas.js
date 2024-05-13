@@ -365,3 +365,21 @@ module.exports.renovarPoliza = async (req, res) => {
     throw new ExpressError(error, 500);
   }
 };
+
+module.exports.cambiarContratante = async (req, res) => {
+  const poliza = await Poliza.findByPk(req.params.id);
+
+  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+  const cliente = await Cliente.findByPk(req.body.clienteId);
+
+  if (!cliente) throw new ExpressError("cliente no encontrado", 404);
+
+  poliza.clienteId = req.body.clienteId;
+
+  const updated = await poliza.save();
+
+  const response = new CustomResponse(updated, 200);
+
+  res.json(response);
+};

@@ -194,6 +194,10 @@ const recibosQuerySchema = joi.object({
   hasta: joi.string().isoDate(),
 });
 
+const clienteIdSchema = joi.object({
+  clienteId: joi.number().positive().integer().required(),
+});
+
 module.exports.validateEstadoId = queryValidator(estadoIdSchema);
 
 module.exports.validateRamo = bodyValidator(ramoSchema);
@@ -219,3 +223,5 @@ module.exports.validateEstadoMunicipioId = idValidator(estadoMunicipioIdSchema);
 module.exports.validateEndoso = bodyValidator(endosoSchema);
 
 module.exports.validateRecibosQuery = queryValidator(recibosQuerySchema);
+
+module.exports.validateClienteId = bodyValidator(clienteIdSchema);
