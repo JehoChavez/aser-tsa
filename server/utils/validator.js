@@ -207,6 +207,10 @@ const clienteIdSchema = joi.object({
   clienteId: joi.number().positive().integer().required(),
 });
 
+const clienteQuerySchema = joi.object({
+  nombre: joi.string(),
+});
+
 module.exports.validateEstadoId = queryValidator(estadoIdSchema);
 
 module.exports.validateRamo = bodyValidator(ramoSchema);
@@ -238,3 +242,5 @@ module.exports.validateClienteId = bodyValidator(clienteIdSchema);
 module.exports.validateCancelacion = bodyValidator(cancelacionSchema);
 
 module.exports.validatePago = bodyValidator(pagoSchema);
+
+module.exports.validateClienteQuery = queryValidator(clienteQuerySchema);
