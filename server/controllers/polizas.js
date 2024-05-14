@@ -34,7 +34,7 @@ module.exports.getPolizas = async (req, res) => {
 
   if (noPoliza) {
     filter.noPoliza = {
-      [Op.like]: `%${noPoliza}%%`,
+      [Op.like]: `%${noPoliza}%`,
     };
   }
 
