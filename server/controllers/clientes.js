@@ -3,7 +3,9 @@ const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
 module.exports.getClientes = async (req, res) => {
-  const listOfClientes = await Cliente.findAll();
+  const listOfClientes = await Cliente.findAll({
+    attributes: ["id", "tipoPersona", "nombre", "rfc"],
+  });
 
   const response = new CustomResponse(listOfClientes);
 
