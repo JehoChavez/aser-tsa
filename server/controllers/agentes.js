@@ -63,6 +63,10 @@ module.exports.postAgente = async (req, res) => {
 
   if (existingAgent) throw new ExpressError("agente ya existente", 400);
 
+  const aseguradora = await Aseguradora.findByPk(req.body.aseguradoraId);
+
+  if (!aseguradora) throw new ExpressError("aseguradora no encontrada", 404);
+
   const newAgente = await Agente.create(req.body);
 
   const response = new CustomResponse(newAgente, 201);
