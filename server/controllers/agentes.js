@@ -15,9 +15,19 @@ module.exports.getAgentes = async (req, res) => {
           [Op.in]: aseguradoraIds,
         },
       },
+      include: {
+        model: Aseguradora,
+        as: "aseguradora",
+      },
     });
   } else {
-    listOfAgentes = await Agente.findAll();
+    listOfAgentes = await Agente.findAll({
+      include: {
+        model: Aseguradora,
+        as: "aseguradora",
+        attributes: ["id", "aseguradora"],
+      },
+    });
   }
 
   const response = new CustomResponse(listOfAgentes);
