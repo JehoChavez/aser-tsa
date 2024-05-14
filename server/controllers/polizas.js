@@ -397,3 +397,17 @@ module.exports.cancelarPoliza = async (req, res) => {
 
   res.json(response);
 };
+
+module.exports.anularCancelacion = async (req, res) => {
+  const poliza = await Poliza.findByPk(req.params.id);
+
+  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+  poliza.fechaCancelacion = null;
+
+  const anulada = await poliza.save();
+
+  const response = new CustomResponse(anulada, 200);
+
+  res.json(response);
+};

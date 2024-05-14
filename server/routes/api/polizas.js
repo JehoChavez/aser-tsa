@@ -12,6 +12,7 @@ const {
   renovarPoliza,
   cambiarContratante,
   cancelarPoliza,
+  anularCancelacion,
 } = require("../../controllers/polizas");
 const { getPolizaRecibos } = require("../../controllers/recibos");
 const { getEndosos } = require("../../controllers/endosos");
@@ -65,5 +66,9 @@ router
 router
   .route("/:id/cancelar")
   .patch(validateGenericId, validateCancelacion, catchAsync(cancelarPoliza));
+
+router
+  .route("/:id/anularCancelacion")
+  .patch(validateGenericId, catchAsync(anularCancelacion));
 
 module.exports = router;
