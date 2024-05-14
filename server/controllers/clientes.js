@@ -1,9 +1,21 @@
 const { Cliente, Estado, Municipio } = require("../models");
+const { Op } = require("sequelize");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
 module.exports.getClientes = async (req, res) => {
+  const { nombre } = req.query;
+
+  const filter = {};
+
+  if (nombre) {
+    filter.nombre = {
+      [Op.like]: `%${nombre}%`,
+    };
+  }
+
   const listOfClientes = await Cliente.findAll({
+    where: filter,
     attributes: ["id", "tipoPersona", "nombre", "rfc"],
   });
 

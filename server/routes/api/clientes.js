@@ -8,11 +8,15 @@ const {
   deleteCliente,
   updateCliente,
 } = require("../../controllers/clientes");
-const { validateGenericId, validateCliente } = require("../../utils/validator");
+const {
+  validateGenericId,
+  validateCliente,
+  validateClienteQuery,
+} = require("../../utils/validator");
 
 router
   .route("/")
-  .get(catchAsync(getClientes))
+  .get(validateClienteQuery, catchAsync(getClientes))
   .post(validateCliente, catchAsync(postCliente));
 
 router
