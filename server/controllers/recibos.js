@@ -1,6 +1,7 @@
 const { Recibo, Poliza, Endoso, Cliente, Aseguradora } = require("../models");
 const { Op } = require("sequelize");
 const CustomResponse = require("../utils/CustomResponse");
+const ExpressError = require("../utils/ExpressError");
 
 module.exports.getRecibos = async (req, res) => {
   const query = {
@@ -65,6 +66,20 @@ module.exports.getPolizaRecibos = async (req, res) => {
   if (!poliza) throw new ExpressError("poliza no encontrada", 404);
 
   const response = new CustomResponse(poliza.recibos);
+
+  res.json(response);
+};
+
+module.exports.pagarRecibo = async (req, res) => {
+  const recibo = await Recibo.findByPk(req.params.id);
+
+  if (!recibo) throw new ExpressError("poliza no encontrada", 404);
+
+  recibo.fechaPago = req.body.fechaPago;
+
+  const pagado = await recibo.save();
+
+  const response = new CustomResponse(pagado, 200);
 
   res.json(response);
 };

@@ -195,6 +195,14 @@ const recibosQuerySchema = joi.object({
   pendientes: joi.bool(),
 });
 
+const cancelacionSchema = joi.object({
+  fechaCancelacion: joi.string().isoDate().required,
+});
+
+const pagoSchema = joi.object({
+  fechaPago: joi.string().isoDate().required(),
+});
+
 const clienteIdSchema = joi.object({
   clienteId: joi.number().positive().integer().required(),
 });
@@ -226,3 +234,7 @@ module.exports.validateEndoso = bodyValidator(endosoSchema);
 module.exports.validateRecibosQuery = queryValidator(recibosQuerySchema);
 
 module.exports.validateClienteId = bodyValidator(clienteIdSchema);
+
+module.exports.validateCancelacion = bodyValidator(cancelacionSchema);
+
+module.exports.validatePago = bodyValidator(pagoSchema);
