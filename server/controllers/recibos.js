@@ -73,13 +73,27 @@ module.exports.getPolizaRecibos = async (req, res) => {
 module.exports.pagarRecibo = async (req, res) => {
   const recibo = await Recibo.findByPk(req.params.id);
 
-  if (!recibo) throw new ExpressError("poliza no encontrada", 404);
+  if (!recibo) throw new ExpressError("recibo no encontrado", 404);
 
   recibo.fechaPago = req.body.fechaPago;
 
   const pagado = await recibo.save();
 
   const response = new CustomResponse(pagado, 200);
+
+  res.json(response);
+};
+
+module.exports.anularPago = async (req, res) => {
+  const recibo = await Recibo.findByPk(req.params.id);
+
+  if (!recibo) throw new ExpressError("recibo no encontrado", 404);
+
+  recibo.fechaPago = null;
+
+  const anulado = await recibo.save();
+
+  const response = new CustomResponse(anulado, 200);
 
   res.json(response);
 };
