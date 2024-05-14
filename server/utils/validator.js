@@ -196,7 +196,7 @@ const recibosQuerySchema = joi.object({
 });
 
 const cancelacionSchema = joi.object({
-  fechaCancelacion: joi.string().isoDate().required,
+  fechaCancelacion: joi.string().isoDate().required(),
 });
 
 const pagoSchema = joi.object({

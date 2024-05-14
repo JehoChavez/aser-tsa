@@ -383,3 +383,17 @@ module.exports.cambiarContratante = async (req, res) => {
 
   res.json(response);
 };
+
+module.exports.cancelarPoliza = async (req, res) => {
+  const poliza = await Poliza.findByPk(req.params.id);
+
+  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+  poliza.fechaCancelacion = req.body.fechaCancelacion;
+
+  const cancelada = await poliza.save();
+
+  const response = new CustomResponse(cancelada, 200);
+
+  res.json(response);
+};

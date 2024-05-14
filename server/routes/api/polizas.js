@@ -11,6 +11,7 @@ const {
   reexpedirPoliza,
   renovarPoliza,
   cambiarContratante,
+  cancelarPoliza,
 } = require("../../controllers/polizas");
 const { getPolizaRecibos } = require("../../controllers/recibos");
 const { getEndosos } = require("../../controllers/endosos");
@@ -20,6 +21,7 @@ const {
   validateGenericId,
   validatePolizasQuery,
   validateClienteId,
+  validateCancelacion,
 } = require("../../utils/validator");
 
 router
@@ -59,5 +61,9 @@ router
 router
   .route("/:id/cambiarContratante")
   .patch(validateGenericId, validateClienteId, catchAsync(cambiarContratante));
+
+router
+  .route("/:id/cancelar")
+  .patch(validateGenericId, validateCancelacion, catchAsync(cancelarPoliza));
 
 module.exports = router;
