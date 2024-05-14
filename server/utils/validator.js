@@ -209,6 +209,7 @@ const clienteIdSchema = joi.object({
 
 const clienteQuerySchema = joi.object({
   nombre: joi.string(),
+  tipoPersona: joi.string().valid("fisica", "moral"),
 });
 
 module.exports.validateEstadoId = queryValidator(estadoIdSchema);

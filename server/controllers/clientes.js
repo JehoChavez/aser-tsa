@@ -4,7 +4,7 @@ const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
 module.exports.getClientes = async (req, res) => {
-  const { nombre } = req.query;
+  const { nombre, tipoPersona } = req.query;
 
   const filter = {};
 
@@ -12,6 +12,10 @@ module.exports.getClientes = async (req, res) => {
     filter.nombre = {
       [Op.like]: `%${nombre}%`,
     };
+  }
+
+  if (tipoPersona) {
+    filter.tipoPersona = tipoPersona;
   }
 
   const listOfClientes = await Cliente.findAll({
