@@ -21,6 +21,7 @@ module.exports.getPolizas = async (req, res) => {
     tipoFecha = "inicioVigencia",
     desde,
     hasta,
+    cliente,
     aseguradora,
     agente,
     vendedor,
@@ -62,6 +63,10 @@ module.exports.getPolizas = async (req, res) => {
 
   if (ramo) {
     filter.ramoId = ramo;
+  }
+
+  if (cliente) {
+    filter.clienteId = cliente;
   }
 
   const order = [por, orden];
