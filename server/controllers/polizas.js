@@ -141,7 +141,7 @@ module.exports.getPolizas = async (req, res) => {
 };
 
 module.exports.getPoliza = async (req, res) => {
-  const poliza = await Poliza.findByPk(req.params.id, {
+  let poliza = await Poliza.findByPk(req.params.id, {
     include: [
       {
         model: Cliente,
@@ -203,6 +203,8 @@ module.exports.getPoliza = async (req, res) => {
   });
 
   if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+  poliza = verificarPolizaVencida(poliza.dataValues);
 
   const response = new CustomResponse(poliza);
 
