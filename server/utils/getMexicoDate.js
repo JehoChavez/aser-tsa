@@ -1,4 +1,4 @@
-module.exports.getMexicoDate = () => {
+const getMexicoDate = () => {
   const now = new Date();
 
   const utcOffset = -6 * 60 * 60 * 1000;
@@ -9,3 +9,5 @@ module.exports.getMexicoDate = () => {
 
   return mexicoISODate;
 };
+
+module.exports = getMexicoDate;

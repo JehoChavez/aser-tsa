@@ -12,6 +12,8 @@ const {
 } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
+const getMexicoDate = require("../utils/getMexicoDate");
+const verificarPolizaVencida = require("../utils/verificarPolizaVencida");
 
 module.exports.getPolizas = async (req, res) => {
   const {
@@ -109,6 +111,11 @@ module.exports.getPolizas = async (req, res) => {
         model: Ramo,
         as: "ramo",
       },
+      {
+        model: Recibo,
+        as: "recibos",
+        attributes: ["fechaLimite", "fechaPago"],
+      },
     ],
     order: [order],
     limit: 10,
@@ -122,7 +129,11 @@ module.exports.getPolizas = async (req, res) => {
     options.limit = parseInt(limit);
   }
 
-  const listOfPolizas = await Poliza.findAll(options);
+  let listOfPolizas = await Poliza.findAll(options);
+
+  listOfPolizas = listOfPolizas.map((poliza) =>
+    verificarPolizaVencida(poliza.dataValues)
+  );
 
   const response = new CustomResponse(listOfPolizas);
 
