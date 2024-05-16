@@ -1,38 +1,55 @@
 const { Op } = require("sequelize");
-const { Poliza, Recibo } = require("../models");
+const { Poliza, Recibo, sequelize } = require("../models");
 const getMexicoDate = require("./getMexicoDate");
 
 const markPolizasVencidas = async () => {
   const date = new Date(getMexicoDate());
 
-  const polizasToUpdate = await Poliza.findAll({
-    attributes: ["id"],
-    include: {
-      model: Recibo,
-      as: "recibos",
+  const t = await sequelize.transaction();
+
+  try {
+    const polizasToUpdate = await Poliza.findAll({
+      attributes: ["id"],
       where: {
-        fechaPago: null,
-        fechaLimite: {
-          [Op.lt]: date,
+        vencida: {
+          [Op.not]: true,
         },
       },
-      required: true,
-    },
-  });
-
-  const polizaIds = polizasToUpdate.map((poliza) => poliza.id);
-
-  if (polizaIds.length > 0) {
-    await Poliza.update(
-      { vencida: true },
-      {
+      include: {
+        model: Recibo,
+        as: "recibos",
         where: {
-          id: {
-            [Op.in]: polizaIds,
+          fechaPago: null,
+          fechaLimite: {
+            [Op.lt]: date,
           },
         },
-      }
-    );
+        required: true,
+      },
+      transaction: t,
+    });
+
+    const polizaIds = polizasToUpdate.map((poliza) => poliza.id);
+
+    if (polizaIds.length > 0) {
+      await Poliza.update(
+        { vencida: true },
+        {
+          where: {
+            id: {
+              [Op.in]: polizaIds,
+            },
+          },
+          transaction: t,
+        }
+      );
+    }
+
+    await t.commit();
+    console.log(`${polizaIds.length} polizas fueron marcadas como vencidas`);
+  } catch (error) {
+    await t.rollback();
+    console.log("Error al marcar polizas como vencidas", error);
   }
 };
 
