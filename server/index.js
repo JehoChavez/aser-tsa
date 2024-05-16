@@ -1,9 +1,23 @@
 const express = require("express");
 const app = express();
+const cron = require("node-cron");
 const ExpressError = require("./utils/ExpressError");
 const CustomResponse = require("./utils/CustomResponse");
+const markPolizasVencidas = require("./utils/markPolizasVencidas");
 
 const db = require("./models");
+
+cron.schedule(
+  "0 0 * * *",
+  () => {
+    console.log("Marcando polizas vencidas");
+    markPolizasVencidas();
+  },
+  {
+    scheduled: true,
+    timezone: "America/Mexico_City",
+  }
+);
 
 app.use(express.urlencoded({ extended: true }));
 
