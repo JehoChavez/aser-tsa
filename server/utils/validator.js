@@ -170,7 +170,9 @@ const polizasQuerySchema = joi.object({
   estado: joi
     .array()
     .items(
-      joi.string().valid("vigentes", "renovadas", "reexpedidas", "canceladas")
+      joi
+        .string()
+        .valid("vigentes", "renovadas", "reexpedidas", "canceladas", "vencidas")
     ),
 });
 

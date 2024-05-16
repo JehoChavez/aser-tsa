@@ -94,6 +94,11 @@ module.exports.getPolizas = async (req, res) => {
         ],
       });
     }
+    if (estado.includes("vencidas")) {
+      estadoFilter.push({
+        vencida: true,
+      });
+    }
   }
 
   if (estadoFilter.length > 0) {
@@ -121,6 +126,7 @@ module.exports.getPolizas = async (req, res) => {
       "primaNeta",
       "primaTotal",
       "moneda",
+      "fechaCancelacion",
     ],
     include: [
       {
