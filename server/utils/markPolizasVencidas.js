@@ -14,6 +14,7 @@ const markPolizasVencidas = async () => {
         vencida: {
           [Op.not]: true,
         },
+        fechaCancelacion: null,
       },
       include: {
         model: Recibo,
