@@ -117,6 +117,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       comentarios: DataTypes.STRING,
       fechaCancelacion: DataTypes.DATEONLY,
+      vencida: DataTypes.BOOLEAN,
     },
     {
       sequelize,
