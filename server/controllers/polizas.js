@@ -13,7 +13,6 @@ const {
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 const getMexicoDate = require("../utils/getMexicoDate");
-const verificarPolizaVencida = require("../utils/verificarPolizaVencida");
 
 module.exports.getPolizas = async (req, res) => {
   const {
@@ -168,10 +167,6 @@ module.exports.getPolizas = async (req, res) => {
 
   let listOfPolizas = await Poliza.findAll(options);
 
-  listOfPolizas = listOfPolizas.map((poliza) =>
-    verificarPolizaVencida(poliza.dataValues)
-  );
-
   const response = new CustomResponse(listOfPolizas);
 
   res.json(response);
@@ -240,8 +235,6 @@ module.exports.getPoliza = async (req, res) => {
   });
 
   if (!poliza) throw new ExpressError("poliza no encontrada", 404);
-
-  poliza = verificarPolizaVencida(poliza.dataValues);
 
   const response = new CustomResponse(poliza);
 
