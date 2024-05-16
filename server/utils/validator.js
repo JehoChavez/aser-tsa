@@ -167,6 +167,11 @@ const polizasQuerySchema = joi.object({
       "createdAt",
       "fechaCancelacion"
     ),
+  estado: joi
+    .array()
+    .items(
+      joi.string().valid("vigentes", "renovadas", "reexpedidas", "canceladas")
+    ),
 });
 
 const endosoSchema = joi.object({

@@ -30,9 +30,12 @@ module.exports.getPolizas = async (req, res) => {
     ramo,
     orden = "DESC",
     por = "inicioVigencia",
+    estado,
   } = req.query;
 
   const filter = {};
+
+  let whereClause = {};
 
   if (noPoliza) {
     filter.noPoliza = {
@@ -71,10 +74,44 @@ module.exports.getPolizas = async (req, res) => {
     filter.clienteId = cliente;
   }
 
+  const estadoFilter = [];
+
+  if (estado) {
+    if (estado.includes("renovadas")) {
+      estadoFilter.push({ renovacionId: { [Op.not]: null } });
+    }
+    if (estado.includes("reexpedidas")) {
+      estadoFilter.push({ reexpedicionId: { [Op.not]: null } });
+    }
+    if (estado.includes("canceladas")) {
+      estadoFilter.push({ fechaCancelacion: { [Op.not]: null } });
+    }
+    if (estado.includes("vigentes")) {
+      estadoFilter.push({
+        [Op.and]: [
+          { reexpedicionId: null },
+          { fechaCancelacion: null },
+          { finVigencia: { [Op.gt]: getMexicoDate() } },
+        ],
+      });
+    }
+  }
+
+  if (estadoFilter.length > 0) {
+    whereClause = {
+      [Op.and]: {
+        [Op.and]: filter,
+        [Op.or]: estadoFilter,
+      },
+    };
+  } else {
+    whereClause = filter;
+  }
+
   const order = [por, orden];
 
   const options = {
-    where: filter,
+    where: whereClause,
     attributes: [
       "id",
       "noPoliza",
