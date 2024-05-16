@@ -127,6 +127,7 @@ module.exports.getPolizas = async (req, res) => {
       "primaTotal",
       "moneda",
       "fechaCancelacion",
+      "vencida",
     ],
     include: [
       {
@@ -152,11 +153,6 @@ module.exports.getPolizas = async (req, res) => {
       {
         model: Ramo,
         as: "ramo",
-      },
-      {
-        model: Recibo,
-        as: "recibos",
-        attributes: ["fechaLimite", "fechaPago"],
       },
     ],
     order: [order],

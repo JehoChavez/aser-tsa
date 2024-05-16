@@ -1,4 +1,11 @@
-const { Recibo, Poliza, Endoso, Cliente, Aseguradora } = require("../models");
+const {
+  Recibo,
+  Poliza,
+  Endoso,
+  Cliente,
+  Aseguradora,
+  sequelize,
+} = require("../models");
 const { Op } = require("sequelize");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
@@ -75,13 +82,33 @@ module.exports.pagarRecibo = async (req, res) => {
 
   if (!recibo) throw new ExpressError("recibo no encontrado", 404);
 
-  recibo.fechaPago = req.body.fechaPago;
+  const t = await sequelize.transaction();
 
-  const pagado = await recibo.save();
+  try {
+    recibo.fechaPago = req.body.fechaPago;
 
-  const response = new CustomResponse(pagado, 200);
+    const pagado = await recibo.save({ transaction: t });
 
-  res.json(response);
+    await Poliza.update(
+      { vencida: false },
+      {
+        where: {
+          id: recibo.polizaId,
+        },
+        transaction: t,
+      }
+    );
+
+    await t.commit();
+
+    const response = new CustomResponse(pagado, 200);
+
+    res.json(response);
+  } catch (error) {
+    await t.rollback();
+
+    throw new ExpressError("something went wrong", 500);
+  }
 };
 
 module.exports.anularPago = async (req, res) => {
