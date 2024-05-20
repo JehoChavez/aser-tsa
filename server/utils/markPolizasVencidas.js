@@ -22,7 +22,7 @@ const markPolizasVencidas = async () => {
         where: {
           fechaPago: null,
           fechaLimite: {
-            [Op.lt]: date,
+            [Op.lte]: date,
           },
         },
         required: true,
