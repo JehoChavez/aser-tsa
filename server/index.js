@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const cron = require("node-cron");
+const session = require("express-session");
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const ExpressError = require("./utils/ExpressError");
 const CustomResponse = require("./utils/CustomResponse");
 const markPolizasVencidas = require("./utils/markPolizasVencidas");
@@ -19,7 +21,25 @@ cron.schedule(
   }
 );
 
+const sessionStore = new SequelizeStore({ db: db.sequelize });
+
+sessionStore.sync();
+
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    secret: process.env.AUTH_PASSWORD,
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60,
+    },
+  })
+);
 
 // Routers
 const estadosRouter = require("./routes/api/estados");
