@@ -6,6 +6,7 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const ExpressError = require("./utils/ExpressError");
 const CustomResponse = require("./utils/CustomResponse");
 const markPolizasVencidas = require("./utils/markPolizasVencidas");
+const isAuthenticated = require("./utils/isAuthenticated");
 
 require("dotenv").config();
 
@@ -42,6 +43,8 @@ app.use(
     },
   })
 );
+
+app.use("/api", isAuthenticated);
 
 // Routers
 const estadosRouter = require("./routes/api/estados");
