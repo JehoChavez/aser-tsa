@@ -23,5 +23,6 @@ module.exports.login = async (req, res) => {
 
 module.exports.logout = (req, res) => {
   req.session.destroy();
-  res.json("Logged out");
+  const response = new CustomResponse("logged out successully", 200);
+  res.json(response);
 };
