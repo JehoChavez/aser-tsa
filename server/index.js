@@ -7,6 +7,8 @@ const ExpressError = require("./utils/ExpressError");
 const CustomResponse = require("./utils/CustomResponse");
 const markPolizasVencidas = require("./utils/markPolizasVencidas");
 
+require("dotenv").config();
+
 const db = require("./models");
 
 cron.schedule(
@@ -51,6 +53,7 @@ const clientesRouter = require("./routes/api/clientes");
 const polizasRouter = require("./routes/api/polizas");
 const endososRouter = require("./routes/api/endosos");
 const recibosRouter = require("./routes/api/recibos");
+const authRouter = require("./routes/api/auth");
 app.use("/api/estados", estadosRouter);
 app.use("/api/ramos", ramosRouter);
 app.use("/api/aseguradoras", aseguradorasRouter);
@@ -60,6 +63,7 @@ app.use("/api/clientes", clientesRouter);
 app.use("/api/polizas", polizasRouter);
 app.use("/api/endosos", endososRouter);
 app.use("/api/recibos", recibosRouter);
+app.use("/auth", authRouter);
 
 // Handling not specified routes
 app.all("*", (req, res, next) => {
