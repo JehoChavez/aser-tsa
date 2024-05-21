@@ -20,3 +20,8 @@ module.exports.login = async (req, res) => {
     res.json(response);
   }
 };
+
+module.exports.logout = (req, res) => {
+  req.session.destroy();
+  res.json("Logged out");
+};
