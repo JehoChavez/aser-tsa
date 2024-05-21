@@ -53,7 +53,7 @@ const clientesRouter = require("./routes/api/clientes");
 const polizasRouter = require("./routes/api/polizas");
 const endososRouter = require("./routes/api/endosos");
 const recibosRouter = require("./routes/api/recibos");
-const authRouter = require("./routes/api/auth");
+const authRouter = require("./routes/auth");
 app.use("/api/estados", estadosRouter);
 app.use("/api/ramos", ramosRouter);
 app.use("/api/aseguradoras", aseguradorasRouter);
