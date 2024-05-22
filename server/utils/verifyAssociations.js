@@ -16,6 +16,9 @@ const verifyPolizaAssociations = async (req, res) => {
 
   if (!agente) throw new ExpressError("agente no encontrado", 404);
 
+  if (agente.aseguradoraId !== aseguradora.id)
+    throw new ExpressError("agente no pertenece a aseguradora", 400);
+
   const vendedor = await Vendedor.findByPk(polizaData.vendedorId);
 
   if (!vendedor) throw new ExpressError("vendedor no encontrado", 404);
