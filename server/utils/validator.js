@@ -152,11 +152,11 @@ const polizasQuerySchema = joi.object({
     ),
   desde: joi.string().isoDate(),
   hasta: joi.string().isoDate(),
-  cliente: joi.number().integer().positive(),
-  aseguradora: joi.number().integer().positive(),
-  agente: joi.number().integer().positive(),
-  vendedor: joi.number().integer().positive(),
-  ramo: joi.string(),
+  cliente: joi.array().items(joi.number().integer().positive()),
+  aseguradora: joi.array().items(joi.number().integer().positive()),
+  agente: joi.array().items(joi.number().integer().positive()),
+  vendedor: joi.array().items(joi.number().integer().positive()),
+  ramo: joi.array().items(joi.number().integer().positive()),
   orden: joi.string().valid("ASC", "DESC"),
   por: joi
     .string()

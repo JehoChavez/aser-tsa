@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 const {
   Poliza,
   Cliente,
@@ -32,50 +32,79 @@ module.exports.getPolizas = async (req, res) => {
     estado,
   } = req.query;
 
-  const filter = {};
+  const filter = [];
 
   let whereClause = {};
 
   // Find poliza by numero
   if (noPoliza) {
-    filter.noPoliza = {
-      [Op.like]: `%${noPoliza}%`,
-    };
+    filter.push({
+      noPoliza: {
+        [Op.like]: `%${noPoliza}%`,
+      },
+    });
   }
 
   // Filter by date
   if (desde && hasta) {
-    filter[tipoFecha] = {
-      [Op.and]: {
-        [Op.gte]: desde,
-        [Op.lte]: hasta,
+    filter.push({
+      [tipoFecha]: {
+        [Op.and]: {
+          [Op.gte]: desde,
+          [Op.lte]: hasta,
+        },
       },
-    };
+    });
   } else if ((desde && !hasta) || (hasta && !desde)) {
     throw new ExpressError("desde y hasta deben ser incluidos", 400);
   }
 
+  // Filter by aseguradora IDs
   if (aseguradora) {
-    filter.aseguradoraId = aseguradora;
+    filter.push({
+      aseguradoraId: {
+        [Op.in]: aseguradora,
+      },
+    });
   }
 
+  // Filter by agente IDs
   if (agente) {
-    filter.agenteId = agente;
+    filter.push({
+      agenteId: {
+        [Op.in]: agente,
+      },
+    });
   }
 
+  // Filter by vendedor IDs
   if (vendedor) {
-    filter.vendedorId = vendedor;
+    filter.push({
+      vendedorId: {
+        [Op.in]: vendedor,
+      },
+    });
   }
 
+  // Filter by ramo IDs
   if (ramo) {
-    filter.ramoId = ramo;
+    filter.push({
+      ramoId: {
+        [Op.in]: ramo,
+      },
+    });
   }
 
+  // Filter by cliente IDs
   if (cliente) {
-    filter.clienteId = cliente;
+    filter.push({
+      clienteId: {
+        [Op.in]: cliente,
+      },
+    });
   }
 
-  // Filters
+  // Estado filters
   const estadoFilter = [];
 
   if (estado) {
@@ -104,18 +133,27 @@ module.exports.getPolizas = async (req, res) => {
     }
   }
 
-  if (estadoFilter.length > 0) {
-    // Use or operator cause we want polizas which meet either one of the filters
+  // Build the where clause
+  if (filter.length > 0 && estadoFilter.length > 0) {
     whereClause = {
       [Op.and]: {
         [Op.and]: filter,
         [Op.or]: estadoFilter,
       },
     };
+  } else if (filter.length > 0) {
+    whereClause = {
+      [Op.and]: filter,
+    };
+  } else if (estadoFilter.length > 0) {
+    whereClause = {
+      [Op.or]: estadoFilter,
+    };
   } else {
-    whereClause = filter;
+    whereClause = null;
   }
 
+  // Order
   const order = [por, orden];
 
   const options = {
