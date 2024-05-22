@@ -7,7 +7,7 @@ module.exports.getAseguradoras = async (req, res) => {
 
   const response = new CustomResponse(listOfAseguradoras);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.getAseguradora = async (req, res) => {
@@ -17,7 +17,7 @@ module.exports.getAseguradora = async (req, res) => {
 
   const response = new CustomResponse(aseguradora);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.postAseguradora = async (req, res) => {
@@ -25,7 +25,7 @@ module.exports.postAseguradora = async (req, res) => {
 
   const response = new CustomResponse(newAseguradora, 201);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.deleteAseguradora = async (req, res) => {
@@ -37,7 +37,7 @@ module.exports.deleteAseguradora = async (req, res) => {
 
   const response = new CustomResponse(aseguradora);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.updateAseguradora = async (req, res) => {
@@ -52,5 +52,5 @@ module.exports.updateAseguradora = async (req, res) => {
 
   const response = new CustomResponse(updated);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };

@@ -31,7 +31,7 @@ module.exports.getClientes = async (req, res) => {
 
   const response = new CustomResponse(listOfClientes);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.getCliente = async (req, res) => {
@@ -55,7 +55,7 @@ module.exports.getCliente = async (req, res) => {
 
   const response = new CustomResponse(cliente);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.postCliente = async (req, res) => {
@@ -63,7 +63,7 @@ module.exports.postCliente = async (req, res) => {
 
   const response = new CustomResponse(cliente, 201);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.deleteCliente = async (req, res) => {
@@ -75,7 +75,7 @@ module.exports.deleteCliente = async (req, res) => {
 
   const response = new CustomResponse(cliente);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.updateCliente = async (req, res) => {
@@ -89,5 +89,5 @@ module.exports.updateCliente = async (req, res) => {
 
   const response = new CustomResponse(updated);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };

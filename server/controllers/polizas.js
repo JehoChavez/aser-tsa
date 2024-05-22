@@ -214,7 +214,7 @@ module.exports.getPolizas = async (req, res) => {
 
   const response = new CustomResponse(listOfPolizas);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.getPoliza = async (req, res) => {
@@ -283,7 +283,7 @@ module.exports.getPoliza = async (req, res) => {
 
   const response = new CustomResponse(poliza);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.postPoliza = async (req, res) => {
@@ -311,7 +311,7 @@ module.exports.postPoliza = async (req, res) => {
 
   const response = new CustomResponse({ poliza }, 201);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.updatePoliza = async (req, res) => {
@@ -352,7 +352,7 @@ module.exports.updatePoliza = async (req, res) => {
 
     const response = new CustomResponse({ updatedPoliza, recibos });
 
-    res.json(response);
+    res.status(response.status).json(response);
   } catch (error) {
     await t.rollback();
 
@@ -369,7 +369,7 @@ module.exports.deletePoliza = async (req, res) => {
 
   const response = new CustomResponse(deleted);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.reexpedirPoliza = async (req, res) => {
@@ -419,7 +419,7 @@ module.exports.reexpedirPoliza = async (req, res) => {
 
     const response = new CustomResponse(reexpedicion, 201);
 
-    res.json(response);
+    res.status(response.status).json(response);
   } catch (error) {
     await t.rollback();
 
@@ -456,7 +456,7 @@ module.exports.renovarPoliza = async (req, res) => {
 
     const response = new CustomResponse(renovacion, 201);
 
-    res.json(response);
+    res.status(response.status).json(response);
   } catch (error) {
     await t.rollback();
 
@@ -479,7 +479,7 @@ module.exports.cambiarContratante = async (req, res) => {
 
   const response = new CustomResponse(updated, 200);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.cancelarPoliza = async (req, res) => {
@@ -493,7 +493,7 @@ module.exports.cancelarPoliza = async (req, res) => {
 
   const response = new CustomResponse(cancelada, 200);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.anularCancelacion = async (req, res) => {
@@ -507,5 +507,5 @@ module.exports.anularCancelacion = async (req, res) => {
 
   const response = new CustomResponse(anulada, 200);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };

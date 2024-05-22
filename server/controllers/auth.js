@@ -17,12 +17,12 @@ module.exports.login = async (req, res) => {
     }
   } catch (error) {
     const response = new CustomResponse("Internal error", 500);
-    res.json(response);
+    res.status(response.status).json(response);
   }
 };
 
 module.exports.logout = (req, res) => {
   req.session.destroy();
   const response = new CustomResponse("logged out successully", 200);
-  res.json(response);
+  res.status(response.status).json(response);
 };

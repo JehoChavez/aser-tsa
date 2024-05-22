@@ -7,7 +7,7 @@ module.exports.getRamos = async (req, res) => {
 
   const response = new CustomResponse(listOfRamos);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.getRamo = async (req, res) => {
@@ -17,7 +17,7 @@ module.exports.getRamo = async (req, res) => {
 
   const response = new CustomResponse(ramo);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.postRamo = async (req, res) => {
@@ -25,7 +25,7 @@ module.exports.postRamo = async (req, res) => {
 
   const response = new CustomResponse(nuevoRamo, 201);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.deleteRamo = async (req, res) => {
@@ -37,7 +37,7 @@ module.exports.deleteRamo = async (req, res) => {
 
   const response = new CustomResponse(ramo);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.updateRamo = async (req, res) => {
@@ -51,5 +51,5 @@ module.exports.updateRamo = async (req, res) => {
 
   const response = new CustomResponse(updated);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };

@@ -7,7 +7,7 @@ module.exports.getEstados = async (req, res) => {
 
   const response = new CustomResponse(listOfEstados);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.getEstado = async (req, res) => {
@@ -17,7 +17,7 @@ module.exports.getEstado = async (req, res) => {
 
   const response = new CustomResponse(estado);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.getMunicipios = async (req, res) => {
@@ -36,7 +36,7 @@ module.exports.getMunicipios = async (req, res) => {
 
   const response = new CustomResponse(listOfMunicipios);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.getMunicipio = async (req, res) => {
@@ -50,5 +50,5 @@ module.exports.getMunicipio = async (req, res) => {
 
   const response = new CustomResponse(municipio);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };

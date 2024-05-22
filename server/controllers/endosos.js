@@ -14,7 +14,7 @@ module.exports.getEndosos = async (req, res) => {
 
   const response = new CustomResponse(listOfEndosos);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.getEndoso = async (req, res) => {
@@ -31,7 +31,7 @@ module.exports.getEndoso = async (req, res) => {
 
   const response = new CustomResponse(endoso);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.postEndoso = async (req, res) => {
@@ -70,7 +70,7 @@ module.exports.postEndoso = async (req, res) => {
 
   const response = new CustomResponse(endoso, 201);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.deleteEndoso = async (req, res) => {
@@ -82,7 +82,7 @@ module.exports.deleteEndoso = async (req, res) => {
 
   const response = new CustomResponse(deleted);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.updateEndoso = async (req, res) => {
@@ -132,7 +132,7 @@ module.exports.updateEndoso = async (req, res) => {
 
     const response = new CustomResponse({ updatedEndoso, recibos });
 
-    res.json(response);
+    res.status(response.status).json(response);
   } catch (error) {
     await t.rollback();
 

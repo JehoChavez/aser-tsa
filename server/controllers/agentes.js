@@ -33,7 +33,7 @@ module.exports.getAgentes = async (req, res) => {
 
   const response = new CustomResponse(listOfAgentes);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.getAgente = async (req, res) => {
@@ -49,9 +49,9 @@ module.exports.getAgente = async (req, res) => {
 
   if (!agente) throw new ExpressError("agente no encontrado", 404);
 
-  const response = new CustomResponse(agente);
+  const response = new CustomResponse(agente, 201);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.postAgente = async (req, res) => {
@@ -73,7 +73,7 @@ module.exports.postAgente = async (req, res) => {
 
   const response = new CustomResponse(newAgente, 201);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.updateAgente = async (req, res) => {
@@ -86,5 +86,5 @@ module.exports.updateAgente = async (req, res) => {
 
   const response = new CustomResponse(updated);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };

@@ -7,7 +7,7 @@ module.exports.getVendedores = async (req, res) => {
 
   const response = new CustomResponse(listOfVendedores);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.getVendedor = async (req, res) => {
@@ -17,7 +17,7 @@ module.exports.getVendedor = async (req, res) => {
 
   const response = new CustomResponse(vendedor);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.postVendedor = async (req, res) => {
@@ -25,7 +25,7 @@ module.exports.postVendedor = async (req, res) => {
 
   const response = new CustomResponse(nuevoVendedor, 201);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.deleteVendedor = async (req, res) => {
@@ -37,7 +37,7 @@ module.exports.deleteVendedor = async (req, res) => {
 
   const response = new CustomResponse(vendedor);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.updateVendedor = async (req, res) => {
@@ -51,5 +51,5 @@ module.exports.updateVendedor = async (req, res) => {
 
   const response = new CustomResponse(updated);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };

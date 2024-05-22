@@ -60,7 +60,7 @@ module.exports.getRecibos = async (req, res) => {
 
   const response = new CustomResponse(listOfRecibos, 200);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.getPolizaRecibos = async (req, res) => {
@@ -75,7 +75,7 @@ module.exports.getPolizaRecibos = async (req, res) => {
 
   const response = new CustomResponse(poliza.recibos);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
 
 module.exports.pagarRecibo = async (req, res) => {
@@ -105,7 +105,7 @@ module.exports.pagarRecibo = async (req, res) => {
 
     const response = new CustomResponse(pagado, 200);
 
-    res.json(response);
+    res.status(response.status).json(response);
   } catch (error) {
     await t.rollback();
 
@@ -124,5 +124,5 @@ module.exports.anularPago = async (req, res) => {
 
   const response = new CustomResponse(anulado, 200);
 
-  res.json(response);
+  res.status(response.status).json(response);
 };
