@@ -88,3 +88,14 @@ module.exports.updateAgente = async (req, res) => {
 
   res.status(response.status).json(response);
 };
+
+module.exports.deleteAgente = async (req, res) => {
+  const agente = await Agente.findByPk(req.params.id);
+  if (!agente) throw new ExpressError("agente no encontrado", 404);
+
+  await agente.destroy();
+
+  const response = new CustomResponse(agente);
+
+  res.status(response.status).json(response);
+};

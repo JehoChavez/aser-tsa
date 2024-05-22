@@ -6,6 +6,7 @@ const {
   getAgentes,
   postAgente,
   updateAgente,
+  deleteAgente,
 } = require("../../controllers/agentes");
 const {
   validateIdArray,
@@ -21,6 +22,7 @@ router
 router
   .route("/:id")
   .get(validateGenericId, catchAsync(getAgente))
-  .put(validateGenericId, validateAgent, catchAsync(updateAgente));
+  .put(validateGenericId, validateAgent, catchAsync(updateAgente))
+  .delete(validateGenericId, catchAsync(deleteAgente));
 
 module.exports = router;
