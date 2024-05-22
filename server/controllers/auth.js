@@ -10,10 +10,11 @@ module.exports.login = async (req, res) => {
 
     if (match) {
       req.session.isAuthenticated = true;
-      // TODO: redirect to home page
-      res.json("User authenticated");
+      const response = new CustomResponse(null, 200, "authenticated");
+      res.status(response.status).json(response);
     } else {
-      res.json("Incorrect password");
+      const response = new CustomResponse(null, 400, "incorrect password");
+      res.status(response.status).json(response);
     }
   } catch (error) {
     const response = new CustomResponse("Internal error", 500);
