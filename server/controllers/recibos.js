@@ -39,6 +39,7 @@ module.exports.getRecibos = async (req, res) => {
     order: [["fechaInicio", "ASC"]],
   };
 
+  // Filter by date
   if (req.query.desde && req.query.hasta) {
     query.where = {
       fechaInicio: {
@@ -89,6 +90,7 @@ module.exports.pagarRecibo = async (req, res) => {
 
     const pagado = await recibo.save({ transaction: t });
 
+    // Set poliza.vencida to false when a recibo is paid
     await Poliza.update(
       { vencida: false },
       {
