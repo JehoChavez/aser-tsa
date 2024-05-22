@@ -12,6 +12,7 @@ require("dotenv").config();
 
 const db = require("./models");
 
+// Mark expired polizas every midnight
 cron.schedule(
   "0 0 * * *",
   () => {
@@ -24,6 +25,7 @@ cron.schedule(
   }
 );
 
+// Use sequelize to store session info
 const sessionStore = new SequelizeStore({ db: db.sequelize });
 
 sessionStore.sync();
@@ -44,6 +46,7 @@ app.use(
   })
 );
 
+// Check if is authenticated when hitting every /api route
 app.use("/api", isAuthenticated);
 
 // Routers

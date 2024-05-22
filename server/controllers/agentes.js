@@ -8,6 +8,7 @@ module.exports.getAgentes = async (req, res) => {
 
   let listOfAgentes = [];
 
+  // Get agentes from aseguradoras if aseguradorasIds exists, get all if not
   if (aseguradoraIds) {
     listOfAgentes = await Agente.findAll({
       where: {
@@ -54,6 +55,7 @@ module.exports.getAgente = async (req, res) => {
 };
 
 module.exports.postAgente = async (req, res) => {
+  // Check if agente already exists
   const existingAgent = await Agente.findOne({
     where: {
       clave: req.body.clave,

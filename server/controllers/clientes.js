@@ -8,12 +8,14 @@ module.exports.getClientes = async (req, res) => {
 
   const filter = {};
 
+  // Find cliente by nombre provided by frontend
   if (nombre) {
     filter.nombre = {
       [Op.like]: `%${nombre}%`,
     };
   }
 
+  // Filters
   if (tipoPersona) {
     filter.tipoPersona = tipoPersona;
   }

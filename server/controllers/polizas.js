@@ -36,12 +36,14 @@ module.exports.getPolizas = async (req, res) => {
 
   let whereClause = {};
 
+  // Find poliza by numero
   if (noPoliza) {
     filter.noPoliza = {
       [Op.like]: `%${noPoliza}%`,
     };
   }
 
+  // Filter by date
   if (desde && hasta) {
     filter[tipoFecha] = {
       [Op.and]: {
@@ -73,6 +75,7 @@ module.exports.getPolizas = async (req, res) => {
     filter.clienteId = cliente;
   }
 
+  // Filters
   const estadoFilter = [];
 
   if (estado) {
@@ -102,6 +105,7 @@ module.exports.getPolizas = async (req, res) => {
   }
 
   if (estadoFilter.length > 0) {
+    // Use or operator cause we want polizas which meet either one of the filters
     whereClause = {
       [Op.and]: {
         [Op.and]: filter,
@@ -159,6 +163,7 @@ module.exports.getPolizas = async (req, res) => {
     limit: 10,
   };
 
+  // Pagination
   if (page) {
     options.offset = (parseInt(page) - 1) * (parseInt(limit) || options.limit);
   }
@@ -249,6 +254,7 @@ module.exports.postPoliza = async (req, res) => {
 
   polizaData.recibos = recibosData;
 
+  // Check if poliza already exists
   const existingPoliza = await Poliza.findOne({
     where: {
       noPoliza: polizaData.noPoliza,
@@ -257,6 +263,7 @@ module.exports.postPoliza = async (req, res) => {
 
   if (existingPoliza) throw new ExpressError("poliza ya existente", 400);
 
+  // Create poliza and recibos
   const poliza = await Poliza.create(polizaData, {
     include: {
       model: Recibo,
@@ -280,18 +287,19 @@ module.exports.updatePoliza = async (req, res) => {
   const t = await sequelize.transaction();
 
   try {
-    await Recibo.destroy(
-      {
-        where: {
-          polizaId: poliza.id,
-        },
+    // Delete existing recibos
+    await Recibo.destroy({
+      where: {
+        polizaId: poliza.id,
       },
-      { transaction: t }
-    );
+      transaction: t,
+    });
 
+    // Update poliza
     poliza.set(polizaData);
-    const updatedPoliza = await poliza.save();
+    const updatedPoliza = await poliza.save({ transaction: t });
 
+    // Create new recibos
     const recibos = await Promise.all(
       recibosData.map(async (reciboData) => {
         const recibo = await Recibo.create(
@@ -337,24 +345,23 @@ module.exports.reexpedirPoliza = async (req, res) => {
   const t = await sequelize.transaction();
 
   try {
-    await Endoso.destroy(
-      {
-        where: {
-          polizaId: req.params.id,
-        },
+    // Delete existing endosos
+    await Endoso.destroy({
+      where: {
+        polizaId: req.params.id,
       },
-      { transaction: t }
-    );
+      transaction: t,
+    });
 
-    await Recibo.destroy(
-      {
-        where: {
-          polizaId: req.params.id,
-        },
+    // Delete existing recibos
+    await Recibo.destroy({
+      where: {
+        polizaId: req.params.id,
       },
-      { transaction: t }
-    );
+      transaction: t,
+    });
 
+    // Create new poliza (reexpedicion) and recibos
     const reexpedicion = await Poliza.create(
       polizaData,
       {
@@ -366,6 +373,7 @@ module.exports.reexpedirPoliza = async (req, res) => {
       { transaction: t }
     );
 
+    // Set previous poliza reexpedicionId to the new poliza ID
     poliza.reexpedicionId = reexpedicion.id;
     await poliza.save({ transaction: t });
 
@@ -393,6 +401,7 @@ module.exports.renovarPoliza = async (req, res) => {
   const t = await sequelize.transaction();
 
   try {
+    // Create new poliza (renovacion) and recibos
     const renovacion = await Poliza.create(polizaData, {
       include: {
         model: Recibo,
@@ -401,6 +410,7 @@ module.exports.renovarPoliza = async (req, res) => {
       transaction: t,
     });
 
+    // Set previous poliza renovacionId to the new poliza ID
     poliza.renovacionId = renovacion.id;
     await poliza.save({ transaction: t });
 

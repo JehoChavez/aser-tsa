@@ -4,6 +4,7 @@ const { Endoso, Poliza, Recibo, sequelize } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
+// Get endosos by poliza
 module.exports.getEndosos = async (req, res) => {
   const listOfEndosos = await Endoso.findAll({
     where: {
@@ -41,6 +42,7 @@ module.exports.postEndoso = async (req, res) => {
 
   if (!poliza) throw new ExpressError("poliza no encontrada", 404);
 
+  // Set recibos polizaId to the poliza ID and endoso recibos to recibosData
   if (recibosData) {
     endosoData.recibos = recibosData.map((recibo) => {
       recibo.polizaId = poliza.id;
@@ -48,6 +50,7 @@ module.exports.postEndoso = async (req, res) => {
     });
   }
 
+  // Check if endoso already exists
   const existingEndoso = await Endoso.findOne({
     where: {
       endoso: endosoData.endoso,
@@ -57,27 +60,13 @@ module.exports.postEndoso = async (req, res) => {
 
   if (existingEndoso) throw new ExpressError("endoso ya existe", 400);
 
+  // Create endoso and recibos
   const endoso = await Endoso.create(endosoData, {
     include: {
       model: Recibo,
       as: "recibos",
     },
   });
-
-  // const responseBody = { endoso };
-
-  // if (recibosData) {
-  //   const recibos = await Promise.all(
-  //     recibosData.map(async (reciboData) => {
-  //       const recibo = await Recibo.create(
-  //         { ...reciboData, polizaId: poliza.id, endosoId: endoso.id },
-  //         { transaction: t }
-  //       );
-  //       return recibo;
-  //     })
-  //   );
-  //   responseBody.recibos = recibos;
-  // }
 
   const response = new CustomResponse(endoso, 201);
 
@@ -111,19 +100,20 @@ module.exports.updateEndoso = async (req, res) => {
   const t = await sequelize.transaction();
 
   try {
-    await Recibo.destroy(
-      {
-        where: {
-          endosoId: endoso.id,
-        },
+    // Delete recibos
+    await Recibo.destroy({
+      where: {
+        endosoId: endoso.id,
       },
-      { transaction: t }
-    );
+      transaction: t,
+    });
 
+    // Update endoso
     endoso.set(endosoData);
 
-    const updatedEndoso = await endoso.save();
+    const updatedEndoso = await endoso.save({ transaction: t });
 
+    // Create new recibos
     const recibos = await Promise.all(
       recibosData.map(async (reciboData) => {
         const recibo = await Recibo.create(
