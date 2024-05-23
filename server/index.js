@@ -40,8 +40,6 @@ const sessionStore = new SequelizeStore({
 
 sessionStore.sync();
 
-app.use(express.urlencoded({ extended: true }));
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -55,6 +53,8 @@ app.use(
     },
   })
 );
+
+app.use(express.urlencoded({ extended: true }));
 
 // Check if is authenticated when hitting every /api route
 app.use("/api", isAuthenticated);
