@@ -1,9 +1,8 @@
 const { Op } = require("sequelize");
 const { Poliza, Recibo, sequelize } = require("../models");
-const getMexicoDate = require("./getMexicoDate");
 
 const markPolizasVencidas = async () => {
-  const date = new Date(getMexicoDate());
+  const date = new Date();
 
   const t = await sequelize.transaction();
 
