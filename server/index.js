@@ -32,7 +32,11 @@ cron.schedule(
 );
 
 // Use sequelize to store session info
-const sessionStore = new SequelizeStore({ db: db.sequelize });
+const sessionStore = new SequelizeStore({
+  db: db.sequelize,
+  checkExpirationInterval: 1000 * 60 * 60 * 6,
+  expiration: 1000 * 60 * 60 * 3,
+});
 
 sessionStore.sync();
 
@@ -47,7 +51,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 1000 * 60 * 60,
+      maxAge: 1000 * 60 * 60 * 3,
     },
   })
 );
