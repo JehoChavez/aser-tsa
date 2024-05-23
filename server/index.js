@@ -13,14 +13,16 @@ require("dotenv").config();
 
 const db = require("./models");
 
-// Mark expired polizas every midnight
+// Scheduled tasks to be executed every midnight
 cron.schedule(
   "0 0 * * *",
   () => {
+    // Mark expired polizas
     console.log("Marcando polizas vencidas");
     markPolizasVencidas();
 
-    console.log("Eliminado polizas antigüas");
+    // Delete old polizas
+    console.log("Eliminado polizas antiguas");
     deleteOldPolizas();
   },
   {
