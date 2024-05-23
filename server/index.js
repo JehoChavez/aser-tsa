@@ -6,6 +6,7 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const ExpressError = require("./utils/ExpressError");
 const CustomResponse = require("./utils/CustomResponse");
 const markPolizasVencidas = require("./utils/markPolizasVencidas");
+const deleteOldPolizas = require("./utils/deleteOldPolizas");
 const isAuthenticated = require("./utils/isAuthenticated");
 
 require("dotenv").config();
@@ -18,6 +19,9 @@ cron.schedule(
   () => {
     console.log("Marcando polizas vencidas");
     markPolizasVencidas();
+
+    console.log("Eliminado polizas antigüas");
+    deleteOldPolizas();
   },
   {
     scheduled: true,
