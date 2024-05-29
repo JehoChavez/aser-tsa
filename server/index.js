@@ -2,12 +2,15 @@ const express = require("express");
 const app = express();
 const cron = require("node-cron");
 const session = require("express-session");
+const cors = require("cors");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const ExpressError = require("./utils/ExpressError");
 const CustomResponse = require("./utils/CustomResponse");
 const markPolizasVencidas = require("./utils/markPolizasVencidas");
 const deleteOldPolizas = require("./utils/deleteOldPolizas");
 const isAuthenticated = require("./utils/isAuthenticated");
+
+app.use(cors());
 
 require("dotenv").config();
 
@@ -55,6 +58,7 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Check if is authenticated when hitting every /api route
 app.use("/api", isAuthenticated);
