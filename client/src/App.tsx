@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFound from "./pages/NotFound";
+import "./index.css";
 
 const router = createBrowserRouter([
   { path: "/login", element: <p>Login</p> },
