@@ -9,11 +9,15 @@ const LoginForm = () => {
 
     const password = passwordRef.current?.value;
 
-    const response = await axios.post("http://localhost:3001/auth/login", {
-      password,
-    });
-
-    console.log(response);
+    await axios.post(
+      "http://localhost:3000/auth/login",
+      {
+        password,
+      },
+      {
+        withCredentials: true,
+      }
+    );
   };
 
   return (
