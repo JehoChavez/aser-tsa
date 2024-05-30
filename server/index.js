@@ -10,7 +10,13 @@ const markPolizasVencidas = require("./utils/markPolizasVencidas");
 const deleteOldPolizas = require("./utils/deleteOldPolizas");
 const isAuthenticated = require("./utils/isAuthenticated");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
 
 require("dotenv").config();
 
@@ -98,7 +104,7 @@ app.use((err, req, res, next) => {
 });
 
 db.sequelize.sync().then(() => {
-  app.listen(3001, () => {
-    console.log("Server running on port 3001");
+  app.listen(3000, () => {
+    console.log("Server running on port 3000");
   });
 });
