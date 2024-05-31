@@ -1,11 +1,15 @@
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import logo from "../assets/ASER_Logo_Horizontal-SinFond_Claro.png";
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const activeClasses = "font-bold self-center text-xl text-white";
   const inactiveClasses =
     "text-gray-200 hover:text-gray-400 self-center text-xl";
 
-  const links = (
+  const desktopLinks = (
     <>
       <NavLink
         to="/"
@@ -79,18 +83,71 @@ const Navbar = () => {
     </>
   );
 
+  const mobileLinks = (
+    <>
+      <NavLink to="/">CALENDARIO</NavLink>
+      <NavLink to="/clientes">CLIENTES</NavLink>
+      <NavLink to="/polizas">POLIZAS</NavLink>
+      <NavLink to="/configuracion">CONFIGURACION</NavLink>
+    </>
+  );
+
   return (
-    <nav className="bg-blue-950 text-white fixed w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-      <div className="flex flex-row w-full justify-between">
-        <div className="text-3xl font-bold">
-          {/* Reemplazar con logo de ASER */}
-          ASER-TSA
+    <>
+      <nav
+        className={`bg-blue-950 text-white fixed w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center ${
+          isOpen ? "justify-center md:justify-between" : "justify-between"
+        } ${isOpen ? "h-full md:h-16" : "h-16"}`}
+      >
+        <div
+          className={`flex flex-row w-full justify-between ${
+            isOpen ? "hidden md:flex" : ""
+          }`}
+        >
+          <div className="text-3xl font-bold">
+            <img src={logo} alt="ASER-TSA logo" className="h-16" />
+          </div>
+          <div className="hidden md:flex items-center mr-10">
+            <div className="flex items-center space-x-8">{desktopLinks}</div>
+          </div>
+          <span
+            className="md:hidden"
+            onClick={() => setIsOpen((prev) => !prev)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              fill="currentColor"
+              className="bi bi-list"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+              />
+            </svg>
+          </span>
         </div>
-        <div className="hidden md:flex items-center mr-10">
-          <div className="flex items-center space-x-8">{links}</div>
-        </div>
-      </div>
-    </nav>
+        {isOpen && (
+          <div className="md:hidden flex flex-col items-center space-y-8">
+            {mobileLinks}
+            <span onClick={() => setIsOpen((prev) => !prev)}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                fill="currentColor"
+                className="bi bi-x-lg"
+                viewBox="0 0 16 16"
+              >
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+              </svg>
+            </span>
+          </div>
+        )}
+      </nav>
+    </>
   );
 };
 
