@@ -12,7 +12,7 @@ const LoginForm = () => {
     const password = passwordRef.current?.value;
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:3000/auth/login",
         {
           password,
@@ -21,7 +21,9 @@ const LoginForm = () => {
           withCredentials: true,
         }
       );
-      console.log(response);
+
+      setIsError(false);
+      setIsIncorrect(false);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 400) {
         setIsIncorrect(true);
