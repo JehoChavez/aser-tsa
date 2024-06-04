@@ -5,12 +5,13 @@ import Login from "./pages/Login";
 import "./index.css";
 
 const router = createBrowserRouter([
-  { path: "/", element: <Root /> },
+  { path: "/app", element: <Root /> },
   { path: "/login", element: <Login /> },
   { path: "*", element: <NotFound /> },
 ]);
 
 function App() {
+  console.log("app component rendered");
   return <RouterProvider router={router} />;
 }
 
