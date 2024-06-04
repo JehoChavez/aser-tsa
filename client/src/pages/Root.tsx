@@ -14,8 +14,7 @@ const Root = () => {
           "http://localhost:3000/auth/check-session",
           { withCredentials: true }
         );
-        // Only update state if it has changed
-        const authStatus = response.data.data.isAuthenticated;
+        const authStatus = response.data.content.isAuthenticated;
         setIsAuthenticated((prevStatus) =>
           prevStatus !== authStatus ? authStatus : prevStatus
         );
