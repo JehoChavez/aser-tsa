@@ -2,7 +2,7 @@ class CustomResponse {
   constructor(data, status = 200, message = "success") {
     this.message = message;
     this.status = status;
-    this.data = data;
+    this.content = data;
 
     if (status === 201 && message === "success") {
       this.message = "created";
