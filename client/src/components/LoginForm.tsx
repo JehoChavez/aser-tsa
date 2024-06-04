@@ -37,7 +37,7 @@ const LoginForm = () => {
     }
   };
 
-  if (isLoggedIn) return <Navigate to="/app" replace={true} />;
+  if (isLoggedIn) return <Navigate to="/" replace={true} />;
 
   return (
     <div className="border border-blue-950 p-4">
