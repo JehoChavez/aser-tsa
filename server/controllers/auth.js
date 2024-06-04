@@ -27,3 +27,13 @@ module.exports.logout = (req, res) => {
   const response = new CustomResponse("logged out successully", 200);
   res.status(response.status).json(response);
 };
+
+module.exports.checkSession = (req, res) => {
+  if (req.session.isAuthenticated) {
+    const response = new CustomResponse({ isAuthenticated: true }, 200);
+    res.json(response);
+  } else {
+    const response = new CustomResponse({ isAuthenticated: false }, 200);
+    res.json(response);
+  }
+};
