@@ -1,10 +1,12 @@
 import { FormEvent, useRef, useState } from "react";
+import { Navigate } from "react-router-dom";
 import axios from "axios";
 
 const LoginForm = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const [isIncorrect, setIsIncorrect] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const formSubmitHandler = async (event: FormEvent) => {
     event.preventDefault();
@@ -24,6 +26,7 @@ const LoginForm = () => {
 
       setIsError(false);
       setIsIncorrect(false);
+      setIsLoggedIn(true);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 400) {
         setIsIncorrect(true);
@@ -33,6 +36,8 @@ const LoginForm = () => {
       }
     }
   };
+
+  if (isLoggedIn) return <Navigate to="/app" replace={true} />;
 
   return (
     <div className="border border-blue-950 p-4">
