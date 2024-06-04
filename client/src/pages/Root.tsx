@@ -28,8 +28,6 @@ const Root = () => {
     checkSession();
   }, []);
 
-  console.log(isAuthenticated);
-
   if (isAuthenticated === null) {
     return <Loading />;
   }
