@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const CustomResponse = require("../utils/CustomResponse");
+const ExpressError = require("../utils/ExpressError");
 
 module.exports.login = async (req, res) => {
   const inputPassword = req.body.password;
@@ -23,9 +24,18 @@ module.exports.login = async (req, res) => {
 };
 
 module.exports.logout = (req, res) => {
-  req.session.destroy();
-  const response = new CustomResponse("logged out successully", 200);
-  res.status(response.status).json(response);
+  try {
+    if (req.session.isAuthenticated) {
+      req.session.destroy();
+      const response = new CustomResponse("logged out successully", 200);
+      res.status(response.status).json(response);
+    } else {
+      const response = new CustomResponse("not logged in", 400);
+      res.status(response.status).json(response);
+    }
+  } catch (error) {
+    throw new ExpressError("error logging out", 500);
+  }
 };
 
 module.exports.checkSession = (req, res) => {
