@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.rbc-toolbar-label {
+  @apply text-2xl font-bold text-gray-700;
+}
+
+.rbc-btn-group {
+  @apply font-bold;
+}
