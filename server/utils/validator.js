@@ -225,6 +225,11 @@ const loginSchema = joi.object({
   password: joi.string().required(),
 });
 
+const pendientesQuerySchema = joi.object({
+  desde: joi.string().isoDate().required(),
+  hasta: joi.string().isoDate().required(),
+});
+
 module.exports.validateEstadoId = queryValidator(estadoIdSchema);
 
 module.exports.validateRamo = bodyValidator(ramoSchema);
@@ -260,3 +265,5 @@ module.exports.validatePago = bodyValidator(pagoSchema);
 module.exports.validateClienteQuery = queryValidator(clienteQuerySchema);
 
 module.exports.validateLogin = bodyValidator(loginSchema);
+
+module.exports.validatePendientesQuery = queryValidator(pendientesQuerySchema);
