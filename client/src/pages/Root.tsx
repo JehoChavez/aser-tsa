@@ -36,10 +36,10 @@ const Root = () => {
   }
 
   return (
-    <>
+    <div className="h-screen flex flex-col">
       <Navbar />
       <Outlet />
-    </>
+    </div>
   );
 };
 
