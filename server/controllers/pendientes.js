@@ -1,4 +1,11 @@
-const { Recibo, Poliza, Endoso, Cliente, Aseguradora } = require("../models");
+const {
+  Recibo,
+  Poliza,
+  Endoso,
+  Cliente,
+  Aseguradora,
+  Ramo,
+} = require("../models");
 const { Op } = require("sequelize");
 const CustomResponse = require("../utils/CustomResponse");
 
@@ -40,9 +47,38 @@ module.exports.getPendientes = async (req, res) => {
     order: [["fechaInicio", "ASC"]],
   };
 
+  const renovacionesQuery = {
+    where: {
+      finVigencia: {
+        [Op.and]: {
+          [Op.gte]: req.query.desde,
+          [Op.lte]: req.query.hasta,
+        },
+        renovacionId: null,
+      },
+    },
+    attributes: ["id", "noPoliza", "bienAsegurado", "finVigencia"],
+    include: [
+      {
+        model: Ramo,
+        as: "ramo",
+      },
+      {
+        model: Cliente,
+        as: "cliente",
+        attributes: ["id", "tipoPersona", "nombre"],
+      },
+    ],
+  };
+
   const listOfRecibos = await Recibo.findAll(recibosQuery);
 
-  const response = new CustomResponse({ listOfRecibos }, 200);
+  const lisfOfRenovaciones = await Poliza.findAll(renovacionesQuery);
+
+  const response = new CustomResponse(
+    { cobranza: listOfRecibos, renovaciones: lisfOfRenovaciones },
+    200
+  );
 
   res.status(response.status).json(response);
 };
