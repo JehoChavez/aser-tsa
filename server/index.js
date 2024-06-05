@@ -79,6 +79,7 @@ const clientesRouter = require("./routes/api/clientes");
 const polizasRouter = require("./routes/api/polizas");
 const endososRouter = require("./routes/api/endosos");
 const recibosRouter = require("./routes/api/recibos");
+const pendientesRouter = require("./routes/api/pendientes");
 const authRouter = require("./routes/auth");
 app.use("/api/estados", estadosRouter);
 app.use("/api/ramos", ramosRouter);
@@ -89,6 +90,7 @@ app.use("/api/clientes", clientesRouter);
 app.use("/api/polizas", polizasRouter);
 app.use("/api/endosos", endososRouter);
 app.use("/api/recibos", recibosRouter);
+app.use("/api/pendientes", pendientesRouter);
 app.use("/auth", authRouter);
 
 // Handling not specified routes
