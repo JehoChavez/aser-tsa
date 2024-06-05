@@ -140,7 +140,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`bg-blue-950 text-white fixed w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center ${
+        className={`bg-blue-950 text-white fixed top-0 w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center ${
           isOpen ? "justify-center md:justify-between" : "justify-between"
         } ${isOpen ? "h-full md:h-16" : "h-16"}`}
       >
