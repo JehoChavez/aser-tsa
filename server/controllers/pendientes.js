@@ -24,24 +24,24 @@ module.exports.getPendientes = async (req, res) => {
       {
         model: Poliza,
         as: "poliza",
-        attributes: ["noPoliza"],
+        attributes: ["id", "noPoliza"],
         include: [
           {
             model: Cliente,
             as: "cliente",
-            attributes: ["nombre"],
+            attributes: ["id", "nombre"],
           },
           {
             model: Aseguradora,
             as: "aseguradora",
-            attributes: ["aseguradora"],
+            attributes: ["id", "aseguradora"],
           },
         ],
       },
       {
         model: Endoso,
         as: "endoso",
-        attributes: ["endoso"],
+        attributes: ["id", "endoso"],
       },
     ],
     order: [["fechaInicio", "ASC"]],
