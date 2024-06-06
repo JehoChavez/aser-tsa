@@ -34,3 +34,19 @@ export interface Recibo {
     endoso: string;
   } | null;
 }
+
+export interface Renovacion {
+  id: number;
+  noPoliza: string;
+  bienAsegurado: string;
+  finVigencia: string;
+  ramo: {
+    id: number;
+    ramo: string;
+  };
+  cliente: {
+    id: number;
+    tipoPersona: "fisica" | "moral";
+    nombre: "string";
+  };
+}
