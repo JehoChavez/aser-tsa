@@ -13,3 +13,7 @@
 .rbc-btn-group {
   @apply font-bold;
 }
+
+.rbc-event {
+  @apply p-0;
+}
