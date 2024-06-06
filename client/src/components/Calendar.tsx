@@ -1,5 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
-import { Calendar, Event, momentLocalizer } from "react-big-calendar";
+import {
+  Calendar,
+  Event,
+  momentLocalizer,
+  EventProps,
+} from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import "moment/locale/es";
@@ -134,7 +139,7 @@ const CalendarComponent = () => {
         views={["month"]}
         events={events}
         components={{
-          event: CalendarEvent,
+          event: CalendarEvent as React.ComponentType<EventProps<Event>>,
         }}
         onRangeChange={(range) => rangeChangeHandler(range as DateRange)}
       />
