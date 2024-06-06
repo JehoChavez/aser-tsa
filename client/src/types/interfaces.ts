@@ -1,3 +1,5 @@
+import { Event } from "react-big-calendar";
+
 export interface DateRange {
   start: Date;
   end: Date;
@@ -49,4 +51,8 @@ export interface Renovacion {
     tipoPersona: "fisica" | "moral";
     nombre: "string";
   };
+}
+
+export interface CustomEvent extends Event {
+  type: "recibo" | "renovacion";
 }

@@ -4,7 +4,12 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import "moment/locale/es";
 import axios from "axios";
-import { DateRange, Recibo, Renovacion } from "../types/interfaces";
+import {
+  CustomEvent,
+  DateRange,
+  Recibo,
+  Renovacion,
+} from "../types/interfaces";
 import Loading from "./Loading";
 
 moment.locale("es");
@@ -55,12 +60,13 @@ const CalendarComponent = () => {
 
   useEffect(() => {
     // Convert recibos and renovaciones to events
-    const rangeEvents: Event[] = [];
+    const rangeEvents: CustomEvent[] = [];
     recibos.map((recibo) => {
       rangeEvents.push({
         title: recibo.poliza.noPoliza,
         start: new Date(recibo.fechaInicio),
         end: new Date(recibo.fechaInicio),
+        type: "recibo",
       });
     });
     renovaciones.map((renovacion) => {
@@ -68,6 +74,7 @@ const CalendarComponent = () => {
         title: renovacion.noPoliza,
         start: new Date(renovacion.finVigencia),
         end: new Date(renovacion.finVigencia),
+        type: "renovacion",
       });
     });
 
