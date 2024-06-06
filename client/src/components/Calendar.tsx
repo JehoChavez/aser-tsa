@@ -10,7 +10,8 @@ import {
   Recibo,
   Renovacion,
 } from "../types/interfaces";
-import Loading from "./Loading";
+// import Loading from "./Loading";
+import CalendarEvent from "./CalendarEvent";
 
 moment.locale("es");
 
@@ -52,7 +53,7 @@ const CalendarComponent = () => {
       setIsLoading(false);
       console.log(error);
     }
-  }, []);
+  }, [dateRange]);
 
   useEffect(() => {
     getEvents();
@@ -94,6 +95,9 @@ const CalendarComponent = () => {
         culture="es"
         views={["month"]}
         events={events}
+        components={{
+          event: CalendarEvent,
+        }}
         onRangeChange={(range) => rangeChangeHandler(range as DateRange)}
       />
     </div>
