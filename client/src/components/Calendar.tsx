@@ -60,24 +60,62 @@ const CalendarComponent = () => {
   }, [dateRange]);
 
   useEffect(() => {
-    // Convert recibos and renovaciones to events
+    // Convert recibos and renovaciones to events wuth count
     const rangeEvents: CustomEvent[] = [];
-    recibos.map((recibo) => {
-      rangeEvents.push({
-        title: recibo.poliza.noPoliza,
-        start: new Date(recibo.fechaInicio),
-        end: new Date(recibo.fechaInicio),
-        type: "recibo",
-      });
-    });
-    renovaciones.map((renovacion) => {
-      rangeEvents.push({
-        title: renovacion.noPoliza,
-        start: new Date(renovacion.finVigencia),
-        end: new Date(renovacion.finVigencia),
-        type: "renovacion",
-      });
-    });
+    const countedRecibos: CustomEvent[] = recibos.reduce(
+      (acc: CustomEvent[], recibo) => {
+        const reciboDate = new Date(recibo.fechaInicio);
+
+        const existingEntry: CustomEvent | undefined = acc.find((entry) => {
+          console.log({
+            entry: entry.start,
+            recibo: reciboDate,
+          });
+          return entry.start?.getTime() === reciboDate.getTime();
+        });
+
+        if (existingEntry) {
+          existingEntry.count++;
+        } else {
+          acc.push({
+            start: reciboDate,
+            end: reciboDate,
+            type: "recibo",
+            count: 1,
+          });
+        }
+
+        return acc;
+      },
+      []
+    );
+
+    const countedRenovaciones: CustomEvent[] = renovaciones.reduce(
+      (acc: CustomEvent[], renovacion) => {
+        const renovacionDate = new Date(renovacion.finVigencia);
+
+        const existingEntry: CustomEvent | undefined = acc.find(
+          (entry) => entry.start?.getTime() === renovacionDate.getTime()
+        );
+
+        if (existingEntry) {
+          existingEntry.count++;
+        } else {
+          acc.push({
+            start: renovacionDate,
+            end: renovacionDate,
+            type: "renovacion",
+            count: 1,
+          });
+        }
+
+        return acc;
+      },
+      []
+    );
+
+    rangeEvents.push(...countedRecibos);
+    rangeEvents.push(...countedRenovaciones);
 
     // Set events
     setEvents(rangeEvents);
