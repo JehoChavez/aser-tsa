@@ -54,6 +54,6 @@ export interface Renovacion {
 }
 
 export interface CustomEvent extends Event {
-  type: "recibo" | "renovacion";
+  type: "cobranza" | "renovacion";
   count: number;
 }

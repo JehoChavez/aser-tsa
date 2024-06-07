@@ -72,10 +72,6 @@ const CalendarComponent = () => {
         const reciboDate = new Date(recibo.fechaInicio);
 
         const existingEntry: CustomEvent | undefined = acc.find((entry) => {
-          console.log({
-            entry: entry.start,
-            recibo: reciboDate,
-          });
           return entry.start?.getTime() === reciboDate.getTime();
         });
 
@@ -85,7 +81,7 @@ const CalendarComponent = () => {
           acc.push({
             start: reciboDate,
             end: reciboDate,
-            type: "recibo",
+            type: "cobranza",
             count: 1,
           });
         }
