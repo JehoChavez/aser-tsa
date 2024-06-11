@@ -17,7 +17,7 @@ const Modal = ({ size, closeBtn, onClose, children }: ModalProps) => {
           className={`bg-white p-2 shadow-gray-600 shadow-xl flex flex-col ${sizeClassnames}`}
         >
           {closeBtn && (
-            <div>
+            <div className="mb-1">
               <button className="float-right" onClick={onClose}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
