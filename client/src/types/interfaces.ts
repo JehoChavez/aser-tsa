@@ -70,3 +70,13 @@ export interface PendientesInterface {
   type: "cobranza" | "renovaciones";
   pendientes: Renovacion[] | Recibo[];
 }
+
+export interface CalendarContextInterface {
+  isLoading: boolean;
+  range: DateRange;
+  pendientes: Renovacion[] | Recibo[];
+  events: CustomEvent[];
+  selectedDay: Date | null;
+  type: "cobranza" | "renovacion" | null;
+  dayPendientes: Renovacion[] | Recibo[];
+}
