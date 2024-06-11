@@ -15,7 +15,8 @@ import {
   Recibo,
   Renovacion,
 } from "../types/interfaces";
-// import Loading from "./Loading";
+import Modal from "./Modal";
+import Loading from "./Loading";
 import CalendarEvent from "./CalendarEvent";
 
 moment.locale("es");
@@ -122,24 +123,28 @@ const CalendarComponent = () => {
     setEvents(rangeEvents);
   }, [recibos, renovaciones]);
 
-  // Create modal to display loading without breaking the calendar
-  // if (isLoading) return <Loading />;
-
   return (
-    <div className="h-full px-20 py-2">
-      <Calendar
-        localizer={localizer}
-        startAccessor="start"
-        endAccessor="end"
-        culture="es"
-        views={["month"]}
-        events={events}
-        components={{
-          event: CalendarEvent as React.ComponentType<EventProps<Event>>,
-        }}
-        onRangeChange={(range) => rangeChangeHandler(range as DateRange)}
-      />
-    </div>
+    <>
+      <div className="h-full px-20 py-2">
+        <Calendar
+          localizer={localizer}
+          startAccessor="start"
+          endAccessor="end"
+          culture="es"
+          views={["month"]}
+          events={events}
+          components={{
+            event: CalendarEvent as React.ComponentType<EventProps<Event>>,
+          }}
+          onRangeChange={(range) => rangeChangeHandler(range as DateRange)}
+        />
+      </div>
+      {isLoading && (
+        <Modal size="small">
+          <Loading />
+        </Modal>
+      )}
+    </>
   );
 };
 
