@@ -62,4 +62,5 @@ export interface CustomEvent extends Event {
 export interface ModalProps {
   size: "small" | "medium" | "large";
   children: ReactNode;
+  closeBtn?: boolean;
 }
