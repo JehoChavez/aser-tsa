@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { Event } from "react-big-calendar";
 
 export interface DateRange {
@@ -56,4 +57,9 @@ export interface Renovacion {
 export interface CustomEvent extends Event {
   type: "cobranza" | "renovacion";
   count: number;
+}
+
+export interface ModalProps {
+  size: "small" | "medium" | "large";
+  children: ReactNode;
 }
