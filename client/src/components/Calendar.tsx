@@ -18,6 +18,8 @@ import {
 import Modal from "./Modal";
 import Loading from "./Loading";
 import CalendarEvent from "./CalendarEvent";
+import Pendientes from "./Pendientes";
+import { PendientesInterface } from "../types/interfaces";
 
 moment.locale("es");
 
@@ -33,9 +35,12 @@ const CalendarComponent = () => {
   const [renovaciones, setRenovaciones] = useState<Renovacion[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [eventPendientes, setEventPendientes] =
+    useState<PendientesInterface | null>(null);
 
   const rangeChangeHandler = (range: DateRange) => {
     setDateRange(range);
+    setEventPendientes(null);
   };
 
   // Fetch pendientes each time dateRange changes
@@ -123,6 +128,28 @@ const CalendarComponent = () => {
     setEvents(rangeEvents);
   }, [recibos, renovaciones]);
 
+  const selectEventHandler = (event: CustomEvent) => {
+    if (event.type === "cobranza") {
+      const eventRecibos = recibos.filter(
+        (recibo) =>
+          new Date(recibo.fechaInicio).getTime() === event.start?.getTime()
+      );
+      setEventPendientes({
+        type: "cobranza",
+        pendientes: eventRecibos,
+      });
+    } else if (event.type === "renovacion") {
+      const eventRenovaciones = renovaciones.filter(
+        (renovacion) =>
+          new Date(renovacion.finVigencia).getTime() === event.start?.getTime()
+      );
+      setEventPendientes({
+        type: "renovaciones",
+        pendientes: eventRenovaciones,
+      });
+    }
+  };
+
   return (
     <>
       <div className="h-full px-20 py-2">
@@ -137,11 +164,21 @@ const CalendarComponent = () => {
             event: CalendarEvent as React.ComponentType<EventProps<Event>>,
           }}
           onRangeChange={(range) => rangeChangeHandler(range as DateRange)}
+          onSelectEvent={(event) => selectEventHandler(event as CustomEvent)}
         />
       </div>
       {isLoading && (
         <Modal size="small">
           <Loading />
+        </Modal>
+      )}
+      {eventPendientes && (
+        <Modal
+          size="large"
+          closeBtn={true}
+          onClose={() => setEventPendientes(null)}
+        >
+          <Pendientes pendientes={eventPendientes} />
         </Modal>
       )}
     </>

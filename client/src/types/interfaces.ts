@@ -65,3 +65,8 @@ export interface ModalProps {
   closeBtn?: boolean;
   onClose?: () => void;
 }
+
+export interface PendientesInterface {
+  type: "cobranza" | "renovaciones";
+  pendientes: Renovacion[] | Recibo[];
+}
