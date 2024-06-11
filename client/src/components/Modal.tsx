@@ -1,12 +1,12 @@
 import { ModalProps } from "../types/interfaces";
 import { createPortal } from "react-dom";
 
-const Modal = ({ size, closeBtn, children }: ModalProps) => {
-  let sizeClassnames = "h-1/4 w-1/4";
+const Modal = ({ size, closeBtn, onClose, children }: ModalProps) => {
+  let sizeClassnames = "h-1/3 w-1/4";
   if (size === "medium") {
     sizeClassnames = "h-1/2 w-1/2";
   } else if (size === "large") {
-    sizeClassnames = "h-2/3 w-2/3";
+    sizeClassnames = "h-3/4 w-2/3";
   }
 
   return createPortal(
@@ -18,7 +18,7 @@ const Modal = ({ size, closeBtn, children }: ModalProps) => {
         >
           {closeBtn && (
             <div className="w-full flex justify-end mb-1">
-              <button>
+              <button onClick={onClose}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="32"

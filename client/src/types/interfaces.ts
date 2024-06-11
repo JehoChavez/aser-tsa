@@ -63,4 +63,5 @@ export interface ModalProps {
   size: "small" | "medium" | "large";
   children: ReactNode;
   closeBtn?: boolean;
+  onClose?: () => void;
 }
