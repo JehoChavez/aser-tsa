@@ -11,7 +11,7 @@ const Modal = ({ size, children }: ModalProps) => {
 
   return createPortal(
     <>
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+      <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity z-40"></div>
       <div className="fixed h-screen w-screen flex justify-center items-center z-50 top-0">
         <div className={`bg-white ${sizeClassnames}`}>{children}</div>
       </div>
