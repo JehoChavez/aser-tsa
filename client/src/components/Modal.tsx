@@ -14,7 +14,7 @@ const Modal = ({ size, closeBtn, onClose, children }: ModalProps) => {
       <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity z-40"></div>
       <div className="fixed h-screen w-screen flex justify-center items-center z-50 top-0">
         <div
-          className={`bg-white p-2 shadow-gray-600 shadow-xl flex flex-col ${sizeClassnames}`}
+          className={`bg-gray-100 p-2 shadow-gray-600 shadow-xl flex flex-col ${sizeClassnames}`}
         >
           {closeBtn && (
             <div className="mb-1">
