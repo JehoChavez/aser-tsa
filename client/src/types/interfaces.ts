@@ -67,16 +67,20 @@ export interface ModalProps {
 }
 
 export interface PendientesInterface {
-  type: "cobranza" | "renovaciones";
-  pendientes: Renovacion[] | Recibo[];
+  cobranza: Recibo[];
+  renovacion: Renovacion[];
 }
 
 export interface CalendarContextInterface {
   isLoading: boolean;
   range: DateRange;
-  pendientes: Renovacion[] | Recibo[];
+  pendientes: PendientesInterface;
   events: CustomEvent[];
   selectedDay: Date | null;
   type: "cobranza" | "renovacion" | null;
-  dayPendientes: Renovacion[] | Recibo[];
+  dayPendientes: Renovacion[] | Recibo[] | null;
+  fetchEvents: () => Promise<void>;
+  changeRange: (range: DateRange) => void;
+  selectDay: (event: CustomEvent) => void;
+  closePendientesModal: () => void;
 }
