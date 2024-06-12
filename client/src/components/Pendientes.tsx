@@ -1,9 +1,12 @@
-import { PendientesInterface } from "../types/interfaces";
+import { PendientesProps } from "../types/interfaces";
 
-const Pendientes = ({ pendientes }: { pendientes: PendientesInterface }) => {
+const Pendientes = ({ title, pendientes }: PendientesProps) => {
+  console.log(pendientes);
   return (
     <>
-      <h1 className="text-2xl text-gray-100 text-center font-bold bg-blue-950">{pendientes.type.toUpperCase()}</h1>
+      <h1 className="text-2xl text-gray-100 text-center font-bold bg-blue-950 p-1">
+        {title?.toUpperCase() || "Pendientes"}
+      </h1>
     </>
   );
 };

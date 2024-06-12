@@ -54,7 +54,11 @@ const CalendarComponent = () => {
           closeBtn={true}
           onClose={calendarContext.closePendientesModal}
         >
-          <Pendientes pendientes={calendarContext.dayPendientes} />
+          <Pendientes
+            title={calendarContext.type}
+            type={calendarContext.type}
+            pendientes={calendarContext.dayPendientes}
+          />
         </Modal>
       )}
     </>

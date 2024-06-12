@@ -84,3 +84,9 @@ export interface CalendarContextInterface {
   selectDay: (event: CustomEvent) => void;
   closePendientesModal: () => void;
 }
+
+export interface PendientesProps {
+  title: string | null;
+  type: "cobranza" | "renovacion" | null;
+  pendientes: Recibo[] | Renovacion[];
+}
