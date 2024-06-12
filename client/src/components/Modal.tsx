@@ -32,7 +32,7 @@ const Modal = ({ size, closeBtn, onClose, children }: ModalProps) => {
               </button>
             </div>
           )}
-          <div className="w-full h-full">{children}</div>
+          <div className="w-full h-full flex flex-col">{children}</div>
         </div>
       </div>
     </>,

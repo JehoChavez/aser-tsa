@@ -12,7 +12,7 @@ import { CustomEvent, DateRange } from "../types/interfaces";
 import Modal from "./Modal";
 import Loading from "./Loading";
 import CalendarEvent from "./CalendarEvent";
-import ListDialog from "./LIstDialog";
+import Pendientes from "./Pendientes";
 import { CalendarContext } from "../store/calendar-context";
 
 moment.locale("es");
@@ -48,15 +48,7 @@ const CalendarComponent = () => {
           <Loading />
         </Modal>
       )}
-      {calendarContext.dayPendientes && (
-        <Modal
-          size="large"
-          closeBtn={true}
-          onClose={calendarContext.closePendientesModal}
-        >
-          <ListDialog title={calendarContext.type} />
-        </Modal>
-      )}
+      {calendarContext.dayPendientes && <Pendientes />}
     </>
   );
 };
