@@ -85,8 +85,7 @@ export interface CalendarContextInterface {
   closePendientesModal: () => void;
 }
 
-export interface PendientesProps {
+export interface ListDialogProps {
   title: string | null;
-  type: "cobranza" | "renovacion" | null;
-  pendientes: Recibo[] | Renovacion[];
+  children?: ReactNode;
 }

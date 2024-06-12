@@ -1,14 +1,14 @@
-import { PendientesProps } from "../types/interfaces";
+import { ListDialogProps } from "../types/interfaces";
 
-const Pendientes = ({ title, pendientes }: PendientesProps) => {
-  console.log(pendientes);
+const ListDialog = ({ title, children }: ListDialogProps) => {
   return (
     <>
       <h1 className="text-2xl text-gray-100 text-center font-bold bg-blue-950 p-1">
         {title?.toUpperCase() || "Pendientes"}
       </h1>
+      {children}
     </>
   );
 };
 
-export default Pendientes;
+export default ListDialog;
