@@ -3,6 +3,7 @@ import { CalendarContext } from "../store/calendar-context";
 import ListItem from "./ListItem";
 import ListDialog from "./LIstDialog";
 import Modal from "./Modal";
+import ReciboListHeader from "./ReciboListHeader";
 import { Recibo, Renovacion } from "../types/interfaces";
 
 const Pendientes = () => {
@@ -15,7 +16,12 @@ const Pendientes = () => {
         closeBtn={true}
         onClose={calendarContext.closePendientesModal}
       >
-        <ListDialog title={calendarContext.type}>
+        <ListDialog
+          title={calendarContext.type}
+          header={
+            calendarContext.type === "cobranza" ? <ReciboListHeader /> : null
+          }
+        >
           {calendarContext.dayPendientes.map((pendiente) => {
             if (calendarContext.type === "cobranza") {
               const recibo = pendiente as Recibo;

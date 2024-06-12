@@ -87,6 +87,7 @@ export interface CalendarContextInterface {
 
 export interface ListDialogProps {
   title: string | null;
+  header?: ReactNode;
   children?: ReactNode;
 }
 
