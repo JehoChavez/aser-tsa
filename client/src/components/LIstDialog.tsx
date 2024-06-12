@@ -6,7 +6,7 @@ const ListDialog = ({ title, children }: ListDialogProps) => {
       <h1 className="text-2xl text-gray-100 text-center font-bold bg-blue-950 p-1">
         {title?.toUpperCase() || "Pendientes"}
       </h1>
-      <div className="bg-gray-200 h-full">{children}</div>
+      <div className="bg-gray-200 h-full flex flex-col mt-2">{children}</div>
     </>
   );
 };
