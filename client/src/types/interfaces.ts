@@ -89,3 +89,7 @@ export interface ListDialogProps {
   title: string | null;
   children?: ReactNode;
 }
+
+export interface ListItemProps {
+  children: ReactNode;
+}
