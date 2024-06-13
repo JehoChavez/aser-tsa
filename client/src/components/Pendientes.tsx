@@ -4,6 +4,7 @@ import ListItem from "./ListItem";
 import ListDialog from "./LIstDialog";
 import Modal from "./Modal";
 import PendientesReciboListHeader from "./PendientesReciboListHeader";
+import PendientesReciboListItem from "./PendientesReciboListItem";
 import { Recibo, Renovacion } from "../types/interfaces";
 
 const Pendientes = () => {
@@ -19,14 +20,16 @@ const Pendientes = () => {
         <ListDialog
           title={calendarContext.type}
           header={
-            calendarContext.type === "cobranza" ? <PendientesReciboListHeader /> : null
+            calendarContext.type === "cobranza" ? (
+              <PendientesReciboListHeader />
+            ) : null
           }
         >
           {calendarContext.dayPendientes.map((pendiente) => {
             if (calendarContext.type === "cobranza") {
               const recibo = pendiente as Recibo;
               return (
-                <ListItem key={recibo.id}>{recibo.poliza.noPoliza}</ListItem>
+                <PendientesReciboListItem recibo={recibo} key={recibo.id} />
               );
             } else if (calendarContext.type === "renovacion") {
               const renovacion = pendiente as Renovacion;
