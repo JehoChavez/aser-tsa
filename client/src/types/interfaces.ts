@@ -99,3 +99,8 @@ export interface ListItemProps {
 export interface PendientesReciboListItemInterface {
   recibo: Recibo;
 }
+
+export interface PayDialogProps {
+  recibo: Recibo;
+  onCancel: () => void;
+}
