@@ -44,8 +44,8 @@ const Calendario = () => {
       setIsLoading(true);
       const response = await axios.get("http://localhost:3000/api/pendientes", {
         params: {
-          desde: range.start.toISOString(),
-          hasta: range.end.toISOString(),
+          desde: range.start,
+          hasta: range.end,
         },
         withCredentials: true,
       });
