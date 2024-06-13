@@ -95,3 +95,7 @@ export interface ListDialogProps {
 export interface ListItemProps {
   children: ReactNode;
 }
+
+export interface PendientesReciboListItemInterface {
+  recibo: Recibo;
+}

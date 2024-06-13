@@ -1,7 +1,9 @@
 import ListItem from "./ListItem";
-import { Recibo } from "../types/interfaces";
+import { PendientesReciboListItemInterface } from "../types/interfaces";
 
-const PendientesReciboListItem = ({ recibo }: { recibo: Recibo }) => {
+const PendientesReciboListItem = ({
+  recibo,
+}: PendientesReciboListItemInterface) => {
   const monto = new Intl.NumberFormat("en-us", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
