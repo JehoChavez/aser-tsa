@@ -82,7 +82,7 @@ const vendedorSchema = joi.object({
 const clienteSchema = joi.object({
   tipoPersona: joi.string().valid("fisica", "moral"),
   nombre: joi.string().required(),
-  nacimiento: joi.string().isoDate(),
+  nacimiento: joi.alternatives().try(joi.string().isoDate(), joi.date()),
   rfc: joi.string(),
   calle: joi.string(),
   exterior: joi.string(),
@@ -101,9 +101,15 @@ const reciboSchema = joi.object({
   exhibicion: joi.number().integer().required(),
   de: joi.number().integer().required(),
   monto: joi.number().required(),
-  fechaInicio: joi.string().isoDate().required(),
-  fechaLimite: joi.string().isoDate().required(),
-  fechaPago: joi.string().isoDate(),
+  fechaInicio: joi
+    .alternatives()
+    .try(joi.string().isoDate(), joi.date())
+    .required(),
+  fechaLimite: joi
+    .alternatives()
+    .try(joi.string().isoDate(), joi.date())
+    .required(),
+  fechaPago: joi.alternatives().try(joi.string().isoDate(), joi.date()),
   polizaId: joi.number().positive(),
   endosoId: joi.number().positive(),
 });
@@ -112,9 +118,15 @@ const polizaSchema = joi.object({
   poliza: joi
     .object({
       noPoliza: joi.string().required(),
-      emision: joi.string().isoDate(),
-      inicioVigencia: joi.string().isoDate().required(),
-      finVigencia: joi.string().isoDate().required(),
+      emision: joi.alternatives().try(joi.string().isoDate(), joi.date()),
+      inicioVigencia: joi
+        .alternatives()
+        .try(joi.string().isoDate(), joi.date())
+        .required(),
+      finVigencia: joi
+        .alternatives()
+        .try(joi.string().isoDate(), joi.date())
+        .required(),
       bienAsegurado: joi.string().required(),
       primaNeta: joi.number().required(),
       expedicion: joi.number(),
@@ -124,7 +136,9 @@ const polizaSchema = joi.object({
       moneda: joi.string().valid("MXN", "USD", "UDI"),
       formaPago: joi.number().valid(1, 2, 4, 12),
       comentarios: joi.string(),
-      fechaCancelacion: joi.string().isoDate(),
+      fechaCancelacion: joi
+        .alternatives()
+        .try(joi.string().isoDate(), joi.date()),
       clienteId: joi.number().positive().integer().required(),
       aseguradoraId: joi.number().positive().integer().required(),
       agenteId: joi.number().integer().positive().required(),
@@ -150,8 +164,8 @@ const polizasQuerySchema = joi.object({
       "createdAt",
       "fechaCancelacion"
     ),
-  desde: joi.string().isoDate(),
-  hasta: joi.string().isoDate(),
+  desde: joi.alternatives().try(joi.string().isoDate(), joi.date()),
+  hasta: joi.alternatives().try(joi.string().isoDate(), joi.date()),
   cliente: joi.array().items(joi.number().integer().positive()),
   aseguradora: joi.array().items(joi.number().integer().positive()),
   agente: joi.array().items(joi.number().integer().positive()),
@@ -180,9 +194,15 @@ const endosoSchema = joi.object({
   endoso: joi
     .object({
       endoso: joi.string().required(),
-      emision: joi.string().isoDate(),
-      inicioVigencia: joi.string().isoDate().required(),
-      finVigencia: joi.string().isoDate().required(),
+      emision: joi.alternatives().try(joi.string().isoDate(), joi.date()),
+      inicioVigencia: joi
+        .alternatives()
+        .try(joi.string().isoDate(), joi.date())
+        .required(),
+      finVigencia: joi
+        .alternatives()
+        .try(joi.string().isoDate(), joi.date())
+        .required(),
       tipo: joi.string().valid("A", "B", "D"),
       primaNeta: joi.number().required(),
       expedicion: joi.number(),
@@ -190,7 +210,9 @@ const endosoSchema = joi.object({
       iva: joi.number(),
       primaTotal: joi.number().required(),
       comentarios: joi.string(),
-      fechaCancelacion: joi.string().isoDate(),
+      fechaCancelacion: joi
+        .alternatives()
+        .try(joi.string().isoDate(), joi.date()),
       polizaId: joi.number().integer().positive().required(),
     })
     .required(),
@@ -198,17 +220,23 @@ const endosoSchema = joi.object({
 });
 
 const recibosQuerySchema = joi.object({
-  desde: joi.string().isoDate(),
-  hasta: joi.string().isoDate(),
+  desde: joi.alternatives().try(joi.string().isoDate(), joi.date()),
+  hasta: joi.alternatives().try(joi.string().isoDate(), joi.date()),
   pendientes: joi.bool(),
 });
 
 const cancelacionSchema = joi.object({
-  fechaCancelacion: joi.string().isoDate().required(),
+  fechaCancelacion: joi
+    .alternatives()
+    .try(joi.string().isoDate(), joi.date())
+    .required(),
 });
 
 const pagoSchema = joi.object({
-  fechaPago: joi.string().isoDate().required(),
+  fechaPago: joi
+    .alternatives()
+    .try(joi.string().isoDate(), joi.date())
+    .required(),
 });
 
 const clienteIdSchema = joi.object({
@@ -226,8 +254,8 @@ const loginSchema = joi.object({
 });
 
 const pendientesQuerySchema = joi.object({
-  desde: joi.string().isoDate().required(),
-  hasta: joi.string().isoDate().required(),
+  desde: joi.alternatives().try(joi.string().isoDate(), joi.date()).required(),
+  hasta: joi.alternatives().try(joi.string().isoDate(), joi.date()).required(),
 });
 
 module.exports.validateEstadoId = queryValidator(estadoIdSchema);
