@@ -4,7 +4,7 @@ import {
   CalendarContext,
   defaultCalendarContextValue,
 } from "../store/calendar-context";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
   Recibo,
   Renovacion,
@@ -12,6 +12,7 @@ import {
   PendientesInterface,
   DateRange,
 } from "../types/interfaces";
+import { Navigate } from "react-router-dom";
 
 const Calendario = () => {
   const [isLoading, setIsLoading] = useState(
@@ -31,6 +32,7 @@ const Calendario = () => {
   const [dayPendientes, setDayPendientes] = useState(
     defaultCalendarContextValue.dayPendientes
   );
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   const fetchEvents = async () => {
     const rangePendientes: PendientesInterface = {
@@ -57,9 +59,14 @@ const Calendario = () => {
       setPendientes(rangePendientes);
 
       setIsLoading(false);
+      setIsAuthenticated(true);
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
     }
   };
 
@@ -156,6 +163,8 @@ const Calendario = () => {
     // Set events
     setEvents(rangeEvents);
   }, [pendientes]);
+
+  if (isAuthenticated === false) return <Navigate to="/login" replace />;
 
   return (
     <div className="mt-16 h-full w-full">
