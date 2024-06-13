@@ -9,6 +9,7 @@ import "react-calendar/dist/Calendar.css";
 
 const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
   const [value, onChange] = useState<DatePickerValue>(new Date());
+  console.log(value);
 
   const monto = new Intl.NumberFormat("en-us", {
     minimumFractionDigits: 2,
@@ -30,7 +31,12 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
             </p>
           </span>
           <div className="w-full h-8 text-center">
-            <DatePicker value={value} onChange={onChange} locale="es-es" />
+            <DatePicker
+              value={value}
+              onChange={onChange}
+              shouldOpenCalendar={({ reason }) => reason !== "focus"}
+              locale="es-es"
+            />
           </div>
           <div className="flex items-center justify-center h-1/5">
             <button
