@@ -19,13 +19,10 @@ export interface Recibo {
   poliza: {
     id: number;
     noPoliza: string;
+    moneda: "string";
     cliente: {
       id: number;
-      noPoliza: string;
-      cliente: {
-        id: number;
-        nombre: string;
-      };
+      nombre: string;
     };
     aseguradora: {
       id: number;
