@@ -3,7 +3,7 @@ import { CalendarContext } from "../store/calendar-context";
 import ListItem from "./ListItem";
 import ListDialog from "./LIstDialog";
 import Modal from "./Modal";
-import ReciboListHeader from "./ReciboListHeader";
+import PendientesReciboListHeader from "./PendientesReciboListHeader";
 import { Recibo, Renovacion } from "../types/interfaces";
 
 const Pendientes = () => {
@@ -19,7 +19,7 @@ const Pendientes = () => {
         <ListDialog
           title={calendarContext.type}
           header={
-            calendarContext.type === "cobranza" ? <ReciboListHeader /> : null
+            calendarContext.type === "cobranza" ? <PendientesReciboListHeader /> : null
           }
         >
           {calendarContext.dayPendientes.map((pendiente) => {
