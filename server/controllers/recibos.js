@@ -17,7 +17,7 @@ module.exports.getRecibos = async (req, res) => {
       {
         model: Poliza,
         as: "poliza",
-        attributes: ["noPoliza"],
+        attributes: ["id", "noPoliza", "moneda"],
         include: [
           {
             model: Cliente,
