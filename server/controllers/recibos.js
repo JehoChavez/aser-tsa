@@ -4,6 +4,7 @@ const {
   Endoso,
   Cliente,
   Aseguradora,
+  Ramo,
   sequelize,
 } = require("../models");
 const { Op } = require("sequelize");
@@ -27,6 +28,10 @@ module.exports.getRecibos = async (req, res) => {
             model: Aseguradora,
             as: "aseguradora",
             attributes: ["aseguradora"],
+          },
+          {
+            model: Ramo,
+            as: "Ramo",
           },
         ],
       },

@@ -36,6 +36,10 @@ module.exports.getPendientes = async (req, res) => {
             as: "aseguradora",
             attributes: ["id", "aseguradora"],
           },
+          {
+            model: Ramo,
+            as: "ramo",
+          },
         ],
       },
       {
