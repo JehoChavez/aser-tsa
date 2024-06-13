@@ -31,6 +31,10 @@ export interface Recibo {
       id: number;
       aseguradora: string;
     };
+    ramo: {
+      id: number;
+      ramo: string;
+    };
   };
   endoso: {
     id: number;
