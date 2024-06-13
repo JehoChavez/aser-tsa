@@ -15,8 +15,9 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
           {recibo.poliza.noPoliza}/{recibo.endoso?.endoso}
         </h2>
         <div className="h-3/5 flex flex-col">
-          <span className="m-2 font-bold">
-            ${monto} {recibo.poliza.moneda}
+          <span className="m-2 font-bold flex justify-between">
+            <p>Monto:</p>
+            <p>${monto} {recibo.poliza.moneda}</p>
           </span>
           <p className="text-red-500">Datepicker</p>
         </div>
