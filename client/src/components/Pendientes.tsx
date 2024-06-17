@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import PendientesReciboListHeader from "./PendientesReciboListHeader";
 import PendientesReciboListItem from "./PendientesReciboListItem";
 import { Recibo, Renovacion } from "../types/interfaces";
+import Loading from "./Loading";
 
 const Pendientes = () => {
   const calendarContext = useContext(CalendarContext);
@@ -25,6 +26,11 @@ const Pendientes = () => {
             ) : null
           }
         >
+          {!calendarContext.dayPendientes[0] && (
+            <h3 className="text-lg text-center">
+              No hay pendientes para esta fecha
+            </h3>
+          )}
           {calendarContext.dayPendientes.map((pendiente) => {
             if (calendarContext.type === "cobranza") {
               const recibo = pendiente as Recibo;
