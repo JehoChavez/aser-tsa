@@ -24,6 +24,7 @@ export const defaultCalendarContextValue: CalendarContextInterface = {
   changeRange: (range: DateRange) => {},
   selectDay: (event: CustomEvent) => {},
   closePendientesModal: () => {},
+  onPay: (id: number) => {},
 };
 
 export const CalendarContext: React.Context<CalendarContextInterface> =

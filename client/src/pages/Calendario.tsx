@@ -96,6 +96,10 @@ const Calendario = () => {
     setDayPendientes(eventPendientes);
   };
 
+  const onPay = (id: number) => {
+    console.log(id);
+  };
+
   const closePendientesModal = () => {
     setSelectedDay(null);
     setType(null);
@@ -111,7 +115,8 @@ const Calendario = () => {
     const rangeEvents: CustomEvent[] = [];
     const countedRecibos: CustomEvent[] = pendientes.cobranza.reduce(
       (acc: CustomEvent[], recibo) => {
-        const reciboDate = new Date(recibo.fechaInicio);
+        const [year, month, day] = recibo.fechaInicio.split("-").map(Number);
+        const reciboDate = new Date(year, month - 1, day, 0, 0, 0);
 
         const existingEntry: CustomEvent | undefined = acc.find((entry) => {
           return entry.start?.getTime() === reciboDate.getTime();
@@ -181,6 +186,7 @@ const Calendario = () => {
           changeRange,
           selectDay,
           closePendientesModal,
+          onPay,
         }}
       >
         <CalendarComponent />

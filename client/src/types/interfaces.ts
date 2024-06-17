@@ -84,6 +84,7 @@ export interface CalendarContextInterface {
   changeRange: (range: DateRange) => void;
   selectDay: (event: CustomEvent) => void;
   closePendientesModal: () => void;
+  onPay: (id: number) => void;
 }
 
 export interface ListDialogProps {
