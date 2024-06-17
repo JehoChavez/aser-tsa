@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Modal from "./Modal";
 import { PayDialogProps } from "../types/interfaces";
 import DatePicker from "react-date-picker";
 import { DatePickerValue } from "../types/types";
+import { CalendarContext } from "../store/calendar-context";
 
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
 
 const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
   const [value, onChange] = useState<DatePickerValue>(new Date());
+  const calendarContext = useContext(CalendarContext);
 
   const monto = new Intl.NumberFormat("en-us", {
     minimumFractionDigits: 2,
@@ -57,7 +59,10 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
               </span>
               <p>Cancelar</p>
             </button>
-            <button className="flex justify-evenly items-center w-auto px-2 bg-blue-900 rounded hover:bg-blue-950">
+            <button
+              className="flex justify-evenly items-center w-auto px-2 bg-blue-900 rounded hover:bg-blue-950"
+              onClick={() => calendarContext.onPay(recibo.id, value as Date)}
+            >
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

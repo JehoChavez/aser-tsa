@@ -20,6 +20,7 @@ export const defaultCalendarContextValue: CalendarContextInterface = {
   selectedDay: null,
   type: null,
   dayPendientes: null,
+  hasError: false,
   fetchPendientes: async () => {},
   changeRange: (range: DateRange) => {},
   selectDay: (event: CustomEvent) => {},

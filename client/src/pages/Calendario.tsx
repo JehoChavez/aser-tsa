@@ -13,6 +13,7 @@ import {
   DateRange,
 } from "../types/interfaces";
 import { Navigate } from "react-router-dom";
+import { DayPendientes } from "../types/types";
 
 const Calendario = () => {
   const [isLoading, setIsLoading] = useState(
@@ -29,9 +30,10 @@ const Calendario = () => {
   const [type, setType] = useState<"cobranza" | "renovacion" | null>(
     defaultCalendarContextValue.type
   );
-  const [dayPendientes, setDayPendientes] = useState(
+  const [dayPendientes, setDayPendientes] = useState<DayPendientes>(
     defaultCalendarContextValue.dayPendientes
   );
+  const [hasError, setHasError] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   const fetchPendientes = async () => {
@@ -99,8 +101,28 @@ const Calendario = () => {
     setDayPendientes(eventPendientes);
   };
 
-  const onPay = (id: number) => {
-    console.log(id);
+  const onPay = async (id: number, date: Date) => {
+    try {
+      setIsLoading(true);
+      await axios.patch(
+        `http://localhost:3000/api/recibos/${id}/pagar`,
+        {
+          fechaPago: date,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      const newDayPendientes = dayPendientes?.filter(
+        (pendiente) => pendiente.id !== id
+      );
+      setDayPendientes(newDayPendientes as DayPendientes);
+      fetchPendientes();
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setHasError(true);
+    }
   };
 
   const closePendientesModal = () => {
@@ -185,6 +207,7 @@ const Calendario = () => {
           selectedDay,
           type,
           dayPendientes,
+          hasError,
           fetchPendientes,
           changeRange,
           selectDay,

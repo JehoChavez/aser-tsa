@@ -80,11 +80,12 @@ export interface CalendarContextInterface {
   selectedDay: Date | null;
   type: "cobranza" | "renovacion" | null;
   dayPendientes: Renovacion[] | Recibo[] | null;
+  hasError: boolean;
   fetchPendientes: () => Promise<void>;
   changeRange: (range: DateRange) => void;
   selectDay: (event: CustomEvent) => void;
   closePendientesModal: () => void;
-  onPay: (id: number) => void;
+  onPay: (id: number, date: Date) => void;
 }
 
 export interface ListDialogProps {
