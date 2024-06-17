@@ -34,7 +34,7 @@ const Calendario = () => {
   );
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-  const fetchEvents = async () => {
+  const fetchPendientes = async () => {
     const rangePendientes: PendientesInterface = {
       cobranza: [],
       renovacion: [],
@@ -110,7 +110,7 @@ const Calendario = () => {
   };
 
   useEffect(() => {
-    fetchEvents();
+    fetchPendientes();
   }, [range]);
 
   useEffect(() => {
@@ -185,7 +185,7 @@ const Calendario = () => {
           selectedDay,
           type,
           dayPendientes,
-          fetchEvents,
+          fetchPendientes,
           changeRange,
           selectDay,
           closePendientesModal,

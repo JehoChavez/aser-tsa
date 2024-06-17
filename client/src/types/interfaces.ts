@@ -80,7 +80,7 @@ export interface CalendarContextInterface {
   selectedDay: Date | null;
   type: "cobranza" | "renovacion" | null;
   dayPendientes: Renovacion[] | Recibo[] | null;
-  fetchEvents: () => Promise<void>;
+  fetchPendientes: () => Promise<void>;
   changeRange: (range: DateRange) => void;
   selectDay: (event: CustomEvent) => void;
   closePendientesModal: () => void;
