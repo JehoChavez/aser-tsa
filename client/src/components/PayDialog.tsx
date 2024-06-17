@@ -9,7 +9,6 @@ import "react-calendar/dist/Calendar.css";
 
 const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
   const [value, onChange] = useState<DatePickerValue>(new Date());
-  console.log(value);
 
   const monto = new Intl.NumberFormat("en-us", {
     minimumFractionDigits: 2,
@@ -21,7 +20,8 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
       <div className="flex flex-col h-full">
         <h2 className="bg-blue-950 text-gray-100 text-lg font-bold text-center p-2">
           Pagar Recibo {recibo.exhibicion}/{recibo.de} de Póliza{" "}
-          {recibo.poliza.noPoliza}/{recibo.endoso?.endoso}
+          {recibo.poliza.noPoliza}
+          {`${recibo.endoso ? `/${recibo.endoso.endoso}` : ""}`}
         </h2>
         <div className="h-full flex flex-col justify-around p-3">
           <span className="m-2 font-bold flex justify-between">
@@ -38,9 +38,9 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
               locale="es-es"
             />
           </div>
-          <div className="flex items-center justify-center h-1/5">
+          <div className="flex items-center justify-between h-1/5 text-gray-100 text-lg">
             <button
-              className="w-2/5 flex justify-evenly items-center bg-red-500 text-gray-100 text-lg rounded hover:bg-red-700"
+              className="flex justify-evenly items-center w-auto px-2 bg-red-500 rounded hover:bg-red-700"
               onClick={() => onCancel()}
             >
               <span>
@@ -56,6 +56,21 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
                 </svg>
               </span>
               <p>Cancelar</p>
+            </button>
+            <button className="flex justify-evenly items-center w-auto px-2 bg-blue-900 rounded hover:bg-blue-950">
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  className="bi bi-credit-card-fill pr-1"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1" />
+                </svg>
+              </span>
+              <p>Pagar</p>
             </button>
           </div>
         </div>
