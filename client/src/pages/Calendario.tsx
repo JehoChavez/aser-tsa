@@ -83,10 +83,13 @@ const Calendario = () => {
 
     let eventPendientes: Renovacion[] | Recibo[] = [];
     if (event.type === "cobranza") {
-      eventPendientes = pendientes.cobranza.filter(
-        (recibo) =>
-          new Date(recibo.fechaInicio).getTime() === event.start?.getTime()
-      );
+      eventPendientes = pendientes.cobranza.filter((recibo) => {
+        const [year, month, day] = recibo.fechaInicio.split("-").map(Number);
+        return (
+          new Date(year, month - 1, day, 0, 0, 0).getTime() ===
+          event.start?.getTime()
+        );
+      });
     } else if (event.type === "renovacion") {
       eventPendientes = pendientes.renovacion.filter(
         (renovacion) =>
