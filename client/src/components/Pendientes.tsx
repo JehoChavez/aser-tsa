@@ -6,7 +6,6 @@ import Modal from "./Modal";
 import PendientesReciboListHeader from "./PendientesReciboListHeader";
 import PendientesReciboListItem from "./PendientesReciboListItem";
 import { Recibo, Renovacion } from "../types/interfaces";
-import Loading from "./Loading";
 
 const Pendientes = () => {
   const calendarContext = useContext(CalendarContext);

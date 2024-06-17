@@ -40,6 +40,7 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
               locale="es-es"
             />
           </div>
+          {calendarContext.hasError && <h3 className="text-center text-red-600">Ocurrió un error :(</h3>}
           <div className="flex items-center justify-between h-1/5 text-gray-100 text-lg">
             <button
               className="flex justify-evenly items-center w-auto px-2 bg-red-500 rounded hover:bg-red-700"
