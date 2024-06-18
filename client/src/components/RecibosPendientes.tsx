@@ -20,7 +20,7 @@ const RecibosPendientes = () => {
       >
         {calendarContext.dayPendientes &&
         calendarContext.dayPendientes.length > 0 ? (
-          calendarContext.dayPendientes?.map((pendiente) => {
+          calendarContext.dayPendientes.map((pendiente) => {
             const recibo = pendiente as Recibo;
             return <PendientesReciboListItem recibo={recibo} key={recibo.id} />;
           })
