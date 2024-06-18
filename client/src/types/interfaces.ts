@@ -53,6 +53,15 @@ export interface Renovacion {
     tipoPersona: "fisica" | "moral";
     nombre: "string";
   };
+  agente: {
+    id: number;
+    clave: string;
+    nombre: string;
+  };
+  aseguradora: {
+    id: number;
+    aseguradora: string;
+  };
 }
 
 export interface CustomEvent extends Event {
