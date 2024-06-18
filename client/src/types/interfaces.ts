@@ -115,3 +115,7 @@ export interface PayDialogProps {
   recibo: Recibo;
   onCancel: () => void;
 }
+
+export interface PendientesRenovListItemInterface {
+  renovacion: Renovacion;
+}
