@@ -1,4 +1,4 @@
-const PendientesRenovLIstHeader = () => {
+const PendientesRenovListHeader = () => {
   return (
     <div className="w-full p-2 bg-blue-950 text-gray-200 grid grid-cols-12 text-wrap">
       <h3 className="col-start-1 col-span-2">Nombre</h3>
@@ -11,4 +11,4 @@ const PendientesRenovLIstHeader = () => {
   );
 };
 
-export default PendientesRenovLIstHeader;
+export default PendientesRenovListHeader;
