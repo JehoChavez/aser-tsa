@@ -5,6 +5,7 @@ const {
   Cliente,
   Aseguradora,
   Ramo,
+  Agente,
 } = require("../models");
 const { Op } = require("sequelize");
 const CustomResponse = require("../utils/CustomResponse");
@@ -71,6 +72,16 @@ module.exports.getPendientes = async (req, res) => {
         model: Cliente,
         as: "cliente",
         attributes: ["id", "tipoPersona", "nombre"],
+      },
+      {
+        model: Agente,
+        as: "agente",
+        attributes: ["id", "clave", "nombre"],
+      },
+      {
+        model: Aseguradora,
+        as: "aseguradora",
+        attributes: ["id", "aseguradora"],
       },
     ],
   };
