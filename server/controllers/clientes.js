@@ -27,6 +27,7 @@ module.exports.getClientes = async (req, res) => {
   const listOfClientes = await Cliente.findAll({
     where: filter,
     attributes: ["id", "tipoPersona", "nombre", "rfc", "correo", "telefono"],
+    order: [["createdAt", "DESC"]],
   });
 
   const response = new CustomResponse(listOfClientes);
