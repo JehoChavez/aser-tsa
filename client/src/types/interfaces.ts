@@ -122,7 +122,7 @@ export interface PendientesRenovListItemInterface {
 
 export interface ActionButtonInterface {
   title?: string;
-  onClick: () => void;
+  onClick?: () => void;
   children: ReactNode;
 }
 
