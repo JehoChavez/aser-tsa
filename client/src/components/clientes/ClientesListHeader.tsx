@@ -1,7 +1,7 @@
 const ClientesListHeader = () => {
   return (
     <div className="h-auto p-2 bg-blue-950 bg-opacity-90 text-neutral-200 flex">
-      <div className="w-auto px-2">
+      <div className="w-12 px-2">
         <span>Tipo</span>
       </div>
       <div className="w-full h-auto grid grid-cols-12 ">
