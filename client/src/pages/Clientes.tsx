@@ -46,11 +46,13 @@ const Clientes = () => {
       <div className="w-full h-full flex flex-col">
         {isLoading ? (
           <Loading />
-        ) : (
+        ) : clientes[0] ? (
           <>
             <ClientesListHeader />
             <ClientesList clientes={clientes} />
           </>
+        ) : (
+          <h3 className="text-center">No hay clientes</h3>
         )}
       </div>
     </div>
