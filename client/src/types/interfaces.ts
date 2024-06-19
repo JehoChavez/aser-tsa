@@ -133,4 +133,5 @@ export interface ClienteInterface {
   rfc: string;
   correo: string;
   telefono: string;
+  empresa: string;
 }
