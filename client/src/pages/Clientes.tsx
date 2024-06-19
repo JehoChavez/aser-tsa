@@ -1,6 +1,27 @@
+import { useState, useEffect, useCallback } from "react";
 import ClientesListHeader from "../components/clientes/ClientesListHeader";
+import ClientesList from "../components/clientes/ClientesList";
+import { ClienteInterface } from "../types/interfaces";
+import axios from "axios";
 
 const Clientes = () => {
+  const [clientes, setClientes] = useState<ClienteInterface[]>([]);
+
+  const fetchClientes = useCallback(async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/clientes", {
+        withCredentials: true,
+      });
+      setClientes(response.data.content);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchClientes();
+  }, [fetchClientes]);
+
   return (
     <div className="mt-16 w-full h-full px-5 py-4 flex flex-col">
       <span className="flex items-center text-blue-950 text-opacity-95">
@@ -17,8 +38,9 @@ const Clientes = () => {
         <h1 className="text-3xl">Clientes</h1>
       </span>
       <div id="actions" className="w-full h-1/6"></div>
-      <div className="w-full h-full">
+      <div className="w-full h-full flex flex-col">
         <ClientesListHeader />
+        <ClientesList clientes={clientes} />
       </div>
     </div>
   );
