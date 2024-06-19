@@ -1,4 +1,4 @@
-import { ModalProps } from "../types/interfaces";
+import { ModalProps } from "../../types/interfaces";
 import { createPortal } from "react-dom";
 
 const Modal = ({ size, closeBtn, onClose, children }: ModalProps) => {

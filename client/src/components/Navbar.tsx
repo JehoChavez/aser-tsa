@@ -2,7 +2,7 @@ import { NavLink, Navigate } from "react-router-dom";
 import { useState } from "react";
 import logo from "../assets/ASER_Logo_Horizontal-SinFond_Claro.png";
 import axios from "axios";
-import Loading from "./Loading";
+import Loading from "./utils/Loading";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

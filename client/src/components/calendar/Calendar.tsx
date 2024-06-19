@@ -8,12 +8,12 @@ import {
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import "moment/locale/es";
-import { CustomEvent, DateRange } from "../types/interfaces";
-import Modal from "./Modal";
-import Loading from "./Loading";
+import { CustomEvent, DateRange } from "../../types/interfaces";
+import Modal from "../utils/Modal";
+import Loading from "../utils/Loading";
 import CalendarEvent from "./CalendarEvent";
-import Pendientes from "./Pendientes";
-import { CalendarContext } from "../store/calendar-context";
+import Pendientes from "../pendientes/Pendientes";
+import { CalendarContext } from "../../store/calendar-context";
 
 moment.locale("es");
 

@@ -1,5 +1,5 @@
 import { EventProps } from "react-big-calendar";
-import { CustomEvent } from "../types/interfaces";
+import { CustomEvent } from "../../types/interfaces";
 
 const CalendarEvent: React.FC<EventProps<CustomEvent>> = ({ event }) => {
   return (

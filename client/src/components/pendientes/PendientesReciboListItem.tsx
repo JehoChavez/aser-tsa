@@ -1,7 +1,7 @@
 import { useState } from "react";
-import ListItem from "./ListItem";
+import ListItem from "../utils/ListItem";
 import PayDialog from "./PayDialog";
-import { PendientesReciboListItemInterface } from "../types/interfaces";
+import { PendientesReciboListItemInterface } from "../../types/interfaces";
 
 const PendientesReciboListItem = ({
   recibo,

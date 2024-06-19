@@ -1,4 +1,4 @@
-import { ListItemProps } from "../types/interfaces";
+import { ListItemProps } from "../../types/interfaces";
 
 const ListItem = ({ children }: ListItemProps) => {
   return (

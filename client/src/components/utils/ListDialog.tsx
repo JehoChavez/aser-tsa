@@ -1,4 +1,4 @@
-import { ListDialogProps } from "../types/interfaces";
+import { ListDialogProps } from "../../types/interfaces";
 
 const ListDialog = ({ title, header, children }: ListDialogProps) => {
   return (

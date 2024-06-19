@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import CalendarComponent from "../components/Calendar";
+import CalendarComponent from "../components/calendar/Calendar";
 import {
   CalendarContext,
   defaultCalendarContextValue,

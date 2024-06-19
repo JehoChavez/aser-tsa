@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { CalendarContext } from "../store/calendar-context";
-import Modal from "./Modal";
+import { CalendarContext } from "../../store/calendar-context";
+import Modal from "../utils/Modal";
 import PendientesReciboListHeader from "./PendientesReciboListHeader";
-import ListDialog from "./LIstDialog";
+import ListDialog from "../utils/ListDialog";
 import PendientesReciboListItem from "./PendientesReciboListItem";
-import { Recibo } from "../types/interfaces";
+import { Recibo } from "../../types/interfaces";
 
 const RecibosPendientes = () => {
   const calendarContext = useContext(CalendarContext);

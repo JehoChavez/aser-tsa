@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
-import Modal from "./Modal";
-import { PayDialogProps } from "../types/interfaces";
+import Modal from "../utils/Modal";
+import { PayDialogProps } from "../../types/interfaces";
 import DatePicker from "react-date-picker";
-import { DatePickerValue } from "../types/types";
-import { CalendarContext } from "../store/calendar-context";
+import { DatePickerValue } from "../../types/types";
+import { CalendarContext } from "../../store/calendar-context";
 
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";

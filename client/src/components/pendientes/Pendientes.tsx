@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CalendarContext } from "../store/calendar-context";
+import { CalendarContext } from "../../store/calendar-context";
 import RecibosPendientes from "./RecibosPendientes";
 import RenovacionesPendientes from "./RenovacionesPendientes";
 

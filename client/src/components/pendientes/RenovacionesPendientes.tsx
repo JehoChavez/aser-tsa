@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { CalendarContext } from "../store/calendar-context";
-import Modal from "./Modal";
-import ListDialog from "./LIstDialog";
+import { CalendarContext } from "../../store/calendar-context";
+import Modal from "../utils/Modal";
+import ListDialog from "../utils/ListDialog";
 import PendientesRenovListHeader from "./PendientesRenovListHeader";
 import PendientesRenovListItem from "./PendientesRenovListItem";
-import { Renovacion } from "../types/interfaces";
+import { Renovacion } from "../../types/interfaces";
 
 const RenovacionesPendientes = () => {
   const calendarContext = useContext(CalendarContext);

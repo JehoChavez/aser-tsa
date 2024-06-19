@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ListItem from "./ListItem";
-import { PendientesRenovListItemInterface } from "../types/interfaces";
+import ListItem from "../utils/ListItem";
+import { PendientesRenovListItemInterface } from "../../types/interfaces";
 import { Navigate } from "react-router-dom";
 
 const PendientesRenovListItem = ({
