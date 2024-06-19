@@ -125,3 +125,12 @@ export interface ActionButtonInterface {
   onClick: () => void;
   children: ReactNode;
 }
+
+export interface ClienteInterface {
+  id: number;
+  tipoPersona: "fisica" | "moral";
+  nombre: string;
+  rfc: string;
+  correo: string;
+  telefono: string;
+}
