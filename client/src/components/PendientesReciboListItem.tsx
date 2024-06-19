@@ -32,22 +32,24 @@ const PendientesReciboListItem = ({
           <p>
             ${monto} {recibo.poliza.moneda}
           </p>
-          <button
-            title="Aplicar pago"
-            className="bg-gray-100 flex items-center justify-center border border-blue-950 rounded text-blue-950 hover:bg-gray-300 active:bg-gray-500"
-            onClick={() => setShowPayDialog(true)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              fill="currentColor"
-              className="bi bi-credit-card-fill"
-              viewBox="0 0 16 16"
+          <div className="flex items-center justify-center">
+            <button
+              title="Aplicar pago"
+              className="w-auto p-1 bg-gray-100 flex items-center justify-center border border-blue-950 rounded text-blue-950 hover:bg-gray-300 active:bg-gray-500"
+              onClick={() => setShowPayDialog(true)}
             >
-              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1" />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                fill="currentColor"
+                className="bi bi-credit-card-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1" />
+              </svg>
+            </button>
+          </div>
         </div>
       </ListItem>
       {showPayDialog && <PayDialog recibo={recibo} onCancel={cancelPay} />}
