@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ListItem from "../utils/ListItem";
 import PayDialog from "./PayDialog";
+import ActionButton from "../utils/ActionButton";
 import { PendientesReciboListItemInterface } from "../../types/interfaces";
 
 const PendientesReciboListItem = ({
@@ -33,9 +34,8 @@ const PendientesReciboListItem = ({
             ${monto} {recibo.poliza.moneda}
           </p>
           <div className="flex items-center justify-center">
-            <button
+            <ActionButton
               title="Aplicar pago"
-              className="w-auto p-1 bg-gray-100 flex items-center justify-center border border-blue-950 rounded text-blue-950 hover:bg-gray-300 active:bg-gray-500"
               onClick={() => setShowPayDialog(true)}
             >
               <svg
@@ -48,7 +48,7 @@ const PendientesReciboListItem = ({
               >
                 <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1" />
               </svg>
-            </button>
+            </ActionButton>
           </div>
         </div>
       </ListItem>

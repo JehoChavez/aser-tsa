@@ -119,3 +119,9 @@ export interface PayDialogProps {
 export interface PendientesRenovListItemInterface {
   renovacion: Renovacion;
 }
+
+export interface ActionButtonInterface {
+  title?: string;
+  onClick: () => void;
+  children: ReactNode;
+}
