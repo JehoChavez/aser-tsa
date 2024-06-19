@@ -3,7 +3,7 @@ import ClienteListItem from "./ClienteListItem";
 
 const ClientesList = ({ clientes }: { clientes: ClienteInterface[] }) => {
   return (
-    <div className="h-full w-full bg-neutral-200">
+    <div className="h-full w-full bg-neutral-200 overflow-y-auto">
       {clientes.map((cliente) => (
         <ClienteListItem cliente={cliente} key={cliente.id} />
       ))}
