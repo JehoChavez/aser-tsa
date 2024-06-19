@@ -1,20 +1,25 @@
 import { useState, useEffect, useCallback } from "react";
 import ClientesListHeader from "../components/clientes/ClientesListHeader";
 import ClientesList from "../components/clientes/ClientesList";
+import Loading from "../components/utils/Loading";
 import { ClienteInterface } from "../types/interfaces";
 import axios from "axios";
 
 const Clientes = () => {
   const [clientes, setClientes] = useState<ClienteInterface[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchClientes = useCallback(async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get("http://localhost:3000/api/clientes", {
         withCredentials: true,
       });
       setClientes(response.data.content);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   }, []);
 
@@ -39,8 +44,14 @@ const Clientes = () => {
       </span>
       <div id="actions" className="w-full h-1/6"></div>
       <div className="w-full h-full flex flex-col">
-        <ClientesListHeader />
-        <ClientesList clientes={clientes} />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <ClientesListHeader />
+            <ClientesList clientes={clientes} />
+          </>
+        )}
       </div>
     </div>
   );
