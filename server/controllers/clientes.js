@@ -26,7 +26,15 @@ module.exports.getClientes = async (req, res) => {
 
   const listOfClientes = await Cliente.findAll({
     where: filter,
-    attributes: ["id", "tipoPersona", "nombre", "rfc", "correo", "telefono"],
+    attributes: [
+      "id",
+      "tipoPersona",
+      "nombre",
+      "rfc",
+      "correo",
+      "telefono",
+      "empresa",
+    ],
     order: [["createdAt", "DESC"]],
   });
 
