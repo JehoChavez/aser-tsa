@@ -25,6 +25,7 @@ const PendientesRenovListItem = ({
         <div className="col-span-2 flex items-center justify-center">
           <button
             className="w-auto p-1 bg-gray-100 flex items-center justify-center border border-blue-950 rounded text-blue-950 hover:bg-gray-300 active:bg-gray-500"
+            title="Renovar"
             onClick={() => setNavigate(true)}
           >
             <svg
