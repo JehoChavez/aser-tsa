@@ -3,6 +3,7 @@ import ListItem from "../utils/ListItem";
 import PayDialog from "./PayDialog";
 import ActionButton from "../utils/ActionButton";
 import { PendientesReciboListItemInterface } from "../../types/interfaces";
+import { Link } from "react-router-dom";
 
 const PendientesReciboListItem = ({
   recibo,
@@ -22,9 +23,16 @@ const PendientesReciboListItem = ({
     <>
       <ListItem>
         <div className="w-full p-2 bg-neutral-100 grid grid-cols-12">
-          <a className="col-span-2">{recibo.poliza.cliente.nombre}</a>
+          <Link
+            to={`/clientes/${recibo.poliza.cliente.id}`}
+            className="col-span-2"
+          >
+            {recibo.poliza.cliente.nombre}
+          </Link>
           <p className="col-span-2">{recibo.poliza.ramo.ramo}</p>
-          <a className="col-span-2">{recibo.poliza.noPoliza}</a>
+          <Link to={`/polizas/${recibo.polizaId}`} className="col-span-2">
+            {recibo.poliza.noPoliza}
+          </Link>
           <a>{recibo.endoso?.endoso}</a>
           <p>
             {recibo.exhibicion}/{recibo.de}
