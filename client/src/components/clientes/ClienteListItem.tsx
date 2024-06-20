@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const ClienteListItem = ({ cliente }: { cliente: ClienteInterface }) => {
   return (
     <ListItem>
-      <div className="h-auto flex p-1 text-gray-800">
+      <div className="h-auto flex p-1 text-gray-800 bg-blue-800 bg-opacity-5">
         <div className="w-12 pl-1 pr-2">
           <span className="h-full w-full flex items-center justify-center">
             {cliente.tipoPersona === "fisica" ? (
