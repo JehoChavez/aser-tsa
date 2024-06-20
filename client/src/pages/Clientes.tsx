@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import ClientesOptions from "../components/clientes/ClientesOptions";
 import ClientesListHeader from "../components/clientes/ClientesListHeader";
 import ClientesList from "../components/clientes/ClientesList";
 import Loading from "../components/utils/Loading";
@@ -50,7 +51,7 @@ const Clientes = () => {
           </svg>
           <h1 className="text-3xl">Clientes</h1>
         </span>
-        <div id="actions" className="w-full h-1/6"></div>
+        <ClientesOptions />
         <div className="w-full h-full flex flex-col overflow-hidden">
           {isLoading ? (
             <Modal size="small">
