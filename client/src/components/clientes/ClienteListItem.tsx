@@ -34,27 +34,27 @@ const ClienteListItem = ({ cliente }: { cliente: ClienteInterface }) => {
             )}
           </span>
         </div>
-        <div className="w-full h-auto grid grid-cols-12">
-          <div className="col-span-3 px-2 flex items-center">
+        <div className="w-full h-auto grid grid-rows-5 grid-cols-4 md:grid-rows-none md:grid-cols-12">
+          <div className="row-start-1 col-start-1 col-span-3 px-2 flex items-center">
             <Link to={`/clientes/${cliente.id}`} className="underline">
               {cliente.nombre}
             </Link>
           </div>
-          <div className="col-span-1 px-2 flex items-center">
+          <div className="row-start-2 col-span-3 md:hidden xl:flex md:row-start-1 md:col-span-1 px-2 items-center">
             <p>{cliente.rfc}</p>
           </div>
-          <div className="col-span-3 px-2 flex items-center">
+          <div className="row-start-3 col-span3 md:row-start-1 md:col-span-4 lg:col-span-3 px-2 flex items-center">
             <a href={`mailto:${cliente.correo}`} className="underline">
               {cliente.correo}
             </a>
           </div>
-          <div className="col-span-1 px-2 flex items-center">
+          <div className="row-start-4 col-span-3 md:row-start-1 md:col-span-3 lg:col-span-2 xl:col-span-1 px-2 flex items-center">
             <p>{cliente.telefono}</p>
           </div>
-          <div className="col-span-2 px-2 flex items-center">
+          <div className="flex row-start-5 col-span-3 md:hidden lg:row-start-1 lg:flex xl:col-span-2 lg:col-start-9 px-2 items-center">
             <p>{cliente.empresa}</p>
           </div>
-          <div className="col-start-11 col-span-full px-2 flex items-center">
+          <div className="col-start-4 row-span-full md:col-start-11 col-span-full px-2 flex flex-col justify-around md:flex-row md:justify-normal items-center">
             <ActionButton title="Ver Cliente">
               <Link to={`/clientes/${cliente.id}`}>
                 <svg
