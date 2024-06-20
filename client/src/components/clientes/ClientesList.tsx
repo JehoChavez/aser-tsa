@@ -1,10 +1,12 @@
-import { ClienteInterface } from "../../types/interfaces";
+import { useContext } from "react";
+import { ClientesContext } from "../../store/clientes-context";
 import ClienteListItem from "./ClienteListItem";
 
-const ClientesList = ({ clientes }: { clientes: ClienteInterface[] }) => {
+const ClientesList = () => {
+  const clientesContext = useContext(ClientesContext);
   return (
     <div className="h-full w-full bg-neutral-200 overflow-y-auto">
-      {clientes.map((cliente) => (
+      {clientesContext.clientes.map((cliente) => (
         <ClienteListItem cliente={cliente} key={cliente.id} />
       ))}
     </div>

@@ -135,3 +135,8 @@ export interface ClienteInterface {
   telefono: string;
   empresa: string;
 }
+
+export interface ClientesContextInterface {
+  clientes: ClienteInterface[];
+  fetchClientes: () => Promise<void>;
+}
