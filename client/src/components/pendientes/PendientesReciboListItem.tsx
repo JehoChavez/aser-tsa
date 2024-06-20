@@ -22,8 +22,8 @@ const PendientesReciboListItem = ({
   return (
     <>
       <ListItem>
-        <div className="w-full p-2 bg-neutral-100 grid grid-cols-12">
-          <div className="col-span-2 flex items-center">
+        <div className="w-full p-2 bg-neutral-100 flex flex-col lg:grid grid-cols-2 lg:grid-cols-12">
+          <div className="px-2 lg:col-span-3 2xl:col-span-2 flex items-center">
             <Link
               to={`/clientes/${recibo.poliza.cliente.id}`}
               className="underline"
@@ -31,31 +31,31 @@ const PendientesReciboListItem = ({
               {recibo.poliza.cliente.nombre}
             </Link>
           </div>
-          <div className="col-span-2 flex items-center">
+          <div className="px-2 hidden md:block lg:hidden 2xl:flex 2xl:col-span-2 items-center">
             <p>{recibo.poliza.ramo.ramo}</p>
           </div>
-          <div className="col-span-2 flex items-center">
+          <div className="px-2 lg:col-span-2 flex items-center">
             <Link to={`/polizas/${recibo.polizaId}`} className="underline">
               {recibo.poliza.noPoliza}
             </Link>
           </div>
-          <div className="flex items-center">
+          <div className="px-2 flex items-center">
             <a>{recibo.endoso?.endoso}</a>
           </div>
-          <div className="flex items-center">
+          <div className="px-2 flex items-center">
             <p>
               {recibo.exhibicion}/{recibo.de}
             </p>
           </div>
-          <div className="flex items-center">
+          <div className="px-2 hidden col-span-1 2xl:flex items-center">
             <p>{recibo.poliza.aseguradora.aseguradora}</p>
           </div>
-          <div className="col-span-2 flex items-center">
+          <div className="px-2 col-span-3 xl:col-span-2 flex items-center">
             <p>
               ${monto} {recibo.poliza.moneda}
             </p>
           </div>
-          <div className="flex items-center justify-center">
+          <div className="px-2 flex items-center justify-center">
             <ActionButton
               title="Aplicar pago"
               onClick={() => setShowPayDialog(true)}
