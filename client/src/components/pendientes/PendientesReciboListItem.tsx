@@ -23,24 +23,38 @@ const PendientesReciboListItem = ({
     <>
       <ListItem>
         <div className="w-full p-2 bg-neutral-100 grid grid-cols-12">
-          <Link
-            to={`/clientes/${recibo.poliza.cliente.id}`}
-            className="col-span-2"
-          >
-            {recibo.poliza.cliente.nombre}
-          </Link>
-          <p className="col-span-2">{recibo.poliza.ramo.ramo}</p>
-          <Link to={`/polizas/${recibo.polizaId}`} className="col-span-2">
-            {recibo.poliza.noPoliza}
-          </Link>
-          <a>{recibo.endoso?.endoso}</a>
-          <p>
-            {recibo.exhibicion}/{recibo.de}
-          </p>
-          <p className="col-span-2">{recibo.poliza.aseguradora.aseguradora}</p>
-          <p>
-            ${monto} {recibo.poliza.moneda}
-          </p>
+          <div className="col-span-2 flex items-center">
+            <Link
+              to={`/clientes/${recibo.poliza.cliente.id}`}
+              className="underline"
+            >
+              {recibo.poliza.cliente.nombre}
+            </Link>
+          </div>
+          <div className="col-span-2 flex items-center">
+            <p>{recibo.poliza.ramo.ramo}</p>
+          </div>
+          <div className="col-span-2 flex items-center">
+            <Link to={`/polizas/${recibo.polizaId}`} className="underline">
+              {recibo.poliza.noPoliza}
+            </Link>
+          </div>
+          <div className="flex items-center">
+            <a>{recibo.endoso?.endoso}</a>
+          </div>
+          <div className="flex items-center">
+            <p>
+              {recibo.exhibicion}/{recibo.de}
+            </p>
+          </div>
+          <div className="flex items-center">
+            <p>{recibo.poliza.aseguradora.aseguradora}</p>
+          </div>
+          <div className="col-span-2 flex items-center">
+            <p>
+              ${monto} {recibo.poliza.moneda}
+            </p>
+          </div>
           <div className="flex items-center justify-center">
             <ActionButton
               title="Aplicar pago"
@@ -48,8 +62,8 @@ const PendientesReciboListItem = ({
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
+                width="20"
+                height="20"
                 fill="currentColor"
                 className="bi bi-credit-card-fill"
                 viewBox="0 0 16 16"

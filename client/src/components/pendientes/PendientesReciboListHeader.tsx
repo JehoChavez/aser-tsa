@@ -6,8 +6,8 @@ const PendientesReciboListHeader = () => {
       <h3 className="col-span-2">Póliza</h3>
       <h3>Endoso</h3>
       <h3>Serie</h3>
-      <h3 className="col-span-2">Aseguradora</h3>
-      <h3>Monto</h3>
+      <h3>Aseguradora</h3>
+      <h3 className="col-span-2">Monto</h3>
       <h3>Acción</h3>
     </div>
   );
