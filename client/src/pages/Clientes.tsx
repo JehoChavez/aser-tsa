@@ -36,7 +36,7 @@ const Clientes = () => {
         fetchClientes,
       }}
     >
-      <div className="mt-16 w-full h-full px-5 py-4 flex flex-col">
+      <div className="mt-16 w-full h-full px-5 py-4 flex flex-col overflow-hidden">
         <span className="flex items-center text-blue-950 text-opacity-95">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@ const Clientes = () => {
           <h1 className="text-3xl">Clientes</h1>
         </span>
         <div id="actions" className="w-full h-1/6"></div>
-        <div className="w-full h-full flex flex-col">
+        <div className="w-full h-full flex flex-col overflow-hidden">
           {isLoading ? (
             <Modal size="small">
               <Loading />
