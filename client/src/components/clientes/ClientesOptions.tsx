@@ -1,9 +1,9 @@
+import { useContext } from "react";
+import { ClientesContext } from "../../store/clientes-context";
 import SearchInput from "../utils/SearchInput";
 
 const ClientesOptions = () => {
-  const onSearch = (value: string) => {
-    console.log(value);
-  };
+  const clientesContext = useContext(ClientesContext);
 
   return (
     <div className="w-full h-1/6 flex items-center">
@@ -27,7 +27,10 @@ const ClientesOptions = () => {
           </button>
         </div>
         <div className="col-span-3 md:col-span-2 xl:col-span-3 flex items-center px-2">
-          <SearchInput placeholder="Buscar Cliente" onSearch={onSearch} />
+          <SearchInput
+            placeholder="Buscar Cliente"
+            onSearch={clientesContext.onSearch}
+          />
         </div>
       </div>
     </div>

@@ -139,9 +139,14 @@ export interface ClienteInterface {
 export interface ClientesContextInterface {
   clientes: ClienteInterface[];
   fetchClientes: () => Promise<void>;
+  onSearch: (value: string) => void;
 }
 
 export interface SearchInputInterface {
   placeholder: string;
   onSearch: (value: string) => void;
+}
+
+export interface ClientesSearchParams {
+  nombre?: string;
 }

@@ -4,18 +4,24 @@ import ClientesListHeader from "../components/clientes/ClientesListHeader";
 import ClientesList from "../components/clientes/ClientesList";
 import Loading from "../components/utils/Loading";
 import Modal from "../components/utils/Modal";
-import { ClienteInterface } from "../types/interfaces";
+import { ClienteInterface, ClientesSearchParams } from "../types/interfaces";
 import axios from "axios";
 import { ClientesContext } from "../store/clientes-context";
 
 const Clientes = () => {
   const [clientes, setClientes] = useState<ClienteInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [nombre, setNombre] = useState<string>();
 
   const fetchClientes = useCallback(async () => {
     setIsLoading(true);
+    const params: ClientesSearchParams = {};
+    if (nombre) {
+      params.nombre = nombre;
+    }
     try {
       const response = await axios.get("http://localhost:3000/api/clientes", {
+        params,
         withCredentials: true,
       });
       setClientes(response.data.content);
@@ -24,7 +30,11 @@ const Clientes = () => {
       console.log(error);
       setIsLoading(false);
     }
-  }, []);
+  }, [nombre]);
+
+  const onSearch = (value: string) => {
+    setNombre(value);
+  };
 
   useEffect(() => {
     fetchClientes();
@@ -35,6 +45,7 @@ const Clientes = () => {
       value={{
         clientes,
         fetchClientes,
+        onSearch,
       }}
     >
       <div className="mt-16 w-full h-full px-5 py-4 flex flex-col overflow-hidden">
