@@ -7,7 +7,7 @@ const ClientesOptions = () => {
 
   return (
     <div className="w-full h-1/6 flex items-center">
-      <div className="w-full h-1/2 grid grid-cols-12">
+      <div className="w-full h-1/2 grid grid-cols-4 md:grid-cols-5 xl:grid-cols-12">
         <div className="flex items-center col-span-1 px-2">
           <button className="h-8 w-full bg-blue-950 text-neutral-100 rounded flex items-center justify-evenly hover:bg-indigo-950">
             <span>
@@ -26,7 +26,7 @@ const ClientesOptions = () => {
             Nuevo
           </button>
         </div>
-        <div className="col-span-3 flex items-center px-2">
+        <div className="col-span-3 md:col-span-2 xl:col-span-3 flex items-center px-2">
           <SearchInput placeholder="Buscar Cliente" onSearch={onSearch} />
         </div>
       </div>
