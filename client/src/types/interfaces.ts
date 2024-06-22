@@ -150,3 +150,8 @@ export interface SearchInputInterface {
 export interface ClientesSearchParams {
   nombre?: string;
 }
+
+export interface IconTitleParam {
+  icon: ReactNode;
+  children: ReactNode;
+}
