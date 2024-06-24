@@ -130,10 +130,19 @@ export interface ClienteInterface {
   id: number;
   tipoPersona: "fisica" | "moral";
   nombre: string;
-  rfc: string;
-  correo: string;
-  telefono: string;
-  empresa: string;
+  rfc: string | null;
+  correo: string | null;
+  telefono: string | null;
+  empresa: string | null;
+  nacimiento?: string | null;
+  calle?: string | null;
+  exterior?: string | null;
+  interior?: string | null;
+  colonia?: string | null;
+  codigoPostal?: string | null;
+  comentarios?: string | null;
+  estadoId?: number | null;
+  municipioId?: number | null;
 }
 
 export interface ClientesContextInterface {
