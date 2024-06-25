@@ -22,6 +22,7 @@ const ClienteInfo = ({ cliente }: { cliente: ClienteInterface }) => {
             {nacimiento}
           </p>
           <p>RFC: {cliente.rfc}</p>
+          <p>Empresa: {cliente.empresa}</p>
           <p>
             Correo:{" "}
             <a href={`mailto:${cliente.correo}`} className="underline">
