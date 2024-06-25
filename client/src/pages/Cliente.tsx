@@ -77,7 +77,7 @@ const Cliente = () => {
   }
 
   return (
-    <div className="mt-16 w-full h-full px-5 py-4 flex flex-col">{content}</div>
+    <div className="w-full h-full px-5 py-4 flex flex-col">{content}</div>
   );
 };
 

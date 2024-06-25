@@ -197,7 +197,7 @@ const Calendario = () => {
   if (isAuthenticated === false) return <Navigate to="/login" replace />;
 
   return (
-    <div className="mt-16 h-full w-full">
+    <div className="h-full w-full">
       <CalendarContext.Provider
         value={{
           isLoading,

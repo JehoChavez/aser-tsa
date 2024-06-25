@@ -49,7 +49,7 @@ const Clientes = () => {
         onSearch,
       }}
     >
-      <div className="mt-16 w-full h-full px-5 py-4 flex flex-col overflow-hidden">
+      <div className="w-full h-full px-5 py-4 flex flex-col overflow-hidden">
         <IconTitle
           icon={
             <svg
