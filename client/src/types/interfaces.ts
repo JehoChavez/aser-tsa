@@ -143,6 +143,15 @@ export interface ClienteInterface {
   comentarios?: string | null;
   estadoId?: number | null;
   municipioId?: number | null;
+  estado?: {
+    id: number;
+    estado: string;
+  };
+  municipio?: {
+    id: number;
+    municipio: string;
+    estadoId: number;
+  };
 }
 
 export interface ClientesContextInterface {
