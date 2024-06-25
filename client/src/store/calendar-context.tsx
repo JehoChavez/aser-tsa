@@ -9,8 +9,12 @@ import moment from "moment";
 export const defaultCalendarContextValue: CalendarContextInterface = {
   isLoading: false,
   range: {
-    start: moment().startOf("month").toDate(),
-    end: moment().endOf("month").toDate(),
+    start: new Date(
+      moment().startOf("month").toDate().getTime() - 7 * 24 * 60 * 60 * 1000
+    ),
+    end: new Date(
+      moment().endOf("month").toDate().getTime() + 7 * 24 * 60 * 60 * 1000
+    ),
   },
   pendientes: {
     cobranza: [],
