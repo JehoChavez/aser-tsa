@@ -1,8 +1,9 @@
 import IconTitle from "../components/utils/IconTitle";
+import PolizasOptions from "../components/polizas/PolizasOptions";
 
 const Polizas = () => {
   return (
-    <div className="px-5 py-4">
+    <div className="w-full h-full px-5 py-4 flex flex-col overflow-hidden">
       <IconTitle
         icon={
           <svg
@@ -19,6 +20,7 @@ const Polizas = () => {
       >
         Pólizas
       </IconTitle>
+      <PolizasOptions />
     </div>
   );
 };
