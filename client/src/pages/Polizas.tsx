@@ -8,6 +8,8 @@ import {
 import { PolizaInterface, PolizasParamsInterface } from "../types/interfaces";
 import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
+import Modal from "../components/utils/Modal";
+import Loading from "../components/utils/Loading";
 
 const Polizas = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -80,6 +82,17 @@ const Polizas = () => {
           Pólizas
         </IconTitle>
         <PolizasOptions />
+        <div className="w-full h-full flex flex-col overflow-hidden">
+          {isLoading ? (
+            <Modal size="small">
+              <Loading />
+            </Modal>
+          ) : polizas[0] ? (
+            <h3>Polizas</h3>
+          ) : (
+            <h3 className="text-center">No hay pólizas</h3>
+          )}
+        </div>
       </div>
     </PolizasContext.Provider>
   );
