@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import IconTitle from "../components/utils/IconTitle";
 import PolizasOptions from "../components/polizas/PolizasOptions";
 import {
@@ -10,6 +10,7 @@ import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
 import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
+import PolizasListHeader from "../components/polizas/PolizasListHeader";
 
 const Polizas = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -88,7 +89,7 @@ const Polizas = () => {
               <Loading />
             </Modal>
           ) : polizas[0] ? (
-            <h3>Polizas</h3>
+            <PolizasListHeader />
           ) : (
             <h3 className="text-center">No hay pólizas</h3>
           )}
