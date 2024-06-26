@@ -28,10 +28,7 @@ export interface Recibo {
       id: number;
       aseguradora: string;
     };
-    ramo: {
-      id: number;
-      ramo: string;
-    };
+    ramo: RamoInterface;
   };
   endoso: {
     id: number;
@@ -44,10 +41,7 @@ export interface Renovacion {
   noPoliza: string;
   bienAsegurado: string;
   finVigencia: string;
-  ramo: {
-    id: number;
-    ramo: string;
-  };
+  ramo: RamoInterface;
   cliente: {
     id: number;
     tipoPersona: "fisica" | "moral";
@@ -130,10 +124,10 @@ export interface ClienteInterface {
   id: number;
   tipoPersona: "fisica" | "moral";
   nombre: string;
-  rfc: string | null;
-  correo: string | null;
-  telefono: string | null;
-  empresa: string | null;
+  rfc?: string | null;
+  correo?: string | null;
+  telefono?: string | null;
+  empresa?: string | null;
   nacimiento?: string | null;
   calle?: string | null;
   exterior?: string | null;
@@ -172,4 +166,62 @@ export interface ClientesSearchParams {
 export interface IconTitleParam {
   icon: ReactNode;
   children: ReactNode;
+}
+
+export interface AseguradoraInterface {
+  id: number;
+  aseguradora: string;
+  plazoPrimer?: number;
+  plazoSubsecuentes?: number;
+  comentarios?: string;
+}
+
+export interface AgenteInterface {
+  id: number;
+  clave: string;
+  nombre: string;
+  comentarios?: string | null;
+  aseguradoraId?: string;
+  aseguradora?: AseguradoraInterface;
+}
+
+export interface VendedorInterface {
+  id: number;
+  nombre: string;
+  comentarios?: string;
+}
+
+export interface RamoInterface {
+  id: number;
+  ramo: string;
+}
+
+export interface PolizaInterface {
+  id: number;
+  noPoliza: string;
+  emision: string;
+  inicioVigencia: string;
+  finVigencia: string;
+  bienAsegurado: string;
+  primaNeta: number;
+  expedicion?: number;
+  financiamiento?: number;
+  iva?: number;
+  primaTotal: number;
+  moneda: "MXN" | "USD" | "UDI";
+  formaPago?: 1 | 2 | 4 | 12;
+  comentarios?: string;
+  fechaCancelacion: string | null;
+  vencida: boolean | null;
+  cliente: ClienteInterface;
+  aseguradora: AseguradoraInterface;
+  agente: AgenteInterface;
+  vendedor: VendedorInterface | null;
+  ramo?: RamoInterface;
+  endosos?: PolizaInterface | null;
+  recibos?: Recibo;
+  renueva?: PolizaInterface | null;
+  reexpide?: PolizaInterface | null;
+  renovaciom?: PolizaInterface | null;
+  reexpedicion?: PolizaInterface | null;
 }
