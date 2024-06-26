@@ -129,10 +129,18 @@ const Navbar = () => {
 
   const mobileLinks = (
     <>
-      <NavLink to="/">CALENDARIO</NavLink>
-      <NavLink to="/clientes">CLIENTES</NavLink>
-      <NavLink to="/polizas">POLIZAS</NavLink>
-      <NavLink to="/configuracion">CONFIGURACION</NavLink>
+      <NavLink to="/" onClick={() => setIsOpen(false)}>
+        CALENDARIO
+      </NavLink>
+      <NavLink to="/clientes" onClick={() => setIsOpen(false)}>
+        CLIENTES
+      </NavLink>
+      <NavLink to="/polizas" onClick={() => setIsOpen(false)}>
+        POLIZAS
+      </NavLink>
+      <NavLink to="/configuracion" onClick={() => setIsOpen(false)}>
+        CONFIGURACION
+      </NavLink>
       <button onClick={logOutHandler}>CERRAR SESION</button>
     </>
   );
@@ -140,7 +148,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`bg-blue-950 text-white fixed top-0 w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center ${
+        className={`bg-blue-950 text-white fixed top-0 w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center z-50 ${
           isOpen ? "justify-center md:justify-between" : "justify-between"
         } ${isOpen ? "h-full md:h-16" : "h-16"}`}
       >
