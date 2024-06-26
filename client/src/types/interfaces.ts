@@ -225,3 +225,35 @@ export interface PolizaInterface {
   renovaciom?: PolizaInterface | null;
   reexpedicion?: PolizaInterface | null;
 }
+
+export interface PolizasContextInterface {
+  polizas: PolizaInterface[];
+  params: PolizasParamsInterface;
+  fetchPolizas: () => Promise<void>;
+  onSearch: (value: string) => void;
+}
+
+export interface PolizasParamsInterface {
+  noPoliza: string | null;
+  page: number | null;
+  limit: number | null;
+  tipoFecha: string | null;
+  desde: string | Date | null;
+  hasta: string | Date | null;
+  cliente: number[] | null;
+  aseguradora: number[] | null;
+  agente: number[] | null;
+  vendedor: number[] | null;
+  ramo: number[] | null;
+  orden: "ASC" | "DESC";
+  por:
+    | "inicioVigencia"
+    | "finVigencia"
+    | "emision"
+    | "createdAt"
+    | "fechaCancelacion"
+    | null;
+  estado:
+    | ("vigentes" | "renovadas" | "reexpedidas" | "canceladas" | "vencidas")[]
+    | null;
+}
