@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { ClienteInterface } from "../types/interfaces";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
 import IconTitle from "../components/utils/IconTitle";
@@ -9,6 +9,7 @@ import ClienteInfo from "../components/clientes/ClienteInfo";
 
 const Cliente = () => {
   const { id } = useParams();
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [cliente, setCliente] = useState<ClienteInterface | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,6 +25,11 @@ const Cliente = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
     }
   };
 
@@ -76,9 +82,9 @@ const Cliente = () => {
     );
   }
 
-  return (
-    <div className="w-full h-full px-5 py-4 flex flex-col">{content}</div>
-  );
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
+  return <div className="w-full h-full px-5 py-4 flex flex-col">{content}</div>;
 };
 
 export default Cliente;

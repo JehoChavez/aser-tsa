@@ -6,10 +6,12 @@ import Loading from "../components/utils/Loading";
 import Modal from "../components/utils/Modal";
 import IconTitle from "../components/utils/IconTitle";
 import { ClienteInterface, ClientesSearchParams } from "../types/interfaces";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ClientesContext } from "../store/clientes-context";
+import { Navigate } from "react-router-dom";
 
 const Clientes = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [clientes, setClientes] = useState<ClienteInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [nombre, setNombre] = useState<string>();
@@ -30,6 +32,11 @@ const Clientes = () => {
     } catch (error) {
       console.log(error);
       setIsLoading(false);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
     }
   }, [nombre]);
 
@@ -40,6 +47,8 @@ const Clientes = () => {
   useEffect(() => {
     fetchClientes();
   }, [fetchClientes]);
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
     <ClientesContext.Provider

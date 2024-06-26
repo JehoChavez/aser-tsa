@@ -7,6 +7,7 @@ import {
 } from "../store/polizas-context";
 import { PolizaInterface, PolizasParamsInterface } from "../types/interfaces";
 import axios, { AxiosError } from "axios";
+import { Navigate } from "react-router-dom";
 
 const Polizas = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +50,8 @@ const Polizas = () => {
       };
     });
   };
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
     <PolizasContext.Provider
