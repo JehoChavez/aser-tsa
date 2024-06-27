@@ -8,7 +8,7 @@ const PolizasListHeader  = () => {
       <p className="col-span-2 md:col-span-3 px-2">Contratante</p>
       <p className="hidden md:block px-2">Inicio Vigencia</p>
       <p className="hidden md:block px-2">Fin Vigencia</p>
-      <p className="px-2 col-auto">Acción</p>
+      <p className="px-2 col-auto">Estado / Acciones</p>
     </div>
   )
 }
