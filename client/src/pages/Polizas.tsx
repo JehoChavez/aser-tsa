@@ -11,6 +11,7 @@ import { Navigate } from "react-router-dom";
 import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
 import PolizasListHeader from "../components/polizas/PolizasListHeader";
+import PolizasList from "../components/polizas/PolizasList";
 
 const Polizas = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -89,7 +90,10 @@ const Polizas = () => {
               <Loading />
             </Modal>
           ) : polizas[0] ? (
-            <PolizasListHeader />
+            <>
+              <PolizasListHeader />
+              <PolizasList polizas={polizas} />
+            </>
           ) : (
             <h3 className="text-center">No hay pólizas</h3>
           )}
