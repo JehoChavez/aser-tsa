@@ -222,8 +222,12 @@ export interface PolizaInterface {
   recibos?: Recibo;
   renueva?: PolizaInterface | null;
   reexpide?: PolizaInterface | null;
-  renovaciom?: PolizaInterface | null;
+  renovacion?: PolizaInterface | null;
   reexpedicion?: PolizaInterface | null;
+  renovacionId?: number;
+  reexpedicionId?: number;
+  renuevaId?: number;
+  reexpideId?: number;
 }
 
 export interface PolizasContextInterface {
