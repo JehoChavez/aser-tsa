@@ -77,13 +77,13 @@ const Clientes = () => {
         </IconTitle>
         <ClientesOptions />
         <div className="w-full h-full flex flex-col overflow-hidden">
+          <ClientesListHeader />
           {isLoading ? (
             <Modal size="small">
               <Loading />
             </Modal>
           ) : clientes[0] ? (
             <>
-              <ClientesListHeader />
               <ClientesList />
             </>
           ) : (

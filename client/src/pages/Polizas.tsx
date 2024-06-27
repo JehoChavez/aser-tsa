@@ -94,18 +94,17 @@ const Polizas = () => {
         </IconTitle>
         <PolizasOptions />
         <div className="w-full h-full flex flex-col overflow-hidden">
+          <PolizasListHeader />
           {isLoading ? (
             <Modal size="small">
               <Loading />
             </Modal>
           ) : polizas[0] ? (
             <>
-              <PolizasListHeader />
               <PolizasList />
             </>
           ) : (
             <>
-              <PolizasListHeader />
               <h3 className="text-center">No hay pólizas</h3>
             </>
           )}
