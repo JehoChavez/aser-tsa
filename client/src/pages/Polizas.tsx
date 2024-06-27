@@ -47,12 +47,21 @@ const Polizas = () => {
   }, [fetchPolizas]);
 
   const onSearch = (value: string) => {
-    setParams((prev) => {
-      return {
-        ...prev,
-        noPoliza: value,
-      };
-    });
+    if (value === "") {
+      setParams((prev) => {
+        return {
+          ...prev,
+          noPoliza: null,
+        };
+      });
+    } else {
+      setParams((prev) => {
+        return {
+          ...prev,
+          noPoliza: value,
+        };
+      });
+    }
   };
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;

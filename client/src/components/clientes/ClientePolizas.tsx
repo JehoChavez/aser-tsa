@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import Loading from "../utils/Loading";
 import PolizasListHeader from "../polizas/PolizasListHeader";
 import PolizasList from "../polizas/PolizasList";
+import PolizasOptions from "../polizas/PolizasOptions";
 import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
 import {
@@ -46,13 +47,23 @@ const ClientePolizas = ({ id }: { id: number }) => {
   }, [fetchPolizas]);
 
   const onSearch = (value: string) => {
-    setParams((prev) => {
-      return {
-        ...prev,
-        noPoliza: value,
-      };
-    });
+    if (value === "") {
+      setParams((prev) => {
+        return {
+          ...prev,
+          noPoliza: null,
+        };
+      });
+    } else {
+      setParams((prev) => {
+        return {
+          ...prev,
+          noPoliza: value,
+        };
+      });
+    }
   };
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
@@ -60,6 +71,7 @@ const ClientePolizas = ({ id }: { id: number }) => {
       value={{ polizas, params, fetchPolizas, onSearch }}
     >
       <div className="w-full flex flex-col h-full">
+        <PolizasOptions />
         <PolizasListHeader />
         {isLoading && <Loading />}
         {!isLoading && polizas[0] && <PolizasList />}
