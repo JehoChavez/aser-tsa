@@ -4,6 +4,7 @@ import { PayDialogProps } from "../../types/interfaces";
 import DatePicker from "react-date-picker";
 import { DatePickerValue } from "../../types/types";
 import { CalendarContext } from "../../store/calendar-context";
+import IconTextButton from "../utils/IconTextButton";
 
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
@@ -45,11 +46,8 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
             <h3 className="text-center text-red-600">Ocurrió un error :(</h3>
           )}
           <div className="flex items-center justify-between h-1/5 text-gray-100 text-lg">
-            <button
-              className="flex justify-evenly items-center w-auto px-2 bg-red-500 rounded hover:bg-red-700"
-              onClick={() => onCancel()}
-            >
-              <span>
+            <IconTextButton
+              icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -60,14 +58,16 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
                 >
                   <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
                 </svg>
-              </span>
-              <p>Cancelar</p>
-            </button>
-            <button
-              className="flex justify-evenly items-center w-auto px-2 bg-blue-900 rounded hover:bg-blue-950"
-              onClick={() => calendarContext.onPay(recibo.id, value as Date)}
+              }
+              width="w-auto"
+              bgColor="bg-red-500"
+              hover="bg-red-700"
+              onClick={() => onCancel()}
             >
-              <span>
+              Cancelar
+            </IconTextButton>
+            <IconTextButton
+              icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -78,9 +78,11 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
                 >
                   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1" />
                 </svg>
-              </span>
-              <p>Pagar</p>
-            </button>
+              }
+              onClick={() => calendarContext.onPay(recibo.id, value as Date)}
+            >
+              Pagar
+            </IconTextButton>
           </div>
         </div>
       </div>

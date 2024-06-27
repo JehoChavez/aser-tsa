@@ -261,3 +261,14 @@ export interface PolizasParamsInterface {
     | ("vigentes" | "renovadas" | "reexpedidas" | "canceladas" | "vencidas")[]
     | null;
 }
+
+export interface IconTextButtonInterface {
+  icon: ReactNode;
+  children: ReactNode;
+  width?: string;
+  height?: string;
+  bgColor?: string;
+  textColor?: string;
+  hover?: string;
+  onClick?: () => void;
+}
