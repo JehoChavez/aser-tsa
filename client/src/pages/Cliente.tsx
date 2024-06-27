@@ -6,6 +6,7 @@ import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
 import IconTitle from "../components/utils/IconTitle";
 import ClienteInfo from "../components/clientes/ClienteInfo";
+import ClientePolizas from "../components/clientes/ClientePolizas";
 
 const Cliente = () => {
   const { id } = useParams();
@@ -75,8 +76,9 @@ const Cliente = () => {
     content = (
       <>
         <IconTitle icon={icon}>{cliente?.nombre}</IconTitle>
-        <div className="p-2 pt-5">
+        <div className="p-2 pt-5 w-full h-full flex flex-col">
           <ClienteInfo cliente={cliente as ClienteInterface} />
+          <ClientePolizas id={cliente?.id as number} />
         </div>
       </>
     );
