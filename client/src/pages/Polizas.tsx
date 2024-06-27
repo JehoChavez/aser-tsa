@@ -92,7 +92,7 @@ const Polizas = () => {
           ) : polizas[0] ? (
             <>
               <PolizasListHeader />
-              <PolizasList polizas={polizas} />
+              <PolizasList />
             </>
           ) : (
             <>

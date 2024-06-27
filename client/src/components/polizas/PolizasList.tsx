@@ -1,10 +1,13 @@
-import { PolizaInterface } from "../../types/interfaces";
+import { useContext } from "react";
 import PolizaListItem from "./PolizaListItem";
+import { PolizasContext } from "../../store/polizas-context";
 
-const PolizasList = ({ polizas }: { polizas: PolizaInterface[] }) => {
+const PolizasList = () => {
+  const polizasContext = useContext(PolizasContext);
+
   return (
     <div className="h-5/6 w-full bg-neutral-100 overflow-y-auto">
-      {polizas.map((poliza) => (
+      {polizasContext.polizas.map((poliza) => (
         <PolizaListItem poliza={poliza} key={poliza.id} />
       ))}
     </div>
