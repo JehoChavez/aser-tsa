@@ -38,7 +38,7 @@ const Root = () => {
   return (
     <div className="h-screen flex flex-col">
       <Navbar />
-      <div className="mt-16 flex flex-col w-full h-full overflow-hidden">
+      <div className="mt-16 flex flex-col w-full h-full md:overflow-hidden">
         <Outlet />
       </div>
     </div>
