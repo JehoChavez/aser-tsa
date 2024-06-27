@@ -95,7 +95,10 @@ const Polizas = () => {
               <PolizasList polizas={polizas} />
             </>
           ) : (
-            <h3 className="text-center">No hay pólizas</h3>
+            <>
+              <PolizasListHeader />
+              <h3 className="text-center">No hay pólizas</h3>
+            </>
           )}
         </div>
       </div>
