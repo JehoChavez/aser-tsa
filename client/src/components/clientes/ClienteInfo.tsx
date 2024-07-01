@@ -42,7 +42,7 @@ const ClienteInfo = ({ cliente }: { cliente: ClienteInterface }) => {
         </div>
         <div className="md:w-1/3 m-1 flex flex-col">
           <h4 className="font-semibold">Comentarios:</h4>
-          <p className="bg-neutral-50 w-full h-full p-1 rounded overflow-y-auto">
+          <p className="bg-neutral-50 w-full h-40 p-1 rounded overflow-y-auto">
             {cliente.comentarios}
           </p>
         </div>
