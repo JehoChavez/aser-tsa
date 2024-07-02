@@ -1,10 +1,18 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { PolizasContext } from "../../store/polizas-context";
 import IconTextButton from "../utils/IconTextButton";
 import SearchInput from "../utils/SearchInput";
+import { Navigate } from "react-router-dom";
 
 const PolizasOptions = () => {
   const polizasContext = useContext(PolizasContext);
+  const [navigate, setNavigate] = useState(false);
+
+  const nuevaClickHandler = () => {
+    setNavigate(true);
+  };
+
+  if (navigate) return <Navigate to="./nueva" />;
 
   return (
     <div className="w-full h-1/5 flex items-center">
@@ -25,6 +33,7 @@ const PolizasOptions = () => {
             }
             width="w-full"
             height="h-8"
+            onClick={nuevaClickHandler}
           >
             Nueva
           </IconTextButton>
