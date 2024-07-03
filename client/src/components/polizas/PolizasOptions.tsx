@@ -2,20 +2,19 @@ import { useContext, useState } from "react";
 import { PolizasContext } from "../../store/polizas-context";
 import IconTextButton from "../utils/IconTextButton";
 import SearchInput from "../utils/SearchInput";
-import { Navigate } from "react-router-dom";
+import SelectClienteModal from "../clientes/SelectClienteModal";
 
 const PolizasOptions = () => {
   const polizasContext = useContext(PolizasContext);
-  const [navigate, setNavigate] = useState(false);
+  const [showClienteSelect, setShowClienteSelect] = useState(false);
 
   const nuevaClickHandler = () => {
-    setNavigate(true);
+    setShowClienteSelect(true);
   };
-
-  if (navigate) return <Navigate to="./nueva" />;
 
   return (
     <div className="w-full h-1/5 flex items-center">
+      {showClienteSelect && <SelectClienteModal />}
       <div className="w-full h-1/2 grid grid-cols-4 md:grid-cols-5 xl:grid-cols-12">
         <div className="flex items-center col-span-1 px-2">
           <IconTextButton
