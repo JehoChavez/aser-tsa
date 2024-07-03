@@ -6,7 +6,7 @@ const SearchInput = ({ placeholder, onSearch }: SearchInputInterface) => {
 
   return (
     <form
-      className="flex justify-evenly w-full"
+      className="flex w-full"
       onSubmit={(event) => {
         event.preventDefault();
         onSearch(value);
@@ -19,7 +19,7 @@ const SearchInput = ({ placeholder, onSearch }: SearchInputInterface) => {
         onChange={(event) => {
           setValue(event.target.value);
         }}
-        className="h-8 w-10/12 border border-blue-950 border-opacity-50 bg-blue-500 bg-opacity-5 rounded px-2"
+        className="h-8 w-full border border-blue-950 border-opacity-50 bg-blue-500 bg-opacity-5 rounded px-2"
       />
       <button
         className="bg-blue-950 rounded text-neutral-100 hover:bg-indigo-950 px-2"
