@@ -12,9 +12,13 @@ const PolizasOptions = () => {
     setShowClienteSelect(true);
   };
 
+  const closeModalHandler = () => {
+    setShowClienteSelect(false);
+  };
+
   return (
     <div className="w-full h-1/5 flex items-center">
-      {showClienteSelect && <SelectClienteModal />}
+      {showClienteSelect && <SelectClienteModal onClose={closeModalHandler} />}
       <div className="w-full h-1/2 grid grid-cols-4 md:grid-cols-5 xl:grid-cols-12">
         <div className="flex items-center col-span-1 px-2">
           <IconTextButton

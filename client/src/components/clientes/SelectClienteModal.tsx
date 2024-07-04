@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 import { ClienteInterface, ClientesSearchParams } from "../../types/interfaces";
 import SearchInput from "../utils/SearchInput";
 
-const SelectClienteModal = () => {
+const SelectClienteModal = ({onClose}: {onClose: () => void}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [nombre, setNombre] = useState<string | null>();
@@ -43,7 +43,7 @@ const SelectClienteModal = () => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
-    <Modal size="medium">
+    <Modal size="medium" closeBtn={true} onClose={onClose}>
       <h4 className="text-xl text-blue-950 font-bold mb-3">Selecciona el Cliente</h4>
       <SearchInput
         placeholder="Buscar Cliente"
