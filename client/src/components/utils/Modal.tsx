@@ -14,7 +14,7 @@ const Modal = ({ size, closeBtn, onClose, children }: ModalProps) => {
       <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity z-40"></div>
       <div className="fixed h-screen w-screen flex justify-center items-center z-50 top-0">
         <div
-          className={`bg-gray-200 p-2 shadow-gray-600 shadow-xl flex flex-col ${sizeClassnames}`}
+          className={`bg-gray-200 p-2 shadow-gray-600 shadow-xl flex flex-col ${sizeClassnames} rounded-lg`}
         >
           {closeBtn && (
             <div className="mb-1">
@@ -32,7 +32,7 @@ const Modal = ({ size, closeBtn, onClose, children }: ModalProps) => {
               </button>
             </div>
           )}
-          <div className="w-full h-full flex flex-col">{children}</div>
+          <div className="w-full h-full flex flex-col overflow-auto">{children}</div>
         </div>
       </div>
     </>,
