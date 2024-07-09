@@ -20,6 +20,7 @@ const NPClienteInfo = ({ cliente }: { cliente: ClienteInterface }) => {
           }}
         />
       )}
+      <h2 className="border-b m-2 text-xl text-gray-600 font-bold">Datos del Cliente</h2>
       <div className="flex flex-col md:flex-row rounded p-2">
         <div className="md:w-1/3 px-1">
           <p>Nombre</p>
