@@ -7,7 +7,13 @@ import SearchInput from "../utils/SearchInput";
 import Loading from "../utils/Loading";
 import ListItem from "../utils/ListItem";
 
-const SelectClienteModal = ({ onClose }: { onClose: () => void }) => {
+const SelectClienteModal = ({
+  onClose,
+  onSelect,
+}: {
+  onClose: () => void;
+  onSelect?: () => void;
+}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [nombre, setNombre] = useState<string | null>();
@@ -69,6 +75,9 @@ const SelectClienteModal = ({ onClose }: { onClose: () => void }) => {
                   className="w-full h-full p-1 rounded bg-blue-200 bg-opacity-25 hover:bg-blue-900 hover:bg-opacity-25 hover:cursor-pointer"
                   onClick={() => {
                     setSelected(cliente.id);
+                    if (onSelect) {
+                      onSelect();
+                    }
                   }}
                 >
                   {cliente.nombre}
