@@ -4,7 +4,7 @@ const IconTextButton = ({
   icon,
   children,
   width = "w-auto",
-  height = "heightAuto",
+  height = "height-auto",
   bgColor = "bg-blue-950",
   textColor = "text-neutral-100",
   hover = "bg-indigo-950",
