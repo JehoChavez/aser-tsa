@@ -1,20 +1,32 @@
 import { useContext, useState } from "react";
+import { useParams, Navigate } from "react-router-dom";
 import { PolizasContext } from "../../store/polizas-context";
 import IconTextButton from "../utils/IconTextButton";
 import SearchInput from "../utils/SearchInput";
 import SelectClienteModal from "../clientes/SelectClienteModal";
 
 const PolizasOptions = () => {
+  const { id: clienteId } = useParams();
+
   const polizasContext = useContext(PolizasContext);
   const [showClienteSelect, setShowClienteSelect] = useState(false);
+  const [isClientePage, setIsClientePage] = useState(false);
 
   const nuevaClickHandler = () => {
-    setShowClienteSelect(true);
+    if (clienteId) {
+      setIsClientePage(true);
+    } else {
+      setShowClienteSelect(true);
+    }
   };
 
   const closeModalHandler = () => {
     setShowClienteSelect(false);
   };
+
+  if (isClientePage) {
+    return <Navigate to="./nueva" />;
+  }
 
   return (
     <div className="w-full h-1/5 flex items-center">
