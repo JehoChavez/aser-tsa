@@ -273,8 +273,21 @@ export interface IconTextButtonInterface {
   onClick?: () => void;
 }
 
-export interface FormTextInputProps {
+export interface FormInputProps {
   name: string;
   label: string;
+}
+
+export interface FormTextInputProps extends FormInputProps {
   defaultValue?: string;
+}
+
+export interface SelectInputOption {
+  value: string | number;
+  name: string;
+  selected?: boolean;
+}
+
+export interface FormSelectInputProps extends FormInputProps {
+  options: SelectInputOption[];
 }
