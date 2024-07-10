@@ -6,6 +6,7 @@ import { ClienteInterface } from "../types/interfaces";
 import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
 import NPClienteInfo from "../components/nuevaPoliza/NPClienteInfo";
+import NuevaPolizaForm from "../components/nuevaPoliza/NuevaPolizaForm";
 
 const NuevaPoliza = () => {
   const { id: clienteId } = useParams();
@@ -63,7 +64,10 @@ const NuevaPoliza = () => {
       </IconTitle>
       <div className="w-full h-full py-5">
         {cliente ? (
-          <NPClienteInfo cliente={cliente} />
+          <>
+            <NPClienteInfo cliente={cliente} />
+            <NuevaPolizaForm />
+          </>
         ) : (
           <p className="text-center text-2xl">Cliente No Encontrado</p>
         )}
