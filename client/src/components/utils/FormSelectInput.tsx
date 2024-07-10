@@ -12,12 +12,16 @@ const FormSelectInput = ({ name, label, options }: FormSelectInputProps) => {
         {options.map((option) => {
           if (option.selected) {
             return (
-              <option value={option.value} selected>
+              <option value={option.value} selected key={option.value}>
                 {option.name}
               </option>
             );
           } else {
-            return <option value={option.value}>{option.name}</option>;
+            return (
+              <option value={option.value} key={option.value}>
+                {option.name}
+              </option>
+            );
           }
         })}
       </select>
