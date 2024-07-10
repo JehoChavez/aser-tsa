@@ -290,4 +290,5 @@ export interface SelectInputOption {
 
 export interface FormSelectInputProps extends FormInputProps {
   options: SelectInputOption[];
+  onSelect?: (selected: string) => void;
 }
