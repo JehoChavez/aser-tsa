@@ -8,7 +8,7 @@ const NuevaPolizaForm = () => {
       </h2>
       <form className="mt-2">
         <div className="grid grid-cols-5">
-          <div>
+          <div className="px-2">
             <FormTextInput name="noPoliza" label="Número de Póliza" />
           </div>
         </div>
