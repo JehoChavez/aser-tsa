@@ -272,3 +272,9 @@ export interface IconTextButtonInterface {
   hover?: string;
   onClick?: () => void;
 }
+
+export interface FormTextInputProps {
+  name: string;
+  label: string;
+  defaultValue?: string;
+}
