@@ -10,7 +10,7 @@ const NuevaPolizaForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
-  const [selectedAseguradora, setSelectedAseguradora] = useState<number>(1);
+  const [selectedAseguradora, setSelectedAseguradora] = useState(1);
   const [agentes, setAgentes] = useState<AgenteInterface[]>([]);
 
   const fetchData = useCallback(async () => {
@@ -51,13 +51,9 @@ const NuevaPolizaForm = () => {
     setSelectedAseguradora(parseInt(selected));
   };
 
-  const displayAgentes =
-    selectedAseguradora === 1 ||
-    !agentes.some((agente) => agente.aseguradoraId === selectedAseguradora)
-      ? agentes
-      : agentes.filter(
-          (agente) => agente.aseguradoraId === selectedAseguradora
-        );
+  const displayAgentes = agentes.filter(
+    (agente) => agente.aseguradoraId === selectedAseguradora
+  );
 
   const agenteOptions = displayAgentes.map((agente) => {
     return { value: agente.id, name: `${agente.clave} - ${agente.nombre}` };
