@@ -85,7 +85,11 @@ const NuevaPolizaForm = () => {
           <form className="mt-2" onSubmit={submitHandler}>
             <div className="flex flex-col md:flex-row">
               <div className="md:w-1/4 px-2">
-                <FormTextInput name="noPoliza" label="Número de Póliza" />
+                <FormTextInput
+                  name="noPoliza"
+                  label="Número de Póliza"
+                  required
+                />
               </div>
               <div className="md:w-1/4 px-2">
                 <FormSelectInput

@@ -277,6 +277,7 @@ export interface FormInputProps {
   name: string;
   label: string;
   disabled?: boolean;
+  required?: boolean;
 }
 
 export interface FormTextInputProps extends FormInputProps {
