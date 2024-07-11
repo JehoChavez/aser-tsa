@@ -2,7 +2,11 @@ import { useState, useEffect, useCallback, FormEvent } from "react";
 import FormTextInput from "../utils/FormTextInput";
 import { Navigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
-import { AgenteInterface, AseguradoraInterface } from "../../types/interfaces";
+import {
+  AgenteInterface,
+  AseguradoraInterface,
+  VendedorInterface,
+} from "../../types/interfaces";
 import Loading from "../utils/Loading";
 import FormSelectInput from "../utils/FormSelectInput";
 
@@ -12,6 +16,7 @@ const NuevaPolizaForm = () => {
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
   const [selectedAseguradora, setSelectedAseguradora] = useState(1);
   const [agentes, setAgentes] = useState<AgenteInterface[]>([]);
+  const [vendedores, setVendedores] = useState<VendedorInterface[]>([]);
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
@@ -31,6 +36,12 @@ const NuevaPolizaForm = () => {
         }
       );
       setAgentes(agentesResponse.data.content);
+
+      const vendedoresResponse = await axios.get(
+        "http://localhost:3000/api/vendedores",
+        { withCredentials: true }
+      );
+      setVendedores(vendedoresResponse.data.content);
 
       setIsLoading(false);
     } catch (error) {
@@ -109,6 +120,18 @@ const NuevaPolizaForm = () => {
                   name="agenteId"
                   label="Agente"
                   options={agenteOptions}
+                />
+              </div>
+              <div className="md:w-1/4 px-2">
+                <FormSelectInput
+                  name="vendedorId"
+                  label="Vendedor"
+                  options={vendedores.map((vendedor) => {
+                    return {
+                      value: vendedor.id,
+                      name: vendedor.nombre,
+                    };
+                  })}
                 />
               </div>
             </div>
