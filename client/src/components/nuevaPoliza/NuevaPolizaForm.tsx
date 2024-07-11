@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, FormEvent } from "react";
 import FormTextInput from "../utils/FormTextInput";
 import { Navigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
@@ -47,6 +47,16 @@ const NuevaPolizaForm = () => {
     fetchData();
   }, [fetchData]);
 
+  const submitHandler = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const fd = new FormData(event.target as HTMLFormElement);
+
+    const data = Object.fromEntries(fd.entries());
+
+    console.log(data);
+  };
+
   const aseguradoraSelectHandler = (selected: string) => {
     setSelectedAseguradora(parseInt(selected));
   };
@@ -72,7 +82,7 @@ const NuevaPolizaForm = () => {
           <h2 className="border-b text-xl text-gray-600 font-bold">
             Datos de la Póliza
           </h2>
-          <form className="mt-2">
+          <form className="mt-2" onSubmit={submitHandler}>
             <div className="flex flex-col md:flex-row">
               <div className="md:w-1/4 px-2">
                 <FormTextInput name="noPoliza" label="Número de Póliza" />
@@ -98,6 +108,7 @@ const NuevaPolizaForm = () => {
                 />
               </div>
             </div>
+            <button>Submit</button>
           </form>
         </div>
       )}
