@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import FormTextInput from "../utils/FormTextInput";
 import { Navigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
-import { AseguradoraInterface } from "../../types/interfaces";
+import { AgenteInterface, AseguradoraInterface } from "../../types/interfaces";
 import Loading from "../utils/Loading";
 import FormSelectInput from "../utils/FormSelectInput";
 
@@ -10,6 +10,8 @@ const NuevaPolizaForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
+  const [selectedAseguradora, setSelectedAseguradora] = useState<number>(1);
+  const [agentes, setAgentes] = useState<AgenteInterface[]>([]);
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
@@ -21,6 +23,15 @@ const NuevaPolizaForm = () => {
         }
       );
       setAseguradoras(aseguradorasResponse.data.content);
+
+      const agentesResponse = await axios.get(
+        "http://localhost:3000/api/agentes",
+        {
+          withCredentials: true,
+        }
+      );
+      setAgentes(agentesResponse.data.content);
+
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -35,6 +46,22 @@ const NuevaPolizaForm = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const aseguradoraSelectHandler = (selected: string) => {
+    setSelectedAseguradora(parseInt(selected));
+  };
+
+  const displayAgentes =
+    selectedAseguradora === 1 ||
+    !agentes.some((agente) => agente.aseguradoraId === selectedAseguradora)
+      ? agentes
+      : agentes.filter(
+          (agente) => agente.aseguradoraId === selectedAseguradora
+        );
+
+  const agenteOptions = displayAgentes.map((agente) => {
+    return { value: agente.id, name: `${agente.clave} - ${agente.nombre}` };
+  });
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
@@ -64,6 +91,14 @@ const NuevaPolizaForm = () => {
                       name: aseguradora.aseguradora,
                     };
                   })}
+                  onSelect={aseguradoraSelectHandler}
+                />
+              </div>
+              <div className="md:w-1/4 px-2">
+                <FormSelectInput
+                  name="agenteId"
+                  label="Agente"
+                  options={agenteOptions}
                 />
               </div>
             </div>
