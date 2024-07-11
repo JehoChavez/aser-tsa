@@ -181,7 +181,7 @@ export interface AgenteInterface {
   clave: string;
   nombre: string;
   comentarios?: string | null;
-  aseguradoraId?: string;
+  aseguradoraId?: number;
   aseguradora?: AseguradoraInterface;
 }
 
