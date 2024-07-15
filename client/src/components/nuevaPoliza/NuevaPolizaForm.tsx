@@ -10,6 +10,7 @@ import {
 } from "../../types/interfaces";
 import Loading from "../utils/Loading";
 import FormSelectInput from "../utils/FormSelectInput";
+import FormDateInput from "../utils/FormDateInput";
 
 const NuevaPolizaForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +20,8 @@ const NuevaPolizaForm = () => {
   const [agentes, setAgentes] = useState<AgenteInterface[]>([]);
   const [vendedores, setVendedores] = useState<VendedorInterface[]>([]);
   const [ramos, setRamos] = useState<RamoInterface[]>([]);
+
+  const today = new Date();
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
@@ -101,15 +104,24 @@ const NuevaPolizaForm = () => {
             Datos de la Póliza
           </h2>
           <form className="mt-2" onSubmit={submitHandler}>
-            <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 px-2">
+            <div className="flex flex-col md:flex-row mb-4">
+              <div className="md:w-1/4 px-2">
                 <FormTextInput
                   name="noPoliza"
                   label="Número de Póliza"
                   required
                 />
               </div>
-              <div className="md:w-1/5 px-2">
+              <div className="md:w-1/4 px-2">
+                <FormDateInput
+                  name="emision"
+                  label="Fecha de Emisión"
+                  defaultValue={today}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-1/4 px-2">
                 <FormSelectInput
                   name="aseguradoraId"
                   label="Aseguradora"
@@ -122,14 +134,14 @@ const NuevaPolizaForm = () => {
                   onSelect={aseguradoraSelectHandler}
                 />
               </div>
-              <div className="md:w-1/5 px-2">
+              <div className="md:w-1/4 px-2">
                 <FormSelectInput
                   name="agenteId"
                   label="Agente"
                   options={agenteOptions}
                 />
               </div>
-              <div className="md:w-1/5 px-2">
+              <div className="md:w-1/4 px-2">
                 <FormSelectInput
                   name="vendedorId"
                   label="Vendedor"
@@ -141,7 +153,7 @@ const NuevaPolizaForm = () => {
                   })}
                 />
               </div>
-              <div className="md:w-1/5 px-2">
+              <div className="md:w-1/4 px-2">
                 <FormSelectInput
                   name="ramoId"
                   label="Ramo"
