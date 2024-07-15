@@ -5,6 +5,7 @@ import axios, { AxiosError } from "axios";
 import {
   AgenteInterface,
   AseguradoraInterface,
+  RamoInterface,
   VendedorInterface,
 } from "../../types/interfaces";
 import Loading from "../utils/Loading";
@@ -17,6 +18,7 @@ const NuevaPolizaForm = () => {
   const [selectedAseguradora, setSelectedAseguradora] = useState(1);
   const [agentes, setAgentes] = useState<AgenteInterface[]>([]);
   const [vendedores, setVendedores] = useState<VendedorInterface[]>([]);
+  const [ramos, setRamos] = useState<RamoInterface[]>([]);
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
@@ -42,6 +44,11 @@ const NuevaPolizaForm = () => {
         { withCredentials: true }
       );
       setVendedores(vendedoresResponse.data.content);
+
+      const ramosResponse = await axios.get("http://localhost:3000/api/ramos", {
+        withCredentials: true,
+      });
+      setRamos(ramosResponse.data.content);
 
       setIsLoading(false);
     } catch (error) {
@@ -95,14 +102,14 @@ const NuevaPolizaForm = () => {
           </h2>
           <form className="mt-2" onSubmit={submitHandler}>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/4 px-2">
+              <div className="md:w-1/5 px-2">
                 <FormTextInput
                   name="noPoliza"
                   label="Número de Póliza"
                   required
                 />
               </div>
-              <div className="md:w-1/4 px-2">
+              <div className="md:w-1/5 px-2">
                 <FormSelectInput
                   name="aseguradoraId"
                   label="Aseguradora"
@@ -115,14 +122,14 @@ const NuevaPolizaForm = () => {
                   onSelect={aseguradoraSelectHandler}
                 />
               </div>
-              <div className="md:w-1/4 px-2">
+              <div className="md:w-1/5 px-2">
                 <FormSelectInput
                   name="agenteId"
                   label="Agente"
                   options={agenteOptions}
                 />
               </div>
-              <div className="md:w-1/4 px-2">
+              <div className="md:w-1/5 px-2">
                 <FormSelectInput
                   name="vendedorId"
                   label="Vendedor"
@@ -130,6 +137,18 @@ const NuevaPolizaForm = () => {
                     return {
                       value: vendedor.id,
                       name: vendedor.nombre,
+                    };
+                  })}
+                />
+              </div>
+              <div className="md:w-1/5 px-2">
+                <FormSelectInput
+                  name="ramoId"
+                  label="Ramo"
+                  options={ramos.map((ramo) => {
+                    return {
+                      value: ramo.id,
+                      name: ramo.ramo,
                     };
                   })}
                 />
