@@ -294,3 +294,7 @@ export interface FormSelectInputProps extends FormInputProps {
   options: SelectInputOption[];
   onSelect?: (selected: string) => void;
 }
+
+export interface FormDateInputProps extends FormInputProps {
+  defaultValue?: Date;
+}
