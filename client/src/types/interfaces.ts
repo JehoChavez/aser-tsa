@@ -300,3 +300,10 @@ export interface FormDateInputProps extends FormInputProps {
   value: Date;
   onChange: (date: Date) => void;
 }
+
+export interface AseguradoraSectionProps {
+  aseguradoras: AseguradoraInterface[];
+  agentes: AgenteInterface[];
+  vendedores: VendedorInterface[];
+  ramos: RamoInterface[];
+}

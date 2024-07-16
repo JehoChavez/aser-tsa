@@ -11,6 +11,7 @@ import {
 import Loading from "../utils/Loading";
 import FormSelectInput from "../utils/FormSelectInput";
 import NumberVigenciaSection from "./form/NumberVigenciaSection";
+import AseguradoraSection from "./form/AseguradoraSection";
 
 const NuevaPolizaForm = () => {
   const { id: clienteId } = useParams();
@@ -18,7 +19,6 @@ const NuevaPolizaForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
-  const [selectedAseguradora, setSelectedAseguradora] = useState(1);
   const [agentes, setAgentes] = useState<AgenteInterface[]>([]);
   const [vendedores, setVendedores] = useState<VendedorInterface[]>([]);
   const [ramos, setRamos] = useState<RamoInterface[]>([]);
@@ -79,18 +79,6 @@ const NuevaPolizaForm = () => {
     console.log(data);
   };
 
-  const aseguradoraSelectHandler = (selected: string) => {
-    setSelectedAseguradora(parseInt(selected));
-  };
-
-  const displayAgentes = agentes.filter(
-    (agente) => agente.aseguradoraId === selectedAseguradora
-  );
-
-  const agenteOptions = displayAgentes.map((agente) => {
-    return { value: agente.id, name: `${agente.clave} - ${agente.nombre}` };
-  });
-
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
@@ -105,55 +93,13 @@ const NuevaPolizaForm = () => {
             Datos de la Póliza
           </h2>
           <form className="mt-2" onSubmit={submitHandler}>
-            <div className="flex flex-col md:flex-row mb-4">
-              <NumberVigenciaSection />
-            </div>
-            <div className="flex flex-col md:flex-row mb-4">
-              <div className="md:w-1/4 px-2">
-                <FormSelectInput
-                  name="aseguradoraId"
-                  label="Aseguradora"
-                  options={aseguradoras.map((aseguradora) => {
-                    return {
-                      value: aseguradora.id,
-                      name: aseguradora.aseguradora,
-                    };
-                  })}
-                  onSelect={aseguradoraSelectHandler}
-                />
-              </div>
-              <div className="md:w-1/4 px-2">
-                <FormSelectInput
-                  name="agenteId"
-                  label="Agente"
-                  options={agenteOptions}
-                />
-              </div>
-              <div className="md:w-1/4 px-2">
-                <FormSelectInput
-                  name="vendedorId"
-                  label="Vendedor"
-                  options={vendedores.map((vendedor) => {
-                    return {
-                      value: vendedor.id,
-                      name: vendedor.nombre,
-                    };
-                  })}
-                />
-              </div>
-              <div className="md:w-1/4 px-2">
-                <FormSelectInput
-                  name="ramoId"
-                  label="Ramo"
-                  options={ramos.map((ramo) => {
-                    return {
-                      value: ramo.id,
-                      name: ramo.ramo,
-                    };
-                  })}
-                />
-              </div>
-            </div>
+            <NumberVigenciaSection />
+            <AseguradoraSection
+              aseguradoras={aseguradoras}
+              agentes={agentes}
+              vendedores={vendedores}
+              ramos={ramos}
+            />
             <div className="px-2 mb-4">
               <FormTextInput
                 name="bienAsegurado"
