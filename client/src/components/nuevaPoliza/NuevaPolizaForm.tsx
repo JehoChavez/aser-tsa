@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, FormEvent } from "react";
 import FormTextInput from "../utils/FormTextInput";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import {
   AgenteInterface,
@@ -13,6 +13,8 @@ import FormSelectInput from "../utils/FormSelectInput";
 import FormDateInput from "../utils/FormDateInput";
 
 const NuevaPolizaForm = () => {
+  const { id: clienteId } = useParams();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
@@ -90,6 +92,7 @@ const NuevaPolizaForm = () => {
     const fd = new FormData(event.target as HTMLFormElement);
 
     const data = Object.fromEntries(fd.entries());
+    data.clienteId = clienteId as string;
 
     console.log(data);
   };
