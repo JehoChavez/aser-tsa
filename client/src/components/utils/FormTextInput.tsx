@@ -6,6 +6,7 @@ const FormTextInput = ({
   defaultValue,
   disabled,
   required,
+  placeholder,
 }: FormTextInputProps) => {
   return (
     <div className="w-full flex flex-col">
@@ -18,6 +19,7 @@ const FormTextInput = ({
         defaultValue={defaultValue}
         disabled={disabled}
         required={required}
+        placeholder={placeholder}
       />
     </div>
   );
