@@ -159,7 +159,7 @@ const NuevaPolizaForm = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col md:flex-row mb-4">
               <div className="md:w-1/4 px-2">
                 <FormSelectInput
                   name="aseguradoraId"
@@ -204,6 +204,13 @@ const NuevaPolizaForm = () => {
                   })}
                 />
               </div>
+            </div>
+            <div className="px-2">
+              <FormTextInput
+                name="bienAsegurado"
+                label="Bien Asegurado"
+                placeholder="Unidad, Producto, Titular, Etc."
+              />
             </div>
             <button>Submit</button>
           </form>
