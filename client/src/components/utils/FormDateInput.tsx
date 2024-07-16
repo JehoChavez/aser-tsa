@@ -12,7 +12,7 @@ const FormDateInput = ({
 
   const year = value.getFullYear();
   const month = (value.getMonth() + 1).toString().padStart(2, "0");
-  const day = value.getDate();
+  const day = (value.getDate() + 1).toString().padStart(2, "0");
 
   date = `${year}-${month}-${day}`;
 
