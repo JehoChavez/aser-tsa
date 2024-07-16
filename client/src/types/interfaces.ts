@@ -296,5 +296,6 @@ export interface FormSelectInputProps extends FormInputProps {
 }
 
 export interface FormDateInputProps extends FormInputProps {
-  defaultValue?: Date;
+  value: Date;
+  onChange: (date: Date) => void;
 }

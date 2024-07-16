@@ -5,17 +5,16 @@ const FormDateInput = ({
   label,
   disabled,
   required,
-  defaultValue,
+  value,
+  onChange,
 }: FormDateInputProps) => {
   let date: string | undefined = undefined;
 
-  if (defaultValue) {
-    const year = defaultValue.getFullYear();
-    const month = (defaultValue.getMonth() + 1).toString().padStart(2, "0");
-    const day = defaultValue.getDate();
+  const year = value.getFullYear();
+  const month = (value.getMonth() + 1).toString().padStart(2, "0");
+  const day = value.getDate();
 
-    date = `${year}-${month}-${day}`;
-  }
+  date = `${year}-${month}-${day}`;
 
   return (
     <div className="w-full flex flex-col">
@@ -27,7 +26,13 @@ const FormDateInput = ({
         type="date"
         disabled={disabled}
         required={required}
-        defaultValue={date}
+        value={date}
+        onChange={(e) => {
+          if (onChange) {
+            const date = new Date(e.target.value);
+            onChange(date);
+          }
+        }}
       />
     </div>
   );
