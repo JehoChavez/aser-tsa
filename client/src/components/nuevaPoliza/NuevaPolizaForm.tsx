@@ -23,6 +23,22 @@ const NuevaPolizaForm = () => {
 
   const today = new Date();
 
+  const [emision, setEmision] = useState(today);
+
+  const [inicioVigencia, setInicioVigencia] = useState(today);
+
+  const [finVigencia, setFinVigencia] = useState(
+    new Date(new Date().setFullYear(today.getFullYear() + 1))
+  );
+
+  useEffect(() => {
+    setFinVigencia(
+      new Date(
+        new Date(inicioVigencia).setFullYear(inicioVigencia.getFullYear() + 1)
+      )
+    );
+  }, [inicioVigencia]);
+
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -116,7 +132,30 @@ const NuevaPolizaForm = () => {
                 <FormDateInput
                   name="emision"
                   label="Fecha de Emisión"
-                  defaultValue={today}
+                  value={emision}
+                  onChange={(date) => {
+                    setEmision(date);
+                  }}
+                />
+              </div>
+              <div className="md:w-1/4 px-2">
+                <FormDateInput
+                  name="inicioVigencia"
+                  label="Inicio de Vigencia"
+                  value={inicioVigencia}
+                  onChange={(date) => {
+                    setInicioVigencia(date);
+                  }}
+                />
+              </div>
+              <div className="md:w-1/4 px-2">
+                <FormDateInput
+                  name="finVigencia"
+                  label="Fin de Vigencia"
+                  value={finVigencia}
+                  onChange={(date) => {
+                    setFinVigencia(date);
+                  }}
                 />
               </div>
             </div>
