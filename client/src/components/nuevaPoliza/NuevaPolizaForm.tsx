@@ -10,7 +10,7 @@ import {
 } from "../../types/interfaces";
 import Loading from "../utils/Loading";
 import FormSelectInput from "../utils/FormSelectInput";
-import FormDateInput from "../utils/FormDateInput";
+import NumberVigenciaSection from "./form/NumberVigenciaSection";
 
 const NuevaPolizaForm = () => {
   const { id: clienteId } = useParams();
@@ -22,24 +22,6 @@ const NuevaPolizaForm = () => {
   const [agentes, setAgentes] = useState<AgenteInterface[]>([]);
   const [vendedores, setVendedores] = useState<VendedorInterface[]>([]);
   const [ramos, setRamos] = useState<RamoInterface[]>([]);
-
-  const today = new Date();
-
-  const [emision, setEmision] = useState(today);
-
-  const [inicioVigencia, setInicioVigencia] = useState(today);
-
-  const [finVigencia, setFinVigencia] = useState(
-    new Date(new Date().setFullYear(today.getFullYear() + 1))
-  );
-
-  useEffect(() => {
-    setFinVigencia(
-      new Date(
-        new Date(inicioVigencia).setFullYear(inicioVigencia.getFullYear() + 1)
-      )
-    );
-  }, [inicioVigencia]);
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
@@ -124,43 +106,7 @@ const NuevaPolizaForm = () => {
           </h2>
           <form className="mt-2" onSubmit={submitHandler}>
             <div className="flex flex-col md:flex-row mb-4">
-              <div className="md:w-1/4 px-2">
-                <FormTextInput
-                  name="noPoliza"
-                  label="Número de Póliza"
-                  required
-                />
-              </div>
-              <div className="md:w-1/4 px-2">
-                <FormDateInput
-                  name="emision"
-                  label="Fecha de Emisión"
-                  value={emision}
-                  onChange={(date) => {
-                    setEmision(date);
-                  }}
-                />
-              </div>
-              <div className="md:w-1/4 px-2">
-                <FormDateInput
-                  name="inicioVigencia"
-                  label="Inicio de Vigencia"
-                  value={inicioVigencia}
-                  onChange={(date) => {
-                    setInicioVigencia(date);
-                  }}
-                />
-              </div>
-              <div className="md:w-1/4 px-2">
-                <FormDateInput
-                  name="finVigencia"
-                  label="Fin de Vigencia"
-                  value={finVigencia}
-                  onChange={(date) => {
-                    setFinVigencia(date);
-                  }}
-                />
-              </div>
+              <NumberVigenciaSection />
             </div>
             <div className="flex flex-col md:flex-row mb-4">
               <div className="md:w-1/4 px-2">
@@ -208,12 +154,26 @@ const NuevaPolizaForm = () => {
                 />
               </div>
             </div>
-            <div className="px-2">
+            <div className="px-2 mb-4">
               <FormTextInput
                 name="bienAsegurado"
                 label="Bien Asegurado"
                 placeholder="Unidad, Producto, Titular, Etc."
               />
+            </div>
+            <div className="flex flex-col md:flex-row mb-4">
+              <div className="px-2 md:w-1/6">
+                <FormSelectInput
+                  name="moneda"
+                  label="Moneda"
+                  options={[
+                    { value: "MXN", name: "MXN" },
+                    { value: "USD", name: "USD" },
+                    { value: "UDI", name: "MXN" },
+                  ]}
+                />
+              </div>
+              <div className="px-2 md:w-1/6"></div>
             </div>
             <button>Submit</button>
           </form>
