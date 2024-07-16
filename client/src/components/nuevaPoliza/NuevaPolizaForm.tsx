@@ -9,9 +9,9 @@ import {
   VendedorInterface,
 } from "../../types/interfaces";
 import Loading from "../utils/Loading";
-import FormSelectInput from "../utils/FormSelectInput";
 import NumberVigenciaSection from "./form/NumberVigenciaSection";
 import AseguradoraSection from "./form/AseguradoraSection";
+import MonedaSection from "./form/MonedaSection";
 
 const NuevaPolizaForm = () => {
   const { id: clienteId } = useParams();
@@ -107,20 +107,7 @@ const NuevaPolizaForm = () => {
                 placeholder="Unidad, Producto, Titular, Etc."
               />
             </div>
-            <div className="flex flex-col md:flex-row mb-4">
-              <div className="px-2 md:w-1/6">
-                <FormSelectInput
-                  name="moneda"
-                  label="Moneda"
-                  options={[
-                    { value: "MXN", name: "MXN" },
-                    { value: "USD", name: "USD" },
-                    { value: "UDI", name: "MXN" },
-                  ]}
-                />
-              </div>
-              <div className="px-2 md:w-1/6"></div>
-            </div>
+            <MonedaSection />
             <button>Submit</button>
           </form>
         </div>
