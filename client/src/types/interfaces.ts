@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ChangeEvent, ReactNode } from "react";
 import { Event } from "react-big-calendar";
 
 export interface DateRange {
@@ -284,6 +284,12 @@ export interface FormTextInputProps extends FormInputProps {
   defaultValue?: string;
   placeholder?: string;
   onChange?: () => void;
+}
+
+export interface FormNumberInputProps extends FormInputProps {
+  value?: number;
+  placeholder?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface SelectInputOption {
