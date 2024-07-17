@@ -16,7 +16,7 @@ export interface Recibo {
   fechaPago: string | null;
   endosoId: number | null;
   polizaId: number;
-  poliza: {
+  poliza?: {
     id: number;
     noPoliza: string;
     moneda: "string";
@@ -30,7 +30,7 @@ export interface Recibo {
     };
     ramo: RamoInterface;
   };
-  endoso: {
+  endoso?: {
     id: number;
     endoso: string;
   } | null;
