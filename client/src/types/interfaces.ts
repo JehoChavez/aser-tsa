@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, Ref } from "react";
 import { Event } from "react-big-calendar";
 
 export interface DateRange {
@@ -278,6 +278,7 @@ export interface FormInputProps {
   label: string;
   disabled?: boolean;
   required?: boolean;
+  ref?: Ref<HTMLInputElement>;
 }
 
 export interface FormTextInputProps extends FormInputProps {
