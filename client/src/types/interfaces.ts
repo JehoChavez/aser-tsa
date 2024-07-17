@@ -284,6 +284,7 @@ export interface FormInputProps {
 export interface FormTextInputProps extends FormInputProps {
   defaultValue?: string;
   placeholder?: string;
+  onChange?: () => void;
 }
 
 export interface SelectInputOption {

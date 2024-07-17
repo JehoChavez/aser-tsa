@@ -8,6 +8,7 @@ const FormTextInput = ({
   required,
   placeholder,
   ref,
+  onChange,
 }: FormTextInputProps) => {
   return (
     <div className="w-full flex flex-col">
@@ -22,6 +23,7 @@ const FormTextInput = ({
         required={required}
         placeholder={placeholder}
         ref={ref}
+        onChange={onChange}
       />
     </div>
   );
