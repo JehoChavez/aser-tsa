@@ -11,7 +11,7 @@ import {
 import Loading from "../utils/Loading";
 import NumberVigenciaSection from "./form/NumberVigenciaSection";
 import AseguradoraSection from "./form/AseguradoraSection";
-import MonedaSection from "./form/MonedaSection";
+import PagoSection from "./form/PagoSection";
 
 const NuevaPolizaForm = () => {
   const { id: clienteId } = useParams();
@@ -107,7 +107,7 @@ const NuevaPolizaForm = () => {
                 placeholder="Unidad, Producto, Titular, Etc."
               />
             </div>
-            <MonedaSection />
+            <PagoSection />
             <button>Submit</button>
           </form>
         </div>
