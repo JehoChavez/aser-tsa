@@ -2,8 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import FormSection from "../../utils/FormSection";
 import FormSelectInput from "../../utils/FormSelectInput";
 import FormTextInput from "../../utils/FormTextInput";
+import moment from "moment";
 
-const PagoSection = () => {
+const PagoSection = ({
+  inicioVigencia,
+  finVigencia,
+}: {
+  inicioVigencia: Date;
+  finVigencia: Date;
+}) => {
   const netaRef = useRef<HTMLInputElement>(null);
   const expedicionRef = useRef<HTMLInputElement>(null);
   const financiamientoRef = useRef<HTMLInputElement>(null);
@@ -13,6 +20,9 @@ const PagoSection = () => {
 
   const [subtotal, setSubtotal] = useState(0.0);
   const [iva, setIva] = useState(0.0);
+
+  const [months, setMonths] = useState(0);
+  console.log(months);
 
   const updateSum = () => {
     const netaVal = netaRef.current
@@ -48,6 +58,18 @@ const PagoSection = () => {
       totalRef.current.value = total.toString();
     }
   }, [subtotal, iva]);
+
+  const calcMonthDifference = () => {
+    const inicioDate = moment(inicioVigencia);
+    const finDate = moment(finVigencia);
+
+    const monthDiff = finDate.diff(inicioDate, "months");
+    setMonths(monthDiff);
+  };
+
+  useEffect(() => {
+    calcMonthDifference();
+  }, [inicioVigencia, finVigencia]);
 
   return (
     <>

@@ -123,7 +123,10 @@ const NuevaPolizaForm = () => {
                 placeholder="Unidad, Producto, Titular, Etc."
               />
             </div>
-            <PagoSection />
+            <PagoSection
+              inicioVigencia={inicioVigencia}
+              finVigencia={finVigencia}
+            />
             <button>Submit</button>
           </form>
         </div>
