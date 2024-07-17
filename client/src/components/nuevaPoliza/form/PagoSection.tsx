@@ -120,6 +120,18 @@ const PagoSection = () => {
             ]}
           />
         </div>
+        <div className="px-2 md:w-1/6">
+          <FormSelectInput
+            name="formaPago"
+            label="Forma de Pago"
+            options={[
+              { value: 1, name: "Contado" },
+              { value: 2, name: "Semestral" },
+              { value: 4, name: "Trimestral" },
+              { value: 12, name: "Mensual" },
+            ]}
+          />
+        </div>
       </FormSection>
     </>
   );
