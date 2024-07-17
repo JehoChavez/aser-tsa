@@ -3,7 +3,13 @@ import FormDateInput from "../../utils/FormDateInput";
 import FormSection from "../../utils/FormSection";
 import FormTextInput from "../../utils/FormTextInput";
 
-const NumberVigenciaSection = () => {
+const NumberVigenciaSection = ({
+  onInicioVigenciaChange,
+  onFinVigenciaChange,
+}: {
+  onInicioVigenciaChange: (date: Date) => void;
+  onFinVigenciaChange: (date: Date) => void;
+}) => {
   const today = new Date();
 
   const [emision, setEmision] = useState(today);
@@ -44,6 +50,7 @@ const NumberVigenciaSection = () => {
           value={inicioVigencia}
           onChange={(date) => {
             setInicioVigencia(date);
+            onInicioVigenciaChange(date);
           }}
         />
       </div>
@@ -54,6 +61,7 @@ const NumberVigenciaSection = () => {
           value={finVigencia}
           onChange={(date) => {
             setFinVigencia(date);
+            onFinVigenciaChange(date);
           }}
         />
       </div>

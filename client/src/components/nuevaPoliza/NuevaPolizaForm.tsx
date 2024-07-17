@@ -23,6 +23,19 @@ const NuevaPolizaForm = () => {
   const [vendedores, setVendedores] = useState<VendedorInterface[]>([]);
   const [ramos, setRamos] = useState<RamoInterface[]>([]);
 
+  const today = new Date();
+  const [inicioVigencia, setInicioVigencia] = useState(today);
+  const [finVigencia, setFinVigencia] = useState(
+    new Date(new Date().setFullYear(today.getFullYear() + 1))
+  );
+
+  const onInicioVigenciaChange = (date: Date) => {
+    setInicioVigencia(date);
+  };
+  const onFinVigenciaChange = (date: Date) => {
+    setFinVigencia(date);
+  };
+
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -93,7 +106,10 @@ const NuevaPolizaForm = () => {
             Datos de la Póliza
           </h2>
           <form className="mt-2" onSubmit={submitHandler}>
-            <NumberVigenciaSection />
+            <NumberVigenciaSection
+              onInicioVigenciaChange={onInicioVigenciaChange}
+              onFinVigenciaChange={onFinVigenciaChange}
+            />
             <AseguradoraSection
               aseguradoras={aseguradoras}
               agentes={agentes}
