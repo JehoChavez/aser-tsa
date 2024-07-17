@@ -1,63 +1,61 @@
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import FormSection from "../../utils/FormSection";
 import FormSelectInput from "../../utils/FormSelectInput";
-import FormTextInput from "../../utils/FormTextInput";
+import FormNumberInput from "../../utils/FormNumberInput";
 import moment from "moment";
 
-const PagoSection = ({
-  inicioVigencia,
-  finVigencia,
-}: {
+interface PagoSectionProps {
   inicioVigencia: Date;
   finVigencia: Date;
-}) => {
-  const netaRef = useRef<HTMLInputElement>(null);
-  const expedicionRef = useRef<HTMLInputElement>(null);
-  const financiamientoRef = useRef<HTMLInputElement>(null);
-  const otrosRef = useRef<HTMLInputElement>(null);
-  const ivaRef = useRef<HTMLInputElement>(null);
-  const totalRef = useRef<HTMLInputElement>(null);
+}
 
-  const [subtotal, setSubtotal] = useState(0.0);
-  const [iva, setIva] = useState(0.0);
+const PagoSection = ({ inicioVigencia, finVigencia }: PagoSectionProps) => {
+  const [formValues, setFormValues] = useState({
+    primaNeta: 0,
+    expedicion: 0,
+    financiamiento: 0,
+    otros: 0,
+    iva: 0,
+    primaTotal: 0,
+  });
 
+  const [subtotal, setSubtotal] = useState(0);
   const [months, setMonths] = useState(0);
-  console.log(months);
 
   const updateSum = () => {
-    const netaVal = netaRef.current
-      ? parseFloat(netaRef.current.value) || 0
-      : 0;
-    const expedicionVal = expedicionRef.current
-      ? parseFloat(expedicionRef.current.value) || 0
-      : 0;
-    const financiamientoVal = financiamientoRef.current
-      ? parseFloat(financiamientoRef.current.value) || 0
-      : 0;
-
-    const subtotalSum = netaVal + expedicionVal + financiamientoVal;
+    const { primaNeta, expedicion, financiamiento, otros } = formValues;
+    const subtotalSum = primaNeta + expedicion + financiamiento + otros;
     setSubtotal(subtotalSum);
-    setIva(subtotalSum * 0.16);
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      iva: subtotalSum * 0.16,
+    }));
   };
 
-  const onIvaChange = () => {
-    const ivaVal = ivaRef.current ? parseFloat(ivaRef.current.value) || 0 : 0;
-    setIva(ivaVal);
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: parseFloat(value) || 0,
+    }));
   };
 
   useEffect(() => {
     updateSum();
-  }, []);
+  }, [
+    formValues.primaNeta,
+    formValues.expedicion,
+    formValues.financiamiento,
+    formValues.otros,
+  ]);
 
   useEffect(() => {
-    const total = subtotal + iva;
-    if (ivaRef.current) {
-      ivaRef.current.value = iva.toString();
-    }
-    if (totalRef.current) {
-      totalRef.current.value = total.toString();
-    }
-  }, [subtotal, iva]);
+    const total = subtotal + formValues.iva;
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      primaTotal: total,
+    }));
+  }, [subtotal, formValues.iva]);
 
   const calcMonthDifference = () => {
     const inicioDate = moment(inicioVigencia);
@@ -75,58 +73,54 @@ const PagoSection = ({
     <>
       <FormSection>
         <div className="px-2 md:w-1/6">
-          <FormTextInput
+          <FormNumberInput
             name="primaNeta"
             label="Prima Neta"
             placeholder="00.00"
-            ref={netaRef}
-            onChange={updateSum}
+            onChange={handleInputChange}
             required
           />
         </div>
         <div className="px-2 md:w-1/6">
-          <FormTextInput
+          <FormNumberInput
             name="expedicion"
             label="Gastos de Expedición"
-            ref={expedicionRef}
-            onChange={updateSum}
             placeholder="00.00"
+            onChange={handleInputChange}
           />
         </div>
         <div className="px-2 md:w-1/6">
-          <FormTextInput
+          <FormNumberInput
             name="financiamiento"
             label="Gastos de Financiamiento"
-            ref={financiamientoRef}
-            onChange={updateSum}
             placeholder="00.00"
+            onChange={handleInputChange}
           />
         </div>
         <div className="px-2 md:w-1/6">
-          <FormTextInput
+          <FormNumberInput
             name="otros"
             label="Otros"
-            ref={otrosRef}
-            onChange={updateSum}
             placeholder="00.00"
+            onChange={handleInputChange}
           />
         </div>
         <div className="px-2 md:w-1/6">
-          <FormTextInput
+          <FormNumberInput
             name="iva"
             label="IVA"
             placeholder="00.00"
-            ref={ivaRef}
-            onChange={onIvaChange}
+            value={formValues.iva}
+            onChange={handleInputChange}
           />
         </div>
         <div className="px-2 md:w-1/6">
-          <FormTextInput
+          <FormNumberInput
             name="primaTotal"
             label="Prima Total"
             placeholder="00.00"
-            ref={totalRef}
-            required
+            value={formValues.primaTotal}
+            onChange={handleInputChange}
           />
         </div>
       </FormSection>
@@ -138,7 +132,7 @@ const PagoSection = ({
             options={[
               { value: "MXN", name: "MXN" },
               { value: "USD", name: "USD" },
-              { value: "UDI", name: "MXN" },
+              { value: "UDI", name: "UDI" },
             ]}
           />
         </div>
