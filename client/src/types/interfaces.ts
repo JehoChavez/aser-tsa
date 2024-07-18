@@ -318,8 +318,9 @@ export interface AseguradoraSectionProps {
 export interface FormRecibosContextInterface {
   recibos: Recibo[];
   aseguradora: AseguradoraInterface;
-  polizaId: number;
   endosoId?: number;
   inicioVigencia: Date;
   finVigencia: Date;
+  onInicioVigenciaChange: (date: Date) => void;
+  onFinVigenciaChange: (date: Date) => void;
 }
