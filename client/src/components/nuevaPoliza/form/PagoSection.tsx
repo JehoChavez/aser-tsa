@@ -1,15 +1,13 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, useContext } from "react";
 import FormSection from "../../utils/FormSection";
 import FormSelectInput from "../../utils/FormSelectInput";
 import FormNumberInput from "../../utils/FormNumberInput";
 import moment from "moment";
+import { FormRecibosContext } from "../../../store/form-recibos-context";
 
-interface PagoSectionProps {
-  inicioVigencia: Date;
-  finVigencia: Date;
-}
+const PagoSection = () => {
+  const formRecibosContext = useContext(FormRecibosContext);
 
-const PagoSection = ({ inicioVigencia, finVigencia }: PagoSectionProps) => {
   const [formValues, setFormValues] = useState({
     primaNeta: 0,
     expedicion: 0,
@@ -58,8 +56,8 @@ const PagoSection = ({ inicioVigencia, finVigencia }: PagoSectionProps) => {
   }, [subtotal, formValues.iva]);
 
   const calcMonthDifference = () => {
-    const inicioDate = moment(inicioVigencia);
-    const finDate = moment(finVigencia);
+    const inicioDate = moment(formRecibosContext.inicioVigencia);
+    const finDate = moment(formRecibosContext.finVigencia);
 
     const monthDiff = finDate.diff(inicioDate, "months");
     setMonths(monthDiff);
@@ -67,7 +65,7 @@ const PagoSection = ({ inicioVigencia, finVigencia }: PagoSectionProps) => {
 
   useEffect(() => {
     calcMonthDifference();
-  }, [inicioVigencia, finVigencia]);
+  }, [formRecibosContext.inicioVigencia, formRecibosContext.finVigencia]);
 
   return (
     <>

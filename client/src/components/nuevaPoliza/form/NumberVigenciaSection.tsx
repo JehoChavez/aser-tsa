@@ -1,15 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import FormDateInput from "../../utils/FormDateInput";
 import FormSection from "../../utils/FormSection";
 import FormTextInput from "../../utils/FormTextInput";
+import { FormRecibosContext } from "../../../store/form-recibos-context";
 
-const NumberVigenciaSection = ({
-  onInicioVigenciaChange,
-  onFinVigenciaChange,
-}: {
-  onInicioVigenciaChange: (date: Date) => void;
-  onFinVigenciaChange: (date: Date) => void;
-}) => {
+const NumberVigenciaSection = () => {
+  const formRecibosContext = useContext(FormRecibosContext);
+
   const today = new Date();
 
   const [emision, setEmision] = useState(today);
@@ -50,7 +47,7 @@ const NumberVigenciaSection = ({
           value={inicioVigencia}
           onChange={(date) => {
             setInicioVigencia(date);
-            onInicioVigenciaChange(date);
+            formRecibosContext.onInicioVigenciaChange(date);
           }}
         />
       </div>
@@ -61,7 +58,7 @@ const NumberVigenciaSection = ({
           value={finVigencia}
           onChange={(date) => {
             setFinVigencia(date);
-            onFinVigenciaChange(date);
+            formRecibosContext.onFinVigenciaChange(date);
           }}
         />
       </div>

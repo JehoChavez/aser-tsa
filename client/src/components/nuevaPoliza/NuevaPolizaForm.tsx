@@ -6,12 +6,14 @@ import {
   AgenteInterface,
   AseguradoraInterface,
   RamoInterface,
+  Recibo,
   VendedorInterface,
 } from "../../types/interfaces";
 import Loading from "../utils/Loading";
 import NumberVigenciaSection from "./form/NumberVigenciaSection";
 import AseguradoraSection from "./form/AseguradoraSection";
 import PagoSection from "./form/PagoSection";
+import { FormRecibosContext } from "../../store/form-recibos-context";
 
 const NuevaPolizaForm = () => {
   const { id: clienteId } = useParams();
@@ -22,6 +24,12 @@ const NuevaPolizaForm = () => {
   const [agentes, setAgentes] = useState<AgenteInterface[]>([]);
   const [vendedores, setVendedores] = useState<VendedorInterface[]>([]);
   const [ramos, setRamos] = useState<RamoInterface[]>([]);
+
+  const [recibos, setRecibos] = useState<Recibo[]>([]);
+  const [aseguradora, setAseguradora] = useState<AseguradoraInterface>({
+    id: 1,
+    aseguradora: "Default",
+  });
 
   const today = new Date();
   const [inicioVigencia, setInicioVigencia] = useState(today);
@@ -46,6 +54,7 @@ const NuevaPolizaForm = () => {
         }
       );
       setAseguradoras(aseguradorasResponse.data.content);
+      setAseguradora(aseguradorasResponse.data.content[0]);
 
       const agentesResponse = await axios.get(
         "http://localhost:3000/api/agentes",
@@ -95,7 +104,16 @@ const NuevaPolizaForm = () => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
-    <>
+    <FormRecibosContext.Provider
+      value={{
+        recibos: recibos,
+        aseguradora: aseguradora,
+        inicioVigencia: inicioVigencia,
+        finVigencia: finVigencia,
+        onInicioVigenciaChange: onInicioVigenciaChange,
+        onFinVigenciaChange: onFinVigenciaChange,
+      }}
+    >
       {isLoading ? (
         <div className="w-full h-full">
           <Loading />
@@ -106,10 +124,7 @@ const NuevaPolizaForm = () => {
             Datos de la Póliza
           </h2>
           <form className="mt-2" onSubmit={submitHandler}>
-            <NumberVigenciaSection
-              onInicioVigenciaChange={onInicioVigenciaChange}
-              onFinVigenciaChange={onFinVigenciaChange}
-            />
+            <NumberVigenciaSection />
             <AseguradoraSection
               aseguradoras={aseguradoras}
               agentes={agentes}
@@ -123,15 +138,12 @@ const NuevaPolizaForm = () => {
                 placeholder="Unidad, Producto, Titular, Etc."
               />
             </div>
-            <PagoSection
-              inicioVigencia={inicioVigencia}
-              finVigencia={finVigencia}
-            />
+            <PagoSection />
             <button>Submit</button>
           </form>
         </div>
       )}
-    </>
+    </FormRecibosContext.Provider>
   );
 };
 
