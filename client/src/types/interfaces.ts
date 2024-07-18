@@ -13,9 +13,9 @@ export interface Recibo {
   monto: number;
   fechaInicio: string;
   fechaLimite: string;
-  fechaPago: string | null;
-  endosoId: number | null;
-  polizaId: number;
+  fechaPago?: string | null;
+  endosoId?: number | null;
+  polizaId?: number;
   poliza?: {
     id: number;
     noPoliza: string;
