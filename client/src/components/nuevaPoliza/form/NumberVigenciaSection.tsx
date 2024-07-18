@@ -47,7 +47,7 @@ const NumberVigenciaSection = () => {
           value={inicioVigencia}
           onChange={(date) => {
             setInicioVigencia(date);
-            formRecibosContext.onInicioVigenciaChange(date);
+            formRecibosContext.onPolizaInicioVigenciaChange(date);
           }}
         />
       </div>
@@ -58,7 +58,7 @@ const NumberVigenciaSection = () => {
           value={finVigencia}
           onChange={(date) => {
             setFinVigencia(date);
-            formRecibosContext.onFinVigenciaChange(date);
+            formRecibosContext.onPolizaFinVigenciaChange(date);
           }}
         />
       </div>
