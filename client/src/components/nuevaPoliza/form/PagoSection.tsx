@@ -56,8 +56,8 @@ const PagoSection = () => {
   }, [subtotal, formValues.iva]);
 
   const calcMonthDifference = () => {
-    const inicioDate = moment(formRecibosContext.inicioVigencia);
-    const finDate = moment(formRecibosContext.finVigencia);
+    const inicioDate = moment(formRecibosContext.polizaInicioVigencia);
+    const finDate = moment(formRecibosContext.polizaFinVigencia);
 
     const monthDiff = finDate.diff(inicioDate, "months");
     setMonths(monthDiff);
@@ -65,7 +65,10 @@ const PagoSection = () => {
 
   useEffect(() => {
     calcMonthDifference();
-  }, [formRecibosContext.inicioVigencia, formRecibosContext.finVigencia]);
+  }, [
+    formRecibosContext.polizaInicioVigencia,
+    formRecibosContext.polizaFinVigencia,
+  ]);
 
   return (
     <>

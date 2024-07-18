@@ -108,10 +108,10 @@ const NuevaPolizaForm = () => {
       value={{
         recibos: recibos,
         aseguradora: aseguradora,
-        inicioVigencia: inicioVigencia,
-        finVigencia: finVigencia,
-        onInicioVigenciaChange: onInicioVigenciaChange,
-        onFinVigenciaChange: onFinVigenciaChange,
+        polizaInicioVigencia: inicioVigencia,
+        polizaFinVigencia: finVigencia,
+        onPolizaInicioVigenciaChange: onInicioVigenciaChange,
+        onPolizaFinVigenciaChange: onFinVigenciaChange,
       }}
     >
       {isLoading ? (

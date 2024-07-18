@@ -319,8 +319,12 @@ export interface FormRecibosContextInterface {
   recibos: Recibo[];
   aseguradora: AseguradoraInterface;
   endosoId?: number;
-  inicioVigencia: Date;
-  finVigencia: Date;
-  onInicioVigenciaChange: (date: Date) => void;
-  onFinVigenciaChange: (date: Date) => void;
+  polizaInicioVigencia: Date;
+  polizaFinVigencia: Date;
+  endosoInicioVigencia?: Date;
+  endosoFinVigencia?: Date;
+  onPolizaInicioVigenciaChange: (date: Date) => void;
+  onPolizaFinVigenciaChange: (date: Date) => void;
+  onEndosoInicioVigenciaChange?: (date: Date) => void;
+  onEndosoFinVigenciaChange?: (date: Date) => void;
 }
