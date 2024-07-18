@@ -60,6 +60,10 @@ const PagoSection = () => {
     formRecibosContext.polizaFinVigencia,
   ]);
 
+  const handleFormaPagoChange = (selected: string) => {
+    formRecibosContext.setFormaPago(parseInt(selected));
+  };
+
   return (
     <>
       <FormSection>
@@ -137,6 +141,7 @@ const PagoSection = () => {
               { value: 4, name: "Trimestral" },
               { value: 12, name: "Mensual" },
             ]}
+            onSelect={handleFormaPagoChange}
           />
         </div>
       </FormSection>

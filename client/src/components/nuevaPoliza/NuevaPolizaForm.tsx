@@ -31,6 +31,7 @@ const NuevaPolizaForm = () => {
     id: 1,
     aseguradora: "Default",
   });
+  const [formaPago, setFormaPago] = useState(1);
 
   const today = new Date();
   const [inicioVigencia, setInicioVigencia] = useState(today);
@@ -51,6 +52,9 @@ const NuevaPolizaForm = () => {
 
     const monthDiff = finDate.diff(inicioDate, "months");
     setMonths(monthDiff);
+  };
+  const onFormaPagoChange = (value: number) => {
+    setFormaPago(value);
   };
 
   const fetchData = useCallback(async () => {
@@ -117,10 +121,12 @@ const NuevaPolizaForm = () => {
       value={{
         recibos: recibos,
         aseguradora: aseguradora,
+        formaPago: formaPago,
         polizaInicioVigencia: inicioVigencia,
         polizaFinVigencia: finVigencia,
         monthsDiff: months,
         calcMonthsDiff: calcMonthsDiff,
+        setFormaPago: onFormaPagoChange,
         onPolizaInicioVigenciaChange: onInicioVigenciaChange,
         onPolizaFinVigenciaChange: onFinVigenciaChange,
       }}
