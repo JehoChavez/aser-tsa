@@ -14,6 +14,7 @@ import NumberVigenciaSection from "./form/NumberVigenciaSection";
 import AseguradoraSection from "./form/AseguradoraSection";
 import PagoSection from "./form/PagoSection";
 import { FormRecibosContext } from "../../store/form-recibos-context";
+import moment from "moment";
 
 const NuevaPolizaForm = () => {
   const { id: clienteId } = useParams();
@@ -36,12 +37,20 @@ const NuevaPolizaForm = () => {
   const [finVigencia, setFinVigencia] = useState(
     new Date(new Date().setFullYear(today.getFullYear() + 1))
   );
+  const [months, setMonths] = useState(0);
 
   const onInicioVigenciaChange = (date: Date) => {
     setInicioVigencia(date);
   };
   const onFinVigenciaChange = (date: Date) => {
     setFinVigencia(date);
+  };
+  const calcMonthsDiff = () => {
+    const inicioDate = moment(inicioVigencia);
+    const finDate = moment(finVigencia);
+
+    const monthDiff = finDate.diff(inicioDate, "months");
+    setMonths(monthDiff);
   };
 
   const fetchData = useCallback(async () => {
@@ -110,6 +119,8 @@ const NuevaPolizaForm = () => {
         aseguradora: aseguradora,
         polizaInicioVigencia: inicioVigencia,
         polizaFinVigencia: finVigencia,
+        monthsDiff: months,
+        calcMonthsDiff: calcMonthsDiff,
         onPolizaInicioVigenciaChange: onInicioVigenciaChange,
         onPolizaFinVigenciaChange: onFinVigenciaChange,
       }}

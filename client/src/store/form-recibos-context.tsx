@@ -5,7 +5,11 @@ const defaultFormRecibosContextValue: FormRecibosContextInterface = {
   recibos: [],
   aseguradora: { id: 1, aseguradora: "Default" },
   polizaInicioVigencia: new Date(),
-  polizaFinVigencia: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+  polizaFinVigencia: new Date(
+    new Date().setFullYear(new Date().getFullYear() + 1)
+  ),
+  monthsDiff: 12,
+  calcMonthsDiff: () => {},
   onPolizaInicioVigenciaChange: (date: Date) => {},
   onPolizaFinVigenciaChange: (date: Date) => {},
 };

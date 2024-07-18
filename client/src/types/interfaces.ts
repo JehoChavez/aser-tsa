@@ -323,6 +323,8 @@ export interface FormRecibosContextInterface {
   polizaFinVigencia: Date;
   endosoInicioVigencia?: Date;
   endosoFinVigencia?: Date;
+  monthsDiff: number;
+  calcMonthsDiff: () => void;
   onPolizaInicioVigenciaChange: (date: Date) => void;
   onPolizaFinVigenciaChange: (date: Date) => void;
   onEndosoInicioVigenciaChange?: (date: Date) => void;

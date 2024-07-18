@@ -2,7 +2,6 @@ import { ChangeEvent, useEffect, useState, useContext } from "react";
 import FormSection from "../../utils/FormSection";
 import FormSelectInput from "../../utils/FormSelectInput";
 import FormNumberInput from "../../utils/FormNumberInput";
-import moment from "moment";
 import { FormRecibosContext } from "../../../store/form-recibos-context";
 
 const PagoSection = () => {
@@ -18,7 +17,6 @@ const PagoSection = () => {
   });
 
   const [subtotal, setSubtotal] = useState(0);
-  const [months, setMonths] = useState(0);
 
   const updateSum = () => {
     const { primaNeta, expedicion, financiamiento, otros } = formValues;
@@ -55,16 +53,8 @@ const PagoSection = () => {
     }));
   }, [subtotal, formValues.iva]);
 
-  const calcMonthDifference = () => {
-    const inicioDate = moment(formRecibosContext.polizaInicioVigencia);
-    const finDate = moment(formRecibosContext.polizaFinVigencia);
-
-    const monthDiff = finDate.diff(inicioDate, "months");
-    setMonths(monthDiff);
-  };
-
   useEffect(() => {
-    calcMonthDifference();
+    formRecibosContext.calcMonthsDiff();
   }, [
     formRecibosContext.polizaInicioVigencia,
     formRecibosContext.polizaFinVigencia,
