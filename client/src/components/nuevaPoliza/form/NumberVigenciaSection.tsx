@@ -11,19 +11,15 @@ const NumberVigenciaSection = () => {
 
   const [emision, setEmision] = useState(today);
 
-  const [inicioVigencia, setInicioVigencia] = useState(today);
-
-  const [finVigencia, setFinVigencia] = useState(
-    new Date(new Date().setFullYear(today.getFullYear() + 1))
-  );
-
   useEffect(() => {
-    setFinVigencia(
+    formRecibosContext.onPolizaFinVigenciaChange(
       new Date(
-        new Date(inicioVigencia).setFullYear(inicioVigencia.getFullYear() + 1)
+        new Date(formRecibosContext.polizaInicioVigencia).setFullYear(
+          formRecibosContext.polizaInicioVigencia.getFullYear() + 1
+        )
       )
     );
-  }, [inicioVigencia]);
+  }, [formRecibosContext.polizaInicioVigencia]);
 
   return (
     <FormSection>
@@ -44,9 +40,8 @@ const NumberVigenciaSection = () => {
         <FormDateInput
           name="inicioVigencia"
           label="Inicio de Vigencia"
-          value={inicioVigencia}
+          value={formRecibosContext.polizaInicioVigencia}
           onChange={(date) => {
-            setInicioVigencia(date);
             formRecibosContext.onPolizaInicioVigenciaChange(date);
           }}
         />
@@ -55,9 +50,8 @@ const NumberVigenciaSection = () => {
         <FormDateInput
           name="finVigencia"
           label="Fin de Vigencia"
-          value={finVigencia}
+          value={formRecibosContext.polizaFinVigencia}
           onChange={(date) => {
-            setFinVigencia(date);
             formRecibosContext.onPolizaFinVigenciaChange(date);
           }}
         />
