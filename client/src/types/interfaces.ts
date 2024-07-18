@@ -314,3 +314,12 @@ export interface AseguradoraSectionProps {
   vendedores: VendedorInterface[];
   ramos: RamoInterface[];
 }
+
+export interface FormRecibosContextInterface {
+  recibos: Recibo[];
+  aseguradora: AseguradoraInterface;
+  polizaId: number;
+  endosoId?: number;
+  inicioVigencia: Date;
+  finVigencia: Date;
+}
