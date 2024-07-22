@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, FormEvent } from "react";
+import { useState, useEffect, useCallback, FormEvent, useRef } from "react";
 import FormTextInput from "../utils/FormTextInput";
 import { Navigate, useParams } from "react-router-dom";
 import axios, { AxiosError } from "axios";
@@ -18,6 +18,8 @@ import moment from "moment";
 
 const NuevaPolizaForm = () => {
   const { id: clienteId } = useParams();
+
+  const formRef = useRef<HTMLFormElement>(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -114,6 +116,12 @@ const NuevaPolizaForm = () => {
     console.log(data);
   };
 
+  const clickHandler = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  };
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
@@ -140,7 +148,7 @@ const NuevaPolizaForm = () => {
           <h2 className="border-b text-xl text-gray-600 font-bold">
             Datos de la Póliza
           </h2>
-          <form className="mt-2" onSubmit={submitHandler}>
+          <form className="mt-2" onSubmit={submitHandler} ref={formRef}>
             <NumberVigenciaSection />
             <AseguradoraSection
               aseguradoras={aseguradoras}
@@ -156,8 +164,8 @@ const NuevaPolizaForm = () => {
               />
             </div>
             <PagoSection />
-            <button>Submit</button>
           </form>
+          <button onClick={clickHandler}>Submit</button>
         </div>
       )}
     </FormRecibosContext.Provider>
