@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
-import FormDateInput from "../../utils/FormDateInput";
-import FormSection from "../../utils/FormSection";
-import FormTextInput from "../../utils/FormTextInput";
-import { FormRecibosContext } from "../../../store/form-recibos-context";
+import FormDateInput from "../utils/FormDateInput";
+import FormSection from "../utils/FormSection";
+import FormTextInput from "../utils/FormTextInput";
+import { FormRecibosContext } from "../../store/form-recibos-context";
 
 const NumberVigenciaSection = () => {
   const formRecibosContext = useContext(FormRecibosContext);

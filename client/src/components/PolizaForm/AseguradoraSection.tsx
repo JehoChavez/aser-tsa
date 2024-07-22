@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { AseguradoraSectionProps } from "../../../types/interfaces";
-import FormSection from "../../utils/FormSection";
-import FormSelectInput from "../../utils/FormSelectInput";
+import { AseguradoraSectionProps } from "../../types/interfaces";
+import FormSection from "../utils/FormSection";
+import FormSelectInput from "../utils/FormSelectInput";
 
 const AseguradoraSection = ({
   aseguradoras,

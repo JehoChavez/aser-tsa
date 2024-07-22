@@ -1,8 +1,8 @@
 import { ChangeEvent, useEffect, useState, useContext } from "react";
-import FormSection from "../../utils/FormSection";
-import FormSelectInput from "../../utils/FormSelectInput";
-import FormNumberInput from "../../utils/FormNumberInput";
-import { FormRecibosContext } from "../../../store/form-recibos-context";
+import FormSection from "../utils/FormSection";
+import FormSelectInput from "../utils/FormSelectInput";
+import FormNumberInput from "../utils/FormNumberInput";
+import { FormRecibosContext } from "../../store/form-recibos-context";
 
 const PagoSection = () => {
   const formRecibosContext = useContext(FormRecibosContext);
