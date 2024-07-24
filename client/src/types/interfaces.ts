@@ -7,7 +7,7 @@ export interface DateRange {
 }
 
 export interface Recibo {
-  id: number;
+  id?: number;
   exhibicion: number;
   de: number;
   monto: number;
@@ -325,6 +325,7 @@ export interface FormRecibosContextInterface {
   endosoInicioVigencia?: Date;
   endosoFinVigencia?: Date;
   monthsDiff: number;
+  setRecibos: (recibos: Recibo[]) => void;
   setFormaPago: (value: number) => void;
   calcMonthsDiff: () => void;
   onPolizaInicioVigenciaChange: (date: Date) => void;

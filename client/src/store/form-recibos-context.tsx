@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { FormRecibosContextInterface } from "../types/interfaces";
+import { FormRecibosContextInterface, Recibo } from "../types/interfaces";
 
 const defaultFormRecibosContextValue: FormRecibosContextInterface = {
   recibos: [],
@@ -10,6 +10,7 @@ const defaultFormRecibosContextValue: FormRecibosContextInterface = {
     new Date().setFullYear(new Date().getFullYear() + 1)
   ),
   monthsDiff: 12,
+  setRecibos: (recibos: Recibo[]) => {},
   setFormaPago: (value: number) => {},
   calcMonthsDiff: () => {},
   onPolizaInicioVigenciaChange: (date: Date) => {},

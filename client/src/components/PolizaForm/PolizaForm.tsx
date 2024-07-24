@@ -15,6 +15,7 @@ import AseguradoraSection from "../PolizaForm/AseguradoraSection";
 import PagoSection from "../PolizaForm/PagoSection";
 import { FormRecibosContext } from "../../store/form-recibos-context";
 import moment from "moment";
+import Recibos from "./recibos/Recibos";
 
 const PolizaForm = () => {
   const { id: clienteId } = useParams();
@@ -57,6 +58,9 @@ const PolizaForm = () => {
   };
   const onFormaPagoChange = (value: number) => {
     setFormaPago(value);
+  };
+  const onRecibosChange = (recibos: Recibo[]) => {
+    setRecibos(recibos);
   };
 
   const fetchData = useCallback(async () => {
@@ -133,6 +137,7 @@ const PolizaForm = () => {
         polizaInicioVigencia: inicioVigencia,
         polizaFinVigencia: finVigencia,
         monthsDiff: months,
+        setRecibos: onRecibosChange,
         calcMonthsDiff: calcMonthsDiff,
         setFormaPago: onFormaPagoChange,
         onPolizaInicioVigenciaChange: onInicioVigenciaChange,
@@ -165,6 +170,7 @@ const PolizaForm = () => {
             </div>
             <PagoSection />
           </form>
+          <Recibos />
           <button onClick={clickHandler}>Submit</button>
         </div>
       )}
