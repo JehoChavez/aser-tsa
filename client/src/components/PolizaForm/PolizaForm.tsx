@@ -42,6 +42,8 @@ const PolizaForm = () => {
     new Date(new Date().setFullYear(today.getFullYear() + 1))
   );
   const [months, setMonths] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
+  const [financiamiento, setFinanciamiento] = useState(0);
 
   const onInicioVigenciaChange = (date: Date) => {
     setInicioVigencia(date);
@@ -61,6 +63,12 @@ const PolizaForm = () => {
   };
   const onRecibosChange = (recibos: Recibo[]) => {
     setRecibos(recibos);
+  };
+  const onSubtotalChange = (value: number) => {
+    setSubtotal(value);
+  };
+  const onFinanciamientoChange = (value: number) => {
+    setFinanciamiento(value);
   };
 
   const fetchData = useCallback(async () => {
@@ -137,6 +145,10 @@ const PolizaForm = () => {
         polizaInicioVigencia: inicioVigencia,
         polizaFinVigencia: finVigencia,
         monthsDiff: months,
+        subtotalWoFin: subtotal,
+        financiamiento: financiamiento,
+        setSubtotalWoFin: onSubtotalChange,
+        setFinanciamiento: onFinanciamientoChange,
         setRecibos: onRecibosChange,
         calcMonthsDiff: calcMonthsDiff,
         setFormaPago: onFormaPagoChange,

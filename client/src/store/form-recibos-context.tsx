@@ -10,11 +10,15 @@ const defaultFormRecibosContextValue: FormRecibosContextInterface = {
     new Date().setFullYear(new Date().getFullYear() + 1)
   ),
   monthsDiff: 12,
-  setRecibos: (recibos: Recibo[]) => {},
-  setFormaPago: (value: number) => {},
+  subtotalWoFin: 0,
+  financiamiento: 0,
+  setSubtotalWoFin: () => {},
+  setFinanciamiento: () => {},
+  setRecibos: () => {},
+  setFormaPago: () => {},
   calcMonthsDiff: () => {},
-  onPolizaInicioVigenciaChange: (date: Date) => {},
-  onPolizaFinVigenciaChange: (date: Date) => {},
+  onPolizaInicioVigenciaChange: () => {},
+  onPolizaFinVigenciaChange: () => {},
 };
 
 export const FormRecibosContext: React.Context<FormRecibosContextInterface> =

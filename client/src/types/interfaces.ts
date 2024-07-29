@@ -325,6 +325,10 @@ export interface FormRecibosContextInterface {
   endosoInicioVigencia?: Date;
   endosoFinVigencia?: Date;
   monthsDiff: number;
+  subtotalWoFin: number;
+  financiamiento: number;
+  setSubtotalWoFin: (value: number) => void;
+  setFinanciamiento: (value: number) => void;
   setRecibos: (recibos: Recibo[]) => void;
   setFormaPago: (value: number) => void;
   calcMonthsDiff: () => void;
