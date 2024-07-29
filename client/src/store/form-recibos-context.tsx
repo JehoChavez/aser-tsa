@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { FormRecibosContextInterface, Recibo } from "../types/interfaces";
+import { FormRecibosContextInterface } from "../types/interfaces";
 
 const defaultFormRecibosContextValue: FormRecibosContextInterface = {
   recibos: [],
