@@ -25,7 +25,7 @@ const Recibos = () => {
       const recibo: Recibo = {
         exhibicion: i + 1,
         de: nrOfRecibos,
-        monto: 100, // Placeholder amount, replace with actual logic if necessary
+        primaTotal: 100, // Placeholder amount, replace with actual logic if necessary
         fechaInicio: reciboInicio.format("YYYY-MM-DD"),
         fechaLimite: reciboInicio
           .clone()
@@ -52,7 +52,7 @@ const Recibos = () => {
         {formRecibosContext.recibos.map((recibo, index) => (
           <li key={index}>
             Exhibición: {recibo.exhibicion} de {recibo.de}, Monto:{" "}
-            {recibo.monto}, Inicio: {recibo.fechaInicio}, Límite:{" "}
+            {recibo.primaTotal}, Inicio: {recibo.fechaInicio}, Límite:{" "}
             {recibo.fechaLimite}
           </li>
         ))}
