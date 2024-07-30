@@ -100,7 +100,12 @@ const clienteSchema = joi.object({
 const reciboSchema = joi.object({
   exhibicion: joi.number().integer().required(),
   de: joi.number().integer().required(),
-  monto: joi.number().required(),
+  primaNeta: joi.number().required(),
+  expedicion: joi.number(),
+  financiamient: joi.number(),
+  iva: joi.number(),
+  otros: joi.number(),
+  primaTotal: joi.number().required(),
   fechaInicio: joi
     .alternatives()
     .try(joi.string().isoDate(), joi.date())
