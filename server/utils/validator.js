@@ -131,6 +131,7 @@ const polizaSchema = joi.object({
       primaNeta: joi.number().required(),
       expedicion: joi.number(),
       financiamiento: joi.number(),
+      otros: joi.number(),
       iva: joi.number(),
       primaTotal: joi.number().required(),
       moneda: joi.string().valid("MXN", "USD", "UDI"),
