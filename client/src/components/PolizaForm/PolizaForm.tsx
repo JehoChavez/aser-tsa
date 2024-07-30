@@ -46,7 +46,8 @@ const PolizaForm = () => {
   const [financiamiento, setFinanciamiento] = useState(0);
 
   const onInicioVigenciaChange = (date: Date) => {
-    setInicioVigencia(date);
+    const newDate = new Date(date.setDate(date.getDate() + 1));
+    setInicioVigencia(newDate);
   };
   const onFinVigenciaChange = (date: Date) => {
     setFinVigencia(date);
