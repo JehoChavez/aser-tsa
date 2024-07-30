@@ -207,6 +207,7 @@ export interface PolizaInterface {
   expedicion?: number;
   financiamiento?: number;
   iva?: number;
+  otros?: number;
   primaTotal: number;
   moneda: "MXN" | "USD" | "UDI";
   formaPago?: 1 | 2 | 4 | 12;
