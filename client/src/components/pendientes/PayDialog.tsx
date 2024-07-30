@@ -39,7 +39,6 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
               value={date}
               onChange={(date) => {
                 const newDate = new Date(date.setDate(date.getDate() + 1));
-                console.log(newDate);
                 setDate(newDate);
               }}
             />
