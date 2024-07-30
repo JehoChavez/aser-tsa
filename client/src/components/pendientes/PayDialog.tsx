@@ -16,21 +16,21 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
   const monto = new Intl.NumberFormat("en-us", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(recibo.monto);
+  }).format(recibo.primaTotal);
 
   return (
     <Modal size="small">
       <div className="flex flex-col h-full">
         <h2 className="bg-blue-950 text-gray-100 text-lg font-bold text-center p-2">
           Pagar Recibo {recibo.exhibicion}/{recibo.de} de Póliza{" "}
-          {recibo.poliza.noPoliza}
+          {recibo.poliza?.noPoliza}
           {`${recibo.endoso ? `/${recibo.endoso.endoso}` : ""}`}
         </h2>
         <div className="h-full flex flex-col justify-around p-3">
           <span className="m-2 font-bold flex justify-between">
             <p>Monto:</p>
             <p>
-              ${monto} {recibo.poliza.moneda}
+              ${monto} {recibo.poliza?.moneda}
             </p>
           </span>
           <div className="flex justify-between m-2">
@@ -79,7 +79,7 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
                   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1" />
                 </svg>
               }
-              onClick={() => calendarContext.onPay(recibo.id, value as Date)}
+              onClick={() => calendarContext.onPay(recibo.id as number, value as Date)}
             >
               Pagar
             </IconTextButton>
