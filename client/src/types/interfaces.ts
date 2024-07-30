@@ -10,7 +10,7 @@ export interface Recibo {
   id?: number;
   exhibicion: number;
   de: number;
-  primaNeta: number;
+  primaNeta?: number;
   expedicion?: number;
   financiamiento?: number;
   iva?: number;
