@@ -10,7 +10,12 @@ export interface Recibo {
   id?: number;
   exhibicion: number;
   de: number;
-  monto: number;
+  primaNeta: number;
+  expedicion?: number;
+  financiamiento?: number;
+  iva?: number;
+  otros?: number;
+  primaTotal: number;
   fechaInicio: string;
   fechaLimite: string;
   fechaPago?: string | null;
