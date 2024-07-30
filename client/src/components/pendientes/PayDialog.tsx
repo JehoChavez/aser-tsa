@@ -1,16 +1,15 @@
 import { useState, useContext } from "react";
 import Modal from "../utils/Modal";
 import { PayDialogProps } from "../../types/interfaces";
-import DatePicker from "react-date-picker";
-import { DatePickerValue } from "../../types/types";
 import { CalendarContext } from "../../store/calendar-context";
 import IconTextButton from "../utils/IconTextButton";
+import FormDateInput from "../utils/FormDateInput";
 
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
 
 const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
-  const [value, onChange] = useState<DatePickerValue>(new Date());
+  const [date, setDate] = useState(new Date());
   const calendarContext = useContext(CalendarContext);
 
   const monto = new Intl.NumberFormat("en-us", {
@@ -34,12 +33,15 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
             </p>
           </span>
           <div className="flex justify-between m-2">
-            <p className="font-bold">Fecha de pago:</p>
-            <DatePicker
-              value={value}
-              onChange={onChange}
-              shouldOpenCalendar={({ reason }) => reason !== "focus"}
-              locale="es-es"
+            <FormDateInput
+              name="fechaPago"
+              label="Fecha de Pago"
+              value={date}
+              onChange={(date) => {
+                const newDate = new Date(date.setDate(date.getDate() + 1));
+                console.log(newDate);
+                setDate(newDate);
+              }}
             />
           </div>
           {calendarContext.hasError && (
@@ -79,7 +81,7 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
                   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1" />
                 </svg>
               }
-              onClick={() => calendarContext.onPay(recibo.id as number, value as Date)}
+              onClick={() => calendarContext.onPay(recibo.id as number, date)}
             >
               Pagar
             </IconTextButton>
