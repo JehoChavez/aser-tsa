@@ -1,9 +1,19 @@
-const { Aseguradora } = require("../models");
+const { Aseguradora, Sequelize } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
 module.exports.getAseguradoras = async (req, res) => {
-  const listOfAseguradoras = await Aseguradora.findAll();
+  const listOfAseguradoras = await Aseguradora.findAll({
+    order: [
+      [
+        Sequelize.literal(
+          `CASE WHEN aseguradora = 'Default' THEN 0 ELSE 1 END`
+        ),
+        "ASC",
+      ],
+      ["aseguradora", "ASC"],
+    ],
+  });
 
   const response = new CustomResponse(listOfAseguradoras);
 
