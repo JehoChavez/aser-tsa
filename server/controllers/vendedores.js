@@ -1,9 +1,17 @@
-const { Vendedor } = require("../models");
+const { Vendedor, Sequelize } = require("../models");
 const ExpressError = require("../utils/ExpressError");
 const CustomResponse = require("../utils/CustomResponse");
 
 module.exports.getVendedores = async (req, res) => {
-  const listOfVendedores = await Vendedor.findAll();
+  const listOfVendedores = await Vendedor.findAll({
+    order: [
+      [
+        Sequelize.literal(`CASE WHEN nombre = 'Default' THEN 0 ELSE 1 END`),
+        "ASC",
+      ],
+      ["nombre", "ASC"],
+    ],
+  });
 
   const response = new CustomResponse(listOfVendedores);
 
