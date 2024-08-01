@@ -47,7 +47,6 @@ const Recibos = () => {
 
   useEffect(() => {
     const recibos = generateRecibos();
-    console.log(recibos);
     formRecibosContext.setRecibos(recibos);
   }, [
     formRecibosContext.monthsDiff,

@@ -47,8 +47,6 @@ const SelectClienteModal = ({
     fetchClientes();
   }, [fetchClientes]);
 
-  console.log(clientes);
-
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   if (selected) return <Navigate to={`/clientes/${selected}/nueva`} />;
