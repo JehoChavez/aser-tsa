@@ -26,6 +26,9 @@ const PagoSection = () => {
       ...prevValues,
       iva: subtotalSum * 0.16,
     }));
+
+    formRecibosContext.setSubtotalWoExp(primaNeta + financiamiento + otros);
+    formRecibosContext.setExpedicion(expedicion);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

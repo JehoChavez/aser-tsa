@@ -14,6 +14,7 @@ const Recibos = () => {
       : Math.ceil(formRecibosContext.monthsDiff / mthsBtwnRecibos);
 
   const generateRecibos = () => {
+    const { subtotalWoExp, expedicion } = formRecibosContext;
     const recibos: Recibo[] = [];
     const inicioVigencia = moment(formRecibosContext.polizaInicioVigencia);
 
@@ -25,7 +26,12 @@ const Recibos = () => {
       const recibo: Recibo = {
         exhibicion: i + 1,
         de: nrOfRecibos,
-        primaTotal: 100, // Placeholder amount, replace with actual logic if necessary
+        primaTotal:
+          i === 0
+            ? parseFloat(
+                ((subtotalWoExp / nrOfRecibos + expedicion) * 1.16).toFixed(2)
+              )
+            : parseFloat(((subtotalWoExp / nrOfRecibos) * 1.16).toFixed(2)),
         fechaInicio: reciboInicio.format("YYYY-MM-DD"),
         fechaLimite: reciboInicio
           .clone()
@@ -43,7 +49,12 @@ const Recibos = () => {
     const recibos = generateRecibos();
     console.log(recibos);
     formRecibosContext.setRecibos(recibos);
-  }, [formRecibosContext.monthsDiff, formRecibosContext.formaPago]);
+  }, [
+    formRecibosContext.monthsDiff,
+    formRecibosContext.formaPago,
+    formRecibosContext.subtotalWoExp,
+    formRecibosContext.expedicion,
+  ]);
 
   return (
     <div>
