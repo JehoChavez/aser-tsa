@@ -1,9 +1,17 @@
-const { Ramo } = require("../models");
+const { Ramo, Sequelize } = require("../models");
 const ExpressError = require("../utils/ExpressError");
 const CustomResponse = require("../utils/CustomResponse");
 
 module.exports.getRamos = async (req, res) => {
-  const listOfRamos = await Ramo.findAll();
+  const listOfRamos = await Ramo.findAll({
+    order: [
+      [
+        Sequelize.literal(`CASE WHEN ramo = 'Default' THEN 0 ELSE 1 END`),
+        "ASC",
+      ],
+      ["ramo", "ASC"],
+    ],
+  });
 
   const response = new CustomResponse(listOfRamos);
 
