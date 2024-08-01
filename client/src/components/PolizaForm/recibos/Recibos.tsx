@@ -35,7 +35,12 @@ const Recibos = () => {
         fechaInicio: reciboInicio.format("YYYY-MM-DD"),
         fechaLimite: reciboInicio
           .clone()
-          .add(formRecibosContext.aseguradora.plazoPrimer || 0, "days")
+          .add(
+            i === 0
+              ? formRecibosContext.aseguradora.plazoPrimer || 0
+              : formRecibosContext.aseguradora.plazoSubsecuentes || 0,
+            "days"
+          )
           .format("YYYY-MM-DD"),
       };
 
