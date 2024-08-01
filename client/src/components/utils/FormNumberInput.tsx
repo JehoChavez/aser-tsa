@@ -14,6 +14,7 @@ const FormNumberInput = ({
       <label htmlFor={name}>{label}</label>
       <input
         type="number"
+        step="any"
         name={name}
         id={name}
         className="h-8 p-1 bg-neutral-100 border-gray-400 rounded focus:ring-blue-400 focus:ring-2 disabled:bg-opacity-80 disabled:border-opacity-80"
