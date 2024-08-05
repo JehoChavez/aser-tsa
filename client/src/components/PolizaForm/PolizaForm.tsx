@@ -5,6 +5,7 @@ import axios, { AxiosError } from "axios";
 import {
   AgenteInterface,
   AseguradoraInterface,
+  PrimasInterface,
   RamoInterface,
   Recibo,
   VendedorInterface,
@@ -43,7 +44,18 @@ const PolizaForm = () => {
   );
   const [months, setMonths] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
-  const [expedicion, setExpedicion] = useState(0);
+  const [primas, setPrimas] = useState<PrimasInterface>({
+    primaNeta: 0,
+    expedicion: 0,
+    financiamiento: 0,
+    otros: 0,
+    iva: 0,
+    primaTotal: 0,
+  });
+
+  const onPrimasChange = (primas: PrimasInterface) => {
+    setPrimas(primas);
+  };
 
   const onInicioVigenciaChange = (date: Date) => {
     const newDate = new Date(date.setDate(date.getDate() + 1));
@@ -67,9 +79,6 @@ const PolizaForm = () => {
   };
   const onSubtotalChange = (value: number) => {
     setSubtotal(value);
-  };
-  const onExpedicionChange = (value: number) => {
-    setExpedicion(value);
   };
 
   const fetchData = useCallback(async () => {
@@ -147,9 +156,9 @@ const PolizaForm = () => {
         polizaFinVigencia: finVigencia,
         monthsDiff: months,
         subtotalWoExp: subtotal,
-        expedicion: expedicion,
+        primas: primas,
+        setPrimas: onPrimasChange,
         setSubtotalWoExp: onSubtotalChange,
-        setExpedicion: onExpedicionChange,
         setRecibos: onRecibosChange,
         calcMonthsDiff: calcMonthsDiff,
         setFormaPago: onFormaPagoChange,

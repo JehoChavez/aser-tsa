@@ -14,7 +14,7 @@ const Recibos = () => {
       : Math.ceil(formRecibosContext.monthsDiff / mthsBtwnRecibos);
 
   const generateRecibos = () => {
-    const { subtotalWoExp, expedicion } = formRecibosContext;
+    const { subtotalWoExp, primas } = formRecibosContext;
     const recibos: Recibo[] = [];
     const inicioVigencia = moment(formRecibosContext.polizaInicioVigencia);
 
@@ -29,7 +29,7 @@ const Recibos = () => {
         primaTotal:
           i === 0
             ? parseFloat(
-                ((subtotalWoExp / nrOfRecibos + expedicion) * 1.16).toFixed(2)
+                ((subtotalWoExp / nrOfRecibos + primas.expedicion) * 1.16).toFixed(2)
               )
             : parseFloat(((subtotalWoExp / nrOfRecibos) * 1.16).toFixed(2)),
         fechaInicio: reciboInicio.format("YYYY-MM-DD"),
@@ -57,12 +57,12 @@ const Recibos = () => {
     formRecibosContext.monthsDiff,
     formRecibosContext.formaPago,
     formRecibosContext.subtotalWoExp,
-    formRecibosContext.expedicion,
+    formRecibosContext.primas,
   ]);
 
   return (
     <div>
-      <h2>Recibos</h2>
+      <h2 className="border-b text-xl text-gray-600 font-bold">Recibos</h2>
       <ul>
         {formRecibosContext.recibos.map((recibo, index) => (
           <li key={index}>

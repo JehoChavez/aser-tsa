@@ -321,6 +321,15 @@ export interface AseguradoraSectionProps {
   ramos: RamoInterface[];
 }
 
+export interface PrimasInterface {
+  primaNeta: number;
+  expedicion: number;
+  financiamiento: number;
+  otros: number;
+  iva: number;
+  primaTotal: number;
+}
+
 export interface FormRecibosContextInterface {
   recibos: Recibo[];
   aseguradora: AseguradoraInterface;
@@ -332,9 +341,9 @@ export interface FormRecibosContextInterface {
   endosoFinVigencia?: Date;
   monthsDiff: number;
   subtotalWoExp: number;
-  expedicion: number;
+  primas: PrimasInterface;
+  setPrimas: (primas: PrimasInterface) => void;
   setSubtotalWoExp: (value: number) => void;
-  setExpedicion: (value: number) => void;
   setRecibos: (recibos: Recibo[]) => void;
   setFormaPago: (value: number) => void;
   calcMonthsDiff: () => void;

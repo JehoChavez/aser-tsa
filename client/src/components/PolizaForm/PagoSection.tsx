@@ -28,7 +28,6 @@ const PagoSection = () => {
     }));
 
     formRecibosContext.setSubtotalWoExp(primaNeta + financiamiento + otros);
-    formRecibosContext.setExpedicion(expedicion);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +54,10 @@ const PagoSection = () => {
       primaTotal: total,
     }));
   }, [subtotal, formValues.iva]);
+
+  useEffect(() => {
+    formRecibosContext.setPrimas(formValues);
+  }, [formValues]);
 
   useEffect(() => {
     formRecibosContext.calcMonthsDiff();
