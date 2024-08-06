@@ -14,24 +14,36 @@ const Recibos = () => {
       : Math.ceil(formRecibosContext.monthsDiff / mthsBtwnRecibos);
 
   const generateRecibos = () => {
-    const { subtotalWoExp, primas } = formRecibosContext;
+    const { primas } = formRecibosContext;
     const recibos: Recibo[] = [];
     const inicioVigencia = moment(formRecibosContext.polizaInicioVigencia);
+
+    const subtotal =
+      (primas.primaNeta + primas.financiamiento + primas.otros) / nrOfRecibos;
 
     for (let i = 0; i < nrOfRecibos; i++) {
       const reciboInicio = inicioVigencia
         .clone()
         .add(mthsBtwnRecibos * i, "months");
 
+      const iva =
+        i === 0
+          ? (subtotal + primas.expedicion / nrOfRecibos) * 0.16
+          : subtotal * 0.16;
+      const primaTotal =
+        i === 0
+          ? (subtotal + primas.expedicion / nrOfRecibos) * 1.16
+          : subtotal * 1.16;
+
       const recibo: Recibo = {
         exhibicion: i + 1,
         de: nrOfRecibos,
-        primaTotal:
-          i === 0
-            ? parseFloat(
-                ((subtotalWoExp / nrOfRecibos + primas.expedicion) * 1.16).toFixed(2)
-              )
-            : parseFloat(((subtotalWoExp / nrOfRecibos) * 1.16).toFixed(2)),
+        primaNeta: primas.primaNeta / nrOfRecibos,
+        expedicion: i === 0 ? primas.expedicion : 0,
+        financiamiento: primas.financiamiento / nrOfRecibos,
+        otros: primas.otros / nrOfRecibos,
+        iva: iva,
+        primaTotal: primaTotal,
         fechaInicio: reciboInicio.format("YYYY-MM-DD"),
         fechaLimite: reciboInicio
           .clone()
@@ -59,6 +71,7 @@ const Recibos = () => {
     formRecibosContext.subtotalWoExp,
     formRecibosContext.primas,
   ]);
+  console.log(formRecibosContext.recibos);
 
   return (
     <div>
