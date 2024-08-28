@@ -30,6 +30,22 @@ const PolizaForm = () => {
   const [vendedores, setVendedores] = useState<VendedorInterface[]>([]);
   const [ramos, setRamos] = useState<RamoInterface[]>([]);
 
+  const [nrOfRecibos, setNrOfRecibos] = useState(0);
+
+  const addNrOfRecibos = () => {
+    setNrOfRecibos((nr) => nr++);
+  };
+
+  const subNrOfRecibos = () => {
+    if (nrOfRecibos > 1) {
+      setNrOfRecibos((nr) => nr--);
+    }
+  };
+
+  const setNr = (nr: number) => {
+    setNrOfRecibos(nr);
+  };
+
   const [recibos, setRecibos] = useState<Recibo[]>([]);
   const [aseguradora, setAseguradora] = useState<AseguradoraInterface>({
     id: 1,
@@ -149,6 +165,7 @@ const PolizaForm = () => {
   return (
     <FormRecibosContext.Provider
       value={{
+        nrOfRecibos: nrOfRecibos,
         recibos: recibos,
         aseguradora: aseguradora,
         formaPago: formaPago,
@@ -157,6 +174,9 @@ const PolizaForm = () => {
         monthsDiff: months,
         subtotalWoExp: subtotal,
         primas: primas,
+        addNrOfRecibos: addNrOfRecibos,
+        subNrOfRecibos: subNrOfRecibos,
+        setNrOfRecibos: setNr,
         setPrimas: onPrimasChange,
         setSubtotalWoExp: onSubtotalChange,
         setRecibos: onRecibosChange,

@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { FormRecibosContextInterface } from "../types/interfaces";
 
 const defaultFormRecibosContextValue: FormRecibosContextInterface = {
+  nrOfRecibos: 0,
   recibos: [],
   aseguradora: { id: 1, aseguradora: "Default" },
   formaPago: 1,
@@ -19,6 +20,9 @@ const defaultFormRecibosContextValue: FormRecibosContextInterface = {
     iva: 0,
     primaTotal: 0,
   },
+  addNrOfRecibos: () => {},
+  subNrOfRecibos: () => {},
+  setNrOfRecibos: () => {},
   setPrimas: () => {},
   setSubtotalWoExp: () => {},
   setRecibos: () => {},

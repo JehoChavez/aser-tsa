@@ -331,6 +331,7 @@ export interface PrimasInterface {
 }
 
 export interface FormRecibosContextInterface {
+  nrOfRecibos: number;
   recibos: Recibo[];
   aseguradora: AseguradoraInterface;
   formaPago: number;
@@ -342,6 +343,9 @@ export interface FormRecibosContextInterface {
   monthsDiff: number;
   subtotalWoExp: number;
   primas: PrimasInterface;
+  addNrOfRecibos: () => void;
+  subNrOfRecibos: () => void;
+  setNrOfRecibos: (nr: number) => void;
   setPrimas: (primas: PrimasInterface) => void;
   setSubtotalWoExp: (value: number) => void;
   setRecibos: (recibos: Recibo[]) => void;
