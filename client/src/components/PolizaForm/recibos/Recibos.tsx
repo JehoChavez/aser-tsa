@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { FormRecibosContext } from "../../../store/form-recibos-context";
 import { Recibo } from "../../../types/interfaces";
 import moment from "moment";
+import RecibosListHeader from "./RecibosListHeader";
 
 const Recibos = () => {
   const formRecibosContext = useContext(FormRecibosContext);
@@ -89,6 +90,7 @@ const Recibos = () => {
   return (
     <div>
       <h2 className="border-b text-xl text-gray-600 font-bold">Recibos</h2>
+      <RecibosListHeader />
       <ul>
         {formRecibosContext.recibos.map((recibo, index) => (
           <li key={index}>
