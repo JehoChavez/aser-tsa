@@ -33,12 +33,12 @@ const PolizaForm = () => {
   const [nrOfRecibos, setNrOfRecibos] = useState(0);
 
   const addNrOfRecibos = () => {
-    setNrOfRecibos((nr) => nr++);
+    setNrOfRecibos((nr) => nr + 1);
   };
 
   const subNrOfRecibos = () => {
     if (nrOfRecibos > 1) {
-      setNrOfRecibos((nr) => nr--);
+      setNrOfRecibos((nr) => nr - 1);
     }
   };
 
