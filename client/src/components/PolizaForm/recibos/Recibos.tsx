@@ -69,7 +69,9 @@ const Recibos = () => {
   useEffect(() => {
     const nr = calculateNrOfRecibos();
     formRecibosContext.setNrOfRecibos(nr);
+  }, [formRecibosContext.formaPago]);
 
+  useEffect(() => {
     const recibos = generateRecibos();
     formRecibosContext.setRecibos(recibos);
   }, [
@@ -78,7 +80,11 @@ const Recibos = () => {
     formRecibosContext.subtotalWoExp,
     formRecibosContext.primas,
   ]);
-  console.log(formRecibosContext.recibos);
+
+  useEffect(() => {
+    const recibos = generateRecibos();
+    formRecibosContext.setRecibos(recibos);
+  }, [formRecibosContext.nrOfRecibos]);
 
   return (
     <div>
