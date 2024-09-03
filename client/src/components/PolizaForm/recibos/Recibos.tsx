@@ -3,6 +3,7 @@ import { FormRecibosContext } from "../../../store/form-recibos-context";
 import { Recibo } from "../../../types/interfaces";
 import moment from "moment";
 import RecibosListHeader from "./RecibosListHeader";
+import ReciboListItem from "./ReciboListItem";
 
 const Recibos = () => {
   const formRecibosContext = useContext(FormRecibosContext);
@@ -91,15 +92,11 @@ const Recibos = () => {
     <div>
       <h2 className="border-b text-xl text-gray-600 font-bold">Recibos</h2>
       <RecibosListHeader />
-      <ul>
+      <div className="h-1/4 w-full bg-neutral-100 overflow-y-auto">
         {formRecibosContext.recibos.map((recibo, index) => (
-          <li key={index}>
-            Exhibición: {recibo.exhibicion} de {recibo.de}, Monto:{" "}
-            {recibo.primaTotal}, Inicio: {recibo.fechaInicio}, Límite:{" "}
-            {recibo.fechaLimite}
-          </li>
+          <ReciboListItem recibo={recibo} key={index} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
