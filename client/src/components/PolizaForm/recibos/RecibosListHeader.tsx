@@ -25,8 +25,8 @@ const RecibosListHeader = () => {
         <p>Prima Neta</p>
         <p>Expedición</p>
         <p>Financiamieto</p>
-        <p>IVA</p>
         <p>Otros</p>
+        <p>IVA</p>
         <p>Prima Total</p>
         <p>Fecha Inicio</p>
         <p>Fecha Límite</p>
