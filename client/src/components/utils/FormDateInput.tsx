@@ -18,7 +18,7 @@ const FormDateInput = ({
 
   return (
     <div className="w-full flex flex-col">
-      <label htmlFor={name}>{label}</label>
+      {label && <label htmlFor={name}>{label}</label>}
       <input
         name={name}
         id={name}

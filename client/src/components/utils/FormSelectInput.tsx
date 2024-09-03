@@ -15,7 +15,7 @@ const FormSelectInput = ({
 
   return (
     <div className="w-full flex flex-col">
-      <label htmlFor={name}>{label}</label>
+      {label && <label htmlFor={name}>{label}</label>}
       <select
         name={name}
         id={name}
