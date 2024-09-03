@@ -31,14 +31,26 @@ const ReciboListItem = ({ recibo }: { recibo: Recibo }) => {
         </span>
         <span className="px-1">
           <FormDateInput
-            value={new Date(recibo.fechaInicio)}
+            value={
+              new Date(
+                new Date(recibo.fechaInicio).setDate(
+                  new Date(recibo.fechaInicio).getDate() + 1
+                )
+              )
+            }
             onChange={() => {}}
             name="fechaInicio"
           />
         </span>
         <span className="px-1">
           <FormDateInput
-            value={new Date(recibo.fechaLimite)}
+            value={
+              new Date(
+                new Date(recibo.fechaLimite).setDate(
+                  new Date(recibo.fechaLimite).getDate() + 1
+                )
+              )
+            }
             onChange={() => {}}
             name="fechaLimite"
           />
