@@ -86,6 +86,14 @@ const Recibos = () => {
     formRecibosContext.polizaFinVigencia,
   ]);
 
+  const updateRecibo = (exhibicion: number, key: string, newVal: string) => {
+    const updatedArray = formRecibosContext.recibos.map((recibo) =>
+      recibo.exhibicion === exhibicion ? { ...recibo, [key]: newVal } : recibo
+    );
+
+    formRecibosContext.setRecibos(updatedArray);
+  };
+
   return (
     <div>
       <h2 className="border-b text-xl text-gray-600 font-bold">Recibos</h2>
