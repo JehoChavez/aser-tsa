@@ -81,12 +81,10 @@ const Recibos = () => {
     formRecibosContext.formaPago,
     formRecibosContext.subtotalWoExp,
     formRecibosContext.primas,
+    formRecibosContext.nrOfRecibos,
+    formRecibosContext.polizaInicioVigencia,
+    formRecibosContext.polizaFinVigencia,
   ]);
-
-  useEffect(() => {
-    const recibos = generateRecibos();
-    formRecibosContext.setRecibos(recibos);
-  }, [formRecibosContext.nrOfRecibos]);
 
   return (
     <div>
