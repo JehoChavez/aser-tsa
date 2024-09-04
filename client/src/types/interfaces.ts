@@ -356,3 +356,8 @@ export interface FormRecibosContextInterface {
   onEndosoInicioVigenciaChange?: (date: Date) => void;
   onEndosoFinVigenciaChange?: (date: Date) => void;
 }
+
+export interface ReciboListItemProps {
+  recibo: Recibo;
+  onReciboChange: (exhibicion: number, updated: Recibo) => void;
+}
