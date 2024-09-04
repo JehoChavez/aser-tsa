@@ -56,6 +56,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
         <span className="px-1">
           <FormNumberInput
             name="primaNeta"
+            id={`${recibo.exhibicion}_primaNeta`}
             value={recibo.primaNeta}
             onChange={numberInputChangeHandler}
           />
@@ -63,6 +64,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
         <span className="px-1">
           <FormNumberInput
             name="expedicion"
+            id={`${recibo.exhibicion}_expedicion`}
             value={recibo.expedicion}
             onChange={numberInputChangeHandler}
           />
@@ -70,6 +72,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
         <span className="px-1">
           <FormNumberInput
             name="financiamiento"
+            id={`${recibo.exhibicion}_financiamiento`}
             value={recibo.financiamiento}
             onChange={numberInputChangeHandler}
           />
@@ -77,6 +80,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
         <span className="px-1">
           <FormNumberInput
             name="otros"
+            id={`${recibo.exhibicion}_otros`}
             value={recibo.otros}
             onChange={numberInputChangeHandler}
           />
@@ -84,6 +88,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
         <span className="px-1">
           <FormNumberInput
             name="iva"
+            id={`${recibo.exhibicion}_iva`}
             value={recibo.iva}
             onChange={numberInputChangeHandler}
           />
@@ -91,6 +96,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
         <span className="px-1">
           <FormNumberInput
             name="primaTotal"
+            id={`${recibo.exhibicion}_primaTotal`}
             value={recibo.primaTotal}
             onChange={numberInputChangeHandler}
           />
@@ -106,6 +112,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
             }
             onChange={() => {}}
             name="fechaInicio"
+            id={`${recibo.exhibicion}_fechaInicio`}
           />
         </span>
         <span className="px-1">
@@ -119,6 +126,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
             }
             onChange={() => {}}
             name="fechaLimite"
+            id={`${recibo.exhibicion}_fechaLimite`}
           />
         </span>
       </div>
