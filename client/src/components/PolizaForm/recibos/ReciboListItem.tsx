@@ -1,4 +1,4 @@
-import { Recibo, ReciboListItemProps } from "../../../types/interfaces";
+import { ReciboListItemProps } from "../../../types/interfaces";
 import ListItem from "../../utils/ListItem";
 import FormNumberInput from "../../utils/FormNumberInput";
 import FormDateInput from "../../utils/FormDateInput";
