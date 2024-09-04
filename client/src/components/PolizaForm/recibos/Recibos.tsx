@@ -86,9 +86,9 @@ const Recibos = () => {
     formRecibosContext.polizaFinVigencia,
   ]);
 
-  const updateRecibo = (exhibicion: number, key: string, newVal: string) => {
+  const updateRecibo = (exhibicion: number, updated: Recibo) => {
     const updatedArray = formRecibosContext.recibos.map((recibo) =>
-      recibo.exhibicion === exhibicion ? { ...recibo, [key]: newVal } : recibo
+      recibo.exhibicion === exhibicion ? { ...updated } : recibo
     );
 
     formRecibosContext.setRecibos(updatedArray);
@@ -100,7 +100,11 @@ const Recibos = () => {
       <RecibosListHeader />
       <div className="h-1/4 w-full bg-neutral-100 overflow-y-auto">
         {formRecibosContext.recibos.map((recibo, index) => (
-          <ReciboListItem recibo={recibo} key={index} />
+          <ReciboListItem
+            recibo={recibo}
+            onReciboChange={updateRecibo}
+            key={index}
+          />
         ))}
       </div>
     </div>
