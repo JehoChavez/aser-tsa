@@ -281,6 +281,7 @@ export interface IconTextButtonInterface {
 
 export interface FormInputProps {
   name: string;
+  id?: string;
   label?: string;
   disabled?: boolean;
   required?: boolean;

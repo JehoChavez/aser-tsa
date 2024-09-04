@@ -5,6 +5,7 @@ const FormTextInput = forwardRef(
   (
     {
       name,
+      id,
       label,
       defaultValue,
       disabled,
@@ -20,7 +21,7 @@ const FormTextInput = forwardRef(
         <input
           type="text"
           name={name}
-          id={name}
+          id={id ? id : name}
           className="h-8 p-1 bg-neutral-100 border-gray-400 rounded focus:ring-blue-400 focus:ring-2 disabled:bg-opacity-80 disabled:border-opacity-80"
           defaultValue={defaultValue}
           disabled={disabled}

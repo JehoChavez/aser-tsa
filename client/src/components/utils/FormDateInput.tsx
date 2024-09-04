@@ -2,6 +2,7 @@ import { FormDateInputProps } from "../../types/interfaces";
 
 const FormDateInput = ({
   name,
+  id,
   label,
   disabled,
   required,
@@ -21,7 +22,7 @@ const FormDateInput = ({
       {label && <label htmlFor={name}>{label}</label>}
       <input
         name={name}
-        id={name}
+        id={id ? id : name}
         className="h-8 p-1 bg-neutral-100 border-gray-400 rounded focus:ring-blue-400 focus:ring-2"
         type="date"
         disabled={disabled}

@@ -3,6 +3,7 @@ import { FormSelectInputProps } from "../../types/interfaces";
 
 const FormSelectInput = ({
   name,
+  id,
   label,
   options,
   onSelect,
@@ -18,7 +19,7 @@ const FormSelectInput = ({
       {label && <label htmlFor={name}>{label}</label>}
       <select
         name={name}
-        id={name}
+        id={id ? id : name}
         className="h-8 p-1 bg-neutral-100 border-gray-400 rounded focus:ring-blue-400 focus:ring-2"
         onChange={changeHandler}
         disabled={disabled}
