@@ -31,7 +31,7 @@ const FormDateInput = ({
         onChange={(e) => {
           if (onChange) {
             const date = new Date(e.target.value);
-            onChange(date);
+            onChange(date, e.target.name);
           }
         }}
       />

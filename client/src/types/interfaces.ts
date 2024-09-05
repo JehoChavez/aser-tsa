@@ -312,7 +312,7 @@ export interface FormSelectInputProps extends FormInputProps {
 
 export interface FormDateInputProps extends FormInputProps {
   value: Date;
-  onChange: (date: Date) => void;
+  onChange: (date: Date, name: string) => void;
 }
 
 export interface AseguradoraSectionProps {
