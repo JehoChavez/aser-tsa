@@ -35,7 +35,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
     setSubtotal(sub);
     setRecibo((prev) => ({
       ...prev,
-      iva: sub * 0.16,
+      iva: recibo.iva === 0 ? 0 : sub * 0.16,
     }));
   }, [
     reciboState.primaNeta,

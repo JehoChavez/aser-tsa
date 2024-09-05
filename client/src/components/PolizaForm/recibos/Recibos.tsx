@@ -31,15 +31,16 @@ const Recibos = () => {
         .add((12 / formRecibosContext.formaPago) * i, "months");
 
       const iva =
-        i === 0
+        primas.iva === 0
+          ? 0
+          : i === 0
           ? (subtotal + primas.expedicion / formRecibosContext.nrOfRecibos) *
             0.16
           : subtotal * 0.16;
       const primaTotal =
         i === 0
-          ? (subtotal + primas.expedicion / formRecibosContext.nrOfRecibos) *
-            1.16
-          : subtotal * 1.16;
+          ? subtotal + primas.expedicion / formRecibosContext.nrOfRecibos + iva
+          : subtotal + iva;
 
       const recibo: Recibo = {
         exhibicion: i + 1,
