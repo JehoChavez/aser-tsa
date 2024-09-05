@@ -3,8 +3,14 @@ import ListItem from "../../utils/ListItem";
 import FormNumberInput from "../../utils/FormNumberInput";
 import FormDateInput from "../../utils/FormDateInput";
 import { ChangeEvent, useEffect, useState } from "react";
+import moment from "moment";
 
 const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
+  const diff = moment(recibo.fechaLimite).diff(
+    moment(recibo.fechaInicio),
+    "days"
+  );
+
   const [reciboState, setRecibo] = useState(recibo);
   const [subtotal, setSubtotal] = useState(
     (recibo.primaNeta as number) +
@@ -47,7 +53,27 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
 
   useEffect(() => {
     onReciboChange(recibo.exhibicion, reciboState);
-  }, [reciboState.primaTotal]);
+  }, [
+    reciboState.primaTotal,
+    reciboState.fechaInicio,
+    reciboState.fechaLimite,
+  ]);
+
+  const dateInputChangeHandler = (date: Date, name: string) => {
+    setRecibo((prev) => ({
+      ...prev,
+      [name]: moment(date).add(1, "d").format("YYYY-MM-DD"),
+    }));
+  };
+
+  useEffect(() => {
+    setRecibo((prev) => ({
+      ...prev,
+      fechaLimite: moment(reciboState.fechaInicio)
+        .add(diff, "days")
+        .format("YYYY-MM-DD"),
+    }));
+  }, [reciboState.fechaInicio]);
 
   return (
     <ListItem>
@@ -110,7 +136,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
                 )
               )
             }
-            onChange={() => {}}
+            onChange={dateInputChangeHandler}
             name="fechaInicio"
             id={`${recibo.exhibicion}_fechaInicio`}
           />
@@ -124,7 +150,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
                 )
               )
             }
-            onChange={() => {}}
+            onChange={dateInputChangeHandler}
             name="fechaLimite"
             id={`${recibo.exhibicion}_fechaLimite`}
           />
