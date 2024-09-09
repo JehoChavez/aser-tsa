@@ -232,6 +232,7 @@ const PolizaForm = () => {
                 name="bienAsegurado"
                 label="Bien Asegurado"
                 placeholder="Unidad, Producto, Titular, Etc."
+                required
               />
             </div>
             <PagoSection />
