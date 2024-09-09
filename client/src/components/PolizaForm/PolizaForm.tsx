@@ -5,6 +5,8 @@ import axios, { AxiosError } from "axios";
 import {
   AgenteInterface,
   AseguradoraInterface,
+  PolizaInterface,
+  PostPolizaPayload,
   PrimasInterface,
   RamoInterface,
   Recibo,
@@ -17,7 +19,6 @@ import PagoSection from "../PolizaForm/PagoSection";
 import { FormRecibosContext } from "../../store/form-recibos-context";
 import moment from "moment";
 import Recibos from "./recibos/Recibos";
-import { PostPolizaPayload } from "../../types/types";
 
 const PolizaForm = () => {
   const { id: clienteId } = useParams();
@@ -158,11 +159,19 @@ const PolizaForm = () => {
 
     const fd = new FormData(event.target as HTMLFormElement);
 
-    const data = Object.fromEntries(fd.entries());
-    data.clienteId = clienteId as string;
+    const data = Object.fromEntries(fd.entries()) as unknown as PolizaInterface;
+    data.clienteId = clienteId;
 
     const payload: PostPolizaPayload = {
-      poliza: data,
+      poliza: {
+        ...data,
+        primaNeta: Number(data.primaNeta),
+        expedicion: Number(data.expedicion),
+        financiamiento: Number(data.financiamiento),
+        otros: Number(data.otros),
+        iva: Number(data.iva),
+        primaTotal: Number(data.primaTotal),
+      },
       recibos,
     };
 
