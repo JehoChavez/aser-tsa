@@ -17,6 +17,7 @@ import PagoSection from "../PolizaForm/PagoSection";
 import { FormRecibosContext } from "../../store/form-recibos-context";
 import moment from "moment";
 import Recibos from "./recibos/Recibos";
+import { PostPolizaPayload } from "../../types/types";
 
 const PolizaForm = () => {
   const { id: clienteId } = useParams();
@@ -143,6 +144,15 @@ const PolizaForm = () => {
     fetchData();
   }, [fetchData]);
 
+  const postPoliza = async (payload: PostPolizaPayload) => {
+    const response = await axios.post(
+      "http://localhost:3000/api/polizas",
+      payload,
+      { withCredentials: true }
+    );
+    console.log(response);
+  };
+
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -151,7 +161,12 @@ const PolizaForm = () => {
     const data = Object.fromEntries(fd.entries());
     data.clienteId = clienteId as string;
 
-    console.log(data);
+    const payload: PostPolizaPayload = {
+      poliza: data,
+      recibos,
+    };
+
+    postPoliza(payload);
   };
 
   const clickHandler = () => {
