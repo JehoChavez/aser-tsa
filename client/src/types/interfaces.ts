@@ -234,6 +234,7 @@ export interface PolizaInterface {
   reexpedicionId?: number;
   renuevaId?: number;
   reexpideId?: number;
+  clienteId?: number | string;
 }
 
 export interface PolizasContextInterface {
@@ -361,4 +362,9 @@ export interface FormRecibosContextInterface {
 export interface ReciboListItemProps {
   recibo: Recibo;
   onReciboChange: (exhibicion: number, updated: Recibo) => void;
+}
+
+export interface PostPolizaPayload {
+  poliza: PolizaInterface;
+  recibos: Recibo[];
 }
