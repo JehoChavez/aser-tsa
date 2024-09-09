@@ -102,7 +102,7 @@ const reciboSchema = joi.object({
   de: joi.number().integer().required(),
   primaNeta: joi.number().required(),
   expedicion: joi.number(),
-  financiamient: joi.number(),
+  financiamiento: joi.number(),
   iva: joi.number(),
   otros: joi.number(),
   primaTotal: joi.number().required(),
