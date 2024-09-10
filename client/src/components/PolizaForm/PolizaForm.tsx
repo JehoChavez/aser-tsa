@@ -19,6 +19,7 @@ import PagoSection from "../PolizaForm/PagoSection";
 import { FormRecibosContext } from "../../store/form-recibos-context";
 import moment from "moment";
 import Recibos from "./recibos/Recibos";
+import ActionButton from "../utils/ActionButton";
 
 const PolizaForm = () => {
   const { id: clienteId } = useParams();
@@ -238,7 +239,11 @@ const PolizaForm = () => {
             <PagoSection />
           </form>
           <Recibos />
-          <button onClick={clickHandler}>Submit</button>
+          <div className="w-full flex justify-end">
+            <ActionButton onClick={clickHandler} color="blue" size="lg">
+              Guardar
+            </ActionButton>
+          </div>
         </div>
       )}
     </FormRecibosContext.Provider>
