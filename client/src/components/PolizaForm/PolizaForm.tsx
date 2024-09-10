@@ -20,9 +20,13 @@ import { FormRecibosContext } from "../../store/form-recibos-context";
 import moment from "moment";
 import Recibos from "./recibos/Recibos";
 import ActionButton from "../utils/ActionButton";
+import Modal from "../utils/Modal";
 
 const PolizaForm = () => {
   const { id: clienteId } = useParams();
+
+  const [success, setSuccess] = useState(false);
+  const [successNavigate, setSuccessNavigate] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -153,6 +157,9 @@ const PolizaForm = () => {
       { withCredentials: true }
     );
     console.log(response);
+    if (response.data.status === 201) {
+      setSuccess(true);
+    }
   };
 
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
@@ -185,7 +192,52 @@ const PolizaForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setSuccessNavigate(true);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
+
+  if (successNavigate) return <Navigate to={`/clientes/${clienteId}`} />;
+
+  const successModal = (
+    <Modal size="small">
+      <div className="w-full flex justify-center mt-3 text-green-800">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="150"
+          height="150"
+          fill="currentColor"
+          className="bi bi-check-circle"
+          viewBox="0 0 16 16"
+        >
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+          <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
+        </svg>
+      </div>
+      <h4 className="text-center text-3xl mt-3">Póliza creada exitosamente</h4>
+      <p className="text-center text-lg">
+        Serás redirigido a la página del cliente
+      </p>
+      <div className="w-full flex justify-center mt-2">
+        <ActionButton
+          onClick={() => {
+            setSuccessNavigate(true);
+          }}
+          color="blue"
+          size="lg"
+        >
+          OK
+        </ActionButton>
+      </div>
+    </Modal>
+  );
 
   return (
     <FormRecibosContext.Provider
@@ -246,6 +298,7 @@ const PolizaForm = () => {
           </div>
         </div>
       )}
+      {success && successModal}
     </FormRecibosContext.Provider>
   );
 };
