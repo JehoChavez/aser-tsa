@@ -121,6 +121,7 @@ export interface PendientesRenovListItemInterface {
 
 export interface ActionButtonInterface {
   title?: string;
+  color?: "blue";
   onClick?: () => void;
   children: ReactNode;
 }
