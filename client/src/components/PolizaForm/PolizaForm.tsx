@@ -22,7 +22,7 @@ import Recibos from "./recibos/Recibos";
 import ActionButton from "../utils/ActionButton";
 import Modal from "../utils/Modal";
 
-const PolizaForm = () => {
+const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
   const { id: clienteId } = useParams();
 
   const [success, setSuccess] = useState(false);
