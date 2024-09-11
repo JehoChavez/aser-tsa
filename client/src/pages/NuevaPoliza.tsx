@@ -65,7 +65,7 @@ const NuevaPoliza = () => {
       <div className="w-full h-full py-5">
         {cliente ? (
           <>
-            <NPClienteInfo cliente={cliente} />
+            <NPClienteInfo cliente={cliente} editable />
             <NuevaPolizaForm />
           </>
         ) : (
