@@ -317,7 +317,7 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
             Datos de la Póliza
           </h2>
           <form className="mt-2" onSubmit={submitHandler} ref={formRef}>
-            <NumberVigenciaSection />
+            <NumberVigenciaSection noPoliza={poliza?.noPoliza} />
             <AseguradoraSection
               aseguradoras={aseguradoras}
               agentes={agentes}

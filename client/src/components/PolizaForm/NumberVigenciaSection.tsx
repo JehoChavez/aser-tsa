@@ -3,13 +3,19 @@ import FormDateInput from "../utils/FormDateInput";
 import FormSection from "../utils/FormSection";
 import FormTextInput from "../utils/FormTextInput";
 import { FormRecibosContext } from "../../store/form-recibos-context";
+import { NumberVigenciaProps } from "../../types/interfaces";
 
-const NumberVigenciaSection = () => {
+const NumberVigenciaSection = ({
+  noPoliza,
+  fechaEmision,
+  inicioVigencia,
+  finVigencia,
+}: NumberVigenciaProps) => {
   const formRecibosContext = useContext(FormRecibosContext);
 
   const today = new Date();
 
-  const [emision, setEmision] = useState(today);
+  const [emision, setEmision] = useState(fechaEmision || today);
 
   useEffect(() => {
     formRecibosContext.onPolizaFinVigenciaChange(
@@ -24,7 +30,12 @@ const NumberVigenciaSection = () => {
   return (
     <FormSection>
       <div className="md:w-1/4 px-2">
-        <FormTextInput name="noPoliza" label="Número de Póliza" required />
+        <FormTextInput
+          name="noPoliza"
+          label="Número de Póliza"
+          defaultValue={noPoliza}
+          required
+        />
       </div>
       <div className="md:w-1/4 px-2">
         <FormDateInput
