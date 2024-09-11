@@ -7,6 +7,7 @@ import Clientes from "./pages/Clientes";
 import Cliente from "./pages/Cliente";
 import Polizas from "./pages/Polizas";
 import NuevaPoliza from "./pages/NuevaPoliza";
+import EditarPoliza from "./pages/EditarPoliza";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "/clientes/:id/nueva", element: <NuevaPoliza /> },
       { path: "/polizas", element: <Polizas /> },
       { path: "/polizas/nueva", element: <NuevaPoliza /> },
+      { path: "/polizas/:id/editar", element: <EditarPoliza /> },
     ],
   },
   { path: "/login", element: <Login /> },
