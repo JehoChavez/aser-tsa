@@ -370,3 +370,10 @@ export interface PostPolizaPayload {
   poliza: PolizaInterface;
   recibos: Recibo[];
 }
+
+export interface NumberVigenciaProps {
+  noPoliza?: string;
+  fechaEmision?: Date;
+  inicioVigencia?: Date;
+  finVigencia?: Date;
+}
