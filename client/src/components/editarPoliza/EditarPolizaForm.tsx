@@ -1,6 +1,7 @@
 import PolizaForm from "../PolizaForm/PolizaForm";
+import { PolizaInterface } from "../../types/interfaces";
 
-const EditarPolizaForm = () => {
+const EditarPolizaForm = ({ poliza }: { poliza: PolizaInterface }) => {
   return <PolizaForm />;
 };
 

@@ -22,7 +22,6 @@ const EditarPoliza = () => {
         `http://localhost:3000/api/polizas/${polizaId}`,
         { withCredentials: true }
       );
-      console.log(response.data.content);
       setPoliza(response.data.content);
       setCliente(response.data.content.cliente);
       setIsLoading(false);
@@ -69,7 +68,11 @@ const EditarPoliza = () => {
         {cliente ? (
           <>
             <NPClienteInfo cliente={cliente} />
-            <EditarPolizaForm />
+            {poliza ? (
+              <EditarPolizaForm poliza={poliza} />
+            ) : (
+              <p className="text-center text-2xl">Cliente No Encontrado</p>
+            )}
           </>
         ) : (
           <p className="text-center text-2xl">Cliente No Encontrado</p>
