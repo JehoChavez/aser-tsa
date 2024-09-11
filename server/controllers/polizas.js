@@ -223,7 +223,17 @@ module.exports.getPoliza = async (req, res) => {
       {
         model: Cliente,
         as: "cliente",
-        attributes: ["id", "tipoPersona", "nombre", "rfc"],
+        attributes: [
+          "id",
+          "tipoPersona",
+          "nombre",
+          "rfc",
+          "calle",
+          "exterior",
+          "interior",
+          "colonia",
+          "codigoPostal",
+        ],
       },
       {
         model: Aseguradora,
