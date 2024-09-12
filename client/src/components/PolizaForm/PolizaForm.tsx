@@ -344,6 +344,7 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
                 name="bienAsegurado"
                 label="Bien Asegurado"
                 placeholder="Unidad, Producto, Titular, Etc."
+                defaultValue={poliza?.bienAsegurado}
                 required
               />
             </div>
