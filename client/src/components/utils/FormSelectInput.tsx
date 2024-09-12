@@ -9,6 +9,7 @@ const FormSelectInput = ({
   onSelect,
   disabled,
   required,
+  defaultVal,
 }: FormSelectInputProps) => {
   const changeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     if (onSelect) onSelect(event.target.value);
@@ -24,6 +25,7 @@ const FormSelectInput = ({
         onChange={changeHandler}
         disabled={disabled}
         required={required}
+        defaultValue={defaultVal}
       >
         {options.map((option) => {
           if (option.selected) {

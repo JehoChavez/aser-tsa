@@ -311,6 +311,7 @@ export interface SelectInputOption {
 export interface FormSelectInputProps extends FormInputProps {
   options: SelectInputOption[];
   onSelect?: (selected: string) => void;
+  defaultVal?: number | string;
 }
 
 export interface FormDateInputProps extends FormInputProps {
@@ -323,6 +324,10 @@ export interface AseguradoraSectionProps {
   agentes: AgenteInterface[];
   vendedores: VendedorInterface[];
   ramos: RamoInterface[];
+  aseguradora?: number;
+  agente?: number;
+  vendedor?: number;
+  ramo?: number;
 }
 
 export interface PrimasInterface {
