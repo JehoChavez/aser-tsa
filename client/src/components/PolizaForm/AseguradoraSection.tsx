@@ -8,8 +8,14 @@ const AseguradoraSection = ({
   agentes,
   vendedores,
   ramos,
+  aseguradora,
+  agente,
+  vendedor,
+  ramo,
 }: AseguradoraSectionProps) => {
-  const [selectedAseguradora, setSelectedAseguradora] = useState(1);
+  const [selectedAseguradora, setSelectedAseguradora] = useState(
+    aseguradora || 1
+  );
 
   const aseguradoraSelectHandler = (selected: string) => {
     setSelectedAseguradora(parseInt(selected));
@@ -19,8 +25,11 @@ const AseguradoraSection = ({
     (agente) => agente.aseguradoraId === selectedAseguradora
   );
 
-  const agenteOptions = displayAgentes.map((agente) => {
-    return { value: agente.id, name: `${agente.clave} - ${agente.nombre}` };
+  const agenteOptions = displayAgentes.map((agenteOp) => {
+    return {
+      value: agenteOp.id,
+      name: `${agenteOp.clave} - ${agenteOp.nombre}`,
+    };
   });
 
   return (
@@ -35,6 +44,7 @@ const AseguradoraSection = ({
               name: aseguradora.aseguradora,
             };
           })}
+          defaultVal={aseguradora}
           onSelect={aseguradoraSelectHandler}
         />
       </div>
@@ -43,6 +53,7 @@ const AseguradoraSection = ({
           name="agenteId"
           label="Agente"
           options={agenteOptions}
+          defaultVal={agente}
         />
       </div>
       <div className="md:w-1/4 px-2">
@@ -55,6 +66,7 @@ const AseguradoraSection = ({
               name: vendedor.nombre,
             };
           })}
+          defaultVal={vendedor}
         />
       </div>
       <div className="md:w-1/4 px-2">
@@ -67,6 +79,7 @@ const AseguradoraSection = ({
               name: ramo.ramo,
             };
           })}
+          defaultVal={ramo}
         />
       </div>
     </FormSection>

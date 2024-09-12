@@ -334,6 +334,10 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
               agentes={agentes}
               vendedores={vendedores}
               ramos={ramos}
+              aseguradora={poliza?.aseguradora.id}
+              agente={poliza?.agente.id}
+              vendedor={poliza?.vendedor?.id}
+              ramo={poliza?.ramo?.id}
             />
             <div className="px-2 mb-4">
               <FormTextInput
