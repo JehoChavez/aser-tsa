@@ -317,7 +317,18 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
             Datos de la Póliza
           </h2>
           <form className="mt-2" onSubmit={submitHandler} ref={formRef}>
-            <NumberVigenciaSection noPoliza={poliza?.noPoliza} />
+            <NumberVigenciaSection
+              noPoliza={poliza?.noPoliza}
+              fechaEmision={
+                poliza ? moment(poliza.emision).toDate() : undefined
+              }
+              inicioVigencia={
+                poliza ? moment(poliza.inicioVigencia).toDate() : undefined
+              }
+              finVigencia={
+                poliza ? moment(poliza.finVigencia).toDate() : undefined
+              }
+            />
             <AseguradoraSection
               aseguradoras={aseguradoras}
               agentes={agentes}
