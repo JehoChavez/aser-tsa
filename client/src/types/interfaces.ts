@@ -380,6 +380,4 @@ export interface PostPolizaPayload {
 export interface NumberVigenciaProps {
   noPoliza?: string;
   fechaEmision?: Date;
-  inicioVigencia?: Date;
-  finVigencia?: Date;
 }

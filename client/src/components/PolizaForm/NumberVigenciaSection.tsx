@@ -8,8 +8,6 @@ import { NumberVigenciaProps } from "../../types/interfaces";
 const NumberVigenciaSection = ({
   noPoliza,
   fechaEmision,
-  inicioVigencia,
-  finVigencia,
 }: NumberVigenciaProps) => {
   const formRecibosContext = useContext(FormRecibosContext);
 
@@ -53,11 +51,7 @@ const NumberVigenciaSection = ({
         <FormDateInput
           name="inicioVigencia"
           label="Inicio de Vigencia"
-          value={
-            inicioVigencia
-              ? new Date(inicioVigencia)
-              : formRecibosContext.polizaInicioVigencia
-          }
+          value={formRecibosContext.polizaInicioVigencia}
           onChange={(date) => {
             formRecibosContext.onPolizaInicioVigenciaChange(date);
           }}
@@ -67,11 +61,7 @@ const NumberVigenciaSection = ({
         <FormDateInput
           name="finVigencia"
           label="Fin de Vigencia"
-          value={
-            finVigencia
-              ? new Date(finVigencia)
-              : formRecibosContext.polizaFinVigencia
-          }
+          value={formRecibosContext.polizaFinVigencia}
           onChange={(date) => {
             formRecibosContext.onPolizaFinVigenciaChange(date);
           }}
