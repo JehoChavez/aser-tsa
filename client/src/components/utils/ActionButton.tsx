@@ -13,6 +13,9 @@ const ActionButton = ({
   if (color === "blue") {
     colorClassnames =
       "bg-blue-950 hover:bg-indigo-950 text-white active:bg-gray-900";
+  } else if (color === "red") {
+    colorClassnames =
+      "bg-red-600 hover:bg-red-700 active:bg-red-900 text-white";
   }
 
   return (
