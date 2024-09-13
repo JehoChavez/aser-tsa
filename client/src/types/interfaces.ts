@@ -298,6 +298,7 @@ export interface FormTextInputProps extends FormInputProps {
 
 export interface FormNumberInputProps extends FormInputProps {
   value?: number;
+  defaultVal?: number;
   placeholder?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
