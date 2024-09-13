@@ -23,7 +23,7 @@ import ActionButton from "../utils/ActionButton";
 import Modal from "../utils/Modal";
 
 const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
-  const { id: clienteId } = useParams();
+  const { id: idParam } = useParams();
 
   const [success, setSuccess] = useState(false);
   const [successNavigate, setSuccessNavigate] = useState(false);
@@ -66,9 +66,13 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
   );
 
   const today = new Date();
-  const [inicioVigencia, setInicioVigencia] = useState(today);
+  const [inicioVigencia, setInicioVigencia] = useState(
+    poliza ? moment(poliza.inicioVigencia).toDate() : today
+  );
   const [finVigencia, setFinVigencia] = useState(
-    new Date(new Date().setFullYear(today.getFullYear() + 1))
+    poliza
+      ? moment(poliza.finVigencia).toDate()
+      : moment(today).add(1, "y").toDate()
   );
   const [months, setMonths] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
@@ -166,13 +170,24 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
     }
   };
 
+  const updatePoliza = async (payload: PostPolizaPayload) => {
+    const response = await axios.put(
+      `http://localhost:3000/api/polizas/${idParam}`,
+      payload,
+      { withCredentials: true }
+    );
+    if (response.data.status === 200) {
+      setSuccess(true);
+    }
+  };
+
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const fd = new FormData(event.target as HTMLFormElement);
 
     const data = Object.fromEntries(fd.entries()) as unknown as PolizaInterface;
-    data.clienteId = clienteId;
+    data.clienteId = poliza ? poliza.cliente.id : idParam;
 
     const payload: PostPolizaPayload = {
       poliza: {
@@ -188,7 +203,11 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
     };
 
     try {
-      postPoliza(payload);
+      if (poliza) {
+        updatePoliza(payload);
+      } else {
+        postPoliza(payload);
+      }
     } catch (error) {
       console.log(error);
       setError(true);
@@ -219,7 +238,10 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
-  if (successNavigate) return <Navigate to={`/clientes/${clienteId}`} />;
+  if (successNavigate)
+    return (
+      <Navigate to={`/clientes/${poliza ? poliza.cliente.id : idParam}`} />
+    );
   if (errorNavigate) return <Navigate to="/polizas" />;
 
   const successModal = (
@@ -237,7 +259,9 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
           <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
         </svg>
       </div>
-      <h4 className="text-center text-3xl mt-3">Póliza creada exitosamente</h4>
+      <h4 className="text-center text-3xl mt-3">
+        Póliza {poliza ? "editada" : "creada"} exitosamente
+      </h4>
       <p className="text-center text-lg">
         Serás redirigido a la página del cliente
       </p>
@@ -323,12 +347,6 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
               noPoliza={poliza?.noPoliza}
               fechaEmision={
                 poliza ? moment(poliza.emision).toDate() : undefined
-              }
-              inicioVigencia={
-                poliza ? moment(poliza.inicioVigencia).toDate() : undefined
-              }
-              finVigencia={
-                poliza ? moment(poliza.finVigencia).toDate() : undefined
               }
             />
             <AseguradoraSection
