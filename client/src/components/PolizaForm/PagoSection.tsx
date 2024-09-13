@@ -7,14 +7,7 @@ import { FormRecibosContext } from "../../store/form-recibos-context";
 const PagoSection = () => {
   const formRecibosContext = useContext(FormRecibosContext);
 
-  const [formValues, setFormValues] = useState({
-    primaNeta: 0,
-    expedicion: 0,
-    financiamiento: 0,
-    otros: 0,
-    iva: 0,
-    primaTotal: 0,
-  });
+  const [formValues, setFormValues] = useState(formRecibosContext.primas);
 
   const [subtotal, setSubtotal] = useState(0);
 
@@ -78,6 +71,7 @@ const PagoSection = () => {
             name="primaNeta"
             label="Prima Neta"
             placeholder="00.00"
+            defaultVal={formValues.primaNeta}
             onChange={handleInputChange}
             required
           />
@@ -87,6 +81,7 @@ const PagoSection = () => {
             name="expedicion"
             label="Gastos de Expedición"
             placeholder="00.00"
+            defaultVal={formValues.expedicion}
             onChange={handleInputChange}
           />
         </div>
@@ -95,6 +90,7 @@ const PagoSection = () => {
             name="financiamiento"
             label="Gastos de Financiamiento"
             placeholder="00.00"
+            defaultVal={formValues.financiamiento}
             onChange={handleInputChange}
           />
         </div>
@@ -103,6 +99,7 @@ const PagoSection = () => {
             name="otros"
             label="Otros"
             placeholder="00.00"
+            defaultVal={formValues.otros}
             onChange={handleInputChange}
           />
         </div>
@@ -147,6 +144,7 @@ const PagoSection = () => {
               { value: 4, name: "Trimestral" },
               { value: 12, name: "Mensual" },
             ]}
+            defaultVal={formRecibosContext.formaPago}
             onSelect={handleFormaPagoChange}
           />
         </div>

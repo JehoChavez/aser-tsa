@@ -61,7 +61,9 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
     id: 1,
     aseguradora: "Default",
   });
-  const [formaPago, setFormaPago] = useState(1);
+  const [formaPago, setFormaPago] = useState(
+    (poliza?.formaPago as number) || 1
+  );
 
   const today = new Date();
   const [inicioVigencia, setInicioVigencia] = useState(today);
@@ -71,12 +73,12 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
   const [months, setMonths] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [primas, setPrimas] = useState<PrimasInterface>({
-    primaNeta: 0,
-    expedicion: 0,
-    financiamiento: 0,
-    otros: 0,
-    iva: 0,
-    primaTotal: 0,
+    primaNeta: poliza?.primaNeta || 0,
+    expedicion: poliza?.expedicion || 0,
+    financiamiento: poliza?.financiamiento || 0,
+    otros: poliza?.otros || 0,
+    iva: poliza?.iva || 0,
+    primaTotal: poliza?.primaTotal || 0,
   });
 
   const onPrimasChange = (primas: PrimasInterface) => {
