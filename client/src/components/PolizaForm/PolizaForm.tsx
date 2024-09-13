@@ -371,7 +371,16 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
             <PagoSection moneda={poliza?.moneda} />
           </form>
           <Recibos />
-          <div className="w-full flex justify-end">
+          <div className="w-full flex justify-between">
+            <ActionButton
+              onClick={() => {
+                setSuccessNavigate(true);
+              }}
+              color="red"
+              size="lg"
+            >
+              Cancelar
+            </ActionButton>
             <ActionButton onClick={clickHandler} color="blue" size="lg">
               Guardar
             </ActionButton>
