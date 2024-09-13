@@ -350,7 +350,7 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
                 required
               />
             </div>
-            <PagoSection />
+            <PagoSection moneda={poliza?.moneda} />
           </form>
           <Recibos />
           <div className="w-full flex justify-end">

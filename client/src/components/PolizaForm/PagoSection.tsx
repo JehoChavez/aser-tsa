@@ -4,7 +4,7 @@ import FormSelectInput from "../utils/FormSelectInput";
 import FormNumberInput from "../utils/FormNumberInput";
 import { FormRecibosContext } from "../../store/form-recibos-context";
 
-const PagoSection = () => {
+const PagoSection = ({ moneda }: { moneda?: string }) => {
   const formRecibosContext = useContext(FormRecibosContext);
 
   const [formValues, setFormValues] = useState(formRecibosContext.primas);
@@ -132,6 +132,7 @@ const PagoSection = () => {
               { value: "USD", name: "USD" },
               { value: "UDI", name: "UDI" },
             ]}
+            defaultVal={moneda}
           />
         </div>
         <div className="px-2 md:w-1/6">
