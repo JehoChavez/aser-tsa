@@ -160,24 +160,32 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
   }, [fetchData]);
 
   const postPoliza = async (payload: PostPolizaPayload) => {
-    const response = await axios.post(
-      "http://localhost:3000/api/polizas",
-      payload,
-      { withCredentials: true }
-    );
-    if (response.data.status === 201) {
-      setSuccess(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/polizas",
+        payload,
+        { withCredentials: true }
+      );
+      if (response.data.status === 201) {
+        setSuccess(true);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const updatePoliza = async (payload: PostPolizaPayload) => {
-    const response = await axios.put(
-      `http://localhost:3000/api/polizas/${idParam}`,
-      payload,
-      { withCredentials: true }
-    );
-    if (response.data.status === 200) {
-      setSuccess(true);
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/api/polizas/${idParam}`,
+        payload,
+        { withCredentials: true }
+      );
+      if (response.data.status === 200) {
+        setSuccess(true);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -202,15 +210,10 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
       recibos,
     };
 
-    try {
-      if (poliza) {
-        updatePoliza(payload);
-      } else {
-        postPoliza(payload);
-      }
-    } catch (error) {
-      console.log(error);
-      setError(true);
+    if (poliza) {
+      updatePoliza(payload);
+    } else {
+      postPoliza(payload);
     }
   };
 
