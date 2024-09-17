@@ -147,10 +147,26 @@ const PolizaListItem = ({ poliza }: { poliza: PolizaInterface }) => {
                 <div className="absolute top-7 right-0 z-30 bg-white rounded w-52 p-2 shadow-lg shadow-gray-500">
                   <h4 className="text-blue-900 font-bold">Más acciones</h4>
                   <div className="p-1 text-blue-950 flex flex-col items-start">
-                    <button>Reexpedir</button>
-                    <button>Cambiar Contratante</button>
-                    <button>Cancelar</button>
-                    <button>Eliminar</button>
+                    <button className="w-full hover:bg-gray-200 active:bg-gray-500 active:text-white rounded text-left px-1">
+                      Reexpedir
+                    </button>
+                    <button className="w-full hover:bg-gray-200 active:bg-gray-500 active:text-white rounded text-left px-1">
+                      Cambiar Contratante
+                    </button>
+                    <button className="w-full hover:bg-gray-200 active:bg-gray-500 active:text-white rounded text-left px-1">
+                      Cancelar
+                    </button>
+                    <button className="w-full hover:bg-gray-200 active:bg-gray-500 active:text-white rounded text-left px-1">
+                      Eliminar
+                    </button>
+                    <button
+                      className="w-full hover:bg-red-200 rounded active:bg-red-700 active:text-white text-right text-red-700 px-1"
+                      onClick={() => {
+                        setDisplayMore(false);
+                      }}
+                    >
+                      Cerrar
+                    </button>
                   </div>
                 </div>
               )}
