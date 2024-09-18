@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ListItem from "../utils/ListItem";
 import ActionButton from "../utils/ActionButton";
 import { PolizaInterface } from "../../types/interfaces";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
 import ErrorModal from "../utils/ErrorModal";
+import { PolizasContext } from "../../store/polizas-context";
 
 const PolizaListItem = ({ poliza }: { poliza: PolizaInterface }) => {
+  const polizasContext = useContext(PolizasContext);
+
   const [displayMore, setDisplayMore] = useState(false);
   const inicioVigencia = poliza.inicioVigencia.split("-").reverse().join("-");
   const finVigencia = poliza.finVigencia.split("-").reverse().join("-");
@@ -30,7 +32,9 @@ const PolizaListItem = ({ poliza }: { poliza: PolizaInterface }) => {
     }
   };
 
-  if (success) return <Navigate to="/polizas" />;
+  if (success) {
+    polizasContext.fetchPolizas();
+  }
 
   return (
     <>
