@@ -2,6 +2,7 @@ import ListItem from "../utils/ListItem";
 import { PolizaInterface } from "../../types/interfaces";
 import PolizaLIData from "./PolizaLIData";
 import EstadoAcciones from "./EstadoAcciones";
+import OtrosDatos from "./OtrosDatos";
 
 const PolizaListItem = ({ poliza }: { poliza: PolizaInterface }) => {
   const inicioVigencia = poliza.inicioVigencia.split("-").reverse().join("-");
@@ -17,17 +18,11 @@ const PolizaListItem = ({ poliza }: { poliza: PolizaInterface }) => {
             finVigencia={finVigencia}
           />
           <EstadoAcciones poliza={poliza} />
-          <div className="md:hidden row-start-2 col-span-full p-2 rounded bg-neutral-100 text-neutral-600">
-            <h3 className="text-sm text-neutral-500 font-bold">Otros datos</h3>
-            <p>Aseguradora: {poliza.aseguradora.aseguradora}</p>
-            <p>
-              Agente: {poliza.agente.clave} - {poliza.agente.nombre}
-            </p>
-            <p>Vendedor: {poliza.vendedor?.nombre}</p>
-            <p>
-              Vigencia: {inicioVigencia} al {finVigencia}
-            </p>
-          </div>
+          <OtrosDatos
+            poliza={poliza}
+            inicioVigencia={inicioVigencia}
+            finVigencia={finVigencia}
+          />
         </div>
       </ListItem>
     </>
