@@ -1,14 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { PolizaInterface } from "../../types/interfaces";
-import { Link } from "react-router-dom";
 import ActionButton from "../utils/ActionButton";
 import axios from "axios";
 import { PolizasContext } from "../../store/polizas-context";
 import ErrorModal from "../utils/ErrorModal";
 import Modal from "../utils/Modal";
+import { Navigate } from "react-router-dom";
 
 const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   const polizasContext = useContext(PolizasContext);
+
+  const [editNavigate, setEditNavigate] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const [displayMore, setDisplayMore] = useState(false);
 
@@ -69,6 +72,41 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
     </Modal>
   );
 
+  const editModal = (
+    <Modal size="small">
+      <div className="h-full w-full flex flex-col justify-around">
+        <div>
+          <h4 className="text-center text-3xl my-3 font-semibold">
+            ¿Desea editar la póliza?
+          </h4>
+          <p className="text-center text-lg my-3">
+            Los recibos pagados serán anulados
+          </p>
+        </div>
+        <div className="w-full flex justify-between px-5">
+          <ActionButton
+            color="red"
+            onClick={() => {
+              setShowEditModal(false);
+            }}
+          >
+            Cancelar
+          </ActionButton>
+          <ActionButton
+            color="blue"
+            onClick={() => {
+              setEditNavigate(true);
+            }}
+          >
+            Continuar
+          </ActionButton>
+        </div>
+      </div>
+    </Modal>
+  );
+
+  if (editNavigate) return <Navigate to={`/polizas/${poliza.id}/editar`} />;
+
   return (
     <>
       <div className="col-start-4 md:col-start-11 col-span-full px-2 flex flex-col justify-around md:flex-row md:justify-normal items-center">
@@ -94,23 +132,26 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
             : "Vigente"}
         </p>
         <div className="flex flex-wrap">
-          <ActionButton title="Editar Póliza">
-            <Link to={`/polizas/${poliza.id}/editar`}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="bi bi-pencil-square"
-                viewBox="0 0 16 16"
-              >
-                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                <path
-                  fillRule="evenodd"
-                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
-                />
-              </svg>
-            </Link>
+          <ActionButton
+            title="Editar Póliza"
+            onClick={() => {
+              setShowEditModal(true);
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-pencil-square"
+              viewBox="0 0 16 16"
+            >
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+              <path
+                fillRule="evenodd"
+                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+              />
+            </svg>
           </ActionButton>
           <ActionButton title="Recibos">
             <svg
@@ -210,6 +251,7 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
           </div>
         </div>
       </div>
+      {showEditModal && editModal}
       {deleteSuccess && successModal}
       {error && (
         <ErrorModal
