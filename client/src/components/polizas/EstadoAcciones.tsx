@@ -1,109 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { PolizaInterface } from "../../types/interfaces";
 import ActionButton from "../utils/ActionButton";
-import axios from "axios";
-import { PolizasContext } from "../../store/polizas-context";
-import ErrorModal from "../utils/ErrorModal";
-import Modal from "../utils/Modal";
 import { Navigate } from "react-router-dom";
+import EditModal from "./EditModal";
+import AccionesDropdown from "./AccionesDropdown";
 
 const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
-  const polizasContext = useContext(PolizasContext);
-
   const [editNavigate, setEditNavigate] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-
-  const [displayMore, setDisplayMore] = useState(false);
-
-  const [error, setError] = useState(false);
-  const [deleteSuccess, setDeleteSuccess] = useState(false);
-  const [refetch, setRefetch] = useState(false);
-
-  const deleteHandler = async () => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/polizas/${poliza.id}`,
-        { withCredentials: true }
-      );
-      if (response.data.status === 200) {
-        setDeleteSuccess(true);
-      }
-    } catch (error) {
-      console.log(error);
-      setError(true);
-    }
-  };
-
-  useEffect(() => {
-    if (refetch) {
-      polizasContext.fetchPolizas();
-    }
-  }, [refetch]);
-
-  const successModal = (
-    <Modal size="small">
-      <div className="w-full flex justify-center mt-3 text-green-800">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="150"
-          height="150"
-          fill="currentColor"
-          className="bi bi-check-circle"
-          viewBox="0 0 16 16"
-        >
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-          <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
-        </svg>
-      </div>
-      <h4 className="text-center text-3xl mt-3">
-        Póliza eliminada exitosamente
-      </h4>
-      <div className="w-full flex justify-center mt-2">
-        <ActionButton
-          onClick={() => {
-            setRefetch(true);
-          }}
-          color="blue"
-          size="lg"
-        >
-          OK
-        </ActionButton>
-      </div>
-    </Modal>
-  );
-
-  const editModal = (
-    <Modal size="small">
-      <div className="h-full w-full flex flex-col justify-around">
-        <div>
-          <h4 className="text-center text-3xl my-3 font-semibold">
-            ¿Desea editar la póliza?
-          </h4>
-          <p className="text-center text-lg my-3">
-            Los recibos pagados serán anulados
-          </p>
-        </div>
-        <div className="w-full flex justify-between px-5">
-          <ActionButton
-            color="red"
-            onClick={() => {
-              setShowEditModal(false);
-            }}
-          >
-            Cancelar
-          </ActionButton>
-          <ActionButton
-            color="blue"
-            onClick={() => {
-              setEditNavigate(true);
-            }}
-          >
-            Continuar
-          </ActionButton>
-        </div>
-      </div>
-    </Modal>
-  );
 
   if (editNavigate) return <Navigate to={`/polizas/${poliza.id}/editar`} />;
 
@@ -199,64 +103,16 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8 6a.5.5 0 0 1 .5.5V8H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V9H6a.5.5 0 0 1 0-1h1.5V6.5A.5.5 0 0 1 8 6m-2.5 6.5A.5.5 0 0 1 6 12h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5" />
             </svg>
           </ActionButton>
-          <div className="relative w-full lg:w-auto flex">
-            <ActionButton
-              title="Más Opciones"
-              onClick={() => setDisplayMore((prev) => !prev)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="bi bi-chevron-down"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
-                />
-              </svg>
-            </ActionButton>
-            {displayMore && (
-              <div className="absolute top-7 right-0 z-30 bg-white rounded w-52 p-2 shadow-lg shadow-gray-500">
-                <h4 className="text-blue-900 font-bold">Más acciones</h4>
-                <div className="p-1 text-blue-950 flex flex-col items-start">
-                  <button className="w-full hover:bg-gray-200 active:bg-gray-500 active:text-white rounded text-left px-1">
-                    Reexpedir
-                  </button>
-                  <button className="w-full hover:bg-gray-200 active:bg-gray-500 active:text-white rounded text-left px-1">
-                    Cambiar Contratante
-                  </button>
-                  <button className="w-full hover:bg-gray-200 active:bg-gray-500 active:text-white rounded text-left px-1">
-                    Cancelar
-                  </button>
-                  <button
-                    className="w-full hover:bg-gray-200 active:bg-gray-500 active:text-white rounded text-left px-1"
-                    onClick={deleteHandler}
-                  >
-                    Eliminar
-                  </button>
-                  <button
-                    className="w-full hover:bg-red-200 rounded active:bg-red-700 active:text-white text-right text-red-700 px-1"
-                    onClick={() => {
-                      setDisplayMore(false);
-                    }}
-                  >
-                    Cerrar
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
         </div>
+        <AccionesDropdown poliza={poliza} />
       </div>
-      {showEditModal && editModal}
-      {deleteSuccess && successModal}
-      {error && (
-        <ErrorModal
-          onClick={() => {
-            setError(false);
+      {showEditModal && (
+        <EditModal
+          onCancel={() => {
+            setShowEditModal(false);
+          }}
+          onContinue={() => {
+            setEditNavigate(true);
           }}
         />
       )}
