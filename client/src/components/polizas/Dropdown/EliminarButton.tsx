@@ -1,9 +1,9 @@
 import { useContext, useState, useEffect } from "react";
-import DropdownButton from "../utils/DropdownButton";
+import DropdownButton from "../../utils/DropdownButton";
 import axios from "axios";
-import SuccessModal from "../utils/SuccessModal";
-import ErrorModal from "../utils/ErrorModal";
-import { PolizasContext } from "../../store/polizas-context";
+import SuccessModal from "../../utils/SuccessModal";
+import ErrorModal from "../../utils/ErrorModal";
+import { PolizasContext } from "../../../store/polizas-context";
 
 const EliminarButton = ({ id }: { id: number }) => {
   const polizasContext = useContext(PolizasContext);
