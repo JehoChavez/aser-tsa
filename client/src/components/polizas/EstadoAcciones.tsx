@@ -3,7 +3,7 @@ import { PolizaInterface } from "../../types/interfaces";
 import ActionButton from "../utils/ActionButton";
 import { Navigate } from "react-router-dom";
 import EditModal from "./EditModal";
-import AccionesDropdown from "./AccionesDropdown";
+import AccionesDropdown from "./Dropdown/AccionesDropdown";
 
 const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   const [editNavigate, setEditNavigate] = useState(false);

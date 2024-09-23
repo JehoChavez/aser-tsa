@@ -1,5 +1,5 @@
-import { PolizaInterface } from "../../types/interfaces";
-import Dropdown from "../utils/Dropdown";
+import { PolizaInterface } from "../../../types/interfaces";
+import Dropdown from "../../utils/Dropdown";
 import EliminarButton from "./EliminarButton";
 
 const AccionesDropdown = ({ poliza }: { poliza: PolizaInterface }) => {
