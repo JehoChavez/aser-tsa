@@ -381,3 +381,8 @@ export interface NumberVigenciaProps {
   noPoliza?: string;
   fechaEmision?: Date;
 }
+
+export interface SuccessModalProps {
+  type: "cancelada" | "reexpedida" | "eliminada" | "cambioContratante";
+  onOk: () => void;
+}
