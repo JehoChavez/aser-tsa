@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactNode, useState } from "react";
 import ActionButton from "./ActionButton";
 
 const Dropdown = ({
@@ -6,7 +6,7 @@ const Dropdown = ({
   children,
 }: {
   title?: string;
-  children: ReactElement;
+  children: ReactNode;
 }) => {
   const [displayMore, setDisplayMore] = useState(false);
 
