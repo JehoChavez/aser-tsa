@@ -26,6 +26,9 @@ module.exports.getPendientes = async (req, res) => {
         model: Poliza,
         as: "poliza",
         attributes: ["id", "noPoliza", "moneda"],
+        where: {
+          fechaCancelacion: null,
+        },
         include: [
           {
             model: Cliente,
