@@ -3,13 +3,16 @@ import DropdownButton from "../../utils/DropdownButton";
 import Modal from "../../utils/Modal";
 import ActionButton from "../../utils/ActionButton";
 import FormDateInput from "../../utils/FormDateInput";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import ErrorModal from "../../utils/ErrorModal";
 import SuccessModal from "../../utils/SuccessModal";
 import { PolizasContext } from "../../../store/polizas-context";
+import { Navigate } from "react-router-dom";
 
 const CancelarButton = ({ id }: { id: number }) => {
   const polizasContext = useContext(PolizasContext);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -33,9 +36,16 @@ const CancelarButton = ({ id }: { id: number }) => {
     } catch (error) {
       console.log(error);
       setShowModal(false);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
       setError(true);
     }
   };
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
     <>

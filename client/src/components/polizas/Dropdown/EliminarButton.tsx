@@ -1,12 +1,15 @@
 import { useContext, useState, useEffect } from "react";
 import DropdownButton from "../../utils/DropdownButton";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import SuccessModal from "../../utils/SuccessModal";
 import ErrorModal from "../../utils/ErrorModal";
 import { PolizasContext } from "../../../store/polizas-context";
+import { Navigate } from "react-router-dom";
 
 const EliminarButton = ({ id }: { id: number }) => {
   const polizasContext = useContext(PolizasContext);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const [refetch, setRefetch] = useState(false);
 
@@ -25,8 +28,15 @@ const EliminarButton = ({ id }: { id: number }) => {
     } catch (error) {
       console.log(error);
       setError(true);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
     }
   };
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   useEffect(() => {
     if (refetch) {

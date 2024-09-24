@@ -2,13 +2,16 @@ import { useState, useContext } from "react";
 import DropdownButton from "../../utils/DropdownButton";
 import Modal from "../../utils/Modal";
 import ActionButton from "../../utils/ActionButton";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import ErrorModal from "../../utils/ErrorModal";
 import SuccessModal from "../../utils/SuccessModal";
 import { PolizasContext } from "../../../store/polizas-context";
+import { Navigate } from "react-router-dom";
 
 const RehabilitarButton = ({ id }: { id: number }) => {
   const polizasContext = useContext(PolizasContext);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -31,8 +34,15 @@ const RehabilitarButton = ({ id }: { id: number }) => {
       console.log(error);
       setShowModal(false);
       setError(true);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
     }
   };
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
     <>
