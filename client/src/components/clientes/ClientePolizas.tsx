@@ -19,6 +19,7 @@ const ClientePolizas = ({ id }: { id: number }) => {
   const [polizas, setPolizas] = useState<PolizaInterface[]>([]);
   const [params, setParams] = useState<PolizasParamsInterface>({
     ...defaultPolizasContext.params,
+    estado: ["vigentes", "canceladas"],
     cliente: [id],
   });
 
