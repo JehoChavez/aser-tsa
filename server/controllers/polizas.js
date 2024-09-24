@@ -123,6 +123,7 @@ module.exports.getPolizas = async (req, res) => {
           { reexpedicionId: null },
           { fechaCancelacion: null },
           { finVigencia: { [Op.gt]: getMexicoDate() } },
+          { vencida: { [Op.not]: true } },
         ],
       });
     }
