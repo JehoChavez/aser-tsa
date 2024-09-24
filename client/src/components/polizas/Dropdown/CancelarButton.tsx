@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DropdownButton from "../../utils/DropdownButton";
 import Modal from "../../utils/Modal";
 import ActionButton from "../../utils/ActionButton";
@@ -6,8 +6,11 @@ import FormDateInput from "../../utils/FormDateInput";
 import axios from "axios";
 import ErrorModal from "../../utils/ErrorModal";
 import SuccessModal from "../../utils/SuccessModal";
+import { PolizasContext } from "../../../store/polizas-context";
 
 const CancelarButton = ({ id }: { id: number }) => {
+  const polizasContext = useContext(PolizasContext);
+
   const [showModal, setShowModal] = useState(false);
 
   const [error, setError] = useState(false);
@@ -86,6 +89,7 @@ const CancelarButton = ({ id }: { id: number }) => {
           type="cancelada"
           onOk={() => {
             setSuccess(false);
+            polizasContext.fetchPolizas();
           }}
         />
       )}
