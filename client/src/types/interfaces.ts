@@ -383,6 +383,11 @@ export interface NumberVigenciaProps {
 }
 
 export interface SuccessModalProps {
-  type: "cancelada" | "reexpedida" | "eliminada" | "cambioContratante";
+  type:
+    | "cancelada"
+    | "reexpedida"
+    | "eliminada"
+    | "cambioContratante"
+    | "rehabilitada";
   onOk: () => void;
 }
