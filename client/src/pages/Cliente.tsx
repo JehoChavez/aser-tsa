@@ -36,7 +36,7 @@ const Cliente = () => {
 
   useEffect(() => {
     fetchCliente();
-  }, []);
+  }, [id]);
 
   let content: JSX.Element;
 

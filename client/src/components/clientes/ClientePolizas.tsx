@@ -47,6 +47,12 @@ const ClientePolizas = ({ id }: { id: number }) => {
     fetchPolizas();
   }, [fetchPolizas]);
 
+  useEffect(() => {
+    setParams((prev) => {
+      return { ...prev, cliente: [id] };
+    });
+  }, [id]);
+
   const onSearch = (value: string) => {
     if (value === "") {
       setParams((prev) => {
