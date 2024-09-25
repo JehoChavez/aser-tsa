@@ -74,8 +74,8 @@ const SelectClienteModal = ({
                   className="w-full h-full p-1 rounded bg-blue-200 bg-opacity-25 hover:bg-blue-900 hover:bg-opacity-25 hover:cursor-pointer"
                   onClick={() => {
                     setSelected(cliente.id);
-                    if (onSelect && selected) {
-                      onSelect(selected);
+                    if (onSelect) {
+                      onSelect(cliente.id);
                     }
                   }}
                 >
