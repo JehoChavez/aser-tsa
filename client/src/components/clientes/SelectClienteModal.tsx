@@ -49,7 +49,8 @@ const SelectClienteModal = ({
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
-  if (selected) return <Navigate to={`/clientes/${selected}/nueva`} />;
+  if (selected && !onSelect)
+    return <Navigate to={`/clientes/${selected}/nueva`} />;
 
   return (
     <Modal size="medium" closeBtn={true} onClose={onClose}>
