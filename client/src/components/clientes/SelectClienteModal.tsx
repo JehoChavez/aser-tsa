@@ -12,7 +12,7 @@ const SelectClienteModal = ({
   onSelect,
 }: {
   onClose: () => void;
-  onSelect?: () => void;
+  onSelect?: (selected: number) => void;
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -74,8 +74,8 @@ const SelectClienteModal = ({
                   className="w-full h-full p-1 rounded bg-blue-200 bg-opacity-25 hover:bg-blue-900 hover:bg-opacity-25 hover:cursor-pointer"
                   onClick={() => {
                     setSelected(cliente.id);
-                    if (onSelect) {
-                      onSelect();
+                    if (onSelect && selected) {
+                      onSelect(selected);
                     }
                   }}
                 >
