@@ -3,6 +3,7 @@ import Dropdown from "../../utils/Dropdown";
 import EliminarButton from "./EliminarButton";
 import CancelarButton from "./CancelarButton";
 import RehabilitarButton from "./RehabilitarButton";
+import CambiarContratanteBtn from "./CambiarContratanteBtn";
 
 const AccionesDropdown = ({ poliza }: { poliza: PolizaInterface }) => {
   return (
@@ -12,9 +13,7 @@ const AccionesDropdown = ({ poliza }: { poliza: PolizaInterface }) => {
           <button className="w-full hover:bg-gray-200 active:bg-gray-500 active:text-white rounded text-left px-1">
             Reexpedir
           </button>
-          <button className="w-full hover:bg-gray-200 active:bg-gray-500 active:text-white rounded text-left px-1">
-            Cambiar Contratante
-          </button>
+          <CambiarContratanteBtn id={poliza.id} />
           {poliza.fechaCancelacion ? (
             <RehabilitarButton id={poliza.id} />
           ) : (
