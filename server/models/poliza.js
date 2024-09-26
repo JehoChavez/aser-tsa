@@ -63,6 +63,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "renovacion",
         foreignKey: {
           field: "renovacionId",
+          onDelete: "SET NULL",
         },
       });
       Poliza.belongsTo(models.Poliza, {
