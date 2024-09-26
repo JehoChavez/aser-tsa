@@ -23,7 +23,13 @@ import ActionButton from "../utils/ActionButton";
 import Modal from "../utils/Modal";
 import ErrorModal from "../utils/ErrorModal";
 
-const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
+const PolizaForm = ({
+  poliza,
+  renovacion,
+}: {
+  poliza?: PolizaInterface;
+  renovacion?: boolean;
+}) => {
   const { id: idParam } = useParams();
 
   const [success, setSuccess] = useState(false);
@@ -70,22 +76,28 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
 
   const today = new Date();
   const [inicioVigencia, setInicioVigencia] = useState(
-    poliza ? moment(poliza.inicioVigencia).toDate() : today
+    poliza
+      ? renovacion
+        ? moment(poliza.finVigencia).toDate()
+        : moment(poliza.inicioVigencia).toDate()
+      : today
   );
   const [finVigencia, setFinVigencia] = useState(
     poliza
-      ? moment(poliza.finVigencia).toDate()
+      ? renovacion
+        ? moment(poliza.finVigencia).add(1, "y").toDate()
+        : moment(poliza.finVigencia).toDate()
       : moment(today).add(1, "y").toDate()
   );
   const [months, setMonths] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [primas, setPrimas] = useState<PrimasInterface>({
-    primaNeta: poliza?.primaNeta || 0,
-    expedicion: poliza?.expedicion || 0,
-    financiamiento: poliza?.financiamiento || 0,
-    otros: poliza?.otros || 0,
-    iva: poliza?.iva || 0,
-    primaTotal: poliza?.primaTotal || 0,
+    primaNeta: poliza ? (renovacion ? 0 : poliza.primaNeta || 0) : 0,
+    expedicion: poliza ? (renovacion ? 0 : poliza.expedicion || 0) : 0,
+    financiamiento: poliza ? (renovacion ? 0 : poliza.financiamiento || 0) : 0,
+    otros: poliza ? (renovacion ? 0 : poliza.otros || 0) : 0,
+    iva: poliza ? (renovacion ? 0 : poliza.iva || 0) : 0,
+    primaTotal: poliza ? (renovacion ? 0 : poliza.primaTotal || 0) : 0,
   });
 
   const onPrimasChange = (primas: PrimasInterface) => {
@@ -163,6 +175,7 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
   }, [fetchData]);
 
   const postPoliza = async (payload: PostPolizaPayload) => {
+    setIsLoading(true);
     try {
       const response = await axios.post(
         "http://localhost:3000/api/polizas",
@@ -174,16 +187,21 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        if (error.response?.data.status === "poliza ya existente") {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        } else if (error.response?.data.status === "poliza ya existente") {
           setExiste(true);
         } else {
           setError(true);
         }
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const updatePoliza = async (payload: PostPolizaPayload) => {
+    setIsLoading(true);
     try {
       const response = await axios.put(
         `http://localhost:3000/api/polizas/${idParam}`,
@@ -194,7 +212,38 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
         setSuccess(true);
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
+      setError(true);
       console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const renovarPoliza = async (payload: PostPolizaPayload) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/api/polizas/${idParam}/renovar`,
+        payload,
+        { withCredentials: true }
+      );
+      if (response.data.status === 201) {
+        setSuccess(true);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -220,7 +269,9 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
     };
 
     if (poliza) {
-      updatePoliza(payload);
+      if (renovacion) {
+        renovarPoliza(payload);
+      } else updatePoliza(payload);
     } else {
       postPoliza(payload);
     }
@@ -272,7 +323,8 @@ const PolizaForm = ({ poliza }: { poliza?: PolizaInterface }) => {
         </svg>
       </div>
       <h4 className="text-center text-3xl mt-3">
-        Póliza {poliza ? "editada" : "creada"} exitosamente
+        Póliza {poliza ? (renovacion ? "renovada" : "editada") : "creada"}{" "}
+        exitosamente
       </h4>
       <p className="text-center text-lg">
         Serás redirigido a la página del cliente
