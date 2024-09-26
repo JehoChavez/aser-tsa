@@ -9,7 +9,10 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   const [editNavigate, setEditNavigate] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
+  const [renovarNavigate, setRenovarNavigate] = useState(false);
+
   if (editNavigate) return <Navigate to={`/polizas/${poliza.id}/editar`} />;
+  if (renovarNavigate) return <Navigate to={`/polizas/${poliza.id}/renovar`} />;
 
   return (
     <>
@@ -75,7 +78,12 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
             </svg>
           </ActionButton>
-          <ActionButton title="Renovar Póliza">
+          <ActionButton
+            title="Renovar Póliza"
+            onClick={() => {
+              setRenovarNavigate(true);
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
