@@ -5,6 +5,7 @@ import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
 import SuccessModal from "../../utils/SuccessModal";
 import ErrorModal from "../../utils/ErrorModal";
+import Loading from "../../utils/Loading";
 
 const CambiarContratanteBtn = ({ id }: { id: number }) => {
   const [showModal, setShowModal] = useState(false);
@@ -18,7 +19,11 @@ const CambiarContratanteBtn = ({ id }: { id: number }) => {
 
   const [clienteId, setClienteId] = useState<number>();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const selectHandler = async (clienteIdInner: number) => {
+    setIsLoading(true);
+
     try {
       setClienteId(clienteIdInner);
       const response = await axios.patch(
@@ -40,6 +45,8 @@ const CambiarContratanteBtn = ({ id }: { id: number }) => {
       }
       setShowModal(false);
       setError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -48,6 +55,7 @@ const CambiarContratanteBtn = ({ id }: { id: number }) => {
 
   return (
     <>
+      {isLoading && <Loading />}
       <DropdownButton
         onClick={() => {
           setShowModal(true);

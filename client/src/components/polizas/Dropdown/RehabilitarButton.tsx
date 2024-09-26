@@ -7,6 +7,7 @@ import ErrorModal from "../../utils/ErrorModal";
 import SuccessModal from "../../utils/SuccessModal";
 import { PolizasContext } from "../../../store/polizas-context";
 import { Navigate } from "react-router-dom";
+import Loading from "../../utils/Loading";
 
 const RehabilitarButton = ({ id }: { id: number }) => {
   const polizasContext = useContext(PolizasContext);
@@ -18,7 +19,11 @@ const RehabilitarButton = ({ id }: { id: number }) => {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const rehabilitarHandler = async () => {
+    setIsLoading(true);
+
     try {
       const response = await axios.patch(
         `http://localhost:3000/api/polizas/${id}/anularCancelacion`,
@@ -39,6 +44,8 @@ const RehabilitarButton = ({ id }: { id: number }) => {
           setIsAuthenticated(false);
         }
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,6 +53,7 @@ const RehabilitarButton = ({ id }: { id: number }) => {
 
   return (
     <>
+      {isLoading && <Loading />}
       <DropdownButton
         onClick={() => {
           setShowModal(true);

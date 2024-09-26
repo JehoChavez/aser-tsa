@@ -5,6 +5,7 @@ import SuccessModal from "../../utils/SuccessModal";
 import ErrorModal from "../../utils/ErrorModal";
 import { PolizasContext } from "../../../store/polizas-context";
 import { Navigate } from "react-router-dom";
+import Loading from "../../utils/Loading";
 
 const EliminarButton = ({ id }: { id: number }) => {
   const polizasContext = useContext(PolizasContext);
@@ -16,7 +17,11 @@ const EliminarButton = ({ id }: { id: number }) => {
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [error, setError] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const deleteHandler = async () => {
+    setIsLoading(true);
+
     try {
       const response = await axios.delete(
         `http://localhost:3000/api/polizas/${id}`,
@@ -33,6 +38,8 @@ const EliminarButton = ({ id }: { id: number }) => {
           setIsAuthenticated(false);
         }
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,6 +53,7 @@ const EliminarButton = ({ id }: { id: number }) => {
 
   return (
     <>
+      {isLoading && <Loading />}
       <DropdownButton onClick={deleteHandler}>Eliminar</DropdownButton>
       {error && (
         <ErrorModal

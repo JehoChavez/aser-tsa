@@ -8,6 +8,7 @@ import ErrorModal from "../../utils/ErrorModal";
 import SuccessModal from "../../utils/SuccessModal";
 import { PolizasContext } from "../../../store/polizas-context";
 import { Navigate } from "react-router-dom";
+import Loading from "../../utils/Loading";
 
 const CancelarButton = ({ id }: { id: number }) => {
   const polizasContext = useContext(PolizasContext);
@@ -21,7 +22,11 @@ const CancelarButton = ({ id }: { id: number }) => {
 
   const [date, setDate] = useState(new Date());
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const cancelHandler = async () => {
+    setIsLoading(true);
+
     try {
       const response = await axios.patch(
         `http://localhost:3000/api/polizas/${id}/cancelar`,
@@ -42,6 +47,8 @@ const CancelarButton = ({ id }: { id: number }) => {
         }
       }
       setError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,6 +56,7 @@ const CancelarButton = ({ id }: { id: number }) => {
 
   return (
     <>
+      {isLoading && <Loading />}
       <DropdownButton
         onClick={() => {
           setShowModal(true);
