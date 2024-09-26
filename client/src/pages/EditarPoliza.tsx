@@ -71,7 +71,7 @@ const EditarPoliza = () => {
             {poliza ? (
               <EditarPolizaForm poliza={poliza} />
             ) : (
-              <p className="text-center text-2xl">Cliente No Encontrado</p>
+              <p className="text-center text-2xl">Póliza No Encontrada</p>
             )}
           </>
         ) : (
