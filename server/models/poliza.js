@@ -70,6 +70,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "reexpedicion",
         foreignKey: {
           field: "reexpedicionId",
+          onDelete: "SET NULL",
         },
       });
     }
