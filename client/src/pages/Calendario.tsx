@@ -14,6 +14,7 @@ import {
 } from "../types/interfaces";
 import { Navigate } from "react-router-dom";
 import { DayPendientes } from "../types/types";
+import moment from "moment";
 
 const Calendario = () => {
   const [isLoading, setIsLoading] = useState(
@@ -140,8 +141,7 @@ const Calendario = () => {
     const rangeEvents: CustomEvent[] = [];
     const countedRecibos: CustomEvent[] = pendientes.cobranza.reduce(
       (acc: CustomEvent[], recibo) => {
-        const [year, month, day] = recibo.fechaInicio.split("-").map(Number);
-        const reciboDate = new Date(year, month - 1, day, 0, 0, 0);
+        const reciboDate = moment(recibo.fechaInicio).toDate();
 
         const existingEntry: CustomEvent | undefined = acc.find((entry) => {
           return entry.start?.getTime() === reciboDate.getTime();
@@ -165,7 +165,7 @@ const Calendario = () => {
 
     const countedRenovaciones: CustomEvent[] = pendientes.renovacion.reduce(
       (acc: CustomEvent[], renovacion) => {
-        const renovacionDate = new Date(renovacion.finVigencia);
+        const renovacionDate = moment(renovacion.finVigencia).toDate();
 
         const existingEntry: CustomEvent | undefined = acc.find(
           (entry) => entry.start?.getTime() === renovacionDate.getTime()
