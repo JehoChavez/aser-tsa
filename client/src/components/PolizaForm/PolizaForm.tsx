@@ -411,7 +411,11 @@ const PolizaForm = ({
             <NumberVigenciaSection
               noPoliza={poliza?.noPoliza}
               fechaEmision={
-                poliza ? moment(poliza.emision).toDate() : undefined
+                poliza
+                  ? renovacion
+                    ? undefined
+                    : moment(poliza.emision).toDate()
+                  : undefined
               }
             />
             <AseguradoraSection
