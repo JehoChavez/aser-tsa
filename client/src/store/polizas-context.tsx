@@ -17,7 +17,7 @@ export const defaultPolizasContext: PolizasContextInterface = {
     ramo: null,
     orden: "DESC",
     por: "createdAt",
-    estado: ["vigentes"],
+    estado: ["vigentes", "vencidas", "renovadas"],
   },
   fetchPolizas: async () => {},
   onSearch: (value: string) => {},
