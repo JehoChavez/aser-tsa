@@ -124,6 +124,7 @@ export interface ActionButtonInterface {
   color?: "blue" | "red";
   size?: "md" | "lg";
   onClick?: () => void;
+  disabled?: boolean;
   children: ReactNode;
 }
 
