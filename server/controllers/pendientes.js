@@ -62,8 +62,8 @@ module.exports.getPendientes = async (req, res) => {
           [Op.gte]: req.query.desde,
           [Op.lte]: req.query.hasta,
         },
-        renovacionId: null,
       },
+      renovacionId: null,
     },
     attributes: ["id", "noPoliza", "bienAsegurado", "finVigencia"],
     include: [
