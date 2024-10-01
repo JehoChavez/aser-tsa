@@ -7,6 +7,7 @@ import Loading from "../components/utils/Loading";
 import IconTitle from "../components/utils/IconTitle";
 import NPClienteInfo from "../components/nuevaPoliza/NPClienteInfo";
 import PolizaForm from "../components/PolizaForm/PolizaForm";
+import ActionButton from "../components/utils/ActionButton";
 
 const RenovarPoliza = () => {
   const { id: polizaId } = useParams();
@@ -14,6 +15,8 @@ const RenovarPoliza = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [poliza, setPoliza] = useState<PolizaInterface>();
   const [cliente, setCliente] = useState<ClienteInterface>();
+
+  const [navigate, setNavigate] = useState(false);
 
   const fetchPoliza = useCallback(async () => {
     setIsLoading(true);
@@ -40,6 +43,7 @@ const RenovarPoliza = () => {
   }, []);
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (navigate) return <Navigate to={`/clientes/${cliente?.id}`} />;
 
   return (
     <div className="w-full h-full px-5 py-4 flex flex-col">
@@ -73,7 +77,25 @@ const RenovarPoliza = () => {
           <>
             <NPClienteInfo cliente={cliente} />
             {poliza ? (
-              <PolizaForm poliza={poliza} renovacion />
+              poliza.renovacionId ? (
+                <Modal size="small">
+                  <div className="w-full h-full flex flex-col justify-between py-2">
+                    <h3 className="text-3xl font-semibold text-center text-gray-800 mt-4">
+                      POLIZA YA RENOVADA
+                    </h3>
+                    <ActionButton
+                      color="blue"
+                      onClick={() => {
+                        setNavigate(true);
+                      }}
+                    >
+                      OK
+                    </ActionButton>
+                  </div>
+                </Modal>
+              ) : (
+                <PolizaForm poliza={poliza} renovacion />
+              )
             ) : (
               <p className="text-center text-2xl">Póliza No Encontrada</p>
             )}
