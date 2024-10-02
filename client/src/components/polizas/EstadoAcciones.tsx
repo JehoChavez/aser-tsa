@@ -83,6 +83,7 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
             onClick={() => {
               setRenovarNavigate(true);
             }}
+            disabled={poliza.renovacionId ? true : false}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
