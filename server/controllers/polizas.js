@@ -171,6 +171,8 @@ module.exports.getPolizas = async (req, res) => {
       "moneda",
       "fechaCancelacion",
       "vencida",
+      "renovacionId",
+      "reexpedicionId",
     ],
     include: [
       {
