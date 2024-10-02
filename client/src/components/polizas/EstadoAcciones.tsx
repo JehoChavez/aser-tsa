@@ -44,6 +44,13 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
             onClick={() => {
               setShowEditModal(true);
             }}
+            disabled={
+              poliza.renovacionId ||
+              poliza.reexpedicionId ||
+              poliza.fechaCancelacion
+                ? true
+                : false
+            }
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +92,13 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
             onClick={() => {
               setRenovarNavigate(true);
             }}
-            disabled={poliza.renovacionId ? true : false}
+            disabled={
+              poliza.renovacionId ||
+              poliza.reexpedicionId ||
+              poliza.fechaCancelacion
+                ? true
+                : false
+            }
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
