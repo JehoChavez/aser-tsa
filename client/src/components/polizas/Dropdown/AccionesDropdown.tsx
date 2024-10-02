@@ -13,13 +13,25 @@ const AccionesDropdown = ({ poliza }: { poliza: PolizaInterface }) => {
         <div className="p-1 text-blue-950 flex flex-col items-start">
           <ReexpedirButton
             id={poliza.id}
-            disabled={poliza.reexpedicionId ? true : false}
+            disabled={
+              poliza.reexpedicionId ||
+              poliza.renovacionId ||
+              poliza.fechaCancelacion
+                ? true
+                : false
+            }
           />
-          <CambiarContratanteBtn id={poliza.id} />
+          <CambiarContratanteBtn
+            id={poliza.id}
+            disabled={poliza.fechaCancelacion ? true : false}
+          />
           {poliza.fechaCancelacion ? (
             <RehabilitarButton id={poliza.id} />
           ) : (
-            <CancelarButton id={poliza.id} />
+            <CancelarButton
+              id={poliza.id}
+              disabled={poliza.reexpedicionId ? true : false}
+            />
           )}
           <EliminarButton id={poliza.id} />
         </div>

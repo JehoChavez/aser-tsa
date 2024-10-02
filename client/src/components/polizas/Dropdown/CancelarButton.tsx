@@ -10,7 +10,13 @@ import { PolizasContext } from "../../../store/polizas-context";
 import { Navigate } from "react-router-dom";
 import Loading from "../../utils/Loading";
 
-const CancelarButton = ({ id }: { id: number }) => {
+const CancelarButton = ({
+  id,
+  disabled,
+}: {
+  id: number;
+  disabled?: boolean;
+}) => {
   const polizasContext = useContext(PolizasContext);
 
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -59,8 +65,9 @@ const CancelarButton = ({ id }: { id: number }) => {
       {isLoading && <Loading />}
       <DropdownButton
         onClick={() => {
-          setShowModal(true);
+          !disabled && setShowModal(true);
         }}
+        disabled={disabled}
       >
         Cancelar
       </DropdownButton>
