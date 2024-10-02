@@ -7,7 +7,7 @@ import SuccessModal from "../../utils/SuccessModal";
 import ErrorModal from "../../utils/ErrorModal";
 import Loading from "../../utils/Loading";
 
-const CambiarContratanteBtn = ({ id }: { id: number }) => {
+const CambiarContratanteBtn = ({ id, disabled }: { id: number, disabled?: boolean }) => {
   const [showModal, setShowModal] = useState(false);
 
   const [success, setSuccess] = useState(false);
@@ -58,8 +58,9 @@ const CambiarContratanteBtn = ({ id }: { id: number }) => {
       {isLoading && <Loading />}
       <DropdownButton
         onClick={() => {
-          setShowModal(true);
+          !disabled && setShowModal(true);
         }}
+        disabled={disabled}
       >
         Cambiar Contratante
       </DropdownButton>
