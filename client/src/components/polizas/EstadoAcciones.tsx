@@ -79,7 +79,9 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
             </svg>
           </ActionButton>
           <ActionButton
-            title="Renovar Póliza"
+            title={
+              poliza.renovacionId ? "Póliza ya renovada" : "Renovar Póliza"
+            }
             onClick={() => {
               setRenovarNavigate(true);
             }}
