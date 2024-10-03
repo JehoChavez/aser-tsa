@@ -26,9 +26,11 @@ import ErrorModal from "../utils/ErrorModal";
 const PolizaForm = ({
   poliza,
   renovacion,
+  reexpedicion,
 }: {
   poliza?: PolizaInterface;
   renovacion?: boolean;
+  reexpedicion?: boolean;
 }) => {
   const { id: idParam } = useParams();
 
@@ -241,6 +243,31 @@ const PolizaForm = ({
           setIsAuthenticated(false);
         }
       }
+      setError(true);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const reexpedirPoliza = async (payload: PostPolizaPayload) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/api/polizas/${idParam}/reexpedir`,
+        payload,
+        { withCredentials: true }
+      );
+      if (response.data.status === 200) {
+        setSuccess(true);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
+      setError(true);
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -271,6 +298,8 @@ const PolizaForm = ({
     if (poliza) {
       if (renovacion) {
         renovarPoliza(payload);
+      } else if (reexpedicion) {
+        reexpedirPoliza(payload);
       } else updatePoliza(payload);
     } else {
       postPoliza(payload);
@@ -323,7 +352,14 @@ const PolizaForm = ({
         </svg>
       </div>
       <h4 className="text-center text-3xl mt-3">
-        Póliza {poliza ? (renovacion ? "renovada" : "editada") : "creada"}{" "}
+        Póliza{" "}
+        {poliza
+          ? renovacion
+            ? "renovada"
+            : reexpedicion
+            ? "reexpedida"
+            : "editada"
+          : "creada"}{" "}
         exitosamente
       </h4>
       <p className="text-center text-lg">
