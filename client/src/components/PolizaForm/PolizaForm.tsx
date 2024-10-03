@@ -258,7 +258,7 @@ const PolizaForm = ({
         payload,
         { withCredentials: true }
       );
-      if (response.data.status === 200) {
+      if (response.data.status === 201) {
         setSuccess(true);
       }
     } catch (error) {
