@@ -23,7 +23,9 @@ const AccionesDropdown = ({ poliza }: { poliza: PolizaInterface }) => {
           />
           <CambiarContratanteBtn
             id={poliza.id}
-            disabled={poliza.fechaCancelacion ? true : false}
+            disabled={
+              poliza.fechaCancelacion || poliza.reexpedicionId ? true : false
+            }
           />
           {poliza.fechaCancelacion ? (
             <RehabilitarButton id={poliza.id} />
