@@ -20,7 +20,7 @@ export const defaultPolizasContext: PolizasContextInterface = {
     estado: ["vigentes", "vencidas", "renovadas"],
   },
   fetchPolizas: async () => {},
-  onSearch: (value: string) => {},
+  onSearch: () => {},
 };
 
 export const PolizasContext: React.Context<PolizasContextInterface> =
