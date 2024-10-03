@@ -386,57 +386,60 @@ module.exports.deletePoliza = async (req, res) => {
 };
 
 module.exports.reexpedirPoliza = async (req, res) => {
-  const poliza = await Poliza.findByPk(req.params.id);
-
-  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
-
+  const { id } = req.params;
   const { poliza: polizaData, recibos: recibosData } = req.body;
-  polizaData.recibos = recibosData;
 
+  // Wrap everything in a transaction
   const t = await sequelize.transaction();
 
   try {
-    // Delete existing endosos
+    // Find the existing poliza
+    const poliza = await Poliza.findByPk(id, { transaction: t });
+    if (!poliza) {
+      throw new ExpressError("poliza no encontrada", 404);
+    }
+
+    // Delete existing endosos and recibos within the transaction
     await Endoso.destroy({
-      where: {
-        polizaId: req.params.id,
-      },
+      where: { polizaId: id },
       transaction: t,
     });
 
-    // Delete existing recibos
     await Recibo.destroy({
-      where: {
-        polizaId: req.params.id,
-      },
+      where: { polizaId: id },
       transaction: t,
     });
 
     // Create new poliza (reexpedicion) and recibos
-    const reexpedicion = await Poliza.create(
-      polizaData,
-      {
-        include: {
-          model: Recibo,
-          as: "recibos",
-        },
+    polizaData.recibos = recibosData;
+    const reexpedicion = await Poliza.create(polizaData, {
+      include: {
+        model: Recibo,
+        as: "recibos",
       },
-      { transaction: t }
-    );
+      transaction: t,
+    });
 
     // Set previous poliza reexpedicionId to the new poliza ID
     poliza.reexpedicionId = reexpedicion.id;
     await poliza.save({ transaction: t });
 
+    // Commit the transaction
     await t.commit();
 
+    // Respond with the newly created reexpedicion
     const response = new CustomResponse(reexpedicion, 201);
-
     res.status(response.status).json(response);
   } catch (error) {
+    // Rollback the transaction in case of error
     await t.rollback();
 
-    throw new ExpressError(error, 500);
+    // Handle the error properly
+    if (error instanceof ExpressError) {
+      res.status(error.status).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   }
 };
 
