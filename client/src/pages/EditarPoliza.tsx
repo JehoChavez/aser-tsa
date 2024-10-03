@@ -62,7 +62,7 @@ const EditarPoliza = () => {
           </svg>
         }
       >
-        Nueva Póliza
+        Editar Póliza
       </IconTitle>
       <div className="w-full h-full py-5">
         {cliente ? (
