@@ -26,7 +26,7 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               : poliza.vencida
               ? "bg-orange-900"
               : poliza.renovacionId
-              ? "bg-blue-500"
+              ? "bg-blue-800"
               : "bg-emerald-700"
           }`}
         >
