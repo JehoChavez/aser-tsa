@@ -19,13 +19,15 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
       <div className="col-start-4 md:col-start-11 col-span-full px-2 flex flex-col justify-around md:flex-row md:justify-normal items-center">
         <p
           className={`rounded w-24 text-center px-1 text-neutral-100 ${
-            poliza.fechaCancelacion || poliza.reexpedicionId
-              ? "bg-red-600"
+            poliza.fechaCancelacion
+              ? "bg-red-700"
+              : poliza.reexpedicionId
+              ? "bg-purple-900"
               : poliza.vencida
-              ? "bg-red-900"
+              ? "bg-orange-900"
               : poliza.renovacionId
               ? "bg-blue-500"
-              : "bg-green-500"
+              : "bg-emerald-700"
           }`}
         >
           {poliza.fechaCancelacion
