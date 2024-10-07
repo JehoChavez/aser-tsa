@@ -33,11 +33,11 @@ const EditarPoliza = () => {
         }
       }
     }
-  }, []);
+  }, [polizaId]);
 
   useEffect(() => {
     fetchPoliza();
-  }, []);
+  }, [fetchPoliza]);
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
@@ -75,7 +75,7 @@ const EditarPoliza = () => {
             )}
           </>
         ) : (
-          <p className="text-center text-2xl">Cliente No Encontrado</p>
+          <p className="text-center text-2xl">Póliza No Encontrado</p>
         )}
       </div>
     </div>
