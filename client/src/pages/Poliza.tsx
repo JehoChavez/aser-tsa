@@ -6,6 +6,7 @@ import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
 import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
+import NPClienteInfo from "../components/nuevaPoliza/NPClienteInfo";
 
 const Poliza = () => {
   const { id: polizaId } = useParams();
@@ -63,6 +64,9 @@ const Poliza = () => {
       >
         Póliza {poliza?.noPoliza}
       </IconTitle>
+      <div className="w-full h-full py-5">
+        {cliente && <NPClienteInfo cliente={cliente} />}
+      </div>
     </div>
   );
 };
