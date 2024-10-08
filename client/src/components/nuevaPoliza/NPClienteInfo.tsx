@@ -2,6 +2,8 @@ import { useState } from "react";
 import { ClienteInterface } from "../../types/interfaces";
 import IconTextButton from "../utils/IconTextButton";
 import SelectClienteModal from "../clientes/SelectClienteModal";
+import ActionButton from "../utils/ActionButton";
+import { Link } from "react-router-dom";
 
 const NPClienteInfo = ({
   cliente,
@@ -26,9 +28,28 @@ const NPClienteInfo = ({
           }}
         />
       )}
-      <h2 className="border-b m-2 text-xl text-gray-600 font-bold">
-        Datos del Cliente
-      </h2>
+      <div className="flex justify-between">
+        <h2 className="border-b m-2 text-xl text-gray-600 font-bold">
+          Datos del Cliente
+        </h2>
+        <span className="flex py-2">
+          <ActionButton title="Ver Cliente">
+            <Link to={`/clientes/${cliente.id}`}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-eye-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+              </svg>
+            </Link>
+          </ActionButton>
+        </span>
+      </div>
       <div className="flex flex-col md:flex-row rounded p-2">
         <div className="md:w-1/3 px-1">
           <p>Nombre</p>
