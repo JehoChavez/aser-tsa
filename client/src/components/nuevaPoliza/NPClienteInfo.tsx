@@ -33,8 +33,8 @@ const NPClienteInfo = ({
           Datos del Cliente
         </h2>
         <span className="flex py-2">
-          <ActionButton title="Ver Cliente">
-            <Link to={`/clientes/${cliente.id}`}>
+          <Link to={`/clientes/${cliente.id}`}>
+            <ActionButton title="Ver Cliente">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -46,8 +46,8 @@ const NPClienteInfo = ({
                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
               </svg>
-            </Link>
-          </ActionButton>
+            </ActionButton>
+          </Link>
         </span>
       </div>
       <div className="flex flex-col md:flex-row rounded p-2">
