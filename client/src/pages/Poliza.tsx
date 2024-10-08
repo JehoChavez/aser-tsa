@@ -1,8 +1,52 @@
+import { useState, useCallback, useEffect } from "react";
 import IconTitle from "../components/utils/IconTitle";
+import { useParams } from "react-router-dom";
+import { ClienteInterface, PolizaInterface } from "../types/interfaces";
+import axios, { AxiosError } from "axios";
+import { Navigate } from "react-router-dom";
+import Modal from "../components/utils/Modal";
+import Loading from "../components/utils/Loading";
 
 const Poliza = () => {
+  const { id: polizaId } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [poliza, setPoliza] = useState<PolizaInterface>();
+  const [cliente, setCliente] = useState<ClienteInterface>();
+
+  const fetchPoliza = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/polizas/${polizaId}`,
+        { withCredentials: true }
+      );
+      setPoliza(response.data.content);
+      setCliente(response.data.content.cliente);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }, [polizaId]);
+
+  useEffect(() => {
+    fetchPoliza();
+  }, [fetchPoliza]);
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
   return (
     <div className="w-full h-full px-5 py-4 flex flex-col overflow-hidden">
+      {isLoading && (
+        <Modal size="small">
+          <Loading />
+        </Modal>
+      )}
       <IconTitle
         icon={
           <svg
@@ -17,7 +61,7 @@ const Poliza = () => {
           </svg>
         }
       >
-        Poliza page
+        Póliza {poliza?.noPoliza}
       </IconTitle>
     </div>
   );
