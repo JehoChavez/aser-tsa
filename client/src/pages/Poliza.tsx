@@ -7,6 +7,7 @@ import { Navigate } from "react-router-dom";
 import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
 import NPClienteInfo from "../components/nuevaPoliza/NPClienteInfo";
+import PolizaNumberVigenciaSection from "../components/poliza/PolizaNumberVigenciaSection";
 
 const Poliza = () => {
   const { id: polizaId } = useParams();
@@ -14,6 +15,8 @@ const Poliza = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [poliza, setPoliza] = useState<PolizaInterface>();
   const [cliente, setCliente] = useState<ClienteInterface>();
+
+  console.log(poliza);
 
   const fetchPoliza = useCallback(async () => {
     setIsLoading(true);
@@ -66,6 +69,7 @@ const Poliza = () => {
       </IconTitle>
       <div className="w-full h-full py-5">
         {cliente && <NPClienteInfo cliente={cliente} />}
+        {poliza && <PolizaNumberVigenciaSection poliza={poliza} />}
       </div>
     </div>
   );
