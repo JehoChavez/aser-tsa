@@ -69,7 +69,14 @@ const Poliza = () => {
       </IconTitle>
       <div className="w-full h-full py-5">
         {cliente && <NPClienteInfo cliente={cliente} />}
-        {poliza && <PolizaNumberVigenciaSection poliza={poliza} />}
+        {poliza && (
+          <PolizaNumberVigenciaSection
+            noPoliza={poliza.noPoliza}
+            emision={poliza.emision}
+            inicioVigencia={poliza.inicioVigencia}
+            finVigencia={poliza.finVigencia}
+          />
+        )}
       </div>
     </div>
   );

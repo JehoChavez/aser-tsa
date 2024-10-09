@@ -1,15 +1,39 @@
-import { PolizaInterface } from "../../types/interfaces";
 import PolizaSection from "../utils/PolizaSection";
 import LabelAndData from "../utils/LabelAndData";
 
 const PolizaNumberVigenciaSection = ({
-  poliza,
+  noPoliza,
+  emision,
+  inicioVigencia,
+  finVigencia,
 }: {
-  poliza: PolizaInterface;
+  noPoliza: string;
+  emision: string;
+  inicioVigencia: string;
+  finVigencia: string;
 }) => {
   return (
     <PolizaSection>
-      <LabelAndData label="Póliza">{poliza.noPoliza}</LabelAndData>
+      <div className="w-full flex flex-col md:flex-row">
+        <div className="w-full md:w-1/4 mx-1">
+          <LabelAndData label="Póliza">{noPoliza}</LabelAndData>
+        </div>
+        <div className="w-full md:w-1/4 mx-1">
+          <LabelAndData label="Fecha de Emisión">
+            {emision.split("-").reverse().join("-")}
+          </LabelAndData>
+        </div>
+        <div className="w-full md:w-1/4 mx-1">
+          <LabelAndData label="Inicio de Vigencia">
+            {inicioVigencia.split("-").reverse().join("-")}
+          </LabelAndData>
+        </div>
+        <div className="w-full md:w-1/4 mx-1">
+          <LabelAndData label="Fin de Vigencia">
+            {finVigencia.split("-").reverse().join("-")}
+          </LabelAndData>
+        </div>
+      </div>
     </PolizaSection>
   );
 };
