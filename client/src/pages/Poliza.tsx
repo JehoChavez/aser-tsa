@@ -8,6 +8,7 @@ import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
 import NPClienteInfo from "../components/nuevaPoliza/NPClienteInfo";
 import PolizaNumberVigenciaSection from "../components/poliza/PolizaNumberVigenciaSection";
+import PolizaAseguradoraSection from "../components/poliza/PolizaAseguradoraSection";
 
 const Poliza = () => {
   const { id: polizaId } = useParams();
@@ -70,12 +71,20 @@ const Poliza = () => {
       <div className="w-full h-full py-5">
         {cliente && <NPClienteInfo cliente={cliente} />}
         {poliza && (
-          <PolizaNumberVigenciaSection
-            noPoliza={poliza.noPoliza}
-            emision={poliza.emision}
-            inicioVigencia={poliza.inicioVigencia}
-            finVigencia={poliza.finVigencia}
-          />
+          <>
+            <PolizaNumberVigenciaSection
+              noPoliza={poliza.noPoliza}
+              emision={poliza.emision}
+              inicioVigencia={poliza.inicioVigencia}
+              finVigencia={poliza.finVigencia}
+            />
+            <PolizaAseguradoraSection
+              aseguradora={poliza.aseguradora}
+              agente={poliza.agente}
+              vendedor={poliza.vendedor}
+              ramo={poliza.ramo}
+            />
+          </>
         )}
       </div>
     </div>
