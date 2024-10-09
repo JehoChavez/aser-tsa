@@ -9,6 +9,7 @@ import Loading from "../components/utils/Loading";
 import NPClienteInfo from "../components/nuevaPoliza/NPClienteInfo";
 import PolizaNumberVigenciaSection from "../components/poliza/PolizaNumberVigenciaSection";
 import PolizaAseguradoraSection from "../components/poliza/PolizaAseguradoraSection";
+import LabelAndData from "../components/utils/LabelAndData";
 
 const Poliza = () => {
   const { id: polizaId } = useParams();
@@ -84,6 +85,9 @@ const Poliza = () => {
               vendedor={poliza.vendedor}
               ramo={poliza.ramo}
             />
+            <LabelAndData label="Bien Asegurado">
+              {poliza.bienAsegurado}
+            </LabelAndData>
           </>
         )}
       </div>
