@@ -14,25 +14,23 @@ const PolizaNumberVigenciaSection = ({
 }) => {
   return (
     <PolizaSection>
-      <div className="w-full flex flex-col md:flex-row">
-        <div className="md:w-1/4 m-1">
-          <LabelAndData label="Póliza">{noPoliza}</LabelAndData>
-        </div>
-        <div className="md:w-1/4 mx-1">
-          <LabelAndData label="Fecha de Emisión">
-            {emision.split("-").reverse().join("-")}
-          </LabelAndData>
-        </div>
-        <div className="md:w-1/4 mx-1">
-          <LabelAndData label="Inicio de Vigencia">
-            {inicioVigencia.split("-").reverse().join("-")}
-          </LabelAndData>
-        </div>
-        <div className="md:w-1/4 mx-1">
-          <LabelAndData label="Fin de Vigencia">
-            {finVigencia.split("-").reverse().join("-")}
-          </LabelAndData>
-        </div>
+      <div className="md:w-1/4 m-1">
+        <LabelAndData label="Póliza">{noPoliza}</LabelAndData>
+      </div>
+      <div className="md:w-1/4 m-1">
+        <LabelAndData label="Fecha de Emisión">
+          {emision.split("-").reverse().join("-")}
+        </LabelAndData>
+      </div>
+      <div className="md:w-1/4 m-1">
+        <LabelAndData label="Inicio de Vigencia">
+          {inicioVigencia.split("-").reverse().join("-")}
+        </LabelAndData>
+      </div>
+      <div className="md:w-1/4 m-1">
+        <LabelAndData label="Fin de Vigencia">
+          {finVigencia.split("-").reverse().join("-")}
+        </LabelAndData>
       </div>
     </PolizaSection>
   );
