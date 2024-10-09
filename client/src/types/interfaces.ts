@@ -225,8 +225,8 @@ export interface PolizaInterface {
   cliente: ClienteInterface;
   aseguradora: AseguradoraInterface;
   agente: AgenteInterface;
-  vendedor: VendedorInterface | null;
-  ramo?: RamoInterface;
+  vendedor: VendedorInterface;
+  ramo: RamoInterface;
   endosos?: PolizaInterface | null;
   recibos?: Recibo;
   renueva?: PolizaInterface | null;
