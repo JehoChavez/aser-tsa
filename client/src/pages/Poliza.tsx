@@ -10,6 +10,7 @@ import NPClienteInfo from "../components/nuevaPoliza/NPClienteInfo";
 import PolizaNumberVigenciaSection from "../components/poliza/PolizaNumberVigenciaSection";
 import PolizaAseguradoraSection from "../components/poliza/PolizaAseguradoraSection";
 import LabelAndData from "../components/utils/LabelAndData";
+import PolizaPrimasSection from "../components/poliza/PolizaPrimasSection";
 
 const Poliza = () => {
   const { id: polizaId } = useParams();
@@ -17,8 +18,6 @@ const Poliza = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [poliza, setPoliza] = useState<PolizaInterface>();
   const [cliente, setCliente] = useState<ClienteInterface>();
-
-  console.log(poliza);
 
   const fetchPoliza = useCallback(async () => {
     setIsLoading(true);
@@ -47,7 +46,7 @@ const Poliza = () => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
-    <div className="w-full h-full px-5 py-4 flex flex-col overflow-hidden">
+    <div className="w-full h-full px-5 py-4 flex flex-col">
       {isLoading && (
         <Modal size="small">
           <Loading />
@@ -88,6 +87,18 @@ const Poliza = () => {
             <LabelAndData label="Bien Asegurado">
               {poliza.bienAsegurado}
             </LabelAndData>
+            <PolizaPrimasSection
+              primas={{
+                primaNeta: poliza.primaNeta,
+                expedicion: poliza.expedicion ? poliza.expedicion : 0,
+                financiamiento: poliza.financiamiento
+                  ? poliza.financiamiento
+                  : 0,
+                otros: poliza.otros ? poliza.otros : 0,
+                iva: poliza.iva ? poliza.iva : 0,
+                primaTotal: poliza.primaTotal,
+              }}
+            />
           </>
         )}
       </div>
