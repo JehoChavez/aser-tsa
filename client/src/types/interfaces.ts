@@ -394,6 +394,8 @@ export interface SuccessModalProps {
 }
 
 export interface PolizaRecibosContextInterface {
+  showModal: boolean;
+  onClose: () => void;
   recibos: Recibo[];
   fetchRecibos: (polizaId: number) => void;
 }
