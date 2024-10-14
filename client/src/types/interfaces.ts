@@ -392,3 +392,8 @@ export interface SuccessModalProps {
     | "rehabilitada";
   onOk: () => void;
 }
+
+export interface PolizaRecibosContextInterface {
+  recibos: Recibo[];
+  fetchRecibos: (polizaId: number) => void;
+}
