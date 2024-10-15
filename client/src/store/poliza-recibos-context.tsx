@@ -4,6 +4,7 @@ import { PolizaRecibosContextInterface } from "../types/interfaces";
 const defaultValue: PolizaRecibosContextInterface = {
   showModal: false,
   onClose: () => {},
+  isLoading: false,
   recibos: [],
   fetchRecibos: () => {},
 };
