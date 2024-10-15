@@ -30,7 +30,6 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
         `http://localhost:3000/api/polizas/${poliza.id}/recibos`,
         { withCredentials: true }
       );
-      console.log(response.data.content);
       setRecibos(response.data.content);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -102,6 +101,8 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
           </ActionButton>
           <PolizaRecibosContext.Provider
             value={{
+              noPoliza: poliza.noPoliza,
+              contratante: poliza.cliente.nombre,
               showModal: showRecibosDialog,
               onClose: () => {
                 setShowRecibosDialog(false);

@@ -394,6 +394,8 @@ export interface SuccessModalProps {
 }
 
 export interface PolizaRecibosContextInterface {
+  noPoliza: string;
+  contratante: string;
   showModal: boolean;
   onClose: () => void;
   isLoading: boolean;
