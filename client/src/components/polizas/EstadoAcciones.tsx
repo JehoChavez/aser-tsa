@@ -1,22 +1,49 @@
 import { useState } from "react";
-import { PolizaInterface } from "../../types/interfaces";
+import { PolizaInterface, Recibo } from "../../types/interfaces";
 import ActionButton from "../utils/ActionButton";
 import { Navigate } from "react-router-dom";
 import EditModal from "./EditModal";
 import AccionesDropdown from "./Dropdown/AccionesDropdown";
 import { PolizaRecibosContext } from "../../store/poliza-recibos-context";
 import PolizaRecibosDialog from "./PolizaRecibosDialog";
+import axios, { AxiosError } from "axios";
 
 const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   const [editNavigate, setEditNavigate] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
   const [showRecibosDialog, setShowRecibosDialog] = useState(false);
+  const [recibos, setRecibos] = useState<Recibo[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [renovarNavigate, setRenovarNavigate] = useState(false);
 
   if (editNavigate) return <Navigate to={`/polizas/${poliza.id}/editar`} />;
   if (renovarNavigate) return <Navigate to={`/polizas/${poliza.id}/renovar`} />;
+
+  const fetchRecibos = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/polizas/${poliza.id}/recibos`,
+        { withCredentials: true }
+      );
+      console.log(response.data.content);
+      setRecibos(response.data.content);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
     <>
@@ -79,8 +106,9 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               onClose: () => {
                 setShowRecibosDialog(false);
               },
-              recibos: [],
-              fetchRecibos: () => {},
+              isLoading: isLoading,
+              recibos: recibos,
+              fetchRecibos: fetchRecibos,
             }}
           >
             <ActionButton
