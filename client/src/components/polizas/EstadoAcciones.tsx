@@ -42,6 +42,30 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
     }
   };
 
+  const onPay = async (id: number, date: Date) => {
+    try {
+      setIsLoading(true);
+      await axios.patch(
+        `http://localhost:3000/api/recibos/${id}/pagar`,
+        {
+          fechaPago: date,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      fetchRecibos();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
@@ -110,6 +134,7 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               isLoading: isLoading,
               recibos: recibos,
               fetchRecibos: fetchRecibos,
+              onPay: onPay,
             }}
           >
             <ActionButton
