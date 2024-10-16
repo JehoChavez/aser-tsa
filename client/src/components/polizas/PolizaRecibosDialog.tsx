@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import Loading from "../utils/Loading";
 import ListDialog from "../utils/ListDialog";
 import PolizaRecibosListHeader from "./PolizaRecibosListHeader";
-import PendientesReciboListItem from "../pendientes/PendientesReciboListItem";
+import PolizaReciboListItem from "./PolizaReciboListItem";
 
 const PolizaRecibosDialog = () => {
   const polizaRecibosContext = useContext(PolizaRecibosContext);
@@ -49,7 +49,7 @@ const PolizaRecibosDialog = () => {
           }
         >
           {polizaRecibosContext.recibos.map((recibo) => (
-            <PendientesReciboListItem recibo={recibo} key={recibo.id} />
+            <PolizaReciboListItem recibo={recibo} key={recibo.id} />
           ))}
         </ListDialog>
       )}
