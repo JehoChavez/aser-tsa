@@ -69,16 +69,14 @@ module.exports.getRecibos = async (req, res) => {
 };
 
 module.exports.getPolizaRecibos = async (req, res) => {
-  const poliza = await Poliza.findByPk(req.params.id, {
-    include: {
-      model: Recibo,
-      as: "recibos",
+  const recibos = await Recibo.findAll({
+    where: {
+      polizaId: req.params.id,
     },
+    order: [["fechaInicio", "ASC"]],
   });
 
-  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
-
-  const response = new CustomResponse(poliza.recibos);
+  const response = new CustomResponse(recibos);
 
   res.status(response.status).json(response);
 };
