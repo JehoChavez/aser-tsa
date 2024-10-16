@@ -3,7 +3,6 @@ import { useState } from "react";
 import ListItem from "../utils/ListItem";
 import PayDialog from "../pendientes/PayDialog";
 import ActionButton from "../utils/ActionButton";
-import { Link } from "react-router-dom";
 
 const PolizaReciboListItem = ({ recibo }: { recibo: Recibo }) => {
   const [showPayDialog, setShowPayDialog] = useState(false);
