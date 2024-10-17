@@ -9,7 +9,8 @@ const defaultValue: PolizaRecibosContextInterface = {
   isLoading: false,
   recibos: [],
   fetchRecibos: () => {},
-  onPay: () => {}
+  onPay: () => {},
+  onAnular: () => {},
 };
 
 export const PolizaRecibosContext: React.Context<PolizaRecibosContextInterface> =

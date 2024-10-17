@@ -401,5 +401,6 @@ export interface PolizaRecibosContextInterface {
   isLoading: boolean;
   recibos: Recibo[];
   fetchRecibos: () => void;
-  onPay: (id: number, date: Date) => void
+  onPay: (id: number, date: Date) => void;
+  onAnular: (id: number) => void;
 }

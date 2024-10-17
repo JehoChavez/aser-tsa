@@ -48,8 +48,8 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   };
 
   const onPay = async (id: number, date: Date) => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       await axios.patch(
         `http://localhost:3000/api/recibos/${id}/pagar`,
         {
@@ -60,6 +60,25 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
         }
       );
       fetchRecibos();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+        setShowRecibosDialog(false);
+        setHasError(true);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onAnular = async (id: number) => {
+    setIsLoading(true);
+    try {
+      await axios.patch(`http://localhost:3000/api/recibos/${id}/anularPago`, {
+        withCredentials: true,
+      });
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
@@ -142,6 +161,7 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               recibos: recibos,
               fetchRecibos: fetchRecibos,
               onPay: onPay,
+              onAnular: onAnular,
             }}
           >
             <ActionButton
