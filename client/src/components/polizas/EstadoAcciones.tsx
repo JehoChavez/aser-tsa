@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { PolizaInterface, Recibo } from "../../types/interfaces";
 import ActionButton from "../utils/ActionButton";
 import { Navigate } from "react-router-dom";
@@ -8,8 +8,11 @@ import PolizaRecibosDialog from "./PolizaRecibosDialog";
 import axios, { AxiosError } from "axios";
 import ErrorModal from "../utils/ErrorModal";
 import ConfirmModal from "../utils/ConfirmModal";
+import { PolizasContext } from "../../store/polizas-context";
 
 const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
+  const polizasContext = useContext(PolizasContext);
+
   const [editNavigate, setEditNavigate] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
@@ -95,6 +98,11 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
     }
   };
 
+  const onClose = () => {
+    setShowRecibosDialog(false);
+    polizasContext.fetchPolizas();
+  };
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
@@ -157,9 +165,7 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               noPoliza: poliza.noPoliza,
               contratante: poliza.cliente.nombre,
               showModal: showRecibosDialog,
-              onClose: () => {
-                setShowRecibosDialog(false);
-              },
+              onClose: onClose,
               isLoading: isLoading,
               recibos: recibos,
               fetchRecibos: fetchRecibos,
