@@ -76,9 +76,12 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   const onAnular = async (id: number) => {
     setIsLoading(true);
     try {
-      await axios.patch(`http://localhost:3000/api/recibos/${id}/anularPago`, {
-        withCredentials: true,
-      });
+      await axios.patch(
+        `http://localhost:3000/api/recibos/${id}/anularPago`,
+        {},
+        { withCredentials: true }
+      );
+      fetchRecibos();
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {

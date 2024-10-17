@@ -1,11 +1,17 @@
 import { Recibo } from "../../types/interfaces";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ListItem from "../utils/ListItem";
 import PayDialog from "../pendientes/PayDialog";
 import ActionButton from "../utils/ActionButton";
+import ConfirmModal from "../utils/ConfirmModal";
+import { PolizaRecibosContext } from "../../store/poliza-recibos-context";
 
 const PolizaReciboListItem = ({ recibo }: { recibo: Recibo }) => {
+  const polizaRecibosContext = useContext(PolizaRecibosContext);
+
   const [showPayDialog, setShowPayDialog] = useState(false);
+
+  const [showAnularConfirm, setShowAnularConfirm] = useState(false);
 
   const monto = new Intl.NumberFormat("en-us", {
     minimumFractionDigits: 2,
@@ -66,7 +72,12 @@ const PolizaReciboListItem = ({ recibo }: { recibo: Recibo }) => {
           </div>
           <div className="px-2 flex items-center justify-center">
             {recibo.fechaPago ? (
-              <ActionButton title="Anular Pago">
+              <ActionButton
+                title="Anular Pago"
+                onClick={() => {
+                  setShowAnularConfirm(true);
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -101,6 +112,20 @@ const PolizaReciboListItem = ({ recibo }: { recibo: Recibo }) => {
         </div>
       </ListItem>
       {showPayDialog && <PayDialog recibo={recibo} onCancel={cancelPay} />}
+      {showAnularConfirm && (
+        <ConfirmModal
+          onCancel={() => {
+            setShowAnularConfirm(false);
+          }}
+          onContinue={() => {
+            recibo.id && polizaRecibosContext.onAnular(recibo.id);
+          }}
+        >
+          <h4 className="text-center text-3xl my-3 font-semibold">
+            ¿Desea anular el pago?
+          </h4>
+        </ConfirmModal>
+      )}
     </>
   );
 };
