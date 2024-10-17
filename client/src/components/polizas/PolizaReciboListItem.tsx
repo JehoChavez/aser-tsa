@@ -25,7 +25,11 @@ const PolizaReciboListItem = ({ recibo }: { recibo: Recibo }) => {
   return (
     <>
       <ListItem>
-        <div className="w-full px-1 bg-neutral-100 flex flex-col md:grid grid-cols-10 md:text-center">
+        <div
+          className={`w-full px-1 ${
+            recibo.fechaPago ? "bg-green-100" : "bg-neutral-100"
+          } flex flex-col md:grid grid-cols-10 md:text-center`}
+        >
           <div className="flex">
             <p className="md:hidden mr-1 text-neutral-600 font-semibold">
               Endoso
