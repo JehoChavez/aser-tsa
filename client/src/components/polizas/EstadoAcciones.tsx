@@ -7,6 +7,7 @@ import AccionesDropdown from "./Dropdown/AccionesDropdown";
 import { PolizaRecibosContext } from "../../store/poliza-recibos-context";
 import PolizaRecibosDialog from "./PolizaRecibosDialog";
 import axios, { AxiosError } from "axios";
+import ErrorModal from "../utils/ErrorModal";
 
 const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   const [editNavigate, setEditNavigate] = useState(false);
@@ -17,6 +18,8 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   const [showRecibosDialog, setShowRecibosDialog] = useState(false);
   const [recibos, setRecibos] = useState<Recibo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [hasError, setHasError] = useState(false);
 
   const [renovarNavigate, setRenovarNavigate] = useState(false);
 
@@ -37,6 +40,8 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
           setIsAuthenticated(false);
         }
       }
+      setShowRecibosDialog(false);
+      setHasError(true);
     } finally {
       setIsLoading(false);
     }
@@ -60,6 +65,8 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
         if (error.response?.status === 401) {
           setIsAuthenticated(false);
         }
+        setShowRecibosDialog(false);
+        setHasError(true);
       }
     } finally {
       setIsLoading(false);
@@ -161,6 +168,13 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               </svg>
             </ActionButton>
             {showRecibosDialog && <PolizaRecibosDialog />}
+            {hasError && (
+              <ErrorModal
+                onClick={() => {
+                  setHasError(false);
+                }}
+              />
+            )}
           </PolizaRecibosContext.Provider>
           <ActionButton
             title={
