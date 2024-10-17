@@ -2,12 +2,12 @@ import { useState } from "react";
 import { PolizaInterface, Recibo } from "../../types/interfaces";
 import ActionButton from "../utils/ActionButton";
 import { Navigate } from "react-router-dom";
-import EditModal from "./EditModal";
 import AccionesDropdown from "./Dropdown/AccionesDropdown";
 import { PolizaRecibosContext } from "../../store/poliza-recibos-context";
 import PolizaRecibosDialog from "./PolizaRecibosDialog";
 import axios, { AxiosError } from "axios";
 import ErrorModal from "../utils/ErrorModal";
+import ConfirmModal from "../utils/ConfirmModal";
 
 const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   const [editNavigate, setEditNavigate] = useState(false);
@@ -242,14 +242,21 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
         <AccionesDropdown poliza={poliza} />
       </div>
       {showEditModal && (
-        <EditModal
+        <ConfirmModal
           onCancel={() => {
             setShowEditModal(false);
           }}
           onContinue={() => {
             setEditNavigate(true);
           }}
-        />
+        >
+          <h4 className="text-center text-3xl my-3 font-semibold">
+            ¿Desea editar la póliza?
+          </h4>
+          <p className="text-center text-lg my-3">
+            Los recibos pagados serán anulados
+          </p>
+        </ConfirmModal>
       )}
     </>
   );
