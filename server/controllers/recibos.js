@@ -82,6 +82,8 @@ module.exports.getPolizaRecibos = async (req, res) => {
 };
 
 module.exports.pagarRecibo = async (req, res) => {
+  const date = new Date();
+
   const recibo = await Recibo.findByPk(req.params.id);
 
   if (!recibo) throw new ExpressError("recibo no encontrado", 404);
@@ -93,16 +95,29 @@ module.exports.pagarRecibo = async (req, res) => {
 
     const pagado = await recibo.save({ transaction: t });
 
-    // Set poliza.vencida to false when a recibo is paid
-    await Poliza.update(
-      { vencida: false },
-      {
-        where: {
-          id: recibo.polizaId,
+    const expiredRecibo = await Recibo.findOne({
+      where: {
+        polizaId: recibo.polizaId,
+        fechaPago: null,
+        fechaLimite: {
+          [Op.lte]: date,
         },
-        transaction: t,
-      }
-    );
+      },
+      transaction: t,
+    });
+
+    if (!expiredRecibo) {
+      // Set poliza.vencida to false when a recibo is paid and there are no expired recibos
+      await Poliza.update(
+        { vencida: false },
+        {
+          where: {
+            id: recibo.polizaId,
+          },
+          transaction: t,
+        }
+      );
+    }
 
     await t.commit();
 
