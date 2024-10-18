@@ -117,15 +117,35 @@ module.exports.pagarRecibo = async (req, res) => {
 };
 
 module.exports.anularPago = async (req, res) => {
-  const recibo = await Recibo.findByPk(req.params.id);
+  const date = new Date();
 
-  if (!recibo) throw new ExpressError("recibo no encontrado", 404);
+  const t = await sequelize.transaction();
 
-  recibo.fechaPago = null;
+  try {
+    const recibo = await Recibo.findByPk(req.params.id, { transaction: t });
 
-  const anulado = await recibo.save();
+    if (!recibo) throw new ExpressError("recibo no encontrado", 404);
 
-  const response = new CustomResponse(anulado, 200);
+    recibo.fechaPago = null;
 
-  res.status(response.status).json(response);
+    if (new Date(recibo.fechaLimite) < date) {
+      const poliza = await Poliza.findByPk(recibo.polizaId, { transaction: t });
+
+      poliza.vencida = true;
+
+      await poliza.save({ transaction: t });
+    }
+
+    const anulado = await recibo.save({ transaction: t });
+
+    await t.commit();
+
+    const response = new CustomResponse(anulado, 200);
+
+    res.status(response.status).json(response);
+  } catch (error) {
+    await t.rollback();
+
+    throw new ExpressError("something went wrong", 500);
+  }
 };
