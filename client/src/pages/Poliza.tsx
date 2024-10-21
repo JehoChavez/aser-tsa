@@ -11,6 +11,7 @@ import PolizaNumberVigenciaSection from "../components/poliza/PolizaNumberVigenc
 import PolizaAseguradoraSection from "../components/poliza/PolizaAseguradoraSection";
 import LabelAndData from "../components/utils/LabelAndData";
 import PolizaPrimasSection from "../components/poliza/PolizaPrimasSection";
+import PolizaRecibosSection from "../components/poliza/PolizaRecibosSection";
 
 const Poliza = () => {
   const { id: polizaId } = useParams();
@@ -99,6 +100,9 @@ const Poliza = () => {
                 primaTotal: poliza.primaTotal,
               }}
             />
+            {poliza.recibos && (
+              <PolizaRecibosSection recibos={poliza.recibos} />
+            )}
           </>
         )}
       </div>
