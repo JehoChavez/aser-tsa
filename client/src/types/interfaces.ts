@@ -113,6 +113,7 @@ export interface PendientesReciboListItemInterface {
 export interface PayDialogProps {
   recibo: Recibo;
   onCancel: () => void;
+  onPay?: () => void;
 }
 
 export interface PendientesRenovListItemInterface {

@@ -10,7 +10,7 @@ import Loading from "../utils/Loading";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
 
-const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
+const PayDialog = ({ recibo, onCancel, onPay }: PayDialogProps) => {
   const [date, setDate] = useState(new Date());
   const calendarContext = useContext(CalendarContext);
 
@@ -96,6 +96,7 @@ const PayDialog = ({ recibo, onCancel }: PayDialogProps) => {
                       date
                     );
                   }
+                  onPay && onPay();
                 }}
               >
                 Pagar
