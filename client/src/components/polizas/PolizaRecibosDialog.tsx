@@ -6,7 +6,13 @@ import ListDialog from "../utils/ListDialog";
 import PolizaRecibosListHeader from "./PolizaRecibosListHeader";
 import PolizaReciboListItem from "./PolizaReciboListItem";
 
-const PolizaRecibosDialog = () => {
+const PolizaRecibosDialog = ({
+  noPoliza,
+  contratante,
+}: {
+  noPoliza: string;
+  contratante: string;
+}) => {
   const polizaRecibosContext = useContext(PolizaRecibosContext);
 
   const [primaNetaSum, setPrimaNetaSum] = useState(0);
@@ -41,8 +47,8 @@ const PolizaRecibosDialog = () => {
           title="Recibos"
           header={
             <PolizaRecibosListHeader
-              noPoliza={polizaRecibosContext.noPoliza}
-              contratante={polizaRecibosContext.contratante}
+              noPoliza={noPoliza}
+              contratante={contratante}
               primaNeta={primaNetaSum}
               primaTotal={primaTotalSum}
             />

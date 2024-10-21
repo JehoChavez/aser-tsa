@@ -162,8 +162,6 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
           </ActionButton>
           <PolizaRecibosContext.Provider
             value={{
-              noPoliza: poliza.noPoliza,
-              contratante: poliza.cliente.nombre,
               showModal: showRecibosDialog,
               onClose: onClose,
               isLoading: isLoading,
@@ -196,7 +194,12 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
                 <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
               </svg>
             </ActionButton>
-            {showRecibosDialog && <PolizaRecibosDialog />}
+            {showRecibosDialog && (
+              <PolizaRecibosDialog
+                noPoliza={poliza.noPoliza}
+                contratante={poliza.cliente.nombre}
+              />
+            )}
             {hasError && (
               <ErrorModal
                 onClick={() => {
