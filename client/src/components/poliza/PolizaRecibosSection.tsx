@@ -4,6 +4,9 @@ import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import { PolizaRecibosContext } from "../../store/poliza-recibos-context";
 import PolizaReciboListItem from "../polizas/PolizaReciboListItem";
+import { Navigate } from "react-router-dom";
+import Loading from "../utils/Loading";
+import ErrorModal from "../utils/ErrorModal";
 
 const PolizaRecibosSection = ({
   recibos: propsRecibos,
@@ -85,8 +88,11 @@ const PolizaRecibosSection = ({
     }
   };
 
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
   return (
     <div className="flex flex-col">
+      {hasError && <ErrorModal />}
       <h1 className="text-2xl text-gray-100 text-center font-bold bg-blue-950 p-1 w-full rounded">
         Recibos
       </h1>
@@ -102,6 +108,7 @@ const PolizaRecibosSection = ({
           onPay,
         }}
       >
+        {isLoading && <Loading />}
         {recibos.map((recibo) => (
           <PolizaReciboListItem recibo={recibo} key={recibo.id} />
         ))}
