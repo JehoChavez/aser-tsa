@@ -123,6 +123,7 @@ const PolizaReciboListItem = ({ recibo }: { recibo: Recibo }) => {
           }}
           onContinue={() => {
             recibo.id && polizaRecibosContext.onAnular(recibo.id);
+            setShowAnularConfirm(false);
           }}
         >
           <h4 className="text-center text-3xl my-3 font-semibold">
