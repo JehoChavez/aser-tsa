@@ -290,6 +290,7 @@ module.exports.getPoliza = async (req, res) => {
         ],
       },
     ],
+    order: [[{ model: Recibo, as: "recibos" }, "fechaInicio", "ASC"]],
   });
 
   if (!poliza) throw new ExpressError("poliza no encontrada", 404);
