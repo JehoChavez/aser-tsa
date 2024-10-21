@@ -101,7 +101,10 @@ const Poliza = () => {
               }}
             />
             {poliza.recibos && (
-              <PolizaRecibosSection recibos={poliza.recibos} />
+              <PolizaRecibosSection
+                recibos={poliza.recibos}
+                polizaId={poliza.id}
+              />
             )}
           </>
         )}
