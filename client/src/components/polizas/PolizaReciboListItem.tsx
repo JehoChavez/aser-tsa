@@ -115,7 +115,15 @@ const PolizaReciboListItem = ({ recibo }: { recibo: Recibo }) => {
           </div>
         </div>
       </ListItem>
-      {showPayDialog && <PayDialog recibo={recibo} onCancel={cancelPay} />}
+      {showPayDialog && (
+        <PayDialog
+          recibo={recibo}
+          onCancel={cancelPay}
+          onPay={() => {
+            setShowPayDialog(false);
+          }}
+        />
+      )}
       {showAnularConfirm && (
         <ConfirmModal
           onCancel={() => {
