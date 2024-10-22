@@ -12,6 +12,7 @@ import PolizaAseguradoraSection from "../components/poliza/PolizaAseguradoraSect
 import LabelAndData from "../components/utils/LabelAndData";
 import PolizaPrimasSection from "../components/poliza/PolizaPrimasSection";
 import PolizaRecibosSection from "../components/poliza/PolizaRecibosSection";
+import PolizaAccionesSection from "../components/poliza/PolizaAccionesSection";
 
 const Poliza = () => {
   const { id: polizaId } = useParams();
@@ -106,6 +107,7 @@ const Poliza = () => {
                 polizaId={poliza.id}
               />
             )}
+            <PolizaAccionesSection poliza={poliza} />
           </>
         )}
       </div>
