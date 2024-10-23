@@ -17,6 +17,7 @@ const PolizaAccionesSection = ({ poliza }: { poliza: PolizaInterface }) => {
   const [showContratanteModal, setShowContratanteModal] = useState(false);
 
   if (editNavigate) return <Navigate to={`/polizas/${poliza.id}/editar`} />;
+  if (renovarNavigate) return <Navigate to={`/polizas/${poliza.id}/renovar`} />;
 
   return (
     <div className="flex flex-col md:flex-row w-full justify-between">
