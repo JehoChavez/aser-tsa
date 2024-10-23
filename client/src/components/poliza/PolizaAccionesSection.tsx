@@ -14,10 +14,11 @@ const PolizaAccionesSection = ({ poliza }: { poliza: PolizaInterface }) => {
 
   const [renovarNavigate, setRenovarNavigate] = useState(false);
   const [reexpedirNavigate, setReexpedirNavigate] = useState(false);
-  const [showContratanteModal, setShowContratanteModal] = useState(false);
 
   if (editNavigate) return <Navigate to={`/polizas/${poliza.id}/editar`} />;
   if (renovarNavigate) return <Navigate to={`/polizas/${poliza.id}/renovar`} />;
+  if (reexpedirNavigate)
+    return <Navigate to={`/polizas/${poliza.id}/reexpedir`} />;
 
   return (
     <div className="flex flex-col md:flex-row w-full justify-between">
@@ -55,7 +56,7 @@ const PolizaAccionesSection = ({ poliza }: { poliza: PolizaInterface }) => {
       </ActionButton>
       <ActionButton
         onClick={() => {
-          setReexpedirNavigate(false);
+          setReexpedirNavigate(true);
         }}
         disabled={
           poliza.reexpedicionId ||
