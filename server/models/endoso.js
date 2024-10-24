@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       expedicion: DataTypes.FLOAT,
       financiamiento: DataTypes.FLOAT,
+      otros: DataTypes.FLOAT,
       iva: DataTypes.FLOAT,
       primaTotal: {
         type: DataTypes.FLOAT,

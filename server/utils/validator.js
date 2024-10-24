@@ -213,6 +213,7 @@ const endosoSchema = joi.object({
       primaNeta: joi.number(),
       expedicion: joi.number(),
       financiamiento: joi.number(),
+      otros: joi.number(),
       iva: joi.number(),
       primaTotal: joi.number(),
       comentarios: joi.string(),
