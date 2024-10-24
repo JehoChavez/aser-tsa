@@ -1,5 +1,6 @@
 import Modal from "../utils/Modal";
 import ActionButton from "../utils/ActionButton";
+import EndososList from "./EndososList";
 
 const EndososDialog = ({
   id,
@@ -7,7 +8,7 @@ const EndososDialog = ({
   onClose,
 }: {
   id: number;
-  noPoliza: string,
+  noPoliza: string;
   onClose: () => void;
 }) => {
   return (
@@ -23,6 +24,7 @@ const EndososDialog = ({
           <ActionButton color="blue">Endoso D</ActionButton>
         </div>
       </div>
+      <EndososList />
     </Modal>
   );
 };
