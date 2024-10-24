@@ -279,7 +279,31 @@ module.exports.getPoliza = async (req, res) => {
       },
       {
         model: Poliza,
+        as: "renueva",
+        attributes: [
+          "id",
+          "noPoliza",
+          "inicioVigencia",
+          "finVigencia",
+          "primaNeta",
+          "primaTotal",
+        ],
+      },
+      {
+        model: Poliza,
         as: "reexpedicion",
+        attributes: [
+          "id",
+          "noPoliza",
+          "inicioVigencia",
+          "finVigencia",
+          "primaNeta",
+          "primaTotal",
+        ],
+      },
+      {
+        model: Poliza,
+        as: "reexpide",
         attributes: [
           "id",
           "noPoliza",
