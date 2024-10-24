@@ -9,6 +9,7 @@ import axios, { AxiosError } from "axios";
 import ErrorModal from "../utils/ErrorModal";
 import ConfirmModal from "../utils/ConfirmModal";
 import { PolizasContext } from "../../store/polizas-context";
+import EndososDialog from "../endosos/EndososDialog";
 
 const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   const polizasContext = useContext(PolizasContext);
@@ -21,6 +22,8 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   const [showRecibosDialog, setShowRecibosDialog] = useState(false);
   const [recibos, setRecibos] = useState<Recibo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [showEndosos, setShowEndosos] = useState(false);
 
   const [hasError, setHasError] = useState(false);
 
@@ -238,7 +241,12 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               />
             </svg>
           </ActionButton>
-          <ActionButton title="Endosos">
+          <ActionButton
+            title="Endosos"
+            onClick={() => {
+              setShowEndosos(true);
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -269,6 +277,14 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
             Los recibos pagados serán anulados
           </p>
         </ConfirmModal>
+      )}
+      {showEndosos && (
+        <EndososDialog
+          id={poliza.id}
+          onClose={() => {
+            setShowEndosos(false);
+          }}
+        />
       )}
     </>
   );
