@@ -228,7 +228,7 @@ export interface PolizaInterface {
   agente: AgenteInterface;
   vendedor: VendedorInterface;
   ramo: RamoInterface;
-  endosos?: PolizaInterface | null;
+  endosos?: PolizaInterface[] | null;
   recibos?: Recibo[];
   renueva?: PolizaInterface | null;
   reexpide?: PolizaInterface | null;
