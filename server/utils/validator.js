@@ -210,11 +210,11 @@ const endosoSchema = joi.object({
         .try(joi.string().isoDate(), joi.date())
         .required(),
       tipo: joi.string().valid("A", "B", "D"),
-      primaNeta: joi.number().required(),
+      primaNeta: joi.number(),
       expedicion: joi.number(),
       financiamiento: joi.number(),
       iva: joi.number(),
-      primaTotal: joi.number().required(),
+      primaTotal: joi.number(),
       comentarios: joi.string(),
       fechaCancelacion: joi
         .alternatives()
