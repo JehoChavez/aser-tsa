@@ -241,6 +241,23 @@ export interface PolizaInterface {
   clienteId?: number | string;
 }
 
+export interface EndosoInterface {
+  endoso: string;
+  emision?: string;
+  inicioVigencia: string;
+  finVigencia: string;
+  tipo: "A" | "B" | "D";
+  primaNeta?: number;
+  expedicion?: number;
+  financiamiento?: number;
+  iva?: number;
+  otros?: number;
+  primaTotal?: number;
+  comentarios?: string;
+  fechaCancelacion?: string;
+  polizaId: number;
+}
+
 export interface PolizasContextInterface {
   polizas: PolizaInterface[];
   params: PolizasParamsInterface;
