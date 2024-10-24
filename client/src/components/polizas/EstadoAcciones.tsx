@@ -281,6 +281,7 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
       {showEndosos && (
         <EndososDialog
           id={poliza.id}
+          noPoliza={poliza.noPoliza}
           onClose={() => {
             setShowEndosos(false);
           }}
