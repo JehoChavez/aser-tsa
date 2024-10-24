@@ -420,3 +420,8 @@ export interface PolizaRecibosContextInterface {
   onPay: (id: number, date: Date) => void;
   onAnular: (id: number) => void;
 }
+
+export interface EndososContextInterface {
+  endosos: EndosoInterface[];
+  fetchEndosos: () => void;
+}
