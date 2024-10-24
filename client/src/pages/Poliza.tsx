@@ -13,6 +13,7 @@ import LabelAndData from "../components/utils/LabelAndData";
 import PolizaPrimasSection from "../components/poliza/PolizaPrimasSection";
 import PolizaRecibosSection from "../components/poliza/PolizaRecibosSection";
 import PolizaAccionesSection from "../components/poliza/PolizaAccionesSection";
+import PolizaRenuevaReexpideSection from "../components/poliza/PolizaRenuevaReexpideSection";
 
 const Poliza = () => {
   const { id: polizaId } = useParams();
@@ -100,6 +101,12 @@ const Poliza = () => {
                 iva: poliza.iva ? poliza.iva : 0,
                 primaTotal: poliza.primaTotal,
               }}
+            />
+            <PolizaRenuevaReexpideSection
+              renueva={poliza.renueva}
+              reexpide={poliza.reexpide}
+              renovacion={poliza.renovacion}
+              reexpedicion={poliza.reexpedicion}
             />
             {poliza.recibos && (
               <PolizaRecibosSection
