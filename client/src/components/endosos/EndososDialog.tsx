@@ -5,6 +5,7 @@ import { EndososContext } from "../../store/endosos-context";
 import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import Loading from "../utils/Loading";
+import { Navigate } from "react-router-dom";
 
 const EndososDialog = ({
   id,
@@ -47,6 +48,8 @@ const EndososDialog = ({
   useEffect(() => {
     fetchEndosos();
   }, []);
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
     <Modal size="large" closeBtn onClose={onClose}>
