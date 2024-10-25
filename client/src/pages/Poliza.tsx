@@ -14,6 +14,8 @@ import PolizaPrimasSection from "../components/poliza/PolizaPrimasSection";
 import PolizaRecibosSection from "../components/poliza/PolizaRecibosSection";
 import PolizaAccionesSection from "../components/poliza/PolizaAccionesSection";
 import PolizaRenuevaReexpideSection from "../components/poliza/PolizaRenuevaReexpideSection";
+import ActionButton from "../components/utils/ActionButton";
+import EndososDialog from "../components/endosos/EndososDialog";
 
 const Poliza = () => {
   const { id: polizaId } = useParams();
@@ -21,6 +23,8 @@ const Poliza = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [poliza, setPoliza] = useState<PolizaInterface>();
   const [cliente, setCliente] = useState<ClienteInterface>();
+
+  const [showEndosos, setShowEndosos] = useState(false);
 
   const fetchPoliza = useCallback(async () => {
     setIsLoading(true);
@@ -108,6 +112,24 @@ const Poliza = () => {
               renovacion={poliza.renovacion}
               reexpedicion={poliza.reexpedicion}
             />
+            <ActionButton
+              color="blue"
+              size="lg"
+              onClick={() => {
+                setShowEndosos(true);
+              }}
+            >
+              Ver Endosos
+            </ActionButton>
+            {showEndosos && (
+              <EndososDialog
+                id={poliza.id}
+                noPoliza={poliza.noPoliza}
+                onClose={() => {
+                  setShowEndosos(false);
+                }}
+              />
+            )}
             {poliza.recibos && (
               <PolizaRecibosSection
                 recibos={poliza.recibos}
