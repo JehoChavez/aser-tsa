@@ -27,7 +27,7 @@ const CambiarContratanteBtn = ({ id, disabled }: { id: number, disabled?: boolea
     try {
       setClienteId(clienteIdInner);
       const response = await axios.patch(
-        `http://localhost:3000/api/polizas/${id}/cambiarContratante`,
+        `http://localhost:3000/api/polizas/${id}/cambiar-contratante`,
         { clienteId: clienteIdInner },
         { withCredentials: true }
       );

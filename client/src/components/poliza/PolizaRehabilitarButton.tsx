@@ -30,7 +30,7 @@ const PolizaRehabilitarButton = ({
 
     try {
       const response = await axios.patch(
-        `http://localhost:3000/api/polizas/${id}/anularCancelacion`,
+        `http://localhost:3000/api/polizas/${id}/anular-cancelacion`,
         {},
         { withCredentials: true }
       );

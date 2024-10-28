@@ -19,7 +19,7 @@ router
   .patch(validateGenericId, validatePago, catchAsync(pagarRecibo));
 
 router
-  .route("/:id/anularPago")
+  .route("/:id/anular-pago")
   .patch(validateGenericId, catchAsync(anularPago));
 
 module.exports = router;

@@ -71,7 +71,7 @@ const PolizaRecibosSection = ({
     setIsLoading(true);
     try {
       await axios.patch(
-        `http://localhost:3000/api/recibos/${id}/anularPago`,
+        `http://localhost:3000/api/recibos/${id}/anular-pago`,
         {},
         { withCredentials: true }
       );

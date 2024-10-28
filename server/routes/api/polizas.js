@@ -60,7 +60,7 @@ router
   .post(validateGenericId, validatePoliza, catchAsync(renovarPoliza));
 
 router
-  .route("/:id/cambiarContratante")
+  .route("/:id/cambiar-contratante")
   .patch(validateGenericId, validateClienteId, catchAsync(cambiarContratante));
 
 router
@@ -68,7 +68,7 @@ router
   .patch(validateGenericId, validateCancelacion, catchAsync(cancelarPoliza));
 
 router
-  .route("/:id/anularCancelacion")
+  .route("/:id/anular-cancelacion")
   .patch(validateGenericId, catchAsync(anularCancelacion));
 
 module.exports = router;
