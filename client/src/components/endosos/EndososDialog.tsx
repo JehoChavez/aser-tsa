@@ -25,7 +25,7 @@ const EndososDialog = ({
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const [showForm, setShowForm] = useState(false);
-  const [endosoType, setEndosoType] = useState<"a" | "b" | "d">("a");
+  const [endosoType, setEndosoType] = useState<"A" | "B" | "D">("A");
 
   const fetchEndosos = async () => {
     setIsLoading(true);
@@ -78,7 +78,7 @@ const EndososDialog = ({
                   color="blue"
                   onClick={() => {
                     setShowForm(true);
-                    setEndosoType("a");
+                    setEndosoType("A");
                   }}
                 >
                   Endoso A
@@ -87,7 +87,7 @@ const EndososDialog = ({
                   color="blue"
                   onClick={() => {
                     setShowForm(true);
-                    setEndosoType("b");
+                    setEndosoType("B");
                   }}
                 >
                   Endoso B
@@ -96,7 +96,7 @@ const EndososDialog = ({
                   color="blue"
                   onClick={() => {
                     setShowForm(true);
-                    setEndosoType("d");
+                    setEndosoType("D");
                   }}
                 >
                   Endoso D

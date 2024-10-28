@@ -6,7 +6,7 @@ const EndosoForm = ({
   onCancel,
 }: {
   id: number;
-  type: "a" | "b" | "d";
+  type: "A" | "B" | "D";
   onCancel: () => void;
 }) => {
   return (
