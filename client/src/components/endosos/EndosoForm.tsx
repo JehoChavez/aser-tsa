@@ -1,4 +1,5 @@
 import ActionButton from "../utils/ActionButton";
+import EndosoVigenciaSection from "./EndosoVigenciaSection";
 
 const EndosoForm = ({
   id,
@@ -11,7 +12,7 @@ const EndosoForm = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <p>{type}</p>
+      <EndosoVigenciaSection />
       <ActionButton color="red" onClick={onCancel}>
         Cancelar
       </ActionButton>
