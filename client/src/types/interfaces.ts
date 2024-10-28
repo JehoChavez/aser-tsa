@@ -401,6 +401,11 @@ export interface NumberVigenciaProps {
   fechaEmision?: Date;
 }
 
+export interface EndosoVigenciaProps {
+  endoso?: string;
+  fechaEmision?: string;
+}
+
 export interface SuccessModalProps {
   type:
     | "cancelada"
