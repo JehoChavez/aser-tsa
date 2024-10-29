@@ -54,7 +54,7 @@ const EndosoForm = ({
   const [endosoFinVigencia, setEndosoFinVigencia] = useState(
     endoso
       ? moment(endoso.finVigencia).toDate()
-      : moment(today).add(1, "y").toDate()
+      : moment(polizaFinVigencia).add(1, "y").toDate()
   );
 
   const [months, setMonths] = useState(0);
@@ -86,7 +86,7 @@ const EndosoForm = ({
     const monthDiff = finDate.diff(inicioDate, "months");
     setMonths(monthDiff);
   };
-  const onFormaPagoChange = (value: number) => {};
+  const onFormaPagoChange = () => {};
   const onRecibosChange = (recibos: Recibo[]) => {
     setRecibos(recibos);
   };
