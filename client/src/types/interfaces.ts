@@ -380,8 +380,8 @@ export interface FormRecibosContextInterface {
   setRecibos: (recibos: Recibo[]) => void;
   setFormaPago: (value: number) => void;
   calcMonthsDiff: () => void;
-  onPolizaInicioVigenciaChange: (date: Date) => void;
-  onPolizaFinVigenciaChange: (date: Date) => void;
+  onPolizaInicioVigenciaChange?: (date: Date) => void;
+  onPolizaFinVigenciaChange?: (date: Date) => void;
   onEndosoInicioVigenciaChange?: (date: Date) => void;
   onEndosoFinVigenciaChange?: (date: Date) => void;
 }

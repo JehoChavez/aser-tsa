@@ -128,6 +128,10 @@ const Poliza = () => {
                 onClose={() => {
                   setShowEndosos(false);
                 }}
+                aseguradora={poliza.aseguradora}
+                formaPago={poliza.formaPago}
+                polizaInicioVigencia={poliza.inicioVigencia}
+                polizaFinVigencia={poliza.finVigencia}
               />
             )}
             {poliza.recibos && (

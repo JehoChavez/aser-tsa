@@ -7,15 +7,24 @@ import axios, { AxiosError } from "axios";
 import Loading from "../utils/Loading";
 import { Navigate } from "react-router-dom";
 import EndosoForm from "./EndosoForm";
+import { AseguradoraInterface } from "../../types/interfaces";
 
 const EndososDialog = ({
   id,
   noPoliza,
   onClose,
+  aseguradora,
+  formaPago,
+  polizaInicioVigencia,
+  polizaFinVigencia,
 }: {
   id: number;
   noPoliza: string;
   onClose: () => void;
+  aseguradora: AseguradoraInterface;
+  formaPago: number;
+  polizaInicioVigencia: string;
+  polizaFinVigencia: string;
 }) => {
   const [endosos, setEndosos] = useState([]);
 
@@ -68,6 +77,10 @@ const EndososDialog = ({
             onCancel={() => {
               setShowForm(false);
             }}
+            aseguradora={aseguradora}
+            formaPago={formaPago}
+            polizaInicioVigencia={polizaInicioVigencia}
+            polizaFinVigencia={polizaFinVigencia}
           />
         ) : (
           <>

@@ -285,6 +285,10 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
           onClose={() => {
             setShowEndosos(false);
           }}
+          aseguradora={poliza.aseguradora}
+          formaPago={poliza.formaPago}
+          polizaInicioVigencia={poliza.inicioVigencia}
+          polizaFinVigencia={poliza.finVigencia}
         />
       )}
     </>
