@@ -173,6 +173,7 @@ module.exports.getPolizas = async (req, res) => {
       "vencida",
       "renovacionId",
       "reexpedicionId",
+      "formaPago"
     ],
     include: [
       {

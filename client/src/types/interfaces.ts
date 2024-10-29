@@ -219,7 +219,7 @@ export interface PolizaInterface {
   otros?: number;
   primaTotal: number;
   moneda: "MXN" | "USD" | "UDI";
-  formaPago?: 1 | 2 | 4 | 12;
+  formaPago: 1 | 2 | 4 | 12;
   comentarios?: string;
   fechaCancelacion: string | null;
   vencida: boolean | null;
