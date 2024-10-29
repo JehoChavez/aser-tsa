@@ -2,14 +2,19 @@ import FormSection from "../utils/FormSection";
 import FormTextInput from "../utils/FormTextInput";
 import FormDateInput from "../utils/FormDateInput";
 import { EndosoVigenciaProps } from "../../types/interfaces";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { FormRecibosContext } from "../../store/form-recibos-context";
 
 const EndosoVigenciaSection = ({
   endoso,
   fechaEmision,
 }: EndosoVigenciaProps) => {
+  const formRecibosContext = useContext(FormRecibosContext);
+
+  const today = new Date();
+
   const [emision, setEmision] = useState(
-    fechaEmision ? new Date(fechaEmision) : new Date()
+    fechaEmision ? new Date(fechaEmision) : today
   );
 
   return (
@@ -33,10 +38,29 @@ const EndosoVigenciaSection = ({
         />
       </div>
       <div className="w-1/4">
-        <FormTextInput name="endoso" label="No. de Endoso" />
+        <FormDateInput
+          name="inicioVigencia"
+          label="Inicio de Vigencia"
+          value={formRecibosContext.endosoInicioVigencia || today}
+          onChange={(date) => {
+            formRecibosContext.onEndosoInicioVigenciaChange &&
+              formRecibosContext.onEndosoInicioVigenciaChange(date);
+          }}
+        />
       </div>
       <div className="w-1/4">
-        <FormTextInput name="endoso" label="No. de Endoso" />
+        <FormDateInput
+          name="finVigencia"
+          label="Fin de Vigencia"
+          value={
+            formRecibosContext.endosoFinVigencia ||
+            formRecibosContext.polizaFinVigencia
+          }
+          onChange={(date) => {
+            formRecibosContext.onEndosoFinVigenciaChange &&
+              formRecibosContext.onEndosoFinVigenciaChange(date);
+          }}
+        />
       </div>
     </FormSection>
   );
