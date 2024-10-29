@@ -18,13 +18,14 @@ const NumberVigenciaSection = ({
   );
 
   useEffect(() => {
-    formRecibosContext.onPolizaFinVigenciaChange(
-      new Date(
-        new Date(formRecibosContext.polizaInicioVigencia).setFullYear(
-          formRecibosContext.polizaInicioVigencia.getFullYear() + 1
+    formRecibosContext.onPolizaFinVigenciaChange &&
+      formRecibosContext.onPolizaFinVigenciaChange(
+        new Date(
+          new Date(formRecibosContext.polizaInicioVigencia).setFullYear(
+            formRecibosContext.polizaInicioVigencia.getFullYear() + 1
+          )
         )
-      )
-    );
+      );
   }, [formRecibosContext.polizaInicioVigencia]);
 
   return (
@@ -53,7 +54,8 @@ const NumberVigenciaSection = ({
           label="Inicio de Vigencia"
           value={formRecibosContext.polizaInicioVigencia}
           onChange={(date) => {
-            formRecibosContext.onPolizaInicioVigenciaChange(date);
+            formRecibosContext.onPolizaInicioVigenciaChange &&
+              formRecibosContext.onPolizaInicioVigenciaChange(date);
           }}
         />
       </div>
@@ -63,7 +65,8 @@ const NumberVigenciaSection = ({
           label="Fin de Vigencia"
           value={formRecibosContext.polizaFinVigencia}
           onChange={(date) => {
-            formRecibosContext.onPolizaFinVigenciaChange(date);
+            formRecibosContext.onPolizaFinVigenciaChange &&
+              formRecibosContext.onPolizaFinVigenciaChange(date);
           }}
         />
       </div>
