@@ -9,6 +9,7 @@ import {
 } from "../../types/interfaces";
 import moment from "moment";
 import { FormRecibosContext } from "../../store/form-recibos-context";
+import FormTextInput from "../utils/FormTextInput";
 
 const EndosoForm = ({
   id,
@@ -122,6 +123,11 @@ const EndosoForm = ({
         }}
       >
         <EndosoVigenciaSection />
+        <FormTextInput
+          name="concepto"
+          label="Concepto"
+          defaultValue={endoso?.concepto}
+        />
         <ActionButton color="red" onClick={onCancel}>
           Cancelar
         </ActionButton>
