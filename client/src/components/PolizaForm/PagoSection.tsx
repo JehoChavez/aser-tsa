@@ -128,34 +128,36 @@ const PagoSection = ({
           />
         </div>
       </FormSection>
-      <FormSection>
-        <div className="px-2 md:w-1/6">
-          <FormSelectInput
-            name="moneda"
-            label="Moneda"
-            options={[
-              { value: "MXN", name: "MXN" },
-              { value: "USD", name: "USD" },
-              { value: "UDI", name: "UDI" },
-            ]}
-            defaultVal={moneda}
-          />
-        </div>
-        <div className="px-2 md:w-1/6">
-          <FormSelectInput
-            name="formaPago"
-            label="Forma de Pago"
-            options={[
-              { value: 1, name: "Contado" },
-              { value: 2, name: "Semestral" },
-              { value: 4, name: "Trimestral" },
-              { value: 12, name: "Mensual" },
-            ]}
-            defaultVal={formRecibosContext.formaPago}
-            onSelect={handleFormaPagoChange}
-          />
-        </div>
-      </FormSection>
+      {!endoso && (
+        <FormSection>
+          <div className="px-2 md:w-1/6">
+            <FormSelectInput
+              name="moneda"
+              label="Moneda"
+              options={[
+                { value: "MXN", name: "MXN" },
+                { value: "USD", name: "USD" },
+                { value: "UDI", name: "UDI" },
+              ]}
+              defaultVal={moneda}
+            />
+          </div>
+          <div className="px-2 md:w-1/6">
+            <FormSelectInput
+              name="formaPago"
+              label="Forma de Pago"
+              options={[
+                { value: 1, name: "Contado" },
+                { value: 2, name: "Semestral" },
+                { value: 4, name: "Trimestral" },
+                { value: 12, name: "Mensual" },
+              ]}
+              defaultVal={formRecibosContext.formaPago}
+              onSelect={handleFormaPagoChange}
+            />
+          </div>
+        </FormSection>
+      )}
     </>
   );
 };
