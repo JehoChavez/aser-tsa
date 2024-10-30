@@ -72,7 +72,11 @@ const PagoSection = ({
   return (
     <>
       <FormSection>
-        <div className={`${endoso ? "pr-2" : "px-2"} md:w-1/6`}>
+        <div
+          className={`${
+            endoso ? "md:pr-2" : "md:px-2"
+          } md:w-1/6 flex flex-col justify-end`}
+        >
           <FormNumberInput
             name="primaNeta"
             label="Prima Neta"
@@ -82,7 +86,7 @@ const PagoSection = ({
             required
           />
         </div>
-        <div className="px-2 md:w-1/6">
+        <div className="md:px-2 md:w-1/6 flex flex-col justify-end">
           <FormNumberInput
             name="expedicion"
             label="Gastos de Expedición"
@@ -91,7 +95,7 @@ const PagoSection = ({
             onChange={handleInputChange}
           />
         </div>
-        <div className="px-2 md:w-1/6">
+        <div className="md:px-2 md:w-1/6 flex flex-col justify-end">
           <FormNumberInput
             name="financiamiento"
             label="Gastos de Financiamiento"
@@ -100,7 +104,7 @@ const PagoSection = ({
             onChange={handleInputChange}
           />
         </div>
-        <div className="px-2 md:w-1/6">
+        <div className="md:px-2 md:w-1/6 flex flex-col justify-end">
           <FormNumberInput
             name="otros"
             label="Otros"
@@ -109,7 +113,7 @@ const PagoSection = ({
             onChange={handleInputChange}
           />
         </div>
-        <div className="px-2 md:w-1/6">
+        <div className="md:px-2 md:w-1/6 flex flex-col justify-end">
           <FormNumberInput
             name="iva"
             label="IVA"
@@ -118,7 +122,11 @@ const PagoSection = ({
             onChange={handleInputChange}
           />
         </div>
-        <div className={`${endoso ? "pl-2" : "px-2"} md:w-1/6`}>
+        <div
+          className={`${
+            endoso ? "md:pl-2" : "md:px-2"
+          } md:w-1/6 flex flex-col justify-end`}
+        >
           <FormNumberInput
             name="primaTotal"
             label="Prima Total"
