@@ -4,7 +4,13 @@ import FormSelectInput from "../utils/FormSelectInput";
 import FormNumberInput from "../utils/FormNumberInput";
 import { FormRecibosContext } from "../../store/form-recibos-context";
 
-const PagoSection = ({ moneda }: { moneda?: string }) => {
+const PagoSection = ({
+  moneda,
+  endoso,
+}: {
+  moneda?: string;
+  endoso?: boolean;
+}) => {
   const formRecibosContext = useContext(FormRecibosContext);
 
   const [formValues, setFormValues] = useState(formRecibosContext.primas);
@@ -66,7 +72,7 @@ const PagoSection = ({ moneda }: { moneda?: string }) => {
   return (
     <>
       <FormSection>
-        <div className="px-2 md:w-1/6">
+        <div className={`${endoso ? "" : "px-2"} md:w-1/6`}>
           <FormNumberInput
             name="primaNeta"
             label="Prima Neta"
