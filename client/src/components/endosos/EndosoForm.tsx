@@ -55,7 +55,7 @@ const EndosoForm = ({
   const [endosoFinVigencia, setEndosoFinVigencia] = useState(
     endoso
       ? moment(endoso.finVigencia).toDate()
-      : moment(polizaFinVigencia).add(1, "y").toDate()
+      : moment(polizaFinVigencia).toDate()
   );
 
   const [months, setMonths] = useState(0);
