@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
-      comentarios: DataTypes.STRING,
+      concepto: DataTypes.STRING,
       fechaCancelacion: DataTypes.DATEONLY,
     },
     {

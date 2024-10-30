@@ -47,7 +47,7 @@ const EndosoListItem = ({ endoso }: { endoso: EndosoInterface }) => {
           <p className="md:hidden mr-1 text-neutral-600 font-semibold">
             Comentarios
           </p>
-          <p className="md:w-full">{endoso.comentarios}</p>
+          <p className="md:w-full">{endoso.concepto}</p>
         </div>
         <div className="flex md:col-span-2">
           <p className="md:hidden mr-1 text-neutral-600 font-semibold">

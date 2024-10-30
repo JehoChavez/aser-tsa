@@ -216,7 +216,7 @@ const endosoSchema = joi.object({
       otros: joi.number(),
       iva: joi.number(),
       primaTotal: joi.number(),
-      comentarios: joi.string(),
+      concepto: joi.string(),
       fechaCancelacion: joi
         .alternatives()
         .try(joi.string().isoDate(), joi.date()),

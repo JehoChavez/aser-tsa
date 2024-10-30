@@ -253,7 +253,7 @@ export interface EndosoInterface {
   iva?: number;
   otros?: number;
   primaTotal?: number;
-  comentarios?: string;
+  concepto?: string;
   fechaCancelacion?: string;
   polizaId: number;
 }
