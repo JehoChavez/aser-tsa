@@ -72,7 +72,7 @@ const PagoSection = ({
   return (
     <>
       <FormSection>
-        <div className={`${endoso ? "" : "px-2"} md:w-1/6`}>
+        <div className={`${endoso ? "pr-2" : "px-2"} md:w-1/6`}>
           <FormNumberInput
             name="primaNeta"
             label="Prima Neta"
@@ -118,7 +118,7 @@ const PagoSection = ({
             onChange={handleInputChange}
           />
         </div>
-        <div className="px-2 md:w-1/6">
+        <div className={`${endoso ? "pl-2" : "px-2"} md:w-1/6`}>
           <FormNumberInput
             name="primaTotal"
             label="Prima Total"
