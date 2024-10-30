@@ -19,7 +19,7 @@ const EndosoVigenciaSection = ({
 
   return (
     <FormSection>
-      <div className="w-1/4">
+      <div className="w-full md:w-1/4 md:pr-1">
         <FormTextInput
           name="endoso"
           label="No. de Endoso"
@@ -27,7 +27,7 @@ const EndosoVigenciaSection = ({
           required
         />
       </div>
-      <div className="w-1/4">
+      <div className="w-full md:w-1/4 md:px-1">
         <FormDateInput
           name="emision"
           label="Fecha de Emisión"
@@ -37,7 +37,7 @@ const EndosoVigenciaSection = ({
           }}
         />
       </div>
-      <div className="w-1/4">
+      <div className="w-full md:w-1/4 md:px-1">
         <FormDateInput
           name="inicioVigencia"
           label="Inicio de Vigencia"
@@ -48,7 +48,7 @@ const EndosoVigenciaSection = ({
           }}
         />
       </div>
-      <div className="w-1/4">
+      <div className="w-full md:w-1/4 md:pl-1">
         <FormDateInput
           name="finVigencia"
           label="Fin de Vigencia"
