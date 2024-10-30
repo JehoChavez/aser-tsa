@@ -10,6 +10,8 @@ import {
 import moment from "moment";
 import { FormRecibosContext } from "../../store/form-recibos-context";
 import FormTextInput from "../utils/FormTextInput";
+import PagoSection from "../PolizaForm/PagoSection";
+import FormSection from "../utils/FormSection";
 
 const EndosoForm = ({
   id,
@@ -123,11 +125,14 @@ const EndosoForm = ({
         }}
       >
         <EndosoVigenciaSection />
-        <FormTextInput
-          name="concepto"
-          label="Concepto"
-          defaultValue={endoso?.concepto}
-        />
+        <FormSection>
+          <FormTextInput
+            name="concepto"
+            label="Concepto"
+            defaultValue={endoso?.concepto}
+          />
+        </FormSection>
+        {type !== "B" && <PagoSection endoso />}
         <ActionButton color="red" onClick={onCancel}>
           Cancelar
         </ActionButton>
