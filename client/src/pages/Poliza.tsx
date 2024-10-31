@@ -124,7 +124,7 @@ const Poliza = () => {
             </ActionButton>
             {showEndosos && (
               <EndososDialog
-                id={poliza.id}
+                polizaId={poliza.id}
                 noPoliza={poliza.noPoliza}
                 onClose={() => {
                   setShowEndosos(false);

@@ -10,7 +10,7 @@ import EndosoForm from "./EndosoForm";
 import { AseguradoraInterface } from "../../types/interfaces";
 
 const EndososDialog = ({
-  id,
+  polizaId,
   noPoliza,
   onClose,
   aseguradora,
@@ -18,7 +18,7 @@ const EndososDialog = ({
   polizaInicioVigencia,
   polizaFinVigencia,
 }: {
-  id: number;
+  polizaId: number;
   noPoliza: string;
   onClose: () => void;
   aseguradora: AseguradoraInterface;
@@ -40,7 +40,7 @@ const EndososDialog = ({
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/polizas/${id}/endosos`,
+        `http://localhost:3000/api/polizas/${polizaId}/endosos`,
         {
           withCredentials: true,
         }
@@ -72,7 +72,7 @@ const EndososDialog = ({
       <EndososContext.Provider value={{ endosos, fetchEndosos }}>
         {showForm ? (
           <EndosoForm
-            id={id}
+            polizaId={polizaId}
             type={endosoType}
             onCancel={() => {
               setShowForm(false);
