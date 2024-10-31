@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import ActionButton from "../utils/ActionButton";
 import EndosoVigenciaSection from "./EndosoVigenciaSection";
 import {
   AseguradoraInterface,
   EndosoInterface,
+  PostEndosoPayload,
   PrimasInterface,
   Recibo,
 } from "../../types/interfaces";
@@ -15,7 +16,7 @@ import FormSection from "../utils/FormSection";
 import Recibos from "../PolizaForm/recibos/Recibos";
 
 const EndosoForm = ({
-  id,
+  polizaId,
   type,
   onCancel,
   aseguradora,
@@ -24,7 +25,7 @@ const EndosoForm = ({
   polizaInicioVigencia,
   polizaFinVigencia,
 }: {
-  id: number;
+  polizaId: number;
   type: "A" | "B" | "D";
   onCancel: () => void;
   aseguradora: AseguradoraInterface;
@@ -33,6 +34,8 @@ const EndosoForm = ({
   polizaInicioVigencia: string;
   polizaFinVigencia: string;
 }) => {
+  const formRef = useRef<HTMLFormElement>(null);
+
   const [nrOfRecibos, setNrOfRecibos] = useState(0);
 
   const addNrOfRecibos = () => {
@@ -98,6 +101,36 @@ const EndosoForm = ({
     setSubtotal(value);
   };
 
+  const submitHandler = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const fd = new FormData(event.target as HTMLFormElement);
+
+    const data = Object.fromEntries(fd.entries()) as unknown as EndosoInterface;
+    data.polizaId = polizaId;
+
+    const payload: PostEndosoPayload = {
+      endoso: {
+        ...data,
+        primaNeta: Number(data.primaNeta),
+        expedicion: Number(data.expedicion),
+        financiamiento: Number(data.financiamiento),
+        otros: Number(data.otros),
+        iva: Number(data.iva),
+        primaTotal: Number(data.primaTotal),
+      },
+      recibos,
+    };
+
+    console.log(payload);
+  };
+
+  const clickHandler = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
       <FormRecibosContext.Provider
@@ -127,15 +160,17 @@ const EndosoForm = ({
       >
         <div className="w-full h-full flex flex-col justify-between">
           <div className="flex flex-col">
-            <EndosoVigenciaSection />
-            <FormSection>
-              <FormTextInput
-                name="concepto"
-                label="Concepto"
-                defaultValue={endoso?.concepto}
-              />
-            </FormSection>
-            {type !== "B" && <PagoSection endoso />}
+            <form ref={formRef} onSubmit={submitHandler}>
+              <EndosoVigenciaSection />
+              <FormSection>
+                <FormTextInput
+                  name="concepto"
+                  label="Concepto"
+                  defaultValue={endoso?.concepto}
+                />
+              </FormSection>
+              {type !== "B" && <PagoSection endoso />}
+            </form>
             <div className="h-full">
               <Recibos endoso />
             </div>
@@ -144,7 +179,7 @@ const EndosoForm = ({
             <ActionButton color="red" size="lg" onClick={onCancel}>
               Cancelar
             </ActionButton>
-            <ActionButton color="blue" size="lg" onClick={() => {}}>
+            <ActionButton color="blue" size="lg" onClick={clickHandler}>
               Guardar
             </ActionButton>
           </div>

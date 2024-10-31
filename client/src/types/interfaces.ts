@@ -396,6 +396,11 @@ export interface PostPolizaPayload {
   recibos: Recibo[];
 }
 
+export interface PostEndosoPayload {
+  endoso: EndosoInterface;
+  recibos: Recibo[];
+}
+
 export interface NumberVigenciaProps {
   noPoliza?: string;
   fechaEmision?: Date;
