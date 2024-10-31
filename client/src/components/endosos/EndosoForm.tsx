@@ -87,7 +87,7 @@ const EndosoForm = ({
     const inicioDate = moment(endosoInicioVigencia);
     const finDate = moment(endosoFinVigencia);
 
-    const monthDiff = finDate.diff(inicioDate, "months");
+    const monthDiff = Math.ceil(finDate.diff(inicioDate, "months", true));
     setMonths(monthDiff);
   };
   const onFormaPagoChange = () => {};

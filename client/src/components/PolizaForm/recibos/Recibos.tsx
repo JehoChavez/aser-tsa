@@ -26,9 +26,12 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
       formRecibosContext.nrOfRecibos;
 
     for (let i = 0; i < formRecibosContext.nrOfRecibos; i++) {
-      const reciboInicio = inicioVigencia
-        .clone()
-        .add((12 / formRecibosContext.formaPago) * i, "months");
+      const reciboInicio =
+        endoso && i === 0
+          ? moment(formRecibosContext.endosoInicioVigencia)
+          : inicioVigencia
+              .clone()
+              .add((12 / formRecibosContext.formaPago) * i, "months");
 
       const iva =
         primas.iva === 0
