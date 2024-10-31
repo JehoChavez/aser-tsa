@@ -12,6 +12,7 @@ import { FormRecibosContext } from "../../store/form-recibos-context";
 import FormTextInput from "../utils/FormTextInput";
 import PagoSection from "../PolizaForm/PagoSection";
 import FormSection from "../utils/FormSection";
+import Recibos from "../PolizaForm/recibos/Recibos";
 
 const EndosoForm = ({
   id,
@@ -133,6 +134,9 @@ const EndosoForm = ({
           />
         </FormSection>
         {type !== "B" && <PagoSection endoso />}
+        <div className="h-full">
+          <Recibos endoso />
+        </div>
         <ActionButton color="red" onClick={onCancel}>
           Cancelar
         </ActionButton>

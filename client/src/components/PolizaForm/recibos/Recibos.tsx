@@ -5,7 +5,7 @@ import moment from "moment";
 import RecibosListHeader from "./RecibosListHeader";
 import ReciboListItem from "./ReciboListItem";
 
-const Recibos = () => {
+const Recibos = ({endoso}: {endoso?: boolean}) => {
   const formRecibosContext = useContext(FormRecibosContext);
 
   // Calculate the number of months between each recibo and the total number of recibos.
@@ -74,18 +74,33 @@ const Recibos = () => {
     formRecibosContext.setNrOfRecibos(nr);
   }, [formRecibosContext.formaPago]);
 
-  useEffect(() => {
-    const recibos = generateRecibos();
-    formRecibosContext.setRecibos(recibos);
-  }, [
-    formRecibosContext.monthsDiff,
-    formRecibosContext.formaPago,
-    formRecibosContext.subtotalWoExp,
-    formRecibosContext.primas,
-    formRecibosContext.nrOfRecibos,
-    formRecibosContext.polizaInicioVigencia,
-    formRecibosContext.polizaFinVigencia,
-  ]);
+  if (endoso) {
+    useEffect(() => {
+      const recibos = generateRecibos();
+      formRecibosContext.setRecibos(recibos);
+    }, [
+      formRecibosContext.monthsDiff,
+      formRecibosContext.formaPago,
+      formRecibosContext.subtotalWoExp,
+      formRecibosContext.primas,
+      formRecibosContext.nrOfRecibos,
+      formRecibosContext.endosoInicioVigencia,
+      formRecibosContext.endosoFinVigencia,
+    ]);
+  } else {
+    useEffect(() => {
+      const recibos = generateRecibos();
+      formRecibosContext.setRecibos(recibos);
+    }, [
+      formRecibosContext.monthsDiff,
+      formRecibosContext.formaPago,
+      formRecibosContext.subtotalWoExp,
+      formRecibosContext.primas,
+      formRecibosContext.nrOfRecibos,
+      formRecibosContext.polizaInicioVigencia,
+      formRecibosContext.polizaFinVigencia,
+    ]);
+  }
 
   const updateRecibo = (exhibicion: number, updated: Recibo) => {
     const updatedArray = formRecibosContext.recibos.map((recibo) =>
