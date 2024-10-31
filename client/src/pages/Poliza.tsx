@@ -105,6 +105,7 @@ const Poliza = () => {
                 iva: poliza.iva ? poliza.iva : 0,
                 primaTotal: poliza.primaTotal,
               }}
+              formaPago={poliza.formaPago}
             />
             <PolizaRenuevaReexpideSection
               renueva={poliza.renueva}
