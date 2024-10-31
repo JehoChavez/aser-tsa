@@ -5,7 +5,7 @@ import moment from "moment";
 import RecibosListHeader from "./RecibosListHeader";
 import ReciboListItem from "./ReciboListItem";
 
-const Recibos = ({endoso}: {endoso?: boolean}) => {
+const Recibos = ({ endoso }: { endoso?: boolean }) => {
   const formRecibosContext = useContext(FormRecibosContext);
 
   // Calculate the number of months between each recibo and the total number of recibos.
@@ -72,7 +72,7 @@ const Recibos = ({endoso}: {endoso?: boolean}) => {
   useEffect(() => {
     const nr = calculateNrOfRecibos();
     formRecibosContext.setNrOfRecibos(nr);
-  }, [formRecibosContext.formaPago]);
+  }, [formRecibosContext.formaPago, formRecibosContext.monthsDiff]);
 
   if (endoso) {
     useEffect(() => {
@@ -80,7 +80,6 @@ const Recibos = ({endoso}: {endoso?: boolean}) => {
       formRecibosContext.setRecibos(recibos);
     }, [
       formRecibosContext.monthsDiff,
-      formRecibosContext.formaPago,
       formRecibosContext.subtotalWoExp,
       formRecibosContext.primas,
       formRecibosContext.nrOfRecibos,
