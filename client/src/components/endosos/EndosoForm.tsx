@@ -99,7 +99,7 @@ const EndosoForm = ({
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full">
       <FormRecibosContext.Provider
         value={{
           nrOfRecibos,
@@ -125,21 +125,30 @@ const EndosoForm = ({
           onEndosoFinVigenciaChange: onFinVigenciaChange,
         }}
       >
-        <EndosoVigenciaSection />
-        <FormSection>
-          <FormTextInput
-            name="concepto"
-            label="Concepto"
-            defaultValue={endoso?.concepto}
-          />
-        </FormSection>
-        {type !== "B" && <PagoSection endoso />}
-        <div className="h-full">
-          <Recibos endoso />
+        <div className="w-full h-full flex flex-col justify-between">
+          <div className="flex flex-col">
+            <EndosoVigenciaSection />
+            <FormSection>
+              <FormTextInput
+                name="concepto"
+                label="Concepto"
+                defaultValue={endoso?.concepto}
+              />
+            </FormSection>
+            {type !== "B" && <PagoSection endoso />}
+            <div className="h-full">
+              <Recibos endoso />
+            </div>
+          </div>
+          <div className="w-full flex justify-between">
+            <ActionButton color="red" size="lg" onClick={onCancel}>
+              Cancelar
+            </ActionButton>
+            <ActionButton color="blue" size="lg" onClick={() => {}}>
+              Guardar
+            </ActionButton>
+          </div>
         </div>
-        <ActionButton color="red" onClick={onCancel}>
-          Cancelar
-        </ActionButton>
       </FormRecibosContext.Provider>
     </div>
   );
