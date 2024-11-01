@@ -16,6 +16,9 @@ import FormSection from "../utils/FormSection";
 import Recibos from "../PolizaForm/recibos/Recibos";
 import Modal from "../utils/Modal";
 import ErrorModal from "../utils/ErrorModal";
+import Loading from "../utils/Loading";
+import axios, { AxiosError } from "axios";
+import { Navigate } from "react-router-dom";
 
 const EndosoForm = ({
   polizaId,
@@ -40,6 +43,10 @@ const EndosoForm = ({
   onSuccess: () => void;
   onError: () => void;
 }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
@@ -110,6 +117,30 @@ const EndosoForm = ({
     setSubtotal(value);
   };
 
+  const postEndoso = async (payload: PostEndosoPayload) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/endosos",
+        payload,
+        { withCredentials: true }
+      );
+      if (response.data.status === 201) {
+        setSuccess(true);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        } else {
+          setError(true);
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -121,6 +152,7 @@ const EndosoForm = ({
     const payload: PostEndosoPayload = {
       endoso: {
         ...data,
+        tipo: type,
         primaNeta: Number(data.primaNeta),
         expedicion: Number(data.expedicion),
         financiamiento: Number(data.financiamiento),
@@ -131,7 +163,11 @@ const EndosoForm = ({
       recibos,
     };
 
-    console.log(payload);
+    if (endoso) {
+      console.log(payload);
+    } else {
+      postEndoso(payload);
+    }
   };
 
   const clickHandler = () => {
@@ -166,6 +202,8 @@ const EndosoForm = ({
     </Modal>
   );
 
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
   return (
     <div className="flex flex-col h-full">
       <FormRecibosContext.Provider
@@ -193,32 +231,39 @@ const EndosoForm = ({
           onEndosoFinVigenciaChange: onFinVigenciaChange,
         }}
       >
-        <div className="w-full h-full flex flex-col justify-between">
-          <div className="flex flex-col">
-            <form ref={formRef} onSubmit={submitHandler}>
-              <EndosoVigenciaSection />
-              <FormSection>
-                <FormTextInput
-                  name="concepto"
-                  label="Concepto"
-                  defaultValue={endoso?.concepto}
-                />
-              </FormSection>
-              {type !== "B" && <PagoSection endoso />}
-            </form>
-            <div className="h-full">
-              <Recibos endoso />
+        {isLoading ? (
+          <div className="w-full h-full">
+            <Loading />
+          </div>
+        ) : (
+          <div className="w-full h-full flex flex-col justify-between">
+            <div className="flex flex-col">
+              <form ref={formRef} onSubmit={submitHandler}>
+                <EndosoVigenciaSection />
+                <FormSection>
+                  <FormTextInput
+                    name="concepto"
+                    label="Concepto"
+                    defaultValue={endoso?.concepto}
+                  />
+                </FormSection>
+                {type !== "B" && <PagoSection endoso />}
+              </form>
+              <div className="h-full">
+                <Recibos endoso />
+              </div>
+            </div>
+            <div className="w-full flex justify-between">
+              <ActionButton color="red" size="lg" onClick={onCancel}>
+                Cancelar
+              </ActionButton>
+              <ActionButton color="blue" size="lg" onClick={clickHandler}>
+                Guardar
+              </ActionButton>
             </div>
           </div>
-          <div className="w-full flex justify-between">
-            <ActionButton color="red" size="lg" onClick={onCancel}>
-              Cancelar
-            </ActionButton>
-            <ActionButton color="blue" size="lg" onClick={clickHandler}>
-              Guardar
-            </ActionButton>
-          </div>
-        </div>
+        )}
+
         {success && successModal}
         {error && <ErrorModal onClick={onError} />}
       </FormRecibosContext.Provider>
