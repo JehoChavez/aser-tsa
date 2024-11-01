@@ -14,6 +14,8 @@ import FormTextInput from "../utils/FormTextInput";
 import PagoSection from "../PolizaForm/PagoSection";
 import FormSection from "../utils/FormSection";
 import Recibos from "../PolizaForm/recibos/Recibos";
+import Modal from "../utils/Modal";
+import ErrorModal from "../utils/ErrorModal";
 
 const EndosoForm = ({
   polizaId,
@@ -24,6 +26,8 @@ const EndosoForm = ({
   endoso,
   polizaInicioVigencia,
   polizaFinVigencia,
+  onSuccess,
+  onError,
 }: {
   polizaId: number;
   type: "A" | "B" | "D";
@@ -33,7 +37,12 @@ const EndosoForm = ({
   endoso?: EndosoInterface;
   polizaInicioVigencia: string;
   polizaFinVigencia: string;
+  onSuccess: () => void;
+  onError: () => void;
 }) => {
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
   const formRef = useRef<HTMLFormElement>(null);
 
   const [nrOfRecibos, setNrOfRecibos] = useState(0);
@@ -131,6 +140,32 @@ const EndosoForm = ({
     }
   };
 
+  const successModal = (
+    <Modal size="small">
+      <div className="w-full flex justify-center mt-3 text-green-800">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="150"
+          height="150"
+          fill="currentColor"
+          className="bi bi-check-circle"
+          viewBox="0 0 16 16"
+        >
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+          <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
+        </svg>
+      </div>
+      <h4 className="text-center text-3xl mt-3">
+        Endoso {endoso ? "editado" : "creado"} exitosamente
+      </h4>
+      <div className="w-full flex justify-center mt-2">
+        <ActionButton onClick={onSuccess} color="blue" size="lg">
+          OK
+        </ActionButton>
+      </div>
+    </Modal>
+  );
+
   return (
     <div className="flex flex-col h-full">
       <FormRecibosContext.Provider
@@ -184,6 +219,8 @@ const EndosoForm = ({
             </ActionButton>
           </div>
         </div>
+        {success && successModal}
+        {error && <ErrorModal onClick={onError} />}
       </FormRecibosContext.Provider>
     </div>
   );

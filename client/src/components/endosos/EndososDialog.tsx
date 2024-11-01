@@ -81,6 +81,12 @@ const EndososDialog = ({
             formaPago={formaPago}
             polizaInicioVigencia={polizaInicioVigencia}
             polizaFinVigencia={polizaFinVigencia}
+            onSuccess={() => {
+              setShowForm(false);
+            }}
+            onError={() => {
+              setShowForm(false);
+            }}
           />
         ) : (
           <>
