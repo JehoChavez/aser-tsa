@@ -10,7 +10,7 @@ const EndososList = () => {
     <div className="p-2 w-full h-full">
       <EndososListHeader />
       {endososContext.endosos.map((endoso) => {
-        return <EndosoListItem endoso={endoso} />;
+        return <EndosoListItem endoso={endoso} key={endoso.id} />;
       })}
     </div>
   );
