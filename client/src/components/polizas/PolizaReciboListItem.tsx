@@ -34,7 +34,7 @@ const PolizaReciboListItem = ({ recibo }: { recibo: Recibo }) => {
             <p className="md:hidden mr-1 text-neutral-600 font-semibold">
               Endoso
             </p>
-            <p className="md:w-full">{recibo.endosoId || 0}</p>
+            <p className="md:w-full">{recibo.endoso?.endoso || 0}</p>
           </div>
           <div className="flex">
             <p className="md:hidden mr-1 text-neutral-600 font-semibold">
