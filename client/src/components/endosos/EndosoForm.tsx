@@ -1,4 +1,4 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useRef, useState, useContext } from "react";
 import ActionButton from "../utils/ActionButton";
 import EndosoVigenciaSection from "./EndosoVigenciaSection";
 import {
@@ -19,6 +19,7 @@ import ErrorModal from "../utils/ErrorModal";
 import Loading from "../utils/Loading";
 import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
+import { EndososContext } from "../../store/endosos-context";
 
 const EndosoForm = ({
   polizaId,
@@ -43,6 +44,8 @@ const EndosoForm = ({
   onSuccess: () => void;
   onError: () => void;
 }) => {
+  const endososContext = useContext(EndososContext);
+
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -127,6 +130,7 @@ const EndosoForm = ({
       );
       if (response.data.status === 201) {
         setSuccess(true);
+        endososContext.fetchEndosos();
       }
     } catch (error) {
       if (error instanceof AxiosError) {
