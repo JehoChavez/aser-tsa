@@ -245,6 +245,7 @@ const EndosoForm = ({
                     name="concepto"
                     label="Concepto"
                     defaultValue={endoso?.concepto}
+                    required
                   />
                 </FormSection>
                 {type !== "B" && <PagoSection endoso />}
