@@ -173,7 +173,7 @@ module.exports.getPolizas = async (req, res) => {
       "vencida",
       "renovacionId",
       "reexpedicionId",
-      "formaPago"
+      "formaPago",
     ],
     include: [
       {
@@ -265,6 +265,13 @@ module.exports.getPoliza = async (req, res) => {
       {
         model: Recibo,
         as: "recibos",
+        include: [
+          {
+            model: Endoso,
+            as: "endoso",
+            attributes: ["endoso"],
+          },
+        ],
       },
       {
         model: Poliza,
