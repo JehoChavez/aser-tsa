@@ -242,6 +242,7 @@ export interface PolizaInterface {
 }
 
 export interface EndosoInterface {
+  id: number;
   endoso: string;
   emision?: string;
   inicioVigencia: string;
