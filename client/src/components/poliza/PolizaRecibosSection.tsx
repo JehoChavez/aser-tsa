@@ -1,6 +1,6 @@
 import { Recibo } from "../../types/interfaces";
 import PolizaRecibosListCols from "../polizas/PolizaRecibosListCols";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { PolizaRecibosContext } from "../../store/poliza-recibos-context";
 import PolizaReciboListItem from "../polizas/PolizaReciboListItem";
@@ -18,6 +18,11 @@ const PolizaRecibosSection = ({
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const [recibos, setRecibos] = useState(propsRecibos);
+
+  useEffect(() => {
+    setRecibos(propsRecibos);
+  }, [propsRecibos]);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [hasError, setHasError] = useState(false);

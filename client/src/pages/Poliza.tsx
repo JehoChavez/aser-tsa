@@ -1,9 +1,7 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import IconTitle from "../components/utils/IconTitle";
-import { useParams } from "react-router-dom";
-import { ClienteInterface, PolizaInterface } from "../types/interfaces";
+import { useParams, Navigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
-import { Navigate } from "react-router-dom";
 import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
 import NPClienteInfo from "../components/nuevaPoliza/NPClienteInfo";
@@ -16,30 +14,30 @@ import PolizaAccionesSection from "../components/poliza/PolizaAccionesSection";
 import PolizaRenuevaReexpideSection from "../components/poliza/PolizaRenuevaReexpideSection";
 import ActionButton from "../components/utils/ActionButton";
 import EndososDialog from "../components/endosos/EndososDialog";
+import { ClienteInterface, PolizaInterface } from "../types/interfaces";
 
 const Poliza = () => {
   const { id: polizaId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [poliza, setPoliza] = useState<PolizaInterface>();
-  const [cliente, setCliente] = useState<ClienteInterface>();
-
+  const [poliza, setPoliza] = useState<PolizaInterface | null>(null);
+  const [cliente, setCliente] = useState<ClienteInterface | null>(null);
   const [showEndosos, setShowEndosos] = useState(false);
 
   const fetchPoliza = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(
+      const response = await axios.get<{ content: PolizaInterface }>(
         `http://localhost:3000/api/polizas/${polizaId}`,
         { withCredentials: true }
       );
       setPoliza(response.data.content);
       setCliente(response.data.content.cliente);
     } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 401) {
-          setIsAuthenticated(false);
-        }
+      if (error instanceof AxiosError && error.response?.status === 401) {
+        setIsAuthenticated(false);
+      } else {
+        console.error("Error fetching policy data:", error);
       }
     } finally {
       setIsLoading(false);
@@ -97,12 +95,10 @@ const Poliza = () => {
             <PolizaPrimasSection
               primas={{
                 primaNeta: poliza.primaNeta,
-                expedicion: poliza.expedicion ? poliza.expedicion : 0,
-                financiamiento: poliza.financiamiento
-                  ? poliza.financiamiento
-                  : 0,
-                otros: poliza.otros ? poliza.otros : 0,
-                iva: poliza.iva ? poliza.iva : 0,
+                expedicion: poliza.expedicion || 0,
+                financiamiento: poliza.financiamiento || 0,
+                otros: poliza.otros || 0,
+                iva: poliza.iva || 0,
                 primaTotal: poliza.primaTotal,
               }}
               formaPago={poliza.formaPago}
@@ -116,9 +112,7 @@ const Poliza = () => {
             <ActionButton
               color="blue"
               size="lg"
-              onClick={() => {
-                setShowEndosos(true);
-              }}
+              onClick={() => setShowEndosos(true)}
             >
               Ver Endosos
             </ActionButton>
@@ -128,6 +122,7 @@ const Poliza = () => {
                 noPoliza={poliza.noPoliza}
                 onClose={() => {
                   setShowEndosos(false);
+                  fetchPoliza();
                 }}
                 aseguradora={poliza.aseguradora}
                 formaPago={poliza.formaPago}
