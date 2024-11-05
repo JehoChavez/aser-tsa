@@ -20,6 +20,7 @@ import Loading from "../utils/Loading";
 import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
 import { EndososContext } from "../../store/endosos-context";
+import convertPrimasToNegative from "../utils/convertPrimasToNegative";
 
 const EndosoForm = ({
   polizaId,
@@ -157,21 +158,50 @@ const EndosoForm = ({
     const data = Object.fromEntries(fd.entries()) as unknown as EndosoInterface;
     data.polizaId = polizaId;
 
+    const adjustedPrimas =
+      type === "D" ? convertPrimasToNegative(primas) : primas;
+
+    const adjustedRecibos =
+      type === "D"
+        ? recibos.map((recibo) => {
+            const reciboPrimas: PrimasInterface = {
+              primaNeta: Number(recibo.primaNeta),
+              expedicion: Number(recibo.expedicion),
+              financiamiento: Number(recibo.financiamiento),
+              otros: Number(recibo.otros),
+              iva: Number(recibo.iva),
+              primaTotal: Number(recibo.primaTotal),
+            };
+
+            const reciboAdjustedPrimas = convertPrimasToNegative(reciboPrimas);
+
+            return {
+              ...recibo,
+              primaNeta: reciboAdjustedPrimas.primaNeta,
+              expedicion: reciboAdjustedPrimas.expedicion,
+              financiamiento: reciboAdjustedPrimas.financiamiento,
+              otros: reciboAdjustedPrimas.otros,
+              iva: reciboAdjustedPrimas.iva,
+              primaTotal: reciboAdjustedPrimas.primaTotal,
+            };
+          })
+        : recibos;
+
     const payload: PostEndosoPayload = {
       endoso: {
         ...data,
         tipo: type,
-        primaNeta: Number(data.primaNeta),
-        expedicion: Number(data.expedicion),
-        financiamiento: Number(data.financiamiento),
-        otros: Number(data.otros),
-        iva: Number(data.iva),
-        primaTotal: Number(data.primaTotal),
+        primaNeta: adjustedPrimas.primaNeta,
+        expedicion: adjustedPrimas.expedicion,
+        financiamiento: adjustedPrimas.financiamiento,
+        otros: adjustedPrimas.otros,
+        iva: adjustedPrimas.iva,
+        primaTotal: adjustedPrimas.primaTotal,
       },
-      recibos,
+      recibos: adjustedRecibos,
     };
 
-    if (endoso) {
+    if (endoso || type === "D") {
       console.log(payload);
     } else {
       postEndoso(payload);
