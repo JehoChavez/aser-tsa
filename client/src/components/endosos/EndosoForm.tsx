@@ -201,7 +201,7 @@ const EndosoForm = ({
       recibos: adjustedRecibos,
     };
 
-    if (endoso || type === "D") {
+    if (endoso) {
       console.log(payload);
     } else {
       postEndoso(payload);
