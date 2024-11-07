@@ -158,7 +158,7 @@ const EndosoForm = ({
         payload,
         { withCredentials: true }
       );
-      if (response.data.status === 201) {
+      if (response.data.status === 200) {
         setSuccess(true);
         endososContext.fetchEndosos();
       }
