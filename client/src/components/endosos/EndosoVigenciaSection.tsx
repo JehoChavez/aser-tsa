@@ -4,6 +4,7 @@ import FormDateInput from "../utils/FormDateInput";
 import { EndosoVigenciaProps } from "../../types/interfaces";
 import { useState, useContext } from "react";
 import { FormRecibosContext } from "../../store/form-recibos-context";
+import moment from "moment";
 
 const EndosoVigenciaSection = ({
   endoso,
@@ -14,7 +15,7 @@ const EndosoVigenciaSection = ({
   const today = new Date();
 
   const [emision, setEmision] = useState(
-    fechaEmision ? new Date(fechaEmision) : today
+    fechaEmision ? moment(fechaEmision).toDate() : today
   );
 
   return (
