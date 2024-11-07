@@ -7,7 +7,7 @@ import axios, { AxiosError } from "axios";
 import Loading from "../utils/Loading";
 import { Navigate } from "react-router-dom";
 import EndosoForm from "./EndosoForm";
-import { AseguradoraInterface } from "../../types/interfaces";
+import { AseguradoraInterface, EndosoInterface } from "../../types/interfaces";
 
 const EndososDialog = ({
   polizaId,
@@ -35,6 +35,9 @@ const EndososDialog = ({
 
   const [showForm, setShowForm] = useState(false);
   const [endosoType, setEndosoType] = useState<"A" | "B" | "D">("A");
+  const [endosoToEdit, setEndosoToEdit] = useState<EndosoInterface | null>(
+    null
+  );
 
   const fetchEndosos = async () => {
     setIsLoading(true);
@@ -69,7 +72,20 @@ const EndososDialog = ({
       <h2 className="w-full text-center text-2xl bg-blue-950 text-gray-100 font-bold p-1">
         ENDOSOS {noPoliza}
       </h2>
-      <EndososContext.Provider value={{ endosos, fetchEndosos }}>
+      <EndososContext.Provider
+        value={{
+          endosos,
+          fetchEndosos,
+          showForm,
+          setShowForm: (show) => {
+            setShowForm(show);
+          },
+          endosoToEdit,
+          setEndosoToEdit: (endoso) => {
+            setEndosoToEdit(endoso);
+          },
+        }}
+      >
         {showForm ? (
           <EndosoForm
             polizaId={polizaId}
@@ -87,6 +103,7 @@ const EndososDialog = ({
             onError={() => {
               setShowForm(false);
             }}
+            endoso={endosoToEdit ? endosoToEdit : undefined}
           />
         ) : (
           <>

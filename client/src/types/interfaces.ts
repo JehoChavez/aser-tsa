@@ -435,4 +435,8 @@ export interface PolizaRecibosContextInterface {
 export interface EndososContextInterface {
   endosos: EndosoInterface[];
   fetchEndosos: () => void;
+  showForm: boolean;
+  setShowForm: (show: boolean) => void;
+  endosoToEdit: EndosoInterface | null;
+  setEndosoToEdit: (endoso: EndosoInterface) => void;
 }

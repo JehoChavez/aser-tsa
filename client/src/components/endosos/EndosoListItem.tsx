@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { EndosoInterface } from "../../types/interfaces";
 import ActionButton from "../utils/ActionButton";
 import ListItem from "../utils/ListItem";
 import ConfirmModal from "../utils/ConfirmModal";
+import { EndososContext } from "../../store/endosos-context";
 
 const EndosoListItem = ({ endoso }: { endoso: EndosoInterface }) => {
+  const endososContext = useContext(EndososContext);
+
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   return (
@@ -88,7 +91,10 @@ const EndosoListItem = ({ endoso }: { endoso: EndosoInterface }) => {
           onCancel={() => {
             setShowConfirmModal(false);
           }}
-          onContinue={() => {}}
+          onContinue={() => {
+            endososContext.setEndosoToEdit(endoso);
+            endososContext.setShowForm(true);
+          }}
         >
           <h4 className="text-center text-3xl my-3 font-semibold">
             ¿Desea editar el endoso?
