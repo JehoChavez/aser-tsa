@@ -91,6 +91,7 @@ const EndososDialog = ({
             polizaId={polizaId}
             type={endosoType}
             onCancel={() => {
+              setEndosoToEdit(null);
               setShowForm(false);
             }}
             aseguradora={aseguradora}
