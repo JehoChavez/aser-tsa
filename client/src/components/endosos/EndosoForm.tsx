@@ -306,7 +306,10 @@ const EndosoForm = ({
           <div className="w-full h-full flex flex-col justify-between">
             <div className="flex flex-col">
               <form ref={formRef} onSubmit={submitHandler}>
-                <EndosoVigenciaSection />
+                <EndosoVigenciaSection
+                  endoso={endoso?.endoso}
+                  fechaEmision={endoso?.emision}
+                />
                 <FormSection>
                   <FormTextInput
                     name="concepto"
