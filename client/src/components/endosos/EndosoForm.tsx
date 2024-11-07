@@ -150,6 +150,31 @@ const EndosoForm = ({
     }
   };
 
+  const editEndoso = async (payload: PostEndosoPayload) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/api/endosos/${endoso?.id}`,
+        payload,
+        { withCredentials: true }
+      );
+      if (response.data.status === 201) {
+        setSuccess(true);
+        endososContext.fetchEndosos();
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        } else {
+          setError(true);
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -202,7 +227,7 @@ const EndosoForm = ({
     };
 
     if (endoso) {
-      console.log(payload);
+      editEndoso(payload);
     } else {
       postEndoso(payload);
     }
