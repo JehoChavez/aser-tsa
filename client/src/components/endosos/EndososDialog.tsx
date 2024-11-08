@@ -38,6 +38,9 @@ const EndososDialog = ({
   const [endosoToEdit, setEndosoToEdit] = useState<EndosoInterface | null>(
     null
   );
+  const [endosoToShow, setEndosoToShow] = useState<EndosoInterface | null>(
+    null
+  );
 
   const fetchEndosos = async () => {
     setIsLoading(true);
@@ -83,6 +86,10 @@ const EndososDialog = ({
           endosoToEdit,
           setEndosoToEdit: (endoso) => {
             setEndosoToEdit(endoso);
+          },
+          endosoToShow,
+          setEndosoToShow: (endoso) => {
+            setEndosoToShow;
           },
         }}
       >

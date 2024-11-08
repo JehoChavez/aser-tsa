@@ -8,6 +8,8 @@ export const defaultEndososContext: EndososContextInterface = {
   setShowForm: () => {},
   endosoToEdit: null,
   setEndosoToEdit: () => {},
+  endosoToShow: null,
+  setEndosoToShow: () => {},
 };
 
 export const EndososContext: React.Context<EndososContextInterface> =
