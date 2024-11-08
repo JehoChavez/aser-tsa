@@ -345,9 +345,11 @@ const EndosoForm = ({
                 </FormSection>
                 {type !== "B" && <PagoSection endoso />}
               </form>
-              <div className="h-full">
-                <Recibos endoso />
-              </div>
+              {type !== "B" && (
+                <div className="h-full">
+                  <Recibos endoso />
+                </div>
+              )}
             </div>
             <div className="w-full flex justify-between">
               <ActionButton color="red" size="lg" onClick={onCancel}>
