@@ -438,7 +438,7 @@ export interface EndososContextInterface {
   showForm: boolean;
   setShowForm: (show: boolean) => void;
   endosoToEdit: EndosoInterface | null;
-  setEndosoToEdit: (endoso: EndosoInterface) => void;
+  setEndosoToEdit: (endoso: EndosoInterface | null) => void;
   endosoToShow: EndosoInterface | null;
-  setEndosoToShow: (endoso: EndosoInterface) => void;
+  setEndosoToShow: (endoso: EndosoInterface | null) => void;
 }
