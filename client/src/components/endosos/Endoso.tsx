@@ -14,12 +14,17 @@ const Endoso = () => {
           {endosoContext.endosoToShow?.endoso}
         </h3>
         <PolizaSection>
-          <div className="md:w-1/4 m-1">
-            <LabelAndData label="Póliza">
+          <div className="md:w-1/5 m-1">
+            <LabelAndData label="Endoso">
               {endosoContext.endosoToShow?.endoso}
             </LabelAndData>
           </div>
-          <div className="md:w-1/4 m-1">
+          <div className="md:w-1/5 m-1">
+            <LabelAndData label="Tipo">
+              {endosoContext.endosoToShow?.tipo}
+            </LabelAndData>
+          </div>
+          <div className="md:w-1/5 m-1">
             <LabelAndData label="Fecha de Emisión">
               {endosoContext.endosoToShow?.emision
                 ?.split("-")
@@ -27,7 +32,7 @@ const Endoso = () => {
                 .join("-")}
             </LabelAndData>
           </div>
-          <div className="md:w-1/4 m-1">
+          <div className="md:w-1/5 m-1">
             <LabelAndData label="Inicio de Vigencia">
               {endosoContext.endosoToShow?.inicioVigencia
                 ?.split("-")
@@ -35,7 +40,7 @@ const Endoso = () => {
                 .join("-")}
             </LabelAndData>
           </div>
-          <div className="md:w-1/4 m-1">
+          <div className="md:w-1/5 m-1">
             <LabelAndData label="Fin de Vigencia">
               {endosoContext.endosoToShow?.finVigencia
                 ?.split("-")
