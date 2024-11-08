@@ -18,7 +18,14 @@ const EndosoListItem = ({ endoso }: { endoso: EndosoInterface }) => {
             <p className="md:hidden mr-1 text-neutral-600 font-semibold">
               Endoso
             </p>
-            <p className="md:w-full">{endoso.endoso}</p>
+            <p
+              className="md:w-full underline hover:cursor-pointer"
+              onClick={() => {
+                endososContext.setEndosoToShow(endoso);
+              }}
+            >
+              {endoso.endoso}
+            </p>
           </div>
           <div className="flex">
             <p className="md:hidden mr-1 text-neutral-600 font-semibold">

@@ -8,6 +8,7 @@ import Loading from "../utils/Loading";
 import { Navigate } from "react-router-dom";
 import EndosoForm from "./EndosoForm";
 import { AseguradoraInterface, EndosoInterface } from "../../types/interfaces";
+import Endoso from "./Endoso";
 
 const EndososDialog = ({
   polizaId,
@@ -71,7 +72,15 @@ const EndososDialog = ({
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
-    <Modal size="large" closeBtn onClose={onClose}>
+    <Modal
+      size="large"
+      closeBtn
+      onClose={() => {
+        setEndosoToEdit(null);
+        setEndosoToShow(null);
+        onClose();
+      }}
+    >
       <h2 className="w-full text-center text-2xl bg-blue-950 text-gray-100 font-bold p-1">
         ENDOSOS {noPoliza}
       </h2>
@@ -113,6 +122,8 @@ const EndososDialog = ({
             }}
             endoso={endosoToEdit ? endosoToEdit : undefined}
           />
+        ) : endosoToShow ? (
+          <Endoso />
         ) : (
           <>
             <div className="p-2">
