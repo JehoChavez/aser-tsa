@@ -89,7 +89,7 @@ const EndososDialog = ({
           },
           endosoToShow,
           setEndosoToShow: (endoso) => {
-            setEndosoToShow;
+            setEndosoToShow(endoso);
           },
         }}
       >
