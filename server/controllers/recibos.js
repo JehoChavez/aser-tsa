@@ -81,6 +81,19 @@ module.exports.getPolizaRecibos = async (req, res) => {
   res.status(response.status).json(response);
 };
 
+module.exports.getEndosoRecibos = async (req, res) => {
+  const recibos = await Recibo.findAll({
+    where: {
+      reciboId: req.params.id,
+    },
+    order: [["fechaInicio", "ASC"]],
+  });
+
+  const response = new CustomResponse(recibos);
+
+  res.status(response.status).json(response);
+};
+
 module.exports.pagarRecibo = async (req, res) => {
   const date = new Date();
 
