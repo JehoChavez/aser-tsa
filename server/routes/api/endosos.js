@@ -7,7 +7,7 @@ const {
   deleteEndoso,
   updateEndoso,
 } = require("../../controllers/endosos");
-import { getEndosoRecibos } from "../../controllers/recibos";
+const { getEndosoRecibos } = require("../../controllers/recibos");
 const { validateGenericId, validateEndoso } = require("../../utils/validator");
 
 router.route("/").post(validateEndoso, catchAsync(postEndoso));
