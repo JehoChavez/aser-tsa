@@ -60,13 +60,18 @@ module.exports.postEndoso = async (req, res) => {
 
   if (existingEndoso) throw new ExpressError("endoso ya existe", 400);
 
+  const options =
+    endosoData.tipo === "B"
+      ? null
+      : {
+          include: {
+            model: Recibo,
+            as: "recibos",
+          },
+        };
+
   // Create endoso and recibos
-  const endoso = await Endoso.create(endosoData, {
-    include: {
-      model: Recibo,
-      as: "recibos",
-    },
-  });
+  const endoso = await Endoso.create(endosoData, options);
 
   const response = new CustomResponse(endoso, 201);
 
