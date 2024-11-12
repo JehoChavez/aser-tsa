@@ -3,6 +3,7 @@ import { EndososContext } from "../../store/endosos-context";
 import PolizaSection from "../utils/PolizaSection";
 import LabelAndData from "../utils/LabelAndData";
 import ActionButton from "../utils/ActionButton";
+import EndosoRecibosSection from "./EndosoRecibosSection";
 
 const Endoso = () => {
   const endosoContext = useContext(EndososContext);
@@ -86,6 +87,9 @@ const Endoso = () => {
             </LabelAndData>
           </div>
         </PolizaSection>
+        <EndosoRecibosSection
+          endosoId={endosoContext.endosoToShow?.id as number}
+        />
       </div>
       <div className="w-full flex justify-between">
         <ActionButton
