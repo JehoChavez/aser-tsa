@@ -4,6 +4,7 @@ import ActionButton from "../utils/ActionButton";
 import ListItem from "../utils/ListItem";
 import ConfirmModal from "../utils/ConfirmModal";
 import { EndososContext } from "../../store/endosos-context";
+import DeleteEndosoButton from "./DeleteEndosoButton";
 
 const EndosoListItem = ({ endoso }: { endoso: EndosoInterface }) => {
   const endososContext = useContext(EndososContext);
@@ -90,6 +91,7 @@ const EndosoListItem = ({ endoso }: { endoso: EndosoInterface }) => {
                 />
               </svg>
             </ActionButton>
+            <DeleteEndosoButton id={endoso.id} />
           </div>
         </div>
       </ListItem>
