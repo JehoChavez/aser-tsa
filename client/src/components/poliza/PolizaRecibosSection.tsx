@@ -97,7 +97,13 @@ const PolizaRecibosSection = ({
 
   return (
     <div className="flex flex-col">
-      {hasError && <ErrorModal />}
+      {hasError && (
+        <ErrorModal
+          onClick={() => {
+            setHasError(false);
+          }}
+        />
+      )}
       <h1 className="text-2xl text-gray-100 text-center font-bold bg-blue-950 p-1 w-full rounded">
         Recibos
       </h1>
