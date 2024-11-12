@@ -418,7 +418,8 @@ export interface SuccessModalProps {
     | "reexpedida"
     | "eliminada"
     | "cambioContratante"
-    | "rehabilitada";
+    | "rehabilitada"
+    | "endosoEliminado";
   onOk: () => void;
 }
 
