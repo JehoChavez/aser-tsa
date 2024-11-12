@@ -84,7 +84,7 @@ module.exports.getPolizaRecibos = async (req, res) => {
 module.exports.getEndosoRecibos = async (req, res) => {
   const recibos = await Recibo.findAll({
     where: {
-      reciboId: req.params.id,
+      endosoId: req.params.id,
     },
     order: [["fechaInicio", "ASC"]],
   });
