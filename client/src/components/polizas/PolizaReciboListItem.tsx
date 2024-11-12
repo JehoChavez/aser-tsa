@@ -6,7 +6,13 @@ import ActionButton from "../utils/ActionButton";
 import ConfirmModal from "../utils/ConfirmModal";
 import { PolizaRecibosContext } from "../../store/poliza-recibos-context";
 
-const PolizaReciboListItem = ({ recibo }: { recibo: Recibo }) => {
+const PolizaReciboListItem = ({
+  recibo,
+  isEndoso,
+}: {
+  recibo: Recibo;
+  isEndoso?: boolean;
+}) => {
   const polizaRecibosContext = useContext(PolizaRecibosContext);
 
   const [showPayDialog, setShowPayDialog] = useState(false);
@@ -28,9 +34,11 @@ const PolizaReciboListItem = ({ recibo }: { recibo: Recibo }) => {
         <div
           className={`w-full px-1 ${
             recibo.fechaPago ? "bg-green-100" : "bg-neutral-100"
-          } flex flex-col md:grid grid-cols-10 md:text-center`}
+          } flex flex-col md:grid ${
+            isEndoso ? "grid-cols-9" : "grid-cols-10"
+          } md:text-center`}
         >
-          <div className="flex">
+          <div className={isEndoso ? "hidden" : "flex"}>
             <p className="md:hidden mr-1 text-neutral-600 font-semibold">
               Endoso
             </p>
