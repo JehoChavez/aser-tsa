@@ -73,6 +73,11 @@ module.exports.getPolizaRecibos = async (req, res) => {
     where: {
       polizaId: req.params.id,
     },
+    include: {
+      model: Endoso,
+      as: "endoso",
+      attributes: ["endoso"],
+    },
     order: [["fechaInicio", "ASC"]],
   });
 
