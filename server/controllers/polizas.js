@@ -184,7 +184,7 @@ module.exports.getPolizas = async (req, res) => {
       {
         model: Aseguradora,
         as: "aseguradora",
-        attributes: ["id", "aseguradora"],
+        attributes: ["id", "aseguradora", "plazoPrimer", "plazoSubsecuentes"],
       },
       {
         model: Cliente,
@@ -242,7 +242,7 @@ module.exports.getPoliza = async (req, res) => {
       {
         model: Aseguradora,
         as: "aseguradora",
-        attributes: ["id", "aseguradora"],
+        attributes: ["id", "aseguradora", "plazoPrimer", "plazoSubsecuentes"],
       },
       {
         model: Agente,
