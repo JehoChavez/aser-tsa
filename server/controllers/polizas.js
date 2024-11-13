@@ -379,6 +379,8 @@ module.exports.updatePoliza = async (req, res) => {
       transaction: t,
     });
 
+    polizaData.vencida = false;
+
     // Update poliza
     poliza.set(polizaData);
     const updatedPoliza = await poliza.save({ transaction: t });
