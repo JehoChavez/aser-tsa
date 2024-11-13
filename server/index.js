@@ -3,12 +3,15 @@ const app = express();
 const cron = require("node-cron");
 const session = require("express-session");
 const cors = require("cors");
+const helmet = require("helmet");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const ExpressError = require("./utils/ExpressError");
 const CustomResponse = require("./utils/CustomResponse");
 const markPolizasVencidas = require("./utils/markPolizasVencidas");
 const deleteOldPolizas = require("./utils/deleteOldPolizas");
 const isAuthenticated = require("./utils/isAuthenticated");
+
+app.use(helmet());
 
 app.use(
   cors({
