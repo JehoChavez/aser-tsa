@@ -7,6 +7,7 @@ import PolizaRehabilitarButton from "./PolizaRehabilitarButton";
 import PolizaEliminarButton from "./PolizaEliminarButton";
 import { Navigate } from "react-router-dom";
 import ConfirmModal from "../utils/ConfirmModal";
+import ReturnButton from "../utils/ReturnButton";
 
 const PolizaAccionesSection = ({ poliza }: { poliza: PolizaInterface }) => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -22,6 +23,7 @@ const PolizaAccionesSection = ({ poliza }: { poliza: PolizaInterface }) => {
 
   return (
     <div className="flex flex-col md:flex-row w-full justify-between">
+      <ReturnButton size="lg" />
       <ActionButton
         onClick={() => {
           setShowEditModal(true);
