@@ -379,6 +379,14 @@ module.exports.updatePoliza = async (req, res) => {
       transaction: t,
     });
 
+    // Delete existin endosos
+    await Endoso.destroy({
+      where: {
+        polizaId: poliza.id,
+      },
+      transaction: t,
+    });
+
     polizaData.vencida = false;
 
     // Update poliza

@@ -283,7 +283,7 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
             ¿Desea editar la póliza?
           </h4>
           <p className="text-center text-lg my-3">
-            Los recibos pagados serán anulados
+            Los recibos pagados y endosos serán eliminados
           </p>
         </ConfirmModal>
       )}
