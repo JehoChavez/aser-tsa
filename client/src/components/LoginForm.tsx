@@ -47,6 +47,7 @@ const LoginForm = () => {
       <form
         onSubmit={formSubmitHandler}
         className="flex flex-col items-center justify-center text-lg w-72 px-2"
+        autoComplete="on"
       >
         <label htmlFor="password" className="w-full text-left mb-1">
           Contraseña
@@ -61,6 +62,7 @@ const LoginForm = () => {
           placeholder="password"
           required
           ref={passwordRef}
+          autoComplete="on"
         />
         <p
           className={`w-full text-sm text-red-500 ${
