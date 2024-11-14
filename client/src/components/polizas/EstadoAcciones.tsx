@@ -10,6 +10,7 @@ import ErrorModal from "../utils/ErrorModal";
 import ConfirmModal from "../utils/ConfirmModal";
 import { PolizasContext } from "../../store/polizas-context";
 import EndososDialog from "../endosos/EndososDialog";
+import moment from "moment";
 
 const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   const polizasContext = useContext(PolizasContext);
@@ -101,6 +102,10 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
     }
   };
 
+  const vencida =
+    moment().isAfter(moment(poliza.finVigencia)) && !poliza.renovacionId;
+  console.log(vencida);
+
   const onClose = () => {
     setShowRecibosDialog(false);
     polizasContext.fetchPolizas();
@@ -112,7 +117,7 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
     <>
       <div className="col-start-4 md:col-start-11 col-span-full px-2 flex flex-col justify-around md:flex-row md:justify-normal items-center">
         <p
-          className={`rounded w-24 text-center px-1 text-neutral-100 ${
+          className={`rounded w-28 text-center px-1 text-neutral-100 ${
             poliza.fechaCancelacion
               ? "bg-red-700"
               : poliza.reexpedicionId
@@ -121,6 +126,8 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               ? "bg-orange-900"
               : poliza.renovacionId
               ? "bg-blue-800"
+              : vencida
+              ? "bg-gray-700"
               : "bg-emerald-700"
           }`}
         >
@@ -132,6 +139,8 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
             ? "Vencida"
             : poliza.renovacionId
             ? "Renovada"
+            : vencida
+            ? "No Renovada"
             : "Vigente"}
         </p>
         <div className="flex flex-wrap">
