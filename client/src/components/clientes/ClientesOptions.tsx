@@ -1,16 +1,22 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ClientesContext } from "../../store/clientes-context";
 import SearchInput from "../utils/SearchInput";
 import IconTextButton from "../utils/IconTextButton";
+import ClienteDialog from "./ClienteDialog";
 
 const ClientesOptions = () => {
   const clientesContext = useContext(ClientesContext);
+
+  const [showDialog, setShowDialog] = useState(false);
 
   return (
     <div className="w-full h-1/5 flex items-center">
       <div className="w-full h-1/2 grid grid-cols-4 md:grid-cols-5 xl:grid-cols-12">
         <div className="flex items-center col-span-1 px-2">
           <IconTextButton
+            onClick={() => {
+              setShowDialog(true);
+            }}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -29,6 +35,13 @@ const ClientesOptions = () => {
           >
             Nuevo
           </IconTextButton>
+          {showDialog && (
+            <ClienteDialog
+              onClose={() => {
+                setShowDialog(false);
+              }}
+            />
+          )}
         </div>
         <div className="col-span-3 md:col-span-2 xl:col-span-3 flex items-center px-2">
           <SearchInput
