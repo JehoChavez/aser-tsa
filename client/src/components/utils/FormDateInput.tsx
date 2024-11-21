@@ -29,8 +29,9 @@ const FormDateInput = ({
         required={required}
         value={date}
         onChange={(e) => {
+          const [year, month, day] = e.target.value.split("-").map(Number);
           if (onChange) {
-            const date = new Date(e.target.value);
+            const date = new Date(year, month - 1, day);
             onChange(date, e.target.name);
           }
         }}
