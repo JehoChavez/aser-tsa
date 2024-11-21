@@ -29,8 +29,7 @@ const PersonaFormSection = () => {
           label="Fecha de Nacimiento"
           value={fechaNacimiento}
           onChange={(date) => {
-            const modDate = new Date(date);
-            setFechaNacimiento(modDate);
+            setFechaNacimiento(date);
           }}
         />
       </div>
