@@ -1,9 +1,13 @@
+import { useState } from "react";
 import FormTextInput from "../../utils/FormTextInput";
 import FormSelectInput from "../../utils/FormSelectInput";
 import FormDateInput from "../../utils/FormDateInput";
 import FormSection from "../../utils/FormSection";
 
 const PersonaFormSection = () => {
+  const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
+  console.log(fechaNacimiento);
+
   return (
     <FormSection>
       <div className="w-full md:w-1/4 md:pr-1 flex flex-col justify-end">
@@ -11,9 +15,23 @@ const PersonaFormSection = () => {
           name="tipoPersona"
           label="Tipo de Persona"
           options={[
-            { value: "fisica", name: "Física", selected: true },
+            { value: "fisica", name: "Física" },
             { value: "moral", name: "Moral" },
           ]}
+        />
+      </div>
+      <div className="w-full md:w-1/4 md:px-1 flex flex-col justify-end">
+        <FormTextInput name="nombre" label="Nombre" required />
+      </div>
+      <div className="w-full md:w-1/4 md:px-1 flex flex-col justify-end">
+        <FormDateInput
+          name="nacimiento"
+          label="Fecha de Nacimiento"
+          value={fechaNacimiento}
+          onChange={(date) => {
+            const modDate = new Date(date);
+            setFechaNacimiento(modDate);
+          }}
         />
       </div>
     </FormSection>
