@@ -118,16 +118,13 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
       <RecibosListHeader />
       <div className="h-1/4 w-full bg-neutral-100 overflow-y-auto">
         {formRecibosContext.recibos.map((recibo, index) => {
-          console.log(recibo);
-          if (recibo.primaNeta != 0) {
-            return (
-              <ReciboListItem
-                reciboIndex={index}
-                onReciboChange={updateRecibo}
-                key={index}
-              />
-            );
-          }
+          return (
+            <ReciboListItem
+              reciboIndex={index}
+              onReciboChange={updateRecibo}
+              key={index}
+            />
+          );
         })}
       </div>
     </div>
