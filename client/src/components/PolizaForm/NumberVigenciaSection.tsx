@@ -44,7 +44,7 @@ const NumberVigenciaSection = ({
           label="Fecha de Emisión"
           value={emision}
           onChange={(date) => {
-            setEmision(new Date(date.setDate(date.getDate() + 1)));
+            setEmision(date);
           }}
         />
       </div>

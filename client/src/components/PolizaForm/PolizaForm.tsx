@@ -107,8 +107,7 @@ const PolizaForm = ({
   };
 
   const onInicioVigenciaChange = (date: Date) => {
-    const newDate = new Date(date.setDate(date.getDate() + 1));
-    setInicioVigencia(newDate);
+    setInicioVigencia(date);
   };
   const onFinVigenciaChange = (date: Date) => {
     setFinVigencia(date);

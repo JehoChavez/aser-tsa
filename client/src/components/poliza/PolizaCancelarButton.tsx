@@ -84,8 +84,7 @@ const PolizaCancelarButton = ({
                 label="Fecha de Cancelación"
                 value={date}
                 onChange={(date) => {
-                  const newDate = new Date(date.setDate(date.getDate() + 1));
-                  setDate(newDate);
+                  setDate(date);
                 }}
               />
             </div>
