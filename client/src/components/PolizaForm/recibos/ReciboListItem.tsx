@@ -81,7 +81,7 @@ const ReciboListItem = ({
   const dateInputChangeHandler = (date: Date, name: string) => {
     setReciboState((prev) => ({
       ...prev,
-      [name]: moment(date).add(1, "d").format("YYYY-MM-DD"),
+      [name]: moment(date).format("YYYY-MM-DD"),
     }));
   };
 
@@ -93,6 +93,16 @@ const ReciboListItem = ({
         .format("YYYY-MM-DD"),
     }));
   }, [reciboState.fechaInicio]);
+
+  const [inicioYear, inicioMonth, inicioDay] = recibo.fechaInicio
+    .split("-")
+    .map(Number);
+  const inicioDate = new Date(inicioYear, inicioMonth - 1, inicioDay);
+
+  const [limiteYear, limiteMonth, limiteDay] = recibo.fechaLimite
+    .split("-")
+    .map(Number);
+  const limiteDate = new Date(limiteYear, limiteMonth - 1, limiteDay);
 
   return (
     <ListItem>
@@ -148,13 +158,7 @@ const ReciboListItem = ({
         </span>
         <span className="px-1">
           <FormDateInput
-            value={
-              new Date(
-                new Date(reciboState.fechaInicio).setDate(
-                  new Date(reciboState.fechaInicio).getDate() + 1
-                )
-              )
-            }
+            value={inicioDate}
             onChange={dateInputChangeHandler}
             name="fechaInicio"
             id={`${reciboState.exhibicion}_fechaInicio`}
@@ -162,13 +166,7 @@ const ReciboListItem = ({
         </span>
         <span className="px-1">
           <FormDateInput
-            value={
-              new Date(
-                new Date(reciboState.fechaLimite).setDate(
-                  new Date(reciboState.fechaLimite).getDate() + 1
-                )
-              )
-            }
+            value={limiteDate}
             onChange={dateInputChangeHandler}
             name="fechaLimite"
             id={`${reciboState.exhibicion}_fechaLimite`}
