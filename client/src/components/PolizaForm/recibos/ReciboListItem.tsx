@@ -2,16 +2,35 @@ import { ReciboListItemProps } from "../../../types/interfaces";
 import ListItem from "../../utils/ListItem";
 import FormNumberInput from "../../utils/FormNumberInput";
 import FormDateInput from "../../utils/FormDateInput";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, useContext } from "react";
+import { FormRecibosContext } from "../../../store/form-recibos-context";
 import moment from "moment";
 
-const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
+const ReciboListItem = ({
+  reciboIndex,
+  onReciboChange,
+}: ReciboListItemProps) => {
+  const formRecibosContext = useContext(FormRecibosContext);
+  const recibo = formRecibosContext.recibos[reciboIndex];
+
   const diff = moment(recibo.fechaLimite).diff(
     moment(recibo.fechaInicio),
     "days"
   );
 
-  const [reciboState, setRecibo] = useState(recibo);
+  const [reciboState, setReciboState] = useState(recibo);
+
+  useEffect(() => {
+    setReciboState(recibo);
+  }, [
+    recibo.primaNeta,
+    recibo.expedicion,
+    recibo.financiamiento,
+    recibo.otros,
+    recibo.iva,
+    recibo.primaTotal,
+  ]);
+
   const [subtotal, setSubtotal] = useState(
     (recibo.primaNeta as number) +
       (recibo.expedicion as number) +
@@ -20,7 +39,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
   );
 
   const numberInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setRecibo((prev) => ({
+    setReciboState((prev) => ({
       ...prev,
       [e.target.name]: e.target.value ? parseFloat(e.target.value) : 0,
     }));
@@ -33,7 +52,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
       (reciboState.financiamiento as number) +
       (reciboState.otros as number);
     setSubtotal(sub);
-    setRecibo((prev) => ({
+    setReciboState((prev) => ({
       ...prev,
       iva: recibo.iva === 0 ? 0 : sub * 0.16,
     }));
@@ -45,7 +64,7 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
   ]);
 
   useEffect(() => {
-    setRecibo((prev) => ({
+    setReciboState((prev) => ({
       ...prev,
       primaTotal: subtotal + (prev.iva as number),
     }));
@@ -60,14 +79,14 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
   ]);
 
   const dateInputChangeHandler = (date: Date, name: string) => {
-    setRecibo((prev) => ({
+    setReciboState((prev) => ({
       ...prev,
       [name]: moment(date).add(1, "d").format("YYYY-MM-DD"),
     }));
   };
 
   useEffect(() => {
-    setRecibo((prev) => ({
+    setReciboState((prev) => ({
       ...prev,
       fechaLimite: moment(reciboState.fechaInicio)
         .add(diff, "days")
@@ -82,48 +101,48 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
         <span className="px-1">
           <FormNumberInput
             name="primaNeta"
-            id={`${recibo.exhibicion}_primaNeta`}
-            value={recibo.primaNeta}
+            id={`${reciboState.exhibicion}_primaNeta`}
+            value={reciboState.primaNeta}
             onChange={numberInputChangeHandler}
           />
         </span>
         <span className="px-1">
           <FormNumberInput
             name="expedicion"
-            id={`${recibo.exhibicion}_expedicion`}
-            value={recibo.expedicion}
+            id={`${reciboState.exhibicion}_expedicion`}
+            value={reciboState.expedicion}
             onChange={numberInputChangeHandler}
           />
         </span>
         <span className="px-1">
           <FormNumberInput
             name="financiamiento"
-            id={`${recibo.exhibicion}_financiamiento`}
-            value={recibo.financiamiento}
+            id={`${reciboState.exhibicion}_financiamiento`}
+            value={reciboState.financiamiento}
             onChange={numberInputChangeHandler}
           />
         </span>
         <span className="px-1">
           <FormNumberInput
             name="otros"
-            id={`${recibo.exhibicion}_otros`}
-            value={recibo.otros}
+            id={`${reciboState.exhibicion}_otros`}
+            value={reciboState.otros}
             onChange={numberInputChangeHandler}
           />
         </span>
         <span className="px-1">
           <FormNumberInput
             name="iva"
-            id={`${recibo.exhibicion}_iva`}
-            value={recibo.iva}
+            id={`${reciboState.exhibicion}_iva`}
+            value={reciboState.iva}
             onChange={numberInputChangeHandler}
           />
         </span>
         <span className="px-1">
           <FormNumberInput
             name="primaTotal"
-            id={`${recibo.exhibicion}_primaTotal`}
-            value={recibo.primaTotal}
+            id={`${reciboState.exhibicion}_primaTotal`}
+            value={reciboState.primaTotal}
             onChange={numberInputChangeHandler}
           />
         </span>
@@ -131,28 +150,28 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
           <FormDateInput
             value={
               new Date(
-                new Date(recibo.fechaInicio).setDate(
-                  new Date(recibo.fechaInicio).getDate() + 1
+                new Date(reciboState.fechaInicio).setDate(
+                  new Date(reciboState.fechaInicio).getDate() + 1
                 )
               )
             }
             onChange={dateInputChangeHandler}
             name="fechaInicio"
-            id={`${recibo.exhibicion}_fechaInicio`}
+            id={`${reciboState.exhibicion}_fechaInicio`}
           />
         </span>
         <span className="px-1">
           <FormDateInput
             value={
               new Date(
-                new Date(recibo.fechaLimite).setDate(
-                  new Date(recibo.fechaLimite).getDate() + 1
+                new Date(reciboState.fechaLimite).setDate(
+                  new Date(reciboState.fechaLimite).getDate() + 1
                 )
               )
             }
             onChange={dateInputChangeHandler}
             name="fechaLimite"
-            id={`${recibo.exhibicion}_fechaLimite`}
+            id={`${reciboState.exhibicion}_fechaLimite`}
           />
         </span>
       </div>
