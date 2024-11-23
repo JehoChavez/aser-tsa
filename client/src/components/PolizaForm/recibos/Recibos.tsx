@@ -117,15 +117,13 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
       <h2 className="border-b text-xl text-gray-600 font-bold">Recibos</h2>
       <RecibosListHeader />
       <div className="h-1/4 w-full bg-neutral-100 overflow-y-auto">
-        {formRecibosContext.recibos.map((recibo, index) => {
-          return (
-            <ReciboListItem
-              reciboIndex={index}
-              onReciboChange={updateRecibo}
-              key={index}
-            />
-          );
-        })}
+        {formRecibosContext.recibos.map((recibo, index) => (
+          <ReciboListItem
+            reciboIndex={index}
+            onReciboChange={updateRecibo}
+            key={index}
+          />
+        ))}
       </div>
     </div>
   );

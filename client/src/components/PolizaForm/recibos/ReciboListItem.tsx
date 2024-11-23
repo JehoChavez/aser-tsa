@@ -3,8 +3,8 @@ import ListItem from "../../utils/ListItem";
 import FormNumberInput from "../../utils/FormNumberInput";
 import FormDateInput from "../../utils/FormDateInput";
 import { ChangeEvent, useEffect, useState, useContext } from "react";
-import { FormRecibosContext } from "../../../store/form-recibos-context";
 import moment from "moment";
+import { FormRecibosContext } from "../../../store/form-recibos-context";
 
 const ReciboListItem = ({
   reciboIndex,
@@ -18,28 +18,10 @@ const ReciboListItem = ({
     "days"
   );
 
-  const [reciboState, setReciboState] = useState(recibo);
-
-  useEffect(() => {
-    setReciboState(recibo);
-  }, [
-    recibo.primaNeta,
-    recibo.expedicion,
-    recibo.financiamiento,
-    recibo.otros,
-    recibo.iva,
-    recibo.primaTotal,
-  ]);
-
-  const [subtotal, setSubtotal] = useState(
-    (recibo.primaNeta as number) +
-      (recibo.expedicion as number) +
-      (recibo.financiamiento as number) +
-      (recibo.otros as number)
-  );
+  const [reciboState, setRecibo] = useState(recibo);
 
   const numberInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setReciboState((prev) => ({
+    setRecibo((prev) => ({
       ...prev,
       [e.target.name]: e.target.value ? parseFloat(e.target.value) : 0,
     }));
@@ -51,8 +33,7 @@ const ReciboListItem = ({
       (reciboState.expedicion as number) +
       (reciboState.financiamiento as number) +
       (reciboState.otros as number);
-    setSubtotal(sub);
-    setReciboState((prev) => ({
+    setRecibo((prev) => ({
       ...prev,
       iva: recibo.iva === 0 ? 0 : sub * 0.16,
     }));
@@ -64,9 +45,14 @@ const ReciboListItem = ({
   ]);
 
   useEffect(() => {
-    setReciboState((prev) => ({
+    setRecibo((prev) => ({
       ...prev,
-      primaTotal: subtotal + (prev.iva as number),
+      primaTotal:
+        (reciboState.primaNeta as number) +
+        (reciboState.expedicion as number) +
+        (reciboState.financiamiento as number) +
+        (reciboState.otros as number) +
+        (prev.iva as number),
     }));
   }, [reciboState.iva]);
 
@@ -79,14 +65,14 @@ const ReciboListItem = ({
   ]);
 
   const dateInputChangeHandler = (date: Date, name: string) => {
-    setReciboState((prev) => ({
+    setRecibo((prev) => ({
       ...prev,
       [name]: moment(date).format("YYYY-MM-DD"),
     }));
   };
 
   useEffect(() => {
-    setReciboState((prev) => ({
+    setRecibo((prev) => ({
       ...prev,
       fechaLimite: moment(reciboState.fechaInicio)
         .add(diff, "days")
@@ -94,20 +80,14 @@ const ReciboListItem = ({
     }));
   }, [reciboState.fechaInicio]);
 
-  const [inicioYear, inicioMonth, inicioDay] = recibo.fechaInicio
-    .split("-")
-    .map(Number);
-  const inicioDate = new Date(inicioYear, inicioMonth - 1, inicioDay);
-
-  const [limiteYear, limiteMonth, limiteDay] = recibo.fechaLimite
-    .split("-")
-    .map(Number);
-  const limiteDate = new Date(limiteYear, limiteMonth - 1, limiteDay);
+  useEffect(() => {
+    setRecibo(recibo);
+  }, [recibo.primaTotal]);
 
   return (
     <ListItem>
       <div className="h-auto text-gray-800 bg-blue-800 bg-opacity-5 grid grid-cols-9 text-center text-xl">
-        <p>{recibo.exhibicion}</p>
+        <p>{reciboState.exhibicion}</p>
         <span className="px-1">
           <FormNumberInput
             name="primaNeta"
@@ -158,7 +138,13 @@ const ReciboListItem = ({
         </span>
         <span className="px-1">
           <FormDateInput
-            value={inicioDate}
+            value={
+              new Date(
+                new Date(reciboState.fechaInicio).setDate(
+                  new Date(reciboState.fechaInicio).getDate() + 1
+                )
+              )
+            }
             onChange={dateInputChangeHandler}
             name="fechaInicio"
             id={`${reciboState.exhibicion}_fechaInicio`}
@@ -166,7 +152,13 @@ const ReciboListItem = ({
         </span>
         <span className="px-1">
           <FormDateInput
-            value={limiteDate}
+            value={
+              new Date(
+                new Date(reciboState.fechaLimite).setDate(
+                  new Date(reciboState.fechaLimite).getDate() + 1
+                )
+              )
+            }
             onChange={dateInputChangeHandler}
             name="fechaLimite"
             id={`${reciboState.exhibicion}_fechaLimite`}
