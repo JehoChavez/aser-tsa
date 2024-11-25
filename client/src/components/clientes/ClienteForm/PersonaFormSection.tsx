@@ -6,8 +6,7 @@ import FormSection from "../../utils/FormSection";
 
 const PersonaFormSection = () => {
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
-  console.log(fechaNacimiento);
-
+  
   return (
     <FormSection>
       <div className="w-full md:w-1/4 md:pr-1 flex flex-col justify-end">
