@@ -33,6 +33,9 @@ const PersonaFormSection = () => {
           }}
         />
       </div>
+      <div className="w-full md:w-1/4 md:pl-1 flex flex-col justify-end">
+        <FormTextInput name="rfc" label="RFC" />
+      </div>
     </FormSection>
   );
 };
