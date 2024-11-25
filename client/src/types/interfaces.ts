@@ -129,6 +129,19 @@ export interface ActionButtonInterface {
   children: ReactNode;
 }
 
+export interface Municipio {
+  id: number;
+  municipio: string;
+  estadoId: number;
+  estado?: Estado;
+}
+
+export interface Estado {
+  id: number;
+  estado: string;
+  municipios?: Municipio[];
+}
+
 export interface ClienteInterface {
   id: number;
   tipoPersona: "fisica" | "moral";
