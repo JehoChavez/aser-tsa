@@ -5,6 +5,7 @@ import axios, { AxiosError } from "axios";
 import { useState, useEffect } from "react";
 import { Estado, Municipio } from "../../../types/interfaces";
 import { Navigate } from "react-router-dom";
+import ErrorModal from "../../utils/ErrorModal";
 
 const DomicilioSection = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -77,6 +78,7 @@ const DomicilioSection = () => {
 
   return (
     <>
+    {error && <ErrorModal />}
       <h2 className="border-b text-xl text-gray-600 font-bold w-full">
         Domicilio
       </h2>
