@@ -432,7 +432,8 @@ export interface SuccessModalProps {
     | "eliminada"
     | "cambioContratante"
     | "rehabilitada"
-    | "endosoEliminado";
+    | "endosoEliminado"
+    | "clienteCreado";
   onOk: () => void;
 }
 
