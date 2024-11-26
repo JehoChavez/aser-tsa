@@ -1,9 +1,13 @@
 import PersonaFormSection from "./PersonaFormSection";
+import DomicilioSection from "./DomicilioSection";
 
 const ClienteForm = () => {
   return (
-    <PersonaFormSection />
-  )
+    <form>
+      <PersonaFormSection />
+      <DomicilioSection />
+    </form>
+  );
 };
 
 export default ClienteForm;
