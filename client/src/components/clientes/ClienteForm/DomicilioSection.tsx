@@ -1,6 +1,7 @@
 import FormSection from "../../utils/FormSection";
 import FormTextInput from "../../utils/FormTextInput";
 import FormSelectInput from "../../utils/FormSelectInput";
+import FormNumberInput from "../../utils/FormNumberInput";
 import axios, { AxiosError } from "axios";
 import { useState, useEffect } from "react";
 import { Estado, Municipio } from "../../../types/interfaces";
@@ -78,7 +79,7 @@ const DomicilioSection = () => {
 
   return (
     <>
-    {error && <ErrorModal />}
+      {error && <ErrorModal />}
       <h2 className="border-b text-xl text-gray-600 font-bold w-full">
         Domicilio
       </h2>
@@ -98,11 +99,11 @@ const DomicilioSection = () => {
       </FormSection>
       <FormSection>
         <div className="w-full md:w-1/6 md:pr-1 flex flex-col justify-end">
-          <FormTextInput name="codigoPostal" label="Código Postal" />
+          <FormNumberInput name="codigoPostal" label="Código Postal" />
         </div>
         <div className="w-full md:w-2/6 md:px-1 flex flex-col justify-end">
           <FormSelectInput
-            name="estado"
+            name="estadoId"
             label="Estado"
             options={
               isEstadosLoading
@@ -119,7 +120,7 @@ const DomicilioSection = () => {
         </div>
         <div className="w-full md:w-2/6 md:px-1 flex flex-col justify-end">
           <FormSelectInput
-            name="municipio"
+            name="municipioId"
             label="Municipio"
             options={
               isMunicipiosLoading
