@@ -31,6 +31,10 @@ const ClienteForm = () => {
       fd.entries()
     ) as unknown as ClienteInterface;
 
+    if (!data.municipioId) {
+      data.municipioId = 0;
+    }
+
     try {
       setIsLoading(true);
       const response = await axios.post(
