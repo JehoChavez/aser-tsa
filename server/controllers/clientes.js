@@ -72,7 +72,6 @@ module.exports.postCliente = async (req, res) => {
 
   if (clienteData.estadoId === "0") clienteData.estadoId = null;
   if (clienteData.municipioId === "0" || clienteData.municipioId === 0) clienteData.municipioId = null;
-  console.log(clienteData);
 
   const cliente = await Cliente.create(clienteData);
 
