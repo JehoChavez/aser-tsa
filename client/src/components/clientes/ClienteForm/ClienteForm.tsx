@@ -23,23 +23,12 @@ const ClienteForm = () => {
   const [successNavigate, setSuccessNavigate] = useState(false);
   const [error, setError] = useState(false);
 
-  const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const fd = new FormData(event.target as HTMLFormElement);
-    const data = Object.fromEntries(
-      fd.entries()
-    ) as unknown as ClienteInterface;
-
-    if (!data.municipioId) {
-      data.municipioId = 0;
-    }
-
+  const createCliente = async (payload: ClienteInterface) => {
     try {
       setIsLoading(true);
       const response = await axios.post(
         "http://localhost:3000/api/clientes",
-        data,
+        payload,
         {
           withCredentials: true,
         }
@@ -59,6 +48,21 @@ const ClienteForm = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const fd = new FormData(event.target as HTMLFormElement);
+    const data = Object.fromEntries(
+      fd.entries()
+    ) as unknown as ClienteInterface;
+
+    if (!data.municipioId) {
+      data.municipioId = 0;
+    }
+
+    createCliente(data);
   };
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
