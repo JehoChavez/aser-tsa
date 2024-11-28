@@ -14,7 +14,7 @@ import SuccessModal from "../../utils/SuccessModal";
 import { Navigate } from "react-router-dom";
 import ErrorModal from "../../utils/ErrorModal";
 
-const ClienteForm = () => {
+const ClienteForm = ({ cliente }: { cliente?: ClienteInterface }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -50,6 +50,33 @@ const ClienteForm = () => {
     }
   };
 
+  const updateCliente = async (payload: ClienteInterface) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.put(
+        `http://localhost:3000/api/clientes/${cliente?.id}`,
+        payload,
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.status === 200) {
+        setSuccess(true);
+        setClienteId(response.data.content.id);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+        setError(true);
+        console.log(error);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -62,7 +89,11 @@ const ClienteForm = () => {
       data.municipioId = 0;
     }
 
-    createCliente(data);
+    if (cliente) {
+      updateCliente(data);
+    } else {
+      createCliente(data);
+    }
   };
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
