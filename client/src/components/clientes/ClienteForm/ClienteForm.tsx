@@ -106,14 +106,22 @@ const ClienteForm = ({ cliente }: { cliente?: ClienteInterface }) => {
           <Loading />
         </Modal>
       )}
-      {success && (
-        <SuccessModal
-          type="clienteCreado"
-          onOk={() => {
-            setSuccessNavigate(true);
-          }}
-        />
-      )}
+      {success &&
+        (cliente ? (
+          <SuccessModal
+            type="clienteEditado"
+            onOk={() => {
+              setSuccessNavigate(true);
+            }}
+          />
+        ) : (
+          <SuccessModal
+            type="clienteCreado"
+            onOk={() => {
+              setSuccessNavigate(true);
+            }}
+          />
+        ))}
       {error && (
         <ErrorModal
           onClick={() => {

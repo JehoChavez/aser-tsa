@@ -28,6 +28,10 @@ const SuccessModal = ({ type, onOk }: SuccessModalProps) => {
         <h4 className="text-center text-3xl mt-3">
           Cliente Creado Exitosamente
         </h4>
+      ) : type === "clienteEditado" ? (
+        <h4 className="text-center text-3xl mt-3">
+          Cliente Editado Exitosamente
+        </h4>
       ) : (
         <h4 className="text-center text-3xl mt-3">
           Póliza {type} exitosamente
