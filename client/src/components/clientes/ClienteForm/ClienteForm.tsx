@@ -134,7 +134,12 @@ const ClienteForm = ({ cliente }: { cliente?: ClienteInterface }) => {
         className="h-full flex flex-col justify-between"
       >
         <div>
-          <PersonaFormSection />
+          <PersonaFormSection
+            tipoPersona={cliente?.tipoPersona}
+            nombre={cliente?.nombre}
+            nacimiento={cliente?.nacimiento}
+            rfc={cliente?.rfc}
+          />
           <DomicilioSection />
           <ContactoSection />
           <h2 className="border-b text-xl text-gray-600 font-bold w-full">

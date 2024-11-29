@@ -458,3 +458,10 @@ export interface EndososContextInterface {
   endosoToShow: EndosoInterface | null;
   setEndosoToShow: (endoso: EndosoInterface | null) => void;
 }
+
+export interface PersonaSectionProps {
+  tipoPersona?: "fisica" | "moral";
+  nombre?: string;
+  nacimiento?: string | null;
+  rfc?: string | null;
+}
