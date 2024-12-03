@@ -149,7 +149,11 @@ const ClienteForm = ({ cliente }: { cliente?: ClienteInterface }) => {
             estado={cliente?.estado?.id || undefined}
             municipio={cliente?.municipio?.id || undefined}
           />
-          <ContactoSection />
+          <ContactoSection
+            correo={cliente?.correo || undefined}
+            telefono={cliente?.telefono || undefined}
+            empresa={cliente?.empresa || undefined}
+          />
           <h2 className="border-b text-xl text-gray-600 font-bold w-full">
             Comentarios
           </h2>

@@ -475,3 +475,9 @@ export interface DomicilioSectionProps {
   estado?: number;
   municipio?: number;
 }
+
+export interface ContactoSectionProps {
+  correo?: string;
+  telefono?: string;
+  empresa?: string;
+}
