@@ -123,7 +123,7 @@ const DomicilioSection = ({
           <FormNumberInput
             name="codigoPostal"
             label="Código Postal"
-            defaultVal={parseInt(codigoPostal || "")}
+            defaultVal={parseInt(codigoPostal || "") || undefined}
           />
         </div>
         <div className="w-full md:w-2/6 md:px-1 flex flex-col justify-end">
