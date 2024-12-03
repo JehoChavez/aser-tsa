@@ -35,7 +35,7 @@ const ClienteInfo = ({ cliente }: { cliente: ClienteInterface }) => {
               </svg>
             </ActionButton>
           </Link>
-          <EliminarClienteButton id={cliente.id} />
+          <EliminarClienteButton id={cliente.id} endoso />
         </div>
       </div>
       <div className="flex flex-col md:flex-row w-full p-2 text-neutral-700">

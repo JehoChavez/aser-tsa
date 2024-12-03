@@ -8,7 +8,13 @@ import ConfirmModal from "../utils/ConfirmModal";
 import SuccessModal from "../utils/SuccessModal";
 import ErrorModal from "../utils/ErrorModal";
 
-const EliminarClienteButton = ({ id }: { id: number }) => {
+const EliminarClienteButton = ({
+  id,
+  endoso,
+}: {
+  id: number;
+  endoso?: boolean;
+}) => {
   const clientesContext = useContext(ClientesContext);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -16,6 +22,7 @@ const EliminarClienteButton = ({ id }: { id: number }) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [successNavigate, setSuccessNavigate] = useState(false);
   const [error, setError] = useState(false);
 
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -46,6 +53,7 @@ const EliminarClienteButton = ({ id }: { id: number }) => {
   };
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (successNavigate) return <Navigate to="/clientes" />;
 
   return (
     <>
@@ -76,7 +84,11 @@ const EliminarClienteButton = ({ id }: { id: number }) => {
         <SuccessModal
           type="clienteEliminado"
           onOk={() => {
-            clientesContext.fetchClientes();
+            if (!endoso) {
+              clientesContext.fetchClientes();
+            } else {
+              setSuccessNavigate(true);
+            }
           }}
         />
       )}
