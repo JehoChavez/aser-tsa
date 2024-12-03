@@ -55,8 +55,8 @@ const ClienteListItem = ({ cliente }: { cliente: ClienteInterface }) => {
             <p>{cliente.empresa}</p>
           </div>
           <div className="col-start-4 row-span-full md:col-start-11 col-span-full px-2 flex flex-col justify-around md:flex-row md:justify-normal items-center">
-            <ActionButton title="Ver Cliente">
-              <Link to={`/clientes/${cliente.id}`}>
+            <Link to={`/clientes/${cliente.id}`}>
+              <ActionButton title="Ver Cliente">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -68,10 +68,10 @@ const ClienteListItem = ({ cliente }: { cliente: ClienteInterface }) => {
                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                   <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                 </svg>
-              </Link>
-            </ActionButton>
-            <ActionButton title="Editar Cliente">
-              <Link to={`/clientes/${cliente.id}/editar`}>
+              </ActionButton>
+            </Link>
+            <Link to={`/clientes/${cliente.id}/editar`}>
+              <ActionButton title="Editar Cliente">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -86,10 +86,10 @@ const ClienteListItem = ({ cliente }: { cliente: ClienteInterface }) => {
                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
                   />
                 </svg>
-              </Link>
-            </ActionButton>
-            <ActionButton title="Eliminar Cliente">
-              <Link to={`/clientes/${cliente.id}/eliminar`}>
+              </ActionButton>
+            </Link>
+            <Link to={`/clientes/${cliente.id}/eliminar`}>
+              <ActionButton title="Eliminar Cliente">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -100,8 +100,8 @@ const ClienteListItem = ({ cliente }: { cliente: ClienteInterface }) => {
                 >
                   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
                 </svg>
-              </Link>
-            </ActionButton>
+              </ActionButton>
+            </Link>
           </div>
         </div>
       </div>
