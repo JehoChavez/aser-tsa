@@ -7,8 +7,17 @@ import { useState, useEffect } from "react";
 import { Estado, Municipio } from "../../../types/interfaces";
 import { Navigate } from "react-router-dom";
 import ErrorModal from "../../utils/ErrorModal";
+import { DomicilioSectionProps } from "../../../types/interfaces";
 
-const DomicilioSection = () => {
+const DomicilioSection = ({
+  calle,
+  exterior,
+  interior,
+  colonia,
+  codigoPostal,
+  estado,
+  municipio,
+}: DomicilioSectionProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [error, setError] = useState(false);
 
@@ -16,7 +25,7 @@ const DomicilioSection = () => {
   const [isMunicipiosLoading, setIsMunicipiosLoading] = useState(false);
 
   const [estados, setEstados] = useState<Estado[]>([]);
-  const [estadoId, setEstadoId] = useState<number>(0);
+  const [estadoId, setEstadoId] = useState<number>(estado || 0);
   const [municipios, setMunicipios] = useState<Municipio[]>([]);
 
   const fetchEstados = async () => {
@@ -85,21 +94,37 @@ const DomicilioSection = () => {
       </h2>
       <FormSection>
         <div className="w-full md:w-2/6 md:pr-1 flex flex-col justify-end">
-          <FormTextInput name="calle" label="Calle" />
+          <FormTextInput name="calle" label="Calle" defaultValue={calle} />
         </div>
         <div className="w-full md:w-1/6 md:px-1 flex flex-col justify-end">
-          <FormTextInput name="exterior" label="Exterior" />
+          <FormTextInput
+            name="exterior"
+            label="Exterior"
+            defaultValue={exterior}
+          />
         </div>
         <div className="w-full md:w-1/6 md:px-1 flex flex-col justify-end">
-          <FormTextInput name="interior" label="Interior" />
+          <FormTextInput
+            name="interior"
+            label="Interior"
+            defaultValue={interior}
+          />
         </div>
         <div className="w-full md:w-2/6 md:px-1 flex flex-col justify-end">
-          <FormTextInput name="colonia" label="Colonia" />
+          <FormTextInput
+            name="colonia"
+            label="Colonia"
+            defaultValue={colonia}
+          />
         </div>
       </FormSection>
       <FormSection>
         <div className="w-full md:w-1/6 md:pr-1 flex flex-col justify-end">
-          <FormNumberInput name="codigoPostal" label="Código Postal" />
+          <FormNumberInput
+            name="codigoPostal"
+            label="Código Postal"
+            defaultVal={parseInt(codigoPostal || "")}
+          />
         </div>
         <div className="w-full md:w-2/6 md:px-1 flex flex-col justify-end">
           <FormSelectInput
@@ -113,6 +138,7 @@ const DomicilioSection = () => {
                     name: estado.estado,
                   }))
             }
+            defaultVal={estado}
             onSelect={(id) => {
               setEstadoId(parseInt(id));
             }}
@@ -130,6 +156,7 @@ const DomicilioSection = () => {
                     name: municipio.municipio,
                   }))
             }
+            defaultVal={municipio}
             disabled={estadoId === 0}
           />
         </div>

@@ -140,7 +140,15 @@ const ClienteForm = ({ cliente }: { cliente?: ClienteInterface }) => {
             nacimiento={cliente?.nacimiento}
             rfc={cliente?.rfc}
           />
-          <DomicilioSection />
+          <DomicilioSection
+            calle={cliente?.calle || undefined}
+            exterior={cliente?.exterior || undefined}
+            interior={cliente?.interior || undefined}
+            colonia={cliente?.colonia || undefined}
+            codigoPostal={cliente?.codigoPostal || undefined}
+            estado={cliente?.estado?.id || undefined}
+            municipio={cliente?.municipio?.id || undefined}
+          />
           <ContactoSection />
           <h2 className="border-b text-xl text-gray-600 font-bold w-full">
             Comentarios

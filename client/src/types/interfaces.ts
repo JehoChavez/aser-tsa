@@ -465,3 +465,13 @@ export interface PersonaSectionProps {
   nacimiento?: string | null;
   rfc?: string | null;
 }
+
+export interface DomicilioSectionProps {
+  calle?: string;
+  exterior?: string;
+  interior?: string;
+  colonia?: string;
+  codigoPostal?: string;
+  estado?: number;
+  municipio?: number;
+}
