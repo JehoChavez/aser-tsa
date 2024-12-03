@@ -162,6 +162,7 @@ const ClienteForm = ({ cliente }: { cliente?: ClienteInterface }) => {
             name="comentarios"
             rows={7}
             className="w-full mt-2 rounded bg-neutral-100 border-gray-400 focus:ring-blue-400 focus:ring-2"
+            defaultValue={cliente?.comentarios || ""}
           />
         </div>
         <div className="w-full flex justify-between">
