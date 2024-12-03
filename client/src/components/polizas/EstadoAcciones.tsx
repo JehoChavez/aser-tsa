@@ -104,7 +104,6 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
 
   const vencida =
     moment().isAfter(moment(poliza.finVigencia)) && !poliza.renovacionId;
-  console.log(vencida);
 
   const onClose = () => {
     setShowRecibosDialog(false);
