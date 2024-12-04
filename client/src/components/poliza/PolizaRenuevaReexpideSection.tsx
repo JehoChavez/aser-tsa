@@ -8,40 +8,47 @@ const PolizaRenuevaReexpideSection = ({
   reexpide,
   renovacion,
   reexpedicion,
+  fechaCancelacion,
 }: {
   renueva?: PolizaInterface | null;
   reexpide?: PolizaInterface | null;
   renovacion?: PolizaInterface | null;
   reexpedicion?: PolizaInterface | null;
+  fechaCancelacion?: string;
 }) => {
   return (
     <PolizaSection>
-      <div className="md:w-1/4 m-1">
+      <div className="md:w-1/5 m-1">
         <LabelAndData label="Renueva A">
           <Link to={`/polizas/${renueva?.id}`}>
             <span className="underline">{renueva?.noPoliza}</span>
           </Link>
         </LabelAndData>
       </div>
-      <div className="md:w-1/4 m-1">
+      <div className="md:w-1/5 m-1">
         <LabelAndData label="Reexpide A">
           <Link to={`/polizas/${reexpide?.id}`}>
             <span className="underline">{reexpide?.noPoliza}</span>
           </Link>
         </LabelAndData>
       </div>
-      <div className="md:w-1/4 m-1">
+      <div className="md:w-1/5 m-1">
         <LabelAndData label="Renovada En">
           <Link to={`/polizas/${renovacion?.id}`}>
             <span className="underline">{renovacion?.noPoliza}</span>
           </Link>
         </LabelAndData>
       </div>
-      <div className="md:w-1/4 m-1">
+      <div className="md:w-1/5 m-1">
         <LabelAndData label="Reexpedida En">
           <Link to={`/polizas/${reexpedicion?.id}`}>
             <span className="underline">{reexpedicion?.noPoliza}</span>
           </Link>
+        </LabelAndData>
+      </div>
+      <div className="md:w-1/5 m-1">
+        <LabelAndData label="Fecha de Cancelación">
+          <span>{fechaCancelacion?.split("-").reverse().join("-")}</span>
         </LabelAndData>
       </div>
     </PolizaSection>

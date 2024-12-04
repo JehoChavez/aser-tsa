@@ -108,6 +108,7 @@ const Poliza = () => {
               reexpide={poliza.reexpide}
               renovacion={poliza.renovacion}
               reexpedicion={poliza.reexpedicion}
+              fechaCancelacion={poliza.fechaCancelacion || undefined}
             />
             <ActionButton
               color="blue"
