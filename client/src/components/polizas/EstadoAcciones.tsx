@@ -129,6 +129,11 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               ? "bg-gray-700"
               : "bg-emerald-700"
           }`}
+          title={
+            poliza.fechaCancelacion
+              ? poliza.fechaCancelacion.split("-").reverse().join("-")
+              : ""
+          }
         >
           {poliza.fechaCancelacion
             ? "Cancelada"
