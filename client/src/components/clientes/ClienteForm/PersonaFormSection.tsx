@@ -16,6 +16,8 @@ const PersonaFormSection = ({
     nacimiento ? moment(nacimiento).toDate() : new Date()
   );
 
+  const [tipo, setTipo] = useState<"fisica" | "moral">(tipoPersona || "fisica");
+
   return (
     <FormSection>
       <div className="w-full md:w-1/4 md:pr-1 flex flex-col justify-end">
@@ -27,6 +29,10 @@ const PersonaFormSection = ({
             { value: "moral", name: "Moral" },
           ]}
           defaultVal={tipoPersona}
+          onSelect={(selected) => {
+            if (selected === "fisica" || selected === "moral")
+              setTipo(selected);
+          }}
         />
       </div>
       <div className="w-full md:w-1/4 md:px-1 flex flex-col justify-end">
@@ -40,7 +46,9 @@ const PersonaFormSection = ({
       <div className="w-full md:w-1/4 md:px-1 flex flex-col justify-end">
         <FormDateInput
           name="nacimiento"
-          label="Fecha de Nacimiento"
+          label={
+            tipo === "moral" ? "Fecha de Constitución" : "Fecha de Nacimiento"
+          }
           value={fechaNacimiento}
           onChange={(date) => {
             setFechaNacimiento(date);
