@@ -15,6 +15,7 @@ import PolizaRenuevaReexpideSection from "../components/poliza/PolizaRenuevaReex
 import ActionButton from "../components/utils/ActionButton";
 import EndososDialog from "../components/endosos/EndososDialog";
 import { ClienteInterface, PolizaInterface } from "../types/interfaces";
+import NotFound from "../components/utils/NotFound";
 
 const Poliza = () => {
   const { id: polizaId } = useParams();
@@ -23,6 +24,7 @@ const Poliza = () => {
   const [poliza, setPoliza] = useState<PolizaInterface | null>(null);
   const [cliente, setCliente] = useState<ClienteInterface | null>(null);
   const [showEndosos, setShowEndosos] = useState(false);
+  const [notFound, setNotFound] = useState(false);
 
   const fetchPoliza = useCallback(async () => {
     setIsLoading(true);
@@ -34,8 +36,12 @@ const Poliza = () => {
       setPoliza(response.data.content);
       setCliente(response.data.content.cliente);
     } catch (error) {
-      if (error instanceof AxiosError && error.response?.status === 401) {
-        setIsAuthenticated(false);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        } else if (error.response?.status === 404) {
+          setNotFound(true);
+        }
       } else {
         console.error("Error fetching policy data:", error);
       }
@@ -73,74 +79,78 @@ const Poliza = () => {
       >
         Póliza {poliza?.noPoliza}
       </IconTitle>
-      <div className="w-full h-full py-5">
-        {cliente && <NPClienteInfo cliente={cliente} />}
-        {poliza && (
-          <>
-            <PolizaNumberVigenciaSection
-              noPoliza={poliza.noPoliza}
-              emision={poliza.emision}
-              inicioVigencia={poliza.inicioVigencia}
-              finVigencia={poliza.finVigencia}
-            />
-            <PolizaAseguradoraSection
-              aseguradora={poliza.aseguradora}
-              agente={poliza.agente}
-              vendedor={poliza.vendedor}
-              ramo={poliza.ramo}
-            />
-            <LabelAndData label="Bien Asegurado">
-              {poliza.bienAsegurado}
-            </LabelAndData>
-            <PolizaPrimasSection
-              primas={{
-                primaNeta: poliza.primaNeta,
-                expedicion: poliza.expedicion || 0,
-                financiamiento: poliza.financiamiento || 0,
-                otros: poliza.otros || 0,
-                iva: poliza.iva || 0,
-                primaTotal: poliza.primaTotal,
-              }}
-              formaPago={poliza.formaPago}
-            />
-            <PolizaRenuevaReexpideSection
-              renueva={poliza.renueva}
-              reexpide={poliza.reexpide}
-              renovacion={poliza.renovacion}
-              reexpedicion={poliza.reexpedicion}
-              fechaCancelacion={poliza.fechaCancelacion || undefined}
-            />
-            <ActionButton
-              color="blue"
-              size="lg"
-              onClick={() => setShowEndosos(true)}
-            >
-              Ver Endosos
-            </ActionButton>
-            {showEndosos && (
-              <EndososDialog
-                polizaId={poliza.id}
+      {notFound ? (
+        <NotFound type="poliza" />
+      ) : (
+        <div className="w-full h-full py-5">
+          {cliente && <NPClienteInfo cliente={cliente} />}
+          {poliza && (
+            <>
+              <PolizaNumberVigenciaSection
                 noPoliza={poliza.noPoliza}
-                onClose={() => {
-                  setShowEndosos(false);
-                  fetchPoliza();
-                }}
+                emision={poliza.emision}
+                inicioVigencia={poliza.inicioVigencia}
+                finVigencia={poliza.finVigencia}
+              />
+              <PolizaAseguradoraSection
                 aseguradora={poliza.aseguradora}
+                agente={poliza.agente}
+                vendedor={poliza.vendedor}
+                ramo={poliza.ramo}
+              />
+              <LabelAndData label="Bien Asegurado">
+                {poliza.bienAsegurado}
+              </LabelAndData>
+              <PolizaPrimasSection
+                primas={{
+                  primaNeta: poliza.primaNeta,
+                  expedicion: poliza.expedicion || 0,
+                  financiamiento: poliza.financiamiento || 0,
+                  otros: poliza.otros || 0,
+                  iva: poliza.iva || 0,
+                  primaTotal: poliza.primaTotal,
+                }}
                 formaPago={poliza.formaPago}
-                polizaInicioVigencia={poliza.inicioVigencia}
-                polizaFinVigencia={poliza.finVigencia}
               />
-            )}
-            {poliza.recibos && (
-              <PolizaRecibosSection
-                recibos={poliza.recibos}
-                polizaId={poliza.id}
+              <PolizaRenuevaReexpideSection
+                renueva={poliza.renueva}
+                reexpide={poliza.reexpide}
+                renovacion={poliza.renovacion}
+                reexpedicion={poliza.reexpedicion}
+                fechaCancelacion={poliza.fechaCancelacion || undefined}
               />
-            )}
-            <PolizaAccionesSection poliza={poliza} />
-          </>
-        )}
-      </div>
+              <ActionButton
+                color="blue"
+                size="lg"
+                onClick={() => setShowEndosos(true)}
+              >
+                Ver Endosos
+              </ActionButton>
+              {showEndosos && (
+                <EndososDialog
+                  polizaId={poliza.id}
+                  noPoliza={poliza.noPoliza}
+                  onClose={() => {
+                    setShowEndosos(false);
+                    fetchPoliza();
+                  }}
+                  aseguradora={poliza.aseguradora}
+                  formaPago={poliza.formaPago}
+                  polizaInicioVigencia={poliza.inicioVigencia}
+                  polizaFinVigencia={poliza.finVigencia}
+                />
+              )}
+              {poliza.recibos && (
+                <PolizaRecibosSection
+                  recibos={poliza.recibos}
+                  polizaId={poliza.id}
+                />
+              )}
+              <PolizaAccionesSection poliza={poliza} />
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };
