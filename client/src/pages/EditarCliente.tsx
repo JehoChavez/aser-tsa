@@ -8,6 +8,7 @@ import { ClienteInterface } from "../types/interfaces";
 import ErrorModal from "../components/utils/ErrorModal";
 import IconTitle from "../components/utils/IconTitle";
 import ClienteForm from "../components/clientes/ClienteForm/ClienteForm";
+import NotFound from "../components/utils/NotFound";
 
 const EditarCliente = () => {
   const { id: clienteId } = useParams();
@@ -28,7 +29,6 @@ const EditarCliente = () => {
       );
       setCliente(response.data.content);
     } catch (error) {
-      setIsError(true);
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
           setIsAuthenticated(false);
@@ -53,13 +53,11 @@ const EditarCliente = () => {
         </Modal>
       )}
       {isError && (
-        <Modal size="small">
-          <ErrorModal
-            onClick={() => {
-              setIsError(false);
-            }}
-          />
-        </Modal>
+        <ErrorModal
+          onClick={() => {
+            setIsError(false);
+          }}
+        />
       )}
       <IconTitle
         icon={
@@ -79,7 +77,11 @@ const EditarCliente = () => {
         Editar Cliente
       </IconTitle>
       <div className="w-full h-full py-5">
-        {cliente && <ClienteForm cliente={cliente} />}
+        {cliente ? (
+          <ClienteForm cliente={cliente} />
+        ) : (
+          <NotFound type="cliente" />
+        )}
       </div>
     </div>
   );

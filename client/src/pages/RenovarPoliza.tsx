@@ -8,6 +8,7 @@ import IconTitle from "../components/utils/IconTitle";
 import NPClienteInfo from "../components/nuevaPoliza/NPClienteInfo";
 import PolizaForm from "../components/PolizaForm/PolizaForm";
 import ActionButton from "../components/utils/ActionButton";
+import NotFound from "../components/utils/NotFound";
 
 const RenovarPoliza = () => {
   const { id: polizaId } = useParams();
@@ -73,35 +74,35 @@ const RenovarPoliza = () => {
         Renovar Póliza
       </IconTitle>
       <div className="w-full h-full py-5">
-        {cliente ? (
+        {poliza ? (
           <>
-            <NPClienteInfo cliente={cliente} />
-            {poliza ? (
-              poliza.renovacionId ? (
-                <Modal size="small">
-                  <div className="w-full h-full flex flex-col justify-between py-2">
-                    <h3 className="text-3xl font-semibold text-center text-gray-800 mt-4">
-                      POLIZA YA RENOVADA
-                    </h3>
-                    <ActionButton
-                      color="blue"
-                      onClick={() => {
-                        setNavigate(true);
-                      }}
-                    >
-                      OK
-                    </ActionButton>
-                  </div>
-                </Modal>
-              ) : (
-                <PolizaForm poliza={poliza} renovacion />
-              )
+            {cliente ? (
+              <NPClienteInfo cliente={cliente} />
             ) : (
-              <p className="text-center text-2xl">Póliza No Encontrada</p>
+              <NotFound type="cliente" />
+            )}
+            {poliza.renovacionId ? (
+              <Modal size="small">
+                <div className="w-full h-full flex flex-col justify-between py-2">
+                  <h3 className="text-3xl font-semibold text-center text-gray-800 mt-4">
+                    POLIZA YA RENOVADA
+                  </h3>
+                  <ActionButton
+                    color="blue"
+                    onClick={() => {
+                      setNavigate(true);
+                    }}
+                  >
+                    OK
+                  </ActionButton>
+                </div>
+              </Modal>
+            ) : (
+              <PolizaForm poliza={poliza} renovacion />
             )}
           </>
         ) : (
-          <p className="text-center text-2xl">Cliente No Encontrado</p>
+          <NotFound type="poliza" />
         )}
       </div>
     </div>

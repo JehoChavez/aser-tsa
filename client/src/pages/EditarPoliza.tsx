@@ -7,6 +7,7 @@ import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
 import NPClienteInfo from "../components/nuevaPoliza/NPClienteInfo";
 import EditarPolizaForm from "../components/editarPoliza/EditarPolizaForm";
+import NotFound from "../components/utils/NotFound";
 
 const EditarPoliza = () => {
   const { id: polizaId } = useParams();
@@ -71,11 +72,11 @@ const EditarPoliza = () => {
             {poliza ? (
               <EditarPolizaForm poliza={poliza} />
             ) : (
-              <p className="text-center text-2xl">Póliza No Encontrada</p>
+              <NotFound type="poliza" />
             )}
           </>
         ) : (
-          <p className="text-center text-2xl">Póliza No Encontrado</p>
+          <NotFound type="poliza" />
         )}
       </div>
     </div>

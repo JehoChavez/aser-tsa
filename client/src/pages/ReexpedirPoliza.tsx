@@ -7,6 +7,7 @@ import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
 import NPClienteInfo from "../components/nuevaPoliza/NPClienteInfo";
 import PolizaForm from "../components/PolizaForm/PolizaForm";
+import NotFound from "../components/utils/NotFound";
 
 const ReexpedirPoliza = () => {
   const { id: polizaId } = useParams();
@@ -65,17 +66,17 @@ const ReexpedirPoliza = () => {
         Reexpedir Póliza
       </IconTitle>
       <div className="w-full h-full py-5">
-        {cliente ? (
+        {poliza ? (
           <>
-            <NPClienteInfo cliente={cliente} />
-            {poliza ? (
-              <PolizaForm poliza={poliza} reexpedicion />
+            {cliente ? (
+              <NPClienteInfo cliente={cliente} />
             ) : (
-              <p className="text-center text-2xl">Póliza No Encontrada</p>
+              <NotFound type="cliente" />
             )}
+            <PolizaForm poliza={poliza} reexpedicion />
           </>
         ) : (
-          <p className="text-center text-2xl">Cliente No Encontrado</p>
+          <NotFound type="poliza" />
         )}
       </div>
     </div>

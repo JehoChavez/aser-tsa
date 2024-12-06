@@ -7,6 +7,7 @@ import Loading from "../components/utils/Loading";
 import IconTitle from "../components/utils/IconTitle";
 import ClienteInfo from "../components/clientes/ClienteInfo";
 import ClientePolizas from "../components/clientes/ClientePolizas";
+import NotFound from "../components/utils/NotFound";
 
 const Cliente = () => {
   const { id } = useParams();
@@ -47,7 +48,7 @@ const Cliente = () => {
       </Modal>
     );
   } else if (!isLoading && !cliente) {
-    content = <h2>Cliente no encontrado</h2>;
+    content = <NotFound type="cliente" />;
   } else {
     const icon =
       cliente?.tipoPersona === "fisica" ? (
