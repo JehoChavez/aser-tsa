@@ -6,7 +6,7 @@ const ConfigHeader = ({
   setSelectedView: (view: "aseguradoras" | "vendedores" | "ramos") => void;
 }) => {
   return (
-    <div className="w-full bg-blue-950 flex my-2 p-2 rounded">
+    <div className="w-full bg-blue-950 flex mt-2 p-2 rounded-t">
       <p
         className={`rounded-md ${
           selectedView === "aseguradoras"
