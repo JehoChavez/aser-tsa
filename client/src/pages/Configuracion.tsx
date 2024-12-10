@@ -1,6 +1,12 @@
 import IconTitle from "../components/utils/IconTitle";
+import ConfigHeader from "../components/configuracion/ConfigHeader";
+import { useState } from "react";
 
 const Configuracion = () => {
+  const [selectedView, setSelectedView] = useState<
+    "aseguradoras" | "vendedores" | "ramos"
+  >("aseguradoras");
+
   return (
     <div className="w-full h-full px-5 py-4 flex flex-col overflow-hidden">
       <IconTitle
@@ -19,6 +25,12 @@ const Configuracion = () => {
       >
         Configuración
       </IconTitle>
+      <ConfigHeader
+        selectedView={selectedView}
+        setSelectedView={(view: "aseguradoras" | "vendedores" | "ramos") =>
+          setSelectedView(view)
+        }
+      />
     </div>
   );
 };
