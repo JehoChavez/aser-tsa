@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
 import Loading from "../../utils/Loading";
 import ErrorModal from "../../utils/ErrorModal";
+import AseguradorasListHeader from "./AseguradorasListHeader";
 
 const AseguradorasView = () => {
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
@@ -49,6 +50,7 @@ const AseguradorasView = () => {
           }}
         />
       )}
+      <AseguradorasListHeader />
       {aseguradoras.map((aseguradora) => (
         <p>{aseguradora.aseguradora}</p>
       ))}
