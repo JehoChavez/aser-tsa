@@ -1,6 +1,7 @@
 import IconTitle from "../components/utils/IconTitle";
 import ConfigHeader from "../components/configuracion/ConfigHeader";
 import { useState } from "react";
+import AseguradorasView from "../components/configuracion/aseguradoras/AseguradorasView";
 
 const Configuracion = () => {
   const [selectedView, setSelectedView] = useState<
@@ -31,6 +32,7 @@ const Configuracion = () => {
           setSelectedView(view)
         }
       />
+      {selectedView === "aseguradoras" ? <AseguradorasView /> : null}
     </div>
   );
 };
