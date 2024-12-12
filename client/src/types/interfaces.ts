@@ -482,3 +482,8 @@ export interface ContactoSectionProps {
   telefono?: string;
   empresa?: string;
 }
+
+export interface AseguradorasContextInterface {
+  aseguradoras: AseguradoraInterface[];
+  fetchAseguradoras: () => void;
+}
