@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import Loading from "../../utils/Loading";
 import ErrorModal from "../../utils/ErrorModal";
 import AseguradorasListHeader from "./AseguradorasListHeader";
+import AseguradoraListItem from "./AseguradoraListItem";
 
 const AseguradorasView = () => {
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
@@ -51,9 +52,11 @@ const AseguradorasView = () => {
         />
       )}
       <AseguradorasListHeader />
-      {aseguradoras.map((aseguradora) => (
-        <p>{aseguradora.aseguradora}</p>
-      ))}
+      <div className="h-5/6 w-full bg-neutral-100 overflow-y-auto">
+        {aseguradoras.map((aseguradora) => (
+          <AseguradoraListItem aseguradora={aseguradora} key={aseguradora.id} />
+        ))}
+      </div>
     </>
   );
 };
