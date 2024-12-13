@@ -487,3 +487,8 @@ export interface AseguradorasContextInterface {
   aseguradoras: AseguradoraInterface[];
   fetchAseguradoras: () => void;
 }
+
+export interface VendedoresContextInterface {
+  vendedores: VendedorInterface[];
+  fetchVendedores: () => void;
+}

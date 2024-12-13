@@ -2,6 +2,7 @@ import IconTitle from "../components/utils/IconTitle";
 import ConfigHeader from "../components/configuracion/ConfigHeader";
 import { useState } from "react";
 import AseguradorasView from "../components/configuracion/aseguradoras/AseguradorasView";
+import VendedoresView from "../components/configuracion/vendedores/VendedoresView";
 
 const Configuracion = () => {
   const [selectedView, setSelectedView] = useState<
@@ -32,7 +33,11 @@ const Configuracion = () => {
           setSelectedView(view)
         }
       />
-      {selectedView === "aseguradoras" ? <AseguradorasView /> : null}
+      {selectedView === "aseguradoras" ? (
+        <AseguradorasView />
+      ) : selectedView === "vendedores" ? (
+        <VendedoresView />
+      ) : null}
     </div>
   );
 };
