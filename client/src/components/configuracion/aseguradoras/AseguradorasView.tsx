@@ -4,8 +4,6 @@ import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
 import Loading from "../../utils/Loading";
 import ErrorModal from "../../utils/ErrorModal";
-import AseguradorasListHeader from "./AseguradorasListHeader";
-import AseguradoraListItem from "./AseguradoraListItem";
 import { AseguradorasContext } from "../../../store/aseguradoras-context";
 import AseguradorasList from "./AseguradorasList";
 
