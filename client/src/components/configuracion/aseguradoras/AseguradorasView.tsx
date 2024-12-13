@@ -7,6 +7,7 @@ import ErrorModal from "../../utils/ErrorModal";
 import AseguradorasListHeader from "./AseguradorasListHeader";
 import AseguradoraListItem from "./AseguradoraListItem";
 import { AseguradorasContext } from "../../../store/aseguradoras-context";
+import AseguradorasList from "./AseguradorasList";
 
 const AseguradorasView = () => {
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
@@ -52,16 +53,8 @@ const AseguradorasView = () => {
           }}
         />
       )}
-      <AseguradorasListHeader />
       <AseguradorasContext.Provider value={{ aseguradoras, fetchAseguradoras }}>
-        <div className="h-5/6 w-full bg-neutral-100 overflow-y-auto">
-          {aseguradoras.map((aseguradora) => (
-            <AseguradoraListItem
-              aseguradora={aseguradora}
-              key={aseguradora.id}
-            />
-          ))}
-        </div>
+        <AseguradorasList />
       </AseguradorasContext.Provider>
     </>
   );
