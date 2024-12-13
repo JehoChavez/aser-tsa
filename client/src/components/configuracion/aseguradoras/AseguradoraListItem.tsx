@@ -58,7 +58,7 @@ const AseguradoraListItem = ({
         <p>{aseguradora.aseguradora}</p>
         <p className="text-center">{aseguradora.plazoPrimer + " días"}</p>
         <p className="text-center">{aseguradora.plazoSubsecuentes + " días"}</p>
-        <p className="text-center col-span-2">{aseguradora.comentarios}</p>
+        <p className="col-span-2">{aseguradora.comentarios}</p>
         <div className="flex">
           <ActionButton title="Editar">
             <svg
