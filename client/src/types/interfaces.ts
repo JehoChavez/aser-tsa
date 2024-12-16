@@ -492,3 +492,8 @@ export interface VendedoresContextInterface {
   vendedores: VendedorInterface[];
   fetchVendedores: () => void;
 }
+
+export interface AgentesContextInterface {
+  agentes: AgenteInterface[];
+  fetchAgentes: () => void;
+}

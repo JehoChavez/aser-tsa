@@ -3,6 +3,7 @@ import ConfigHeader from "../components/configuracion/ConfigHeader";
 import { useState } from "react";
 import AseguradorasView from "../components/configuracion/aseguradoras/AseguradorasView";
 import VendedoresView from "../components/configuracion/vendedores/VendedoresView";
+import AgentesView from "../components/configuracion/agentes/AgentesView";
 
 const Configuracion = () => {
   const [selectedView, setSelectedView] = useState<
@@ -35,6 +36,8 @@ const Configuracion = () => {
       />
       {selectedView === "aseguradoras" ? (
         <AseguradorasView />
+      ) : selectedView === "agentes" ? (
+        <AgentesView />
       ) : selectedView === "vendedores" ? (
         <VendedoresView />
       ) : null}
