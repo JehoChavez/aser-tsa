@@ -6,7 +6,7 @@ import VendedoresView from "../components/configuracion/vendedores/VendedoresVie
 
 const Configuracion = () => {
   const [selectedView, setSelectedView] = useState<
-    "aseguradoras" | "vendedores" | "ramos"
+    "aseguradoras" | "vendedores" | "ramos" | "agentes"
   >("aseguradoras");
 
   return (
@@ -29,9 +29,9 @@ const Configuracion = () => {
       </IconTitle>
       <ConfigHeader
         selectedView={selectedView}
-        setSelectedView={(view: "aseguradoras" | "vendedores" | "ramos") =>
-          setSelectedView(view)
-        }
+        setSelectedView={(
+          view: "aseguradoras" | "vendedores" | "ramos" | "agentes"
+        ) => setSelectedView(view)}
       />
       {selectedView === "aseguradoras" ? (
         <AseguradorasView />

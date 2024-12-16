@@ -2,8 +2,10 @@ const ConfigHeader = ({
   selectedView,
   setSelectedView,
 }: {
-  selectedView: "aseguradoras" | "vendedores" | "ramos";
-  setSelectedView: (view: "aseguradoras" | "vendedores" | "ramos") => void;
+  selectedView: "aseguradoras" | "vendedores" | "ramos" | "agentes";
+  setSelectedView: (
+    view: "aseguradoras" | "vendedores" | "ramos" | "agentes"
+  ) => void;
 }) => {
   return (
     <div className="w-full bg-blue-950 flex mt-2 p-2 rounded-t">
@@ -18,6 +20,16 @@ const ConfigHeader = ({
         }}
       >
         Aseguradoras
+      </p>
+      <p
+        className={`rounded-md ${
+          selectedView === "agentes" ? "bg-indigo-950" : "hover:bg-blue-900"
+        } px-3 mx-2 py-2 text-sm font-medium text-white hover:cursor-pointer`}
+        onClick={() => {
+          setSelectedView("agentes");
+        }}
+      >
+        Agentes
       </p>
       <p
         className={`rounded-md ${
