@@ -1,12 +1,15 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useContext } from "react";
 import FormSelectInput from "../../utils/FormSelectInput";
 import { Navigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { AseguradoraInterface } from "../../../types/interfaces";
 import Loading from "../../utils/Loading";
 import ErrorModal from "../../utils/ErrorModal";
+import { AgentesContext } from "../../../store/agentes-context";
 
 const AgentesListHeader = () => {
+  const { setAseguradoraIds } = useContext(AgentesContext);
+
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
 
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -19,7 +22,9 @@ const AgentesListHeader = () => {
     try {
       const response = await axios.get(
         "http://localhost:3000/api/aseguradoras",
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        }
       );
       setAseguradoras(response.data.content);
     } catch (error) {
@@ -36,7 +41,7 @@ const AgentesListHeader = () => {
 
   useEffect(() => {
     fetchAseguradoras();
-  }, []);
+  }, [fetchAseguradoras]);
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
@@ -62,6 +67,10 @@ const AgentesListHeader = () => {
                 value: aseguradora.id,
               })),
             ]}
+            onSelect={(selected) => {
+              const selectedId = parseInt(selected);
+              setAseguradoraIds(selectedId === -1 ? [] : [selectedId]);
+            }}
           />
         </div>
       </div>

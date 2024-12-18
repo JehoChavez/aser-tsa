@@ -3,6 +3,8 @@ import { AgentesContextInterface } from "../types/interfaces";
 
 const agentesContextDefaultValue: AgentesContextInterface = {
   agentes: [],
+  aseguradoraIds: [],
+  setAseguradoraIds: () => {},
   fetchAgentes: () => {},
 };
 

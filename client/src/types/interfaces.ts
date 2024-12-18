@@ -495,5 +495,7 @@ export interface VendedoresContextInterface {
 
 export interface AgentesContextInterface {
   agentes: AgenteInterface[];
+  aseguradoraIds: number[];
+  setAseguradoraIds: (ids: number[]) => void;
   fetchAgentes: () => void;
 }
