@@ -3,18 +3,16 @@ import FormSelectInput from "../../utils/FormSelectInput";
 import { Navigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { AseguradoraInterface } from "../../../types/interfaces";
-import Loading from "../../utils/Loading";
 import ErrorModal from "../../utils/ErrorModal";
 import { AgentesContext } from "../../../store/agentes-context";
 
 const AgentesListHeader = () => {
-  const { setAseguradoraIds } = useContext(AgentesContext);
+  const { setAseguradoraIds, setIsLoading } = useContext(AgentesContext);
 
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
 
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
-  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   const fetchAseguradoras = useCallback(async () => {
@@ -47,7 +45,6 @@ const AgentesListHeader = () => {
 
   return (
     <>
-      {isLoading && <Loading />}
       {isError && (
         <ErrorModal
           onClick={() => {

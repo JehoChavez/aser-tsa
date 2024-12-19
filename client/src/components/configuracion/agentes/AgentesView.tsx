@@ -1,11 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
-import Loading from "../../utils/Loading";
 import ErrorModal from "../../utils/ErrorModal";
 import { AgentesContext } from "../../../store/agentes-context";
 import { AgenteInterface } from "../../../types/interfaces";
-import AgentesListHeader from "./AgentesListHeader";
+import AgentesList from "./AgentesList";
 
 const AgentesView = () => {
   const [agentes, setAgentes] = useState<AgenteInterface[]>([]);
@@ -44,7 +43,6 @@ const AgentesView = () => {
 
   return (
     <>
-      {isLoading && <Loading />}
       {isError && (
         <ErrorModal
           onClick={() => {
@@ -53,12 +51,16 @@ const AgentesView = () => {
         />
       )}
       <AgentesContext.Provider
-        value={{ agentes, fetchAgentes, aseguradoraIds, setAseguradoraIds }}
+        value={{
+          agentes,
+          fetchAgentes,
+          aseguradoraIds,
+          setAseguradoraIds,
+          isLoading,
+          setIsLoading,
+        }}
       >
-        <AgentesListHeader />
-        {agentes.map((agente) => (
-          <p>{agente.nombre}</p>
-        ))}
+        <AgentesList />
       </AgentesContext.Provider>
     </>
   );

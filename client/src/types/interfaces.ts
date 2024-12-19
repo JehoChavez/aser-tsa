@@ -498,4 +498,6 @@ export interface AgentesContextInterface {
   aseguradoraIds: number[];
   setAseguradoraIds: (ids: number[]) => void;
   fetchAgentes: () => void;
+  isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
 }
