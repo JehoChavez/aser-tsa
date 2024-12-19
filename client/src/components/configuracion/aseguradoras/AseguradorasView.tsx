@@ -45,6 +45,14 @@ const AseguradorasView = () => {
 
   return (
     <>
+      {isLoading && <Loading />}
+      {isError && (
+        <ErrorModal
+          onClick={() => {
+            setIsError(false);
+          }}
+        />
+      )}
       <ButtonPortal>
         <IconTextButton
           icon={
@@ -65,14 +73,6 @@ const AseguradorasView = () => {
           Nueva
         </IconTextButton>
       </ButtonPortal>
-      {isLoading && <Loading />}
-      {isError && (
-        <ErrorModal
-          onClick={() => {
-            setIsError(false);
-          }}
-        />
-      )}
       <AseguradorasContext.Provider value={{ aseguradoras, fetchAseguradoras }}>
         <AseguradorasList />
       </AseguradorasContext.Provider>
