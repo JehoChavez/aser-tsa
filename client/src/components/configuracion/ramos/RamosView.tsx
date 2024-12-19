@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import Loading from "../../utils/Loading";
 import ErrorModal from "../../utils/ErrorModal";
 import { RamosContext } from "../../../store/ramos-context";
+import RamosList from "./RamosList";
 
 const RamosView = () => {
   const [ramos, setRamos] = useState<RamoInterface[]>([]);
@@ -50,9 +51,7 @@ const RamosView = () => {
         />
       )}
       <RamosContext.Provider value={{ ramos, fetchRamos }}>
-        {ramos.map((ramo) => (
-          <p>{ramo.ramo}</p>
-        ))}
+        <RamosList />
       </RamosContext.Provider>
     </>
   );
