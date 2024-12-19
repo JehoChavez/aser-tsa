@@ -501,3 +501,8 @@ export interface AgentesContextInterface {
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
 }
+
+export interface RamosContextInterface {
+  ramos: RamoInterface[];
+  fetchRamos: () => void;
+}

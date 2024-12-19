@@ -4,6 +4,7 @@ import { useState } from "react";
 import AseguradorasView from "../components/configuracion/aseguradoras/AseguradorasView";
 import VendedoresView from "../components/configuracion/vendedores/VendedoresView";
 import AgentesView from "../components/configuracion/agentes/AgentesView";
+import RamosView from "../components/configuracion/ramos/RamosView";
 
 const Configuracion = () => {
   const [selectedView, setSelectedView] = useState<
@@ -40,6 +41,8 @@ const Configuracion = () => {
         <AgentesView />
       ) : selectedView === "vendedores" ? (
         <VendedoresView />
+      ) : selectedView === "ramos" ? (
+        <RamosView />
       ) : null}
     </div>
   );
