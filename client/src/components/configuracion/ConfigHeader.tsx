@@ -8,8 +8,8 @@ const ConfigHeader = ({
   ) => void;
 }) => {
   return (
-    <div className="w-full bg-blue-950 p-2 rounded-t flex justify-between">
-      <div className="w-full flex mt-2">
+    <div className="w-full bg-blue-950 p-2 rounded-t md:flex justify-between">
+      <div className="w-full flex mt-2 overflow-y-auto">
         <p
           className={`rounded-md ${
             selectedView === "aseguradoras"
@@ -55,7 +55,12 @@ const ConfigHeader = ({
           Ramos
         </p>
       </div>
-      <div id="button-portal-root" className="w-40"></div>
+      <div className="w-full md:w-40 flex justify-end pt-2 md:pt-0">
+        <div
+          id="button-portal-root"
+          className="w-40 h-10 md:h-full"
+        ></div>
+      </div>
     </div>
   );
 };
