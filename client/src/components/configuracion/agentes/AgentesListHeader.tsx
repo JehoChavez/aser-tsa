@@ -55,8 +55,8 @@ const AgentesListHeader = () => {
           }}
         />
       )}
-      <div className="w-full h-auto p-2 bg-blue-950 text-neutral-200">
-        <div className="max-w-96">
+      <div className="w-full h-auto p-2 bg-blue-950 text-neutral-200 rounded-b">
+        <div className="max-w-96 mb-2">
           <FormSelectInput
             label="Aseguradora"
             name="aseguradora"
@@ -72,6 +72,13 @@ const AgentesListHeader = () => {
               setAseguradoraIds(selectedId === -1 ? [] : [selectedId]);
             }}
           />
+        </div>
+        <div className="hidden md:grid md:grid-cols-6">
+          <p className="hidden md:block">Aseguradora</p>
+          <p className="hidden md:block text-center">Clave</p>
+          <p className="hidden md:block text-center">Nombre</p>
+          <p className="hidden md:block text-center col-span-2">Comentarios</p>
+          <p className="hidden md:block text-center">Acciones</p>
         </div>
       </div>
     </>
