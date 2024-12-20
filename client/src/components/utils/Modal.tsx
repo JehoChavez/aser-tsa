@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 const Modal = ({ size, closeBtn, onClose, children }: ModalProps) => {
   let sizeClassnames = "h-1/3 w-1/4";
   if (size === "medium") {
-    sizeClassnames = "h-1/2 w-1/2";
+    sizeClassnames = "w-2/3 h-1/2 md:w-1/2";
   } else if (size === "large") {
     sizeClassnames = "h-3/4 w-2/3";
   }
@@ -32,7 +32,9 @@ const Modal = ({ size, closeBtn, onClose, children }: ModalProps) => {
               </button>
             </div>
           )}
-          <div className="w-full h-full flex flex-col overflow-auto">{children}</div>
+          <div className="w-full h-full flex flex-col overflow-auto">
+            {children}
+          </div>
         </div>
       </div>
     </>,
