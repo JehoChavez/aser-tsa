@@ -8,6 +8,7 @@ import { AseguradorasContext } from "../../../store/aseguradoras-context";
 import AseguradorasList from "./AseguradorasList";
 import ButtonPortal from "../ButtonPortal";
 import IconTextButton from "../../utils/IconTextButton";
+import AseguradoraFormDialog from "./AseguradoraFormDialog";
 
 const AseguradorasView = () => {
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
@@ -16,6 +17,8 @@ const AseguradorasView = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  const [showDialog, setShowDialog] = useState(false);
 
   const fetchAseguradoras = useCallback(async () => {
     setIsLoading(true);
@@ -69,11 +72,15 @@ const AseguradorasView = () => {
           }
           width="w-full"
           height="h-full"
+          onClick={() => setShowDialog(true)}
         >
           Nueva
         </IconTextButton>
       </ButtonPortal>
       <AseguradorasContext.Provider value={{ aseguradoras, fetchAseguradoras }}>
+        {showDialog && (
+          <AseguradoraFormDialog onCancel={() => setShowDialog(false)} />
+        )}
         <AseguradorasList />
       </AseguradorasContext.Provider>
     </>
