@@ -40,6 +40,8 @@ const SuccessModal = ({ type, onOk }: SuccessModalProps) => {
         <h4 className="text-center text-3xl mt-3">Guardado exitosamente</h4>
       ) : type === "editado" ? (
         <h4 className="text-center text-3xl mt-3">Editado exitosamente</h4>
+      ) : type === "eliminado" ? (
+        <h4 className="text-center text-3xl mt-3">Eliminado exitosamente</h4>
       ) : (
         <h4 className="text-center text-3xl mt-3">
           Póliza {type} exitosamente
