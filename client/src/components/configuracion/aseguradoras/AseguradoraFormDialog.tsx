@@ -13,9 +13,11 @@ import SuccessModal from "../../utils/SuccessModal";
 
 const AseguradoraFormDialog = ({
   onCancel,
+  onSuccess,
   aseguradoraId,
 }: {
   onCancel: () => void;
+  onSuccess?: () => void;
   aseguradoraId?: number;
 }) => {
   const aseguradorasContext = useContext(AseguradorasContext);
