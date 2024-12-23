@@ -14,11 +14,11 @@ import SuccessModal from "../../utils/SuccessModal";
 const AseguradoraFormDialog = ({
   onCancel,
   onSuccess,
-  aseguradoraId,
+  aseguradora,
 }: {
   onCancel: () => void;
   onSuccess?: () => void;
-  aseguradoraId?: number;
+  aseguradora?: AseguradoraInterface;
 }) => {
   const aseguradorasContext = useContext(AseguradorasContext);
 
@@ -63,7 +63,7 @@ const AseguradoraFormDialog = ({
     if (!data.plazoSubsecuentes) data.plazoSubsecuentes = 0;
     if (data.comentarios === "") data.comentarios = undefined;
 
-    if (aseguradoraId) {
+    if (aseguradora) {
       // updateAseguradora(data);
     } else {
       postAseguradora(data);
@@ -75,7 +75,7 @@ const AseguradoraFormDialog = ({
   return (
     <Modal size="medium">
       <h3 className="text-2xl bg-blue-950 text-neutral-50 rounded p-2">
-        {aseguradoraId ? "Editar" : "Crear"} aseguradora
+        {aseguradora ? "Editar" : "Crear"} aseguradora
       </h3>
       {isLoading && (
         <Modal size="small">
@@ -91,7 +91,7 @@ const AseguradoraFormDialog = ({
       )}
       {success && (
         <SuccessModal
-          type={aseguradoraId ? "editado" : "guardado"}
+          type={aseguradora ? "editado" : "guardado"}
           onOk={() => {
             aseguradorasContext.fetchAseguradoras();
             onCancel();

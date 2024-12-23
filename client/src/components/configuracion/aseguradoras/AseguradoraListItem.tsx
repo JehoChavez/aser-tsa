@@ -11,6 +11,7 @@ import ConfirmModal from "../../utils/ConfirmModal";
 import SuccessModal from "../../utils/SuccessModal";
 import ErrorModal from "../../utils/ErrorModal";
 import Modal from "../../utils/Modal";
+import AseguradoraFormDialog from "./AseguradoraFormDialog";
 
 const AseguradoraListItem = ({
   aseguradora,
@@ -27,6 +28,8 @@ const AseguradoraListItem = ({
   const [error, setError] = useState(false);
 
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  const [showForm, setShowForm] = useState(false);
 
   const deleteHandler = async () => {
     setIsLoading(true);
@@ -93,6 +96,13 @@ const AseguradoraListItem = ({
           }}
         />
       )}
+      {showForm && (
+        <AseguradoraFormDialog
+          onCancel={() => setShowForm(false)}
+          onSuccess={() => setShowForm(false)}
+          aseguradora={aseguradora}
+        />
+      )}
       <div className="w-full h-auto p-1 text-gray-800 bg-blue-800 bg-opacity-5 md:hidden">
         <LabelAndData label="Aseguradora">
           {aseguradora.aseguradora}
@@ -107,7 +117,7 @@ const AseguradoraListItem = ({
           {aseguradora.comentarios}
         </LabelAndData>
         <div>
-          <ActionButton title="Editar">
+          <ActionButton title="Editar" onClick={() => setShowForm(true)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -123,7 +133,10 @@ const AseguradoraListItem = ({
               />
             </svg>
           </ActionButton>
-          <ActionButton title="Eliminar">
+          <ActionButton
+            title="Eliminar"
+            onClick={() => setShowConfirmDialog(true)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -143,7 +156,7 @@ const AseguradoraListItem = ({
         <p className="text-center">{aseguradora.plazoSubsecuentes + " días"}</p>
         <p className="col-span-2">{aseguradora.comentarios}</p>
         <div className="flex">
-          <ActionButton title="Editar">
+          <ActionButton title="Editar" onClick={() => setShowForm(true)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
