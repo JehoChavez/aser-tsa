@@ -100,15 +100,25 @@ const AseguradoraFormDialog = ({
       )}
       <form onSubmit={submitHandler}>
         <div className="w-full flex flex-col my-2">
-          <FormTextInput name="aseguradora" label="Aseguradora" required />
+          <FormTextInput
+            name="aseguradora"
+            label="Aseguradora"
+            required
+            defaultValue={aseguradora?.aseguradora}
+          />
           <div className="w-full md:flex mt-2">
             <div className="w-full xl:w-1/3 md:mr-10">
-              <FormNumberInput name="plazoPrimer" label="Plazo Primer Recibo" />
+              <FormNumberInput
+                name="plazoPrimer"
+                label="Plazo Primer Recibo"
+                defaultVal={aseguradora?.plazoPrimer}
+              />
             </div>
             <div className="w-full xl:w-1/3">
               <FormNumberInput
                 name="plazoSubsecuentes"
                 label="Plazo Recibos Subsecuentes"
+                defaultVal={aseguradora?.plazoSubsecuentes}
               />
             </div>
           </div>
@@ -119,6 +129,7 @@ const AseguradoraFormDialog = ({
           name="comentarios"
           rows={7}
           className="w-full rounded bg-neutral-100 border-gray-400 focus:ring-blue-400 focus:ring-2"
+          defaultValue={aseguradora?.comentarios}
         />
         <div className="flex justify-between">
           <ActionButton color="red" size="lg" onClick={onCancel}>
