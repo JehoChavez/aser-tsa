@@ -2,14 +2,97 @@ import ListItem from "../../utils/ListItem";
 import { AseguradoraInterface } from "../../../types/interfaces";
 import LabelAndData from "../../utils/LabelAndData";
 import ActionButton from "../../utils/ActionButton";
+import { Navigate } from "react-router-dom";
+import { AseguradorasContext } from "../../../store/aseguradoras-context";
+import { useContext, useState } from "react";
+import axios, { AxiosError } from "axios";
+import Loading from "../../utils/Loading";
+import ConfirmModal from "../../utils/ConfirmModal";
+import SuccessModal from "../../utils/SuccessModal";
+import ErrorModal from "../../utils/ErrorModal";
+import Modal from "../../utils/Modal";
 
 const AseguradoraListItem = ({
   aseguradora,
 }: {
   aseguradora: AseguradoraInterface;
 }) => {
+  const aseguradorasContext = useContext(AseguradorasContext);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  const deleteHandler = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/aseguradoras/${aseguradora.id}`,
+        { withCredentials: true }
+      );
+      if (response.data.status === 200) {
+        setShowConfirmDialog(false);
+        setDeleteSuccess(true);
+      }
+    } catch (error) {
+      setError(true);
+      setShowConfirmDialog(false);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
   return (
     <ListItem>
+      {isLoading && (
+        <Modal size="small">
+          <Loading />
+        </Modal>
+      )}
+      {showConfirmDialog && (
+        <ConfirmModal
+          onContinue={deleteHandler}
+          onCancel={() => {
+            setShowConfirmDialog(false);
+          }}
+        >
+          <h4 className="text-center text-3xl my-3 font-semibold">
+            ¿Desea eliminar la aseguradora {aseguradora.aseguradora}?
+          </h4>
+          <p className="text-center text-lg my-3">
+            Sus pólizas serán eliminadas
+          </p>
+        </ConfirmModal>
+      )}
+      {error && (
+        <ErrorModal
+          onClick={() => {
+            setError(false);
+          }}
+        />
+      )}
+      {deleteSuccess && (
+        <SuccessModal
+          type="eliminado"
+          onOk={() => {
+            aseguradorasContext.fetchAseguradoras();
+            setDeleteSuccess(false);
+          }}
+        />
+      )}
       <div className="w-full h-auto p-1 text-gray-800 bg-blue-800 bg-opacity-5 md:hidden">
         <LabelAndData label="Aseguradora">
           {aseguradora.aseguradora}
@@ -54,7 +137,7 @@ const AseguradoraListItem = ({
           </ActionButton>
         </div>
       </div>
-      <div className="w-full h-auto p-1 text-gray-800 bg-blue-800 bg-opacity-5 hidden md:grid grid-cols-6">
+      <div className="w-full h-auto p-1 text-gray-800 bg-blue-800 bg-opacity-5 hidden md:grid grid-cols-6 hover:bg-gray-200">
         <p>{aseguradora.aseguradora}</p>
         <p className="text-center">{aseguradora.plazoPrimer + " días"}</p>
         <p className="text-center">{aseguradora.plazoSubsecuentes + " días"}</p>
@@ -76,7 +159,10 @@ const AseguradoraListItem = ({
               />
             </svg>
           </ActionButton>
-          <ActionButton title="Eliminar">
+          <ActionButton
+            title="Eliminar"
+            onClick={() => setShowConfirmDialog(true)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
