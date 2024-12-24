@@ -7,6 +7,7 @@ import { AgenteInterface } from "../../../types/interfaces";
 import AgentesList from "./AgentesList";
 import ButtonPortal from "../ButtonPortal";
 import IconTextButton from "../../utils/IconTextButton";
+import AgenteFormDialog from "./AgenteFormDialog";
 
 const AgentesView = () => {
   const [agentes, setAgentes] = useState<AgenteInterface[]>([]);
@@ -16,6 +17,8 @@ const AgentesView = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  const [showDialog, setShowDialog] = useState(false);
 
   const fetchAgentes = useCallback(async () => {
     setIsLoading(true);
@@ -68,6 +71,7 @@ const AgentesView = () => {
           }
           width="w-full"
           height="h-full"
+          onClick={() => setShowDialog(true)}
         >
           Nuevo
         </IconTextButton>
@@ -82,6 +86,9 @@ const AgentesView = () => {
           setIsLoading,
         }}
       >
+        {showDialog && (
+          <AgenteFormDialog onCancel={() => setShowDialog(false)} />
+        )}
         <AgentesList />
       </AgentesContext.Provider>
     </>
