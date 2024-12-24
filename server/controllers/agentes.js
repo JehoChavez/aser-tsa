@@ -28,6 +28,7 @@ module.exports.getAgentes = async (req, res) => {
         as: "aseguradora",
         attributes: ["id", "aseguradora"],
       },
+      order: [["nombre", "ASC"]],
     });
   }
 
