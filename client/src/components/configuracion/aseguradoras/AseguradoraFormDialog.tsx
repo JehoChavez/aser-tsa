@@ -2,7 +2,7 @@ import Modal from "../../utils/Modal";
 import FormTextInput from "../../utils/FormTextInput";
 import FormNumberInput from "../../utils/FormNumberInput";
 import ActionButton from "../../utils/ActionButton";
-import { useCallback, useEffect, useState, useContext } from "react";
+import { useCallback, useState, useContext } from "react";
 import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
 import { AseguradorasContext } from "../../../store/aseguradoras-context";
@@ -51,6 +51,32 @@ const AseguradoraFormDialog = ({
     }
   }, []);
 
+  const updateAseguradora = useCallback(
+    async (payload: AseguradoraInterface) => {
+      setIsLoading(true);
+      try {
+        const response = await axios.put(
+          `http://localhost:3000/api/aseguradoras/${aseguradora?.id}`,
+          payload,
+          { withCredentials: true }
+        );
+        if (response.status === 200) {
+          setSuccess(true);
+        }
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          if (error.response?.status === 401) {
+            setIsAuthenticated(false);
+          }
+          setError(true);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [aseguradora]
+  );
+
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -64,7 +90,7 @@ const AseguradoraFormDialog = ({
     if (data.comentarios === "") data.comentarios = undefined;
 
     if (aseguradora) {
-      // updateAseguradora(data);
+      updateAseguradora(data);
     } else {
       postAseguradora(data);
     }
@@ -91,10 +117,10 @@ const AseguradoraFormDialog = ({
       )}
       {success && (
         <SuccessModal
-          type={aseguradora ? "editado" : "guardado"}
+          type="guardado"
           onOk={() => {
             aseguradorasContext.fetchAseguradoras();
-            onCancel();
+            onSuccess && onSuccess();
           }}
         />
       )}
