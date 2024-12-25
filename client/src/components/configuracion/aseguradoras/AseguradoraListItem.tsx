@@ -76,7 +76,7 @@ const AseguradoraListItem = ({
             ¿Desea eliminar la aseguradora {aseguradora.aseguradora}?
           </h4>
           <p className="text-center text-lg my-3">
-            Sus pólizas serán eliminadas
+            Sus pólizas y agentes serán eliminados
           </p>
         </ConfirmModal>
       )}
