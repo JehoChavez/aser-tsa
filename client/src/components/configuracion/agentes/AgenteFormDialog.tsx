@@ -167,7 +167,7 @@ const AgenteFormDialog = ({
           </div>
           <div className="w-full xl:w-1/3">
             <FormSelectInput
-              name="aseguradora"
+              name="aseguradoraId"
               label="Aseguradora"
               required
               defaultVal={agente?.aseguradoraId}

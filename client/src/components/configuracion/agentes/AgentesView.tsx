@@ -87,7 +87,10 @@ const AgentesView = () => {
         }}
       >
         {showDialog && (
-          <AgenteFormDialog onCancel={() => setShowDialog(false)} />
+          <AgenteFormDialog
+            onCancel={() => setShowDialog(false)}
+            onSuccess={() => setShowDialog(false)}
+          />
         )}
         <AgentesList />
       </AgentesContext.Provider>
