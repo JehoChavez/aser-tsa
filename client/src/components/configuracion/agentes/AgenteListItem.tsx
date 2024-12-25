@@ -4,17 +4,97 @@ import LabelAndData from "../../utils/LabelAndData";
 import ActionButton from "../../utils/ActionButton";
 import AgenteFormDialog from "./AgenteFormDialog";
 import { useState } from "react";
+import ConfirmModal from "../../utils/ConfirmModal";
+import { useContext } from "react";
+import { AgentesContext } from "../../../store/agentes-context";
+import axios, { AxiosError } from "axios";
+import Modal from "../../utils/Modal";
+import Loading from "../../utils/Loading";
+import { Navigate } from "react-router-dom";
+import ErrorModal from "../../utils/ErrorModal";
+import SuccessModal from "../../utils/SuccessModal";
 
 const AgenteListItem = ({ agente }: { agente: AgenteInterface }) => {
+  const agentesContext = useContext(AgentesContext);
+
   const [showForm, setShowForm] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  const deleteHandler = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/agentes/${agente.id}`,
+        { withCredentials: true }
+      );
+      if (response.data.status === 200) {
+        setShowConfirmDialog(false);
+        setDeleteSuccess(true);
+      }
+    } catch (error) {
+      setError(true);
+      setShowConfirmDialog(false);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
     <ListItem>
+      {isLoading && (
+        <Modal size="small">
+          <Loading />
+        </Modal>
+      )}
       {showForm && (
         <AgenteFormDialog
           onCancel={() => setShowForm(false)}
           agente={agente}
           onSuccess={() => setShowForm(false)}
+        />
+      )}
+      {showConfirmDialog && (
+        <ConfirmModal
+          onContinue={deleteHandler}
+          onCancel={() => setShowConfirmDialog(false)}
+        >
+          <h4 className="text-center text-3xl my-3 font-semibold">
+            ¿Desea eliminar el agente {agente.nombre} - {agente.clave}?
+          </h4>
+          <p className="text-center text-lg my-3">
+            Sus pólizas serán eliminadas
+          </p>
+        </ConfirmModal>
+      )}
+      {error && (
+        <ErrorModal
+          onClick={() => {
+            setError(false);
+          }}
+        />
+      )}
+      {deleteSuccess && (
+        <SuccessModal
+          type="eliminado"
+          onOk={() => {
+            agentesContext.fetchAgentes();
+            setDeleteSuccess(false);
+          }}
         />
       )}
       <div className="w-full h-auto p-1 text-gray-800 bg-blue-800 bg-opacity-5 md:hidden">
@@ -41,7 +121,10 @@ const AgenteListItem = ({ agente }: { agente: AgenteInterface }) => {
               />
             </svg>
           </ActionButton>
-          <ActionButton title="Eliminar">
+          <ActionButton
+            title="Eliminar"
+            onClick={() => setShowConfirmDialog(true)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -77,7 +160,10 @@ const AgenteListItem = ({ agente }: { agente: AgenteInterface }) => {
               />
             </svg>
           </ActionButton>
-          <ActionButton title="Eliminar">
+          <ActionButton
+            title="Eliminar"
+            onClick={() => setShowConfirmDialog(true)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
