@@ -2,10 +2,21 @@ import ListItem from "../../utils/ListItem";
 import { AgenteInterface } from "../../../types/interfaces";
 import LabelAndData from "../../utils/LabelAndData";
 import ActionButton from "../../utils/ActionButton";
+import AgenteFormDialog from "./AgenteFormDialog";
+import { useState } from "react";
 
 const AgenteListItem = ({ agente }: { agente: AgenteInterface }) => {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <ListItem>
+      {showForm && (
+        <AgenteFormDialog
+          onCancel={() => setShowForm(false)}
+          agente={agente}
+          onSuccess={() => setShowForm(false)}
+        />
+      )}
       <div className="w-full h-auto p-1 text-gray-800 bg-blue-800 bg-opacity-5 md:hidden">
         <LabelAndData label="Aseguradora">
           {agente.aseguradora?.aseguradora}
@@ -14,7 +25,7 @@ const AgenteListItem = ({ agente }: { agente: AgenteInterface }) => {
         <LabelAndData label="Nombre">{agente.nombre}</LabelAndData>
         <LabelAndData label="Comentarios">{agente.comentarios}</LabelAndData>
         <div>
-          <ActionButton title="Editar">
+          <ActionButton title="Editar" onClick={() => setShowForm(true)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -50,7 +61,7 @@ const AgenteListItem = ({ agente }: { agente: AgenteInterface }) => {
         <p className="text-center">{agente.nombre}</p>
         <p className="text-center col-span-2">{agente.comentarios}</p>
         <div className="flex">
-          <ActionButton title="Editar">
+          <ActionButton title="Editar" onClick={() => setShowForm(true)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
