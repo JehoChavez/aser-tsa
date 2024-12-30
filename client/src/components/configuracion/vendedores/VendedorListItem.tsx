@@ -2,15 +2,106 @@ import ListItem from "../../utils/ListItem";
 import { VendedorInterface } from "../../../types/interfaces";
 import LabelAndData from "../../utils/LabelAndData";
 import ActionButton from "../../utils/ActionButton";
+import VendedorFormDialog from "./VendedorFormDialog";
+import { useState } from "react";
+import ConfirmModal from "../../utils/ConfirmModal";
+import { useContext } from "react";
+import { VendedoresContext } from "../../../store/vendedores-context";
+import axios, { AxiosError } from "axios";
+import Modal from "../../utils/Modal";
+import Loading from "../../utils/Loading";
+import { Navigate } from "react-router-dom";
+import ErrorModal from "../../utils/ErrorModal";
+import SuccessModal from "../../utils/SuccessModal";
 
 const VendedorListItem = ({ vendedor }: { vendedor: VendedorInterface }) => {
+  const vendedoresContext = useContext(VendedoresContext);
+
+  const [showForm, setShowForm] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  const deleteHander = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/vendedores/${vendedor.id}`,
+        { withCredentials: true }
+      );
+      if (response.data.status === 200) {
+        setShowConfirmDialog(false);
+        setDeleteSuccess(true);
+      }
+    } catch (error) {
+      setError(true);
+      setShowConfirmDialog(false);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
   return (
     <ListItem>
+      {isLoading && (
+        <Modal size="small">
+          <Loading />
+        </Modal>
+      )}
+      {showForm && (
+        <VendedorFormDialog
+          onCancel={() => setShowForm(false)}
+          vendedor={vendedor}
+          onSuccess={() => setShowForm(false)}
+        />
+      )}
+      {showConfirmDialog && (
+        <ConfirmModal
+          onContinue={deleteHander}
+          onCancel={() => setShowConfirmDialog(false)}
+        >
+          <h4 className="text-center text-3xl my-3 font-semibold">
+            ¿Desea eliminar el vendedor {vendedor.nombre}?
+          </h4>
+          <p className="text-center text-lg my-3">
+            Sus pólizas serán eliminadas
+          </p>
+        </ConfirmModal>
+      )}
+      {error && (
+        <ErrorModal
+          onClick={() => {
+            setError(false);
+          }}
+        />
+      )}
+      {deleteSuccess && (
+        <SuccessModal
+          type="eliminado"
+          onOk={() => {
+            vendedoresContext.fetchVendedores();
+            setDeleteSuccess(false);
+          }}
+        />
+      )}
       <div className="w-full h-auto p-1 text-gray-800 bg-blue-800 bg-opacity-5 md:hidden">
         <LabelAndData label="Aseguradora">{vendedor.nombre}</LabelAndData>
         <LabelAndData label="Comentarios">{vendedor.comentarios}</LabelAndData>
         <div>
-          <ActionButton title="Editar">
+          <ActionButton title="Editar" onClick={() => setShowForm(true)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -26,7 +117,10 @@ const VendedorListItem = ({ vendedor }: { vendedor: VendedorInterface }) => {
               />
             </svg>
           </ActionButton>
-          <ActionButton title="Eliminar">
+          <ActionButton
+            title="Eliminar"
+            onClick={() => setShowConfirmDialog(true)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -44,7 +138,7 @@ const VendedorListItem = ({ vendedor }: { vendedor: VendedorInterface }) => {
         <p>{vendedor.nombre}</p>
         <p>{vendedor.comentarios}</p>
         <div className="flex justify-center">
-          <ActionButton title="Editar">
+          <ActionButton title="Editar" onClick={() => setShowForm(true)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -60,7 +154,10 @@ const VendedorListItem = ({ vendedor }: { vendedor: VendedorInterface }) => {
               />
             </svg>
           </ActionButton>
-          <ActionButton title="Eliminar">
+          <ActionButton
+            title="Eliminar"
+            onClick={() => setShowConfirmDialog(true)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
