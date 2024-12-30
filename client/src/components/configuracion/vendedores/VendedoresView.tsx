@@ -8,6 +8,7 @@ import { VendedoresContext } from "../../../store/vendedores-context";
 import VendedoresList from "./VendedoresList";
 import ButtonPortal from "../ButtonPortal";
 import IconTextButton from "../../utils/IconTextButton";
+import VendedorFormDialog from "./VendedorFormDialog";
 
 const VendedoresView = () => {
   const [vendedores, setVendedores] = useState<VendedorInterface[]>([]);
@@ -16,6 +17,8 @@ const VendedoresView = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  const [showDialog, setShowDialog] = useState(false);
 
   const fetchVendedores = useCallback(async () => {
     setIsLoading(true);
@@ -52,6 +55,7 @@ const VendedoresView = () => {
           }}
         />
       )}
+
       <ButtonPortal>
         <IconTextButton
           icon={
@@ -68,11 +72,18 @@ const VendedoresView = () => {
           }
           width="w-full"
           height="h-full"
+          onClick={() => setShowDialog(true)}
         >
           Nuevo
         </IconTextButton>
       </ButtonPortal>
       <VendedoresContext.Provider value={{ vendedores, fetchVendedores }}>
+        {showDialog && (
+          <VendedorFormDialog
+            onCancel={() => setShowDialog(false)}
+            onSuccess={() => setShowDialog(false)}
+          />
+        )}
         <VendedoresList />
       </VendedoresContext.Provider>
     </>
