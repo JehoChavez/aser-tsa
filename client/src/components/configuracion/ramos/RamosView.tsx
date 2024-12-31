@@ -8,6 +8,7 @@ import { RamosContext } from "../../../store/ramos-context";
 import RamosList from "./RamosList";
 import ButtonPortal from "../ButtonPortal";
 import IconTextButton from "../../utils/IconTextButton";
+import RamoFormDialog from "./RamoFormDialog";
 
 const RamosView = () => {
   const [ramos, setRamos] = useState<RamoInterface[]>([]);
@@ -16,6 +17,8 @@ const RamosView = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  const [showDialog, setShowDialog] = useState(false);
 
   const fetchRamos = useCallback(async () => {
     setIsLoading(true);
@@ -68,11 +71,18 @@ const RamosView = () => {
           }
           width="w-full"
           height="h-full"
+          onClick={() => setShowDialog(true)}
         >
           Nuevo
         </IconTextButton>
       </ButtonPortal>
       <RamosContext.Provider value={{ ramos, fetchRamos }}>
+        {showDialog && (
+          <RamoFormDialog
+            onCancel={() => setShowDialog(false)}
+            onSuccess={() => setShowDialog(false)}
+          />
+        )}
         <RamosList />
       </RamosContext.Provider>
     </>
