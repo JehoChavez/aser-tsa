@@ -2,14 +2,105 @@ import ListItem from "../../utils/ListItem";
 import { RamoInterface } from "../../../types/interfaces";
 import LabelAndData from "../../utils/LabelAndData";
 import ActionButton from "../../utils/ActionButton";
+import RamoFormDialog from "./RamoFormDialog";
+import { useState } from "react";
+import ConfirmModal from "../../utils/ConfirmModal";
+import { useContext } from "react";
+import { RamosContext } from "../../../store/ramos-context";
+import axios, { AxiosError } from "axios";
+import Modal from "../../utils/Modal";
+import Loading from "../../utils/Loading";
+import { Navigate } from "react-router-dom";
+import ErrorModal from "../../utils/ErrorModal";
+import SuccessModal from "../../utils/SuccessModal";
 
 const RamoListItem = ({ ramo }: { ramo: RamoInterface }) => {
+  const ramosContext = useContext(RamosContext);
+
+  const [showForm, setShowForm] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  const deleteHander = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/ramos/${ramo.id}`,
+        { withCredentials: true }
+      );
+      if (response.data.status === 200) {
+        setShowConfirmDialog(false);
+        setDeleteSuccess(true);
+      }
+    } catch (error) {
+      setError(true);
+      setShowConfirmDialog(false);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setIsAuthenticated(false);
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
   return (
     <ListItem>
+      {isLoading && (
+        <Modal size="small">
+          <Loading />
+        </Modal>
+      )}
+      {showForm && (
+        <RamoFormDialog
+          onSuccess={() => setShowForm(false)}
+          onCancel={() => setShowForm(false)}
+          ramo={ramo}
+        />
+      )}
+      {showConfirmDialog && (
+        <ConfirmModal
+          onContinue={deleteHander}
+          onCancel={() => setShowConfirmDialog(false)}
+        >
+          <h4 className="text-center text-3xl my-3 font-semibold">
+            ¿Desea eliminar el ramo {ramo.ramo}?
+          </h4>
+          <p className="text-center text-lg my-3">
+            Sus pólizas serán eliminadas
+          </p>
+        </ConfirmModal>
+      )}
+      {error && (
+        <ErrorModal
+          onClick={() => {
+            setError(false);
+          }}
+        />
+      )}
+      {deleteSuccess && (
+        <SuccessModal
+          type="eliminado"
+          onOk={() => {
+            ramosContext.fetchRamos();
+            setDeleteSuccess(false);
+          }}
+        />
+      )}
       <div className="w-full h-auto p-1 text-gray-800 bg-blue-800 bg-opacity-5 md:hidden">
         <LabelAndData label="Ramo">{ramo.ramo}</LabelAndData>
         <div>
-          <ActionButton title="Editar">
+          <ActionButton title="Editar" onClick={() => setShowForm(true)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -25,7 +116,10 @@ const RamoListItem = ({ ramo }: { ramo: RamoInterface }) => {
               />
             </svg>
           </ActionButton>
-          <ActionButton title="Eliminar">
+          <ActionButton
+            title="Eliminar"
+            onClick={() => setShowConfirmDialog(true)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -42,7 +136,7 @@ const RamoListItem = ({ ramo }: { ramo: RamoInterface }) => {
       <div className="w-full h-auto p-1 text-gray-800 bg-blue-800 bg-opacity-5 hidden md:grid grid-cols-2">
         <p>{ramo.ramo}</p>
         <div className="flex justify-center">
-          <ActionButton title="Editar">
+          <ActionButton title="Editar" onClick={() => setShowForm(true)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -58,7 +152,10 @@ const RamoListItem = ({ ramo }: { ramo: RamoInterface }) => {
               />
             </svg>
           </ActionButton>
-          <ActionButton title="Eliminar">
+          <ActionButton
+            title="Eliminar"
+            onClick={() => setShowConfirmDialog(true)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
