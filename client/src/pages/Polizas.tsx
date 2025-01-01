@@ -73,6 +73,7 @@ const Polizas = () => {
         params,
         fetchPolizas,
         onSearch,
+        setParams,
       }}
     >
       <div className="w-full h-full px-5 py-4 flex flex-col overflow-hidden">

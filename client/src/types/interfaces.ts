@@ -277,6 +277,7 @@ export interface PolizasContextInterface {
   params: PolizasParamsInterface;
   fetchPolizas: () => Promise<void>;
   onSearch: (value: string) => void;
+  setParams: (params: PolizasParamsInterface) => void;
 }
 
 export interface PolizasParamsInterface {

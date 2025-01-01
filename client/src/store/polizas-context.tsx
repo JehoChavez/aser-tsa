@@ -21,6 +21,7 @@ export const defaultPolizasContext: PolizasContextInterface = {
   },
   fetchPolizas: async () => {},
   onSearch: () => {},
+  setParams: () => {},
 };
 
 export const PolizasContext: React.Context<PolizasContextInterface> =
