@@ -4,6 +4,7 @@ import { PolizasContext } from "../../store/polizas-context";
 import IconTextButton from "../utils/IconTextButton";
 import SearchInput from "../utils/SearchInput";
 import SelectClienteModal from "../clientes/SelectClienteModal";
+import Dropdown from "../utils/Dropdown";
 
 const PolizasOptions = () => {
   const { id: clienteId } = useParams();
@@ -58,6 +59,11 @@ const PolizasOptions = () => {
             placeholder="Buscar Póliza"
             onSearch={polizasContext.onSearch}
           />
+        </div>
+        <div className="flex items-center ml-3">
+          <Dropdown title="Estado" text>
+            test
+          </Dropdown>
         </div>
       </div>
     </div>
