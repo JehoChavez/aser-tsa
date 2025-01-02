@@ -5,10 +5,12 @@ const Dropdown = ({
   title,
   text,
   children,
+  right,
 }: {
   title?: string;
   text?: boolean;
   children: ReactNode;
+  right?: boolean;
 }) => {
   const [displayMore, setDisplayMore] = useState(false);
 
@@ -34,7 +36,11 @@ const Dropdown = ({
         </svg>
       </ActionButton>
       {displayMore && (
-        <div className="absolute top-7 right-0 z-30 bg-white rounded w-52 p-2 shadow-lg shadow-gray-500">
+        <div
+          className={`absolute top-7 ${
+            right ? "left-0" : "right-0"
+          } z-30 bg-white rounded w-52 p-2 shadow-lg shadow-gray-500`}
+        >
           {title && <h4 className="text-blue-900 font-bold">{title}</h4>}
           {children}
           <button

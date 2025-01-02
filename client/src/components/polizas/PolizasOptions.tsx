@@ -61,7 +61,7 @@ const PolizasOptions = () => {
           />
         </div>
         <div className="flex items-center ml-3">
-          <Dropdown title="Estado" text>
+          <Dropdown title="Estado" text right>
             test
           </Dropdown>
         </div>
