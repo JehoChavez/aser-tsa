@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import IconTitle from "../components/utils/IconTitle";
-import PolizasOptions from "../components/polizas/PolizasOptions";
+import PolizasOptions from "../components/polizas/PolizasOptions/PolizasOptions";
 import {
   defaultPolizasContext,
   PolizasContext,
