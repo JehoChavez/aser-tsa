@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import Loading from "../utils/Loading";
 import PolizasListHeader from "../polizas/PolizasListHeader";
 import PolizasList from "../polizas/PolizasList";
-import PolizasOptions from "../polizas/PolizasOptions";
+import PolizasOptions from "../polizas/PolizasOptions/PolizasOptions";
 import axios, { AxiosError } from "axios";
 import { Navigate } from "react-router-dom";
 import {
