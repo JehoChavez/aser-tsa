@@ -82,7 +82,7 @@ const EstadoDropdown = () => {
                 checked={polizasContext.params.estado?.includes("vencidas")}
                 onChange={handleCheckboxChange}
               />
-              <label htmlFor="vencias">Vencidas</label>
+              <label htmlFor="vencidas">Vencidas</label>
             </div>
           </form>
         </div>
