@@ -33,58 +33,56 @@ const EstadoDropdown = () => {
     <div className="flex items-center ml-3">
       <Dropdown title="Estado" text right>
         <div className="w-36 text-gray-800">
-          <form>
-            <div className="hover:font-semibold">
-              <input
-                type="checkbox"
-                id="vigentes"
-                className="mr-3"
-                checked={polizasContext.params.estado?.includes("vigentes")}
-                onChange={handleCheckboxChange}
-              />
-              <label htmlFor="vigentes">Vigentes</label>
-            </div>
-            <div className="hover:font-semibold">
-              <input
-                type="checkbox"
-                id="renovadas"
-                className="mr-3"
-                checked={polizasContext.params.estado?.includes("renovadas")}
-                onChange={handleCheckboxChange}
-              />
-              <label htmlFor="renovadas">Renovadas</label>
-            </div>
-            <div className="hover:font-semibold">
-              <input
-                type="checkbox"
-                id="reexpedidas"
-                className="mr-3"
-                checked={polizasContext.params.estado?.includes("reexpedidas")}
-                onChange={handleCheckboxChange}
-              />
-              <label htmlFor="reexpedidas">Reexpedidas</label>
-            </div>
-            <div className="hover:font-semibold">
-              <input
-                type="checkbox"
-                id="canceladas"
-                className="mr-3"
-                checked={polizasContext.params.estado?.includes("canceladas")}
-                onChange={handleCheckboxChange}
-              />
-              <label htmlFor="canceladas">Canceladas</label>
-            </div>
-            <div className="hover:font-semibold">
-              <input
-                type="checkbox"
-                id="vencidas"
-                className="mr-3"
-                checked={polizasContext.params.estado?.includes("vencidas")}
-                onChange={handleCheckboxChange}
-              />
-              <label htmlFor="vencidas">Vencidas</label>
-            </div>
-          </form>
+          <div className="hover:font-semibold">
+            <input
+              type="checkbox"
+              id="vigentes"
+              className="mr-3"
+              checked={polizasContext.params.estado?.includes("vigentes")}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="vigentes">Vigentes</label>
+          </div>
+          <div className="hover:font-semibold">
+            <input
+              type="checkbox"
+              id="renovadas"
+              className="mr-3"
+              checked={polizasContext.params.estado?.includes("renovadas")}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="renovadas">Renovadas</label>
+          </div>
+          <div className="hover:font-semibold">
+            <input
+              type="checkbox"
+              id="reexpedidas"
+              className="mr-3"
+              checked={polizasContext.params.estado?.includes("reexpedidas")}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="reexpedidas">Reexpedidas</label>
+          </div>
+          <div className="hover:font-semibold">
+            <input
+              type="checkbox"
+              id="canceladas"
+              className="mr-3"
+              checked={polizasContext.params.estado?.includes("canceladas")}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="canceladas">Canceladas</label>
+          </div>
+          <div className="hover:font-semibold">
+            <input
+              type="checkbox"
+              id="vencidas"
+              className="mr-3"
+              checked={polizasContext.params.estado?.includes("vencidas")}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="vencidas">Vencidas</label>
+          </div>
         </div>
       </Dropdown>
     </div>
