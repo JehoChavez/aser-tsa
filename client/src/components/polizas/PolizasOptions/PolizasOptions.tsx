@@ -5,6 +5,7 @@ import IconTextButton from "../../utils/IconTextButton";
 import SearchInput from "../../utils/SearchInput";
 import SelectClienteModal from "../../clientes/SelectClienteModal";
 import EstadoDropdown from "./EstadoDropdown";
+import AseguradoraDropdown from "./AseguradoraDropdown";
 
 const PolizasOptions = () => {
   const { id: clienteId } = useParams();
@@ -61,6 +62,7 @@ const PolizasOptions = () => {
           />
         </div>
         <EstadoDropdown />
+        <AseguradoraDropdown />
       </div>
     </div>
   );
