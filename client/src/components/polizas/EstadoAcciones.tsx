@@ -121,10 +121,10 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
               ? "bg-red-700"
               : poliza.reexpedicionId
               ? "bg-purple-900"
-              : poliza.renovacionId
-              ? "bg-blue-800"
               : poliza.vencida
               ? "bg-orange-900"
+              : poliza.renovacionId
+              ? "bg-blue-800"
               : vencida
               ? "bg-gray-700"
               : "bg-emerald-700"
@@ -139,10 +139,10 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
             ? "Cancelada"
             : poliza.reexpedicionId
             ? "Reexpedida"
-            : poliza.renovacionId
-            ? "Renovada"
             : poliza.vencida
             ? "Vencida"
+            : poliza.renovacionId
+            ? "Renovada"
             : vencida
             ? "No Renovada"
             : "Vigente"}
