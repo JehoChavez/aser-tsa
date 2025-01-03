@@ -59,7 +59,24 @@ const AseguradoraDropdown = () => {
         />
       )}
       <Dropdown title="Aseguradora" text right>
-        <div className="w-36 text-gray-800"></div>
+        <div className="w-44 text-gray-800">
+          <div className="hover:font-semibold">
+            <input type="checkbox" id="todas" className="mr-3" checked={true} />
+            <label htmlFor="todas">Todas</label>
+          </div>
+          {aseguradoras.map((aseguradora) => (
+            <div className="hover:font-semibold">
+              <input
+                type="checkbox"
+                id={`${aseguradora.id}`}
+                className="mr-3"
+              />
+              <label htmlFor={`${aseguradora.id}`}>
+                {aseguradora.aseguradora}
+              </label>
+            </div>
+          ))}
+        </div>
       </Dropdown>
     </div>
   );
