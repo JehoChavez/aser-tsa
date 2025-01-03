@@ -42,6 +42,30 @@ const AseguradoraDropdown = () => {
     fetchAseguradoras();
   }, []);
 
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, checked } = event.target;
+    let newAseguradora = [...(polizasContext.params.aseguradora || [])];
+
+    if (id === "todas") {
+      if (checked) {
+        newAseguradora = [];
+      }
+    } else {
+      if (checked) {
+        newAseguradora.push(parseInt(id));
+      } else {
+        newAseguradora = newAseguradora.filter(
+          (aseguradora) => aseguradora !== parseInt(id)
+        );
+      }
+    }
+
+    polizasContext.setParams({
+      ...polizasContext.params,
+      aseguradora: newAseguradora,
+    });
+  };
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
@@ -61,7 +85,13 @@ const AseguradoraDropdown = () => {
       <Dropdown title="Aseguradora" text right>
         <div className="w-44 text-gray-800">
           <div className="hover:font-semibold">
-            <input type="checkbox" id="todas" className="mr-3" checked={true} />
+            <input
+              type="checkbox"
+              id="todas"
+              className="mr-3"
+              checked={polizasContext.params.aseguradora?.length === 0}
+              onChange={handleCheckboxChange}
+            />
             <label htmlFor="todas">Todas</label>
           </div>
           {aseguradoras.map((aseguradora) => (
@@ -70,6 +100,7 @@ const AseguradoraDropdown = () => {
                 type="checkbox"
                 id={`${aseguradora.id}`}
                 className="mr-3"
+                onChange={handleCheckboxChange}
               />
               <label htmlFor={`${aseguradora.id}`}>
                 {aseguradora.aseguradora}
