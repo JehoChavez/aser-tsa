@@ -11,7 +11,7 @@ export const defaultPolizasContext: PolizasContextInterface = {
     desde: null,
     hasta: null,
     cliente: null,
-    aseguradora: null,
+    aseguradora: [],
     agente: null,
     vendedor: null,
     ramo: null,
