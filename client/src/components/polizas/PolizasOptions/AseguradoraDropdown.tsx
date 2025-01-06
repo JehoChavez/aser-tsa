@@ -101,6 +101,9 @@ const AseguradoraDropdown = () => {
                 type="checkbox"
                 id={`${aseguradora.id}`}
                 onChange={handleCheckboxChange}
+                checked={polizasContext.params.aseguradora?.includes(
+                  aseguradora.id
+                )}
               />
               <label htmlFor={`${aseguradora.id}`} className="pl-3">
                 {aseguradora.aseguradora}
