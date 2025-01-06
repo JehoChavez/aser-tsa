@@ -46,7 +46,7 @@ const AseguradoraDropdown = () => {
     const { id, checked } = event.target;
     let newAseguradora = [...(polizasContext.params.aseguradora || [])];
 
-    if (id === "todas") {
+    if (id === "0") {
       if (checked) {
         newAseguradora = [];
       }
@@ -87,15 +87,15 @@ const AseguradoraDropdown = () => {
           <div className="hover:font-semibold">
             <input
               type="checkbox"
-              id="todas"
+              id="0"
               className="mr-3"
               checked={polizasContext.params.aseguradora?.length === 0}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="todas">Todas</label>
+            <label htmlFor="0">Todas</label>
           </div>
           {aseguradoras.map((aseguradora) => (
-            <div className="hover:font-semibold">
+            <div className="hover:font-semibold" key={aseguradora.id}>
               <input
                 type="checkbox"
                 id={`${aseguradora.id}`}
