@@ -88,21 +88,21 @@ const AseguradoraDropdown = () => {
             <input
               type="checkbox"
               id="0"
-              className="mr-3"
               checked={polizasContext.params.aseguradora?.length === 0}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="0">Todas</label>
+            <label htmlFor="0" className="pl-3">
+              Todas
+            </label>
           </div>
           {aseguradoras.map((aseguradora) => (
             <div className="hover:font-semibold" key={aseguradora.id}>
               <input
                 type="checkbox"
                 id={`${aseguradora.id}`}
-                className="mr-3"
                 onChange={handleCheckboxChange}
               />
-              <label htmlFor={`${aseguradora.id}`}>
+              <label htmlFor={`${aseguradora.id}`} className="pl-3">
                 {aseguradora.aseguradora}
               </label>
             </div>
