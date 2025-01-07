@@ -46,7 +46,7 @@ const AseguradoraDropdown = () => {
     setIsLoading(true);
     try {
       const response = await axios.get("http://localhost:3000/api/agentes", {
-        params: { aseguradoraIds: polizasContext.params.aseguradora },
+        params: { aseguradora: polizasContext.params.aseguradora },
         withCredentials: true,
       });
       setAgentes(response.data.content);

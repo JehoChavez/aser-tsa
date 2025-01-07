@@ -4,16 +4,16 @@ const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
 module.exports.getAgentes = async (req, res) => {
-  const { aseguradoraIds } = req.query;
+  const { aseguradora } = req.query;
 
   let listOfAgentes = [];
 
   // Get agentes from aseguradoras if aseguradorasIds exists, get all if not
-  if (aseguradoraIds) {
+  if (aseguradora) {
     listOfAgentes = await Agente.findAll({
       where: {
         aseguradoraId: {
-          [Op.in]: aseguradoraIds,
+          [Op.in]: aseguradora,
         },
       },
       include: {
