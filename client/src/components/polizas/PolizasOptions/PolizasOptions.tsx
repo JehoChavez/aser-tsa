@@ -5,7 +5,7 @@ import IconTextButton from "../../utils/IconTextButton";
 import SearchInput from "../../utils/SearchInput";
 import SelectClienteModal from "../../clientes/SelectClienteModal";
 import EstadoDropdown from "./EstadoDropdown";
-import AseguradoraDropdown from "./AseguradoraDropdown";
+import AseguradoraDropdown from "./AseguradoraAgenteDropdowns";
 
 const PolizasOptions = () => {
   const { id: clienteId } = useParams();
