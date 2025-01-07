@@ -137,7 +137,7 @@ const AseguradoraDropdown = () => {
         />
       )}
       <div className="flex items-center">
-        <Dropdown title="Aseguradora" text right>
+        <Dropdown title="Aseguradora" text right full>
           <div className="w-44 text-gray-800">
             <div className="hover:font-semibold">
               <input
@@ -173,7 +173,7 @@ const AseguradoraDropdown = () => {
         </Dropdown>
       </div>
       <div className="flex items-center">
-        <Dropdown title="Agente" text right>
+        <Dropdown title="Agente" text right full>
           <div className="w-44 text-gray-800">
             <div className="hover:font-semibold">
               <input

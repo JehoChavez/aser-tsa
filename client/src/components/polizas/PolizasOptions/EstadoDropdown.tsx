@@ -31,7 +31,7 @@ const EstadoDropdown = () => {
 
   return (
     <div className="flex items-center ml-3">
-      <Dropdown title="Estado" text right>
+      <Dropdown title="Estado" text right full>
         <div className="w-36 text-gray-800">
           <div className="hover:font-semibold">
             <input
@@ -90,4 +90,3 @@ const EstadoDropdown = () => {
 };
 
 export default EstadoDropdown;
-

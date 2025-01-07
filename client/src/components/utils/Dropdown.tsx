@@ -6,19 +6,22 @@ const Dropdown = ({
   text,
   children,
   right,
+  full,
 }: {
   title?: string;
   text?: boolean;
   children: ReactNode;
   right?: boolean;
+  full?: boolean;
 }) => {
   const [displayMore, setDisplayMore] = useState(false);
 
   return (
-    <div className="relative w-full lg:w-auto flex">
+    <div className={`w-full ${full ? "" : "lg:w-auto"} flex`}>
       <ActionButton
         title="Más Opciones"
         onClick={() => setDisplayMore((prev) => !prev)}
+        full
       >
         {text && title && <h4 className="mr-1">{title}</h4>}
         <svg

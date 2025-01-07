@@ -7,6 +7,7 @@ const ActionButton = ({
   color,
   size,
   disabled,
+  full,
 }: ActionButtonInterface) => {
   let colorClassnames =
     "bg-gray-100 border-blue-950 text-blue-950 hover:bg-gray-300 active:bg-gray-600 shadow active:text-white disabled:hover:bg-gray-100 disabled:active:bg-gray-100 disabled:active:text-blue-950";
@@ -21,7 +22,9 @@ const ActionButton = ({
 
   return (
     <button
-      className={`w-full lg:w-auto p-1 mx-1 flex items-center justify-center border rounded shadow-gray-400 ${colorClassnames} ${
+      className={`w-full ${
+        full ? "" : "lg:w-auto"
+      } p-1 mx-1 flex items-center justify-center border rounded shadow-gray-400 ${colorClassnames} ${
         size === "lg" ? "text-xl p-2" : ""
       } disabled:opacity-60 disabled:cursor-not-allowed`}
       title={title}

@@ -126,6 +126,7 @@ export interface ActionButtonInterface {
   size?: "md" | "lg";
   onClick?: () => void;
   disabled?: boolean;
+  full?: boolean;
   children: ReactNode;
 }
 

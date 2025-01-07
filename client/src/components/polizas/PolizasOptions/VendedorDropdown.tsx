@@ -79,7 +79,7 @@ const VendedorDropdown = () => {
           }}
         />
       )}
-      <Dropdown title="Vendedor" text right>
+      <Dropdown title="Vendedor" text right full>
         <div className="w-44 text-gray-800">
           <div className="hover:font-semibold">
             <input
