@@ -39,7 +39,7 @@ const Dropdown = ({
         <div
           className={`absolute top-7 ${
             right ? "left-0" : "right-0"
-          } z-30 bg-white rounded max-w-52 p-2 shadow-lg shadow-gray-500`}
+          } z-30 bg-white rounded min-w-48 max-w-56 max-h-80 overflow-auto p-2 shadow-lg shadow-gray-500`}
         >
           {title && <h4 className="text-blue-900 font-bold">{title}</h4>}
           {children}
