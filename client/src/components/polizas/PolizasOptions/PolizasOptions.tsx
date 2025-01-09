@@ -7,6 +7,7 @@ import SelectClienteModal from "../../clientes/SelectClienteModal";
 import EstadoDropdown from "./EstadoDropdown";
 import AseguradoraDropdown from "./AseguradoraAgenteDropdowns";
 import VendedorDropdown from "./VendedorDropdown";
+import RamoDropdown from "./RamoDropdown";
 
 const PolizasOptions = () => {
   const { id: clienteId } = useParams();
@@ -65,6 +66,7 @@ const PolizasOptions = () => {
         <EstadoDropdown />
         <AseguradoraDropdown />
         <VendedorDropdown />
+        <RamoDropdown />
       </div>
     </div>
   );
