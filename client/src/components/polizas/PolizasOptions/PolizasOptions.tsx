@@ -57,7 +57,7 @@ const PolizasOptions = () => {
             Nueva
           </IconTextButton>
         </div>
-        <div className="col-span-3 md:col-span-2 xl:col-span-3 flex items-center px-2">
+        <div className="col-span-3 md:col-span-2 flex items-center px-2">
           <SearchInput
             placeholder="Buscar Póliza"
             onSearch={polizasContext.onSearch}
