@@ -21,6 +21,8 @@ const EstadoDropdown = () => {
       } else {
         newEstado = newEstado.filter((estado) => estado !== id);
       }
+    } else {
+      if (checked) newEstado = [];
     }
 
     polizasContext.setParams({
@@ -33,6 +35,16 @@ const EstadoDropdown = () => {
     <div className="flex items-center md:ml-3">
       <Dropdown title="Estado" text right full>
         <div className="w-36 text-gray-800">
+          <div className="hover:font-semibold">
+            <input
+              type="checkbox"
+              id="todas"
+              className="mr-3"
+              checked={polizasContext.params.estado?.length === 0 || false}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="todas">Todas</label>
+          </div>
           <div className="hover:font-semibold">
             <input
               type="checkbox"
