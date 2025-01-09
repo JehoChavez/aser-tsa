@@ -42,11 +42,9 @@ const Dropdown = ({
         <div
           className={`absolute top-7 ${
             right ? "left-0" : "right-0"
-          } z-30 bg-white rounded min-w-48 max-w-56 max-h-80 shadow-lg shadow-gray-500`}
+          } z-30 bg-white rounded min-w-48 max-w-56 max-h-80 shadow-lg shadow-gray-500 p-1`}
         >
-          {title && (
-            <h4 className="text-blue-900 font-bold mt-1 ml-1">{title}</h4>
-          )}
+          {title && <h4 className="text-blue-900 font-bold">{title}</h4>}
           <div className="max-w-56 max-h-64 overflow-auto p-2">{children}</div>
           <button
             className="w-full hover:bg-red-200 rounded active:bg-red-700 active:text-white text-right text-red-700 px-1"
