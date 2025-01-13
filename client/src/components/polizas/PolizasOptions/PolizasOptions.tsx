@@ -8,6 +8,7 @@ import EstadoDropdown from "./EstadoDropdown";
 import AseguradoraDropdown from "./AseguradoraAgenteDropdowns";
 import VendedorDropdown from "./VendedorDropdown";
 import RamoDropdown from "./RamoDropdown";
+import FechaDropdown from "./FechaDropdown";
 
 const PolizasOptions = () => {
   const { id: clienteId } = useParams();
@@ -67,6 +68,7 @@ const PolizasOptions = () => {
         <AseguradoraDropdown />
         <VendedorDropdown />
         <RamoDropdown />
+        <FechaDropdown />
       </div>
     </div>
   );
