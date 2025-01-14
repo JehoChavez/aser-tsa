@@ -12,9 +12,11 @@ import Modal from "../components/utils/Modal";
 import Loading from "../components/utils/Loading";
 import PolizasListHeader from "../components/polizas/PolizasListHeader";
 import PolizasList from "../components/polizas/PolizasList";
+import ErrorModal from "../components/utils/ErrorModal";
 
 const Polizas = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const [polizas, setPolizas] = useState<PolizaInterface[]>([]);
@@ -34,6 +36,7 @@ const Polizas = () => {
     } catch (error) {
       console.log(error);
       setIsLoading(false);
+      setIsError(true);
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
           setIsAuthenticated(false);
@@ -76,6 +79,7 @@ const Polizas = () => {
         setParams,
       }}
     >
+      {isError && <ErrorModal onClick={() => setIsError(false)} />}
       <div className="w-full h-full px-5 py-4 flex flex-col overflow-hidden">
         <IconTitle
           icon={
