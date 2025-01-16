@@ -22,7 +22,15 @@ const OrderDropdown = () => {
 
   return (
     <div className="flex items-center md:col-start-12">
-      <Dropdown title="Orden" text full>
+      <Dropdown
+        title={
+          (porOptions.find(
+            (option) => option[0] === polizasContext.params.por
+          ) || ["", "Orden"])[1]
+        }
+        text
+        full
+      >
         {porOptions.map((option) => (
           <div className="hover:font-semibold" key={option[0]}>
             <input
