@@ -214,9 +214,9 @@ module.exports.getPolizas = async (req, res) => {
     options.limit = parseInt(limit);
   }
 
-  let listOfPolizas = await Poliza.findAll(options);
+  let { count, rows: polizas } = await Poliza.findAndCountAll(options);
 
-  const response = new CustomResponse(listOfPolizas);
+  const response = new CustomResponse(polizas, undefined, undefined, count);
 
   res.status(response.status).json(response);
 };
