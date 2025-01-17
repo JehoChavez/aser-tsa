@@ -121,8 +121,18 @@ const Polizas = () => {
           </div>
         </div>
       </PolizasContext.Provider>
-      <div className="w-full flex justify-center mb-6">
-        <PageControls />
+      <div className="w-full flex justify-center mb-8">
+        <PageControls
+          page={params.page || 1}
+          count={count}
+          limit={params.limit || 10}
+          onPageChange={(page) => {
+            setParams({ ...params, page });
+          }}
+          onLimitChange={(limit) => {
+            setParams({ ...params, limit });
+          }}
+        />
       </div>
     </>
   );

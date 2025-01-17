@@ -2,11 +2,41 @@ import ActionButton from "./ActionButton";
 import FormNumberInput from "./FormNumberInput";
 import FormSelectInput from "./FormSelectInput";
 
-const PageControls = () => {
+const PageControls = ({
+  page,
+  count,
+  limit,
+  onPageChange,
+  onLimitChange,
+}: {
+  page: number;
+  count: number;
+  limit: number;
+  onPageChange: (page: number) => void;
+  onLimitChange: (limit: number) => void;
+}) => {
+  const lastPage = Math.ceil(count / limit);
+
+  const onFirst = () => {
+    onPageChange(1);
+  };
+
+  const onLast = () => {
+    onPageChange(lastPage);
+  };
+
+  const onPrevious = () => {
+    onPageChange(page - 1);
+  };
+
+  const onNext = () => {
+    onPageChange(page + 1);
+  };
+
   return (
     <div>
       <div className="flex justify-between">
-        <ActionButton>
+        <ActionButton onClick={onFirst} disabled={page === 1}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -25,7 +55,7 @@ const PageControls = () => {
             />
           </svg>
         </ActionButton>
-        <ActionButton>
+        <ActionButton onClick={onPrevious} disabled={page === 1}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -41,9 +71,9 @@ const PageControls = () => {
           </svg>
         </ActionButton>
         <div className="w-12">
-          <FormNumberInput name="page" center />
+          <FormNumberInput value={page} name="page" center />
         </div>
-        <ActionButton>
+        <ActionButton onClick={onNext} disabled={page === lastPage}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -58,7 +88,7 @@ const PageControls = () => {
             />
           </svg>
         </ActionButton>
-        <ActionButton>
+        <ActionButton onClick={onLast} disabled={page === lastPage}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -90,6 +120,9 @@ const PageControls = () => {
               { value: 200, name: "200" },
               { value: 500, name: "500" },
             ]}
+            onSelect={(selected) => {
+              onLimitChange(parseInt(selected));
+            }}
           />
         </div>
       </div>
