@@ -1,6 +1,7 @@
 import ActionButton from "./ActionButton";
 import FormNumberInput from "./FormNumberInput";
 import FormSelectInput from "./FormSelectInput";
+import { ChangeEvent, useState } from "react";
 
 const PageControls = ({
   page,
@@ -15,28 +16,46 @@ const PageControls = ({
   onPageChange: (page: number) => void;
   onLimitChange: (limit: number) => void;
 }) => {
+  const [localPage, setLocalPage] = useState(page);
+
   const lastPage = Math.ceil(count / limit);
 
   const onFirst = () => {
+    setLocalPage(1);
     onPageChange(1);
   };
 
   const onLast = () => {
+    setLocalPage(lastPage);
     onPageChange(lastPage);
   };
 
   const onPrevious = () => {
+    setLocalPage(page - 1);
     onPageChange(page - 1);
   };
 
   const onNext = () => {
+    setLocalPage(page + 1);
     onPageChange(page + 1);
+  };
+
+  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const val = parseInt(event.target.value) || 0;
+
+    if (val >= 0 && val <= lastPage) {
+      setLocalPage(val);
+    }
+  };
+
+  const onCheckClick = () => {
+    onPageChange(localPage);
   };
 
   return (
     <div>
       <div className="flex justify-between">
-        <ActionButton onClick={onFirst} disabled={page === 1}>
+        <ActionButton onClick={onFirst} disabled={page <= 1}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -55,7 +74,7 @@ const PageControls = ({
             />
           </svg>
         </ActionButton>
-        <ActionButton onClick={onPrevious} disabled={page === 1}>
+        <ActionButton onClick={onPrevious} disabled={page <= 1}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -70,10 +89,32 @@ const PageControls = ({
             />
           </svg>
         </ActionButton>
-        <div className="w-12">
-          <FormNumberInput value={page} name="page" center />
+        <div className="flex">
+          <FormNumberInput
+            value={localPage}
+            onChange={onInputChange}
+            minValue={1}
+            maxValue={lastPage}
+            name="page"
+            center
+          />
+          <ActionButton
+            onClick={onCheckClick}
+            disabled={localPage <= 0 || localPage > lastPage}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-check"
+              viewBox="0 0 16 16"
+            >
+              <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+            </svg>
+          </ActionButton>
         </div>
-        <ActionButton onClick={onNext} disabled={page === lastPage}>
+        <ActionButton onClick={onNext} disabled={page >= lastPage}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -88,7 +129,7 @@ const PageControls = ({
             />
           </svg>
         </ActionButton>
-        <ActionButton onClick={onLast} disabled={page === lastPage}>
+        <ActionButton onClick={onLast} disabled={page >= lastPage}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
