@@ -121,7 +121,7 @@ const Polizas = () => {
           </div>
         </div>
       </PolizasContext.Provider>
-      <div className="w-full flex justify-center mb-8">
+      <div className="w-full flex justify-center mb-6">
         <PageControls />
       </div>
     </>

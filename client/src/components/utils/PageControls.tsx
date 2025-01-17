@@ -1,5 +1,6 @@
 import ActionButton from "./ActionButton";
 import FormNumberInput from "./FormNumberInput";
+import FormSelectInput from "./FormSelectInput";
 
 const PageControls = () => {
   return (
@@ -76,6 +77,21 @@ const PageControls = () => {
             />
           </svg>
         </ActionButton>
+      </div>
+      <div className="w-full flex justify-center mt-2">
+        <div className="w-20">
+          <FormSelectInput
+            name="limit"
+            options={[
+              { value: 10, name: "10" },
+              { value: 20, name: "20" },
+              { value: 50, name: "50" },
+              { value: 100, name: "100" },
+              { value: 200, name: "200" },
+              { value: 500, name: "500" },
+            ]}
+          />
+        </div>
       </div>
     </div>
   );
