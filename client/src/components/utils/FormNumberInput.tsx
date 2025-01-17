@@ -9,6 +9,7 @@ const FormNumberInput = ({
   disabled,
   required,
   placeholder,
+  center,
   onChange,
 }: FormNumberInputProps) => {
   return (
@@ -19,7 +20,9 @@ const FormNumberInput = ({
         step="0.01"
         name={name}
         id={id ? id : name}
-        className="h-8 p-1 bg-neutral-100 border-gray-400 rounded focus:ring-blue-400 focus:ring-2 disabled:bg-opacity-80 disabled:border-opacity-80"
+        className={`h-8 p-1 bg-neutral-100 border-gray-400 rounded focus:ring-blue-400 focus:ring-2 disabled:bg-opacity-80 disabled:border-opacity-80 ${
+          center ? "text-center" : null
+        }`}
         value={value}
         defaultValue={defaultVal}
         disabled={disabled}
