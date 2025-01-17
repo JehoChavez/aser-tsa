@@ -75,7 +75,7 @@ const ClientePolizas = ({ id }: { id: number }) => {
 
   return (
     <PolizasContext.Provider
-      value={{ polizas, params, fetchPolizas, onSearch }}
+      value={{ polizas, params, setParams, fetchPolizas, onSearch }}
     >
       <div className="w-full flex flex-col h-full">
         <PolizasOptions />
