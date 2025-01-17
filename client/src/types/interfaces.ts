@@ -323,6 +323,7 @@ export interface FormInputProps {
   label?: string;
   disabled?: boolean;
   required?: boolean;
+  center?: boolean;
 }
 
 export interface FormTextInputProps extends FormInputProps {
