@@ -337,6 +337,8 @@ export interface FormNumberInputProps extends FormInputProps {
   defaultVal?: number;
   placeholder?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  maxValue?: number;
+  minValue?: number;
 }
 
 export interface SelectInputOption {

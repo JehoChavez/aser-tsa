@@ -11,6 +11,8 @@ const FormNumberInput = ({
   placeholder,
   center,
   onChange,
+  maxValue,
+  minValue,
 }: FormNumberInputProps) => {
   return (
     <div className="w-full flex flex-col">
@@ -29,6 +31,8 @@ const FormNumberInput = ({
         required={required}
         placeholder={placeholder}
         onChange={onChange}
+        max={maxValue}
+        min={minValue}
       />
     </div>
   );
