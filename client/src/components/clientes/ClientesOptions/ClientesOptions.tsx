@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { ClientesContext } from "../../store/clientes-context";
-import SearchInput from "../utils/SearchInput";
-import IconTextButton from "../utils/IconTextButton";
+import { ClientesContext } from "../../../store/clientes-context";
+import SearchInput from "../../utils/SearchInput";
+import IconTextButton from "../../utils/IconTextButton";
 import { Link } from "react-router-dom";
 
 const ClientesOptions = () => {

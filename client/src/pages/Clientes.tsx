@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import ClientesOptions from "../components/clientes/ClientesOptions";
+import ClientesOptions from "../components/clientes/ClientesOptions/ClientesOptions";
 import ClientesListHeader from "../components/clientes/ClientesListHeader";
 import ClientesList from "../components/clientes/ClientesList";
 import Loading from "../components/utils/Loading";
