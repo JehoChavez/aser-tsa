@@ -11,6 +11,7 @@ import {
 } from "../../types/interfaces";
 import { defaultPolizasContext } from "../../store/polizas-context";
 import { PolizasContext } from "../../store/polizas-context";
+import PageControls from "../utils/PageControls";
 
 const ClientePolizas = ({ id }: { id: number }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +24,8 @@ const ClientePolizas = ({ id }: { id: number }) => {
     cliente: [id],
   });
 
+  const [count, setCount] = useState(0);
+
   const fetchPolizas = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -31,6 +34,7 @@ const ClientePolizas = ({ id }: { id: number }) => {
         withCredentials: true,
       });
       setPolizas(response.data.content);
+      setCount(response.data.count);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -74,16 +78,31 @@ const ClientePolizas = ({ id }: { id: number }) => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
-    <PolizasContext.Provider
-      value={{ polizas, params, setParams, fetchPolizas, onSearch }}
-    >
-      <div className="w-full flex flex-col h-full">
-        <PolizasOptions />
-        <PolizasListHeader />
-        {isLoading && <Loading />}
-        {!isLoading && polizas[0] && <PolizasList />}
+    <>
+      <PolizasContext.Provider
+        value={{ polizas, params, setParams, fetchPolizas, onSearch }}
+      >
+        <div className="w-full flex flex-col h-full">
+          <PolizasOptions />
+          <PolizasListHeader />
+          {isLoading && <Loading />}
+          {!isLoading && polizas[0] && <PolizasList />}
+        </div>
+      </PolizasContext.Provider>
+      <div className="w-full flex justify-center">
+        <PageControls
+          page={params.page || 1}
+          count={count}
+          limit={params.limit || 10}
+          onPageChange={(page) => {
+            setParams({ ...params, page });
+          }}
+          onLimitChange={(limit) => {
+            setParams({ ...params, limit });
+          }}
+        />
       </div>
-    </PolizasContext.Provider>
+    </>
   );
 };
 
