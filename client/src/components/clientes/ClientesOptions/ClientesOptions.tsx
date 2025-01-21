@@ -3,6 +3,7 @@ import { ClientesContext } from "../../../store/clientes-context";
 import SearchInput from "../../utils/SearchInput";
 import IconTextButton from "../../utils/IconTextButton";
 import { Link } from "react-router-dom";
+import TipoDropdown from "./TipoDropdown";
 
 const ClientesOptions = () => {
   const clientesContext = useContext(ClientesContext);
@@ -11,10 +12,7 @@ const ClientesOptions = () => {
     <div className="w-full h-1/5 flex items-center">
       <div className="w-full h-1/2 grid grid-cols-4 md:grid-cols-5 xl:grid-cols-12">
         <div className="flex items-center col-span-1 px-2">
-          <Link
-            to="/clientes/nuevo"
-            className="w-full"
-          >
+          <Link to="/clientes/nuevo" className="w-full">
             <IconTextButton
               icon={
                 <svg
@@ -42,6 +40,7 @@ const ClientesOptions = () => {
             onSearch={clientesContext.onSearch}
           />
         </div>
+        <TipoDropdown />
       </div>
     </div>
   );
