@@ -6,6 +6,8 @@ export const defaultClientesContextValue: ClientesContextInterface = {
   params: {
     page: 1,
     limit: 10,
+    orden: "DESC",
+    por: "createdAt",
   },
   fetchClientes: async () => {},
   onSearch: () => {},

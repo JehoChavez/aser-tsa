@@ -176,6 +176,8 @@ export interface ClientesParamsInterface {
   tipoPersona?: "fisica" | "moral";
   page?: number;
   limit?: number;
+  orden?: "ASC" | "DESC";
+  por?: "nombre" | "createdAt";
 }
 
 export interface ClientesContextInterface {

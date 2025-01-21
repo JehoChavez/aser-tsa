@@ -256,6 +256,8 @@ const clienteQuerySchema = joi.object({
   estadoId: joi.number().integer().positive().min(1).max(32),
   page: joi.number(),
   limit: joi.number(),
+  orden: joi.string().valid("ASC", "DESC"),
+  por: joi.string().valid("createdAt", "nombre"),
 });
 
 const loginSchema = joi.object({

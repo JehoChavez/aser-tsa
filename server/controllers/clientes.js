@@ -4,7 +4,15 @@ const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
 module.exports.getClientes = async (req, res) => {
-  const { nombre, tipoPersona, estadoId, page, limit } = req.query;
+  const {
+    nombre,
+    tipoPersona,
+    estadoId,
+    page = 1,
+    limit = 10,
+    orden = "DESC",
+    por = "createdAt",
+  } = req.query;
 
   const filter = {};
 
@@ -35,7 +43,7 @@ module.exports.getClientes = async (req, res) => {
       "telefono",
       "empresa",
     ],
-    order: [["createdAt", "DESC"]],
+    order: [[por, orden]],
   };
 
   // Pagination
