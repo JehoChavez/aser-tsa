@@ -5,23 +5,25 @@ import ClientesList from "../components/clientes/ClientesList";
 import Loading from "../components/utils/Loading";
 import Modal from "../components/utils/Modal";
 import IconTitle from "../components/utils/IconTitle";
-import { ClienteInterface, ClientesSearchParams } from "../types/interfaces";
+import { ClienteInterface, ClientesParamsInterface } from "../types/interfaces";
 import axios, { AxiosError } from "axios";
-import { ClientesContext } from "../store/clientes-context";
+import {
+  ClientesContext,
+  defaultClientesContextValue,
+} from "../store/clientes-context";
 import { Navigate } from "react-router-dom";
 
 const Clientes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [clientes, setClientes] = useState<ClienteInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [nombre, setNombre] = useState<string>();
+
+  const [clientes, setClientes] = useState<ClienteInterface[]>([]);
+  const [params, setParams] = useState<ClientesParamsInterface>(
+    defaultClientesContextValue.params
+  );
 
   const fetchClientes = useCallback(async () => {
     setIsLoading(true);
-    const params: ClientesSearchParams = {};
-    if (nombre) {
-      params.nombre = nombre;
-    }
     try {
       const response = await axios.get("http://localhost:3000/api/clientes", {
         params,
@@ -38,10 +40,24 @@ const Clientes = () => {
         }
       }
     }
-  }, [nombre]);
+  }, [params]);
 
   const onSearch = (value: string) => {
-    setNombre(value);
+    if (value === "") {
+      setParams((prev) => {
+        return {
+          ...prev,
+          nombre: undefined,
+        };
+      });
+    } else {
+      setParams((prev) => {
+        return {
+          ...prev,
+          nombre: value,
+        };
+      });
+    }
   };
 
   useEffect(() => {
@@ -54,8 +70,10 @@ const Clientes = () => {
     <ClientesContext.Provider
       value={{
         clientes,
+        params,
         fetchClientes,
         onSearch,
+        setParams,
       }}
     >
       <div className="w-full h-full px-5 py-4 flex flex-col overflow-hidden">

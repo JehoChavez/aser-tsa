@@ -171,19 +171,24 @@ export interface ClienteInterface {
   };
 }
 
+export interface ClientesParamsInterface {
+  nombre?: string;
+  tipoPersona?: "fisica" | "moral";
+  page?: number;
+  limit?: number;
+}
+
 export interface ClientesContextInterface {
   clientes: ClienteInterface[];
+  params: ClientesParamsInterface;
   fetchClientes: () => Promise<void>;
   onSearch: (value: string) => void;
+  setParams: (params: ClientesParamsInterface) => void;
 }
 
 export interface SearchInputInterface {
   placeholder: string;
   onSearch: (value: string) => void;
-}
-
-export interface ClientesSearchParams {
-  nombre?: string;
 }
 
 export interface IconTitleParam {
