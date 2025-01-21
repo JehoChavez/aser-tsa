@@ -4,6 +4,7 @@ import SearchInput from "../../utils/SearchInput";
 import IconTextButton from "../../utils/IconTextButton";
 import { Link } from "react-router-dom";
 import TipoDropdown from "./TipoDropdown";
+import OrderDropdown from "./OrderDropdown";
 
 const ClientesOptions = () => {
   const clientesContext = useContext(ClientesContext);
@@ -41,6 +42,7 @@ const ClientesOptions = () => {
           />
         </div>
         <TipoDropdown />
+        <OrderDropdown />
       </div>
     </div>
   );
