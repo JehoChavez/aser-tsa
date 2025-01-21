@@ -4,7 +4,7 @@ const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
 module.exports.getClientes = async (req, res) => {
-  const { nombre, tipoPersona, estadoId } = req.query;
+  const { nombre, tipoPersona, estadoId, page, limit } = req.query;
 
   const filter = {};
 
@@ -24,7 +24,7 @@ module.exports.getClientes = async (req, res) => {
     filter.estadoId = estadoId;
   }
 
-  const listOfClientes = await Cliente.findAll({
+  const options = {
     where: filter,
     attributes: [
       "id",
@@ -36,7 +36,18 @@ module.exports.getClientes = async (req, res) => {
       "empresa",
     ],
     order: [["createdAt", "DESC"]],
-  });
+  };
+
+  // Pagination
+  if (page) {
+    options.offset = (parseInt(page) - 1) * (parseInt(limit) || options.limit);
+  }
+
+  if (limit) {
+    options.limit = parseInt(limit);
+  }
+
+  const listOfClientes = await Cliente.findAll(options);
 
   const response = new CustomResponse(listOfClientes);
 
@@ -71,7 +82,8 @@ module.exports.postCliente = async (req, res) => {
   const clienteData = req.body;
 
   if (clienteData.estadoId === "0") clienteData.estadoId = null;
-  if (clienteData.municipioId === "0" || clienteData.municipioId === 0) clienteData.municipioId = null;
+  if (clienteData.municipioId === "0" || clienteData.municipioId === 0)
+    clienteData.municipioId = null;
 
   const cliente = await Cliente.create(clienteData);
 

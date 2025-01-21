@@ -254,6 +254,8 @@ const clienteQuerySchema = joi.object({
   nombre: joi.string(),
   tipoPersona: joi.string().valid("fisica", "moral"),
   estadoId: joi.number().integer().positive().min(1).max(32),
+  page: joi.number(),
+  limit: joi.number(),
 });
 
 const loginSchema = joi.object({
