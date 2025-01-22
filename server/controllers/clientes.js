@@ -55,9 +55,9 @@ module.exports.getClientes = async (req, res) => {
     options.limit = parseInt(limit);
   }
 
-  const listOfClientes = await Cliente.findAll(options);
+  const { count, rows: clientes } = await Cliente.findAndCountAll(options);
 
-  const response = new CustomResponse(listOfClientes);
+  const response = new CustomResponse(clientes, undefined, undefined, count);
 
   res.status(response.status).json(response);
 };
