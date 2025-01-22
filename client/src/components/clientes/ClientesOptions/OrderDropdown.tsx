@@ -29,7 +29,10 @@ const OrderDropdown = () => {
         full
       >
         {porOptions.map((option) => (
-          <div key={option[0]}>
+          <div
+            key={option[0]}
+            className="hover:font-semibold flex items-center"
+          >
             <input
               type="radio"
               id={option[0]}
@@ -43,7 +46,7 @@ const OrderDropdown = () => {
                 });
               }}
             />
-            <label htmlFor={option[0]} className="hover:font-semibold">
+            <label htmlFor={option[0]} className="w-full">
               {option[1]}
             </label>
           </div>

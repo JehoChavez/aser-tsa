@@ -35,7 +35,7 @@ const EstadoDropdown = () => {
     <div className="flex items-center md:ml-3">
       <Dropdown title="Estado" text right full>
         <div className="w-36 text-gray-800">
-          <div className="hover:font-semibold">
+          <div className="hover:font-semibold flex items-center">
             <input
               type="checkbox"
               id="todas"
@@ -43,9 +43,11 @@ const EstadoDropdown = () => {
               checked={polizasContext.params.estado?.length === 0 || false}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="todas">Todas</label>
+            <label htmlFor="todas" className="w-full">
+              Todas
+            </label>
           </div>
-          <div className="hover:font-semibold">
+          <div className="hover:font-semibold flex items-center">
             <input
               type="checkbox"
               id="vigentes"
@@ -53,9 +55,11 @@ const EstadoDropdown = () => {
               checked={polizasContext.params.estado?.includes("vigentes")}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="vigentes">Vigentes</label>
+            <label htmlFor="vigentes" className="w-full">
+              Vigentes
+            </label>
           </div>
-          <div className="hover:font-semibold">
+          <div className="hover:font-semibold flex items-center">
             <input
               type="checkbox"
               id="renovadas"
@@ -63,9 +67,11 @@ const EstadoDropdown = () => {
               checked={polizasContext.params.estado?.includes("renovadas")}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="renovadas">Renovadas</label>
+            <label htmlFor="renovadas" className="w-full">
+              Renovadas
+            </label>
           </div>
-          <div className="hover:font-semibold">
+          <div className="hover:font-semibold flex items-center">
             <input
               type="checkbox"
               id="reexpedidas"
@@ -73,9 +79,11 @@ const EstadoDropdown = () => {
               checked={polizasContext.params.estado?.includes("reexpedidas")}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="reexpedidas">Reexpedidas</label>
+            <label htmlFor="reexpedidas" className="w-full">
+              Reexpedidas
+            </label>
           </div>
-          <div className="hover:font-semibold">
+          <div className="hover:font-semibold flex items-center">
             <input
               type="checkbox"
               id="canceladas"
@@ -83,9 +91,11 @@ const EstadoDropdown = () => {
               checked={polizasContext.params.estado?.includes("canceladas")}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="canceladas">Canceladas</label>
+            <label htmlFor="canceladas" className="w-full">
+              Canceladas
+            </label>
           </div>
-          <div className="hover:font-semibold">
+          <div className="hover:font-semibold flex items-center">
             <input
               type="checkbox"
               id="vencidas"
@@ -93,7 +103,9 @@ const EstadoDropdown = () => {
               checked={polizasContext.params.estado?.includes("vencidas")}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="vencidas">Vencidas</label>
+            <label htmlFor="vencidas" className="w-full">
+              Vencidas
+            </label>
           </div>
         </div>
       </Dropdown>

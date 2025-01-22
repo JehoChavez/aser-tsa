@@ -139,7 +139,7 @@ const AseguradoraDropdown = () => {
       <div className="flex items-center">
         <Dropdown title="Aseguradora" text right full>
           <div className="w-44 text-gray-800">
-            <div className="hover:font-semibold">
+            <div className="hover:font-semibold flex items-center">
               <input
                 type="checkbox"
                 id="0"
@@ -148,7 +148,7 @@ const AseguradoraDropdown = () => {
                 }
                 onChange={handleAseguradoraCheckboxChange}
               />
-              <label htmlFor="0" className="pl-3">
+              <label htmlFor="0" className="pl-3 w-full">
                 Todas
               </label>
             </div>
@@ -175,32 +175,33 @@ const AseguradoraDropdown = () => {
       <div className="flex items-center">
         <Dropdown title="Agente" text right full>
           <div className="w-44 text-gray-800">
-            <div className="hover:font-semibold">
+            <div className="hover:font-semibold flex items-center">
               <input
                 type="checkbox"
                 id="0"
                 checked={polizasContext.params.agente?.length === 0 || false}
                 onChange={handleAgenteCheckboxChange}
               />
-              <label htmlFor="0" className="pl-3">
+              <label htmlFor="0" className="pl-3 w-full">
                 Todos
               </label>
             </div>
             {agentes.map((agente) => (
-              <div className="hover:font-semibold" key={agente.id}>
-                <div key={agente.id}>
-                  <input
-                    type="checkbox"
-                    id={`${agente.id}`}
-                    onChange={handleAgenteCheckboxChange}
-                    checked={
-                      polizasContext.params.agente?.includes(agente.id) || false
-                    }
-                  />
-                  <label htmlFor={`${agente.id}`} className="pl-3">
-                    {agente.clave}-{agente.nombre}
-                  </label>
-                </div>
+              <div
+                className="hover:font-semibold flex items-center"
+                key={agente.id}
+              >
+                <input
+                  type="checkbox"
+                  id={`${agente.id}`}
+                  onChange={handleAgenteCheckboxChange}
+                  checked={
+                    polizasContext.params.agente?.includes(agente.id) || false
+                  }
+                />
+                <label htmlFor={`${agente.id}`} className="pl-3 w-full">
+                  {agente.clave}-{agente.nombre}
+                </label>
               </div>
             ))}
           </div>

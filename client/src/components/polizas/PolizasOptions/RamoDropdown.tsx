@@ -83,27 +83,27 @@ const RamoDropdown = () => {
       )}
       <Dropdown title="Ramo" text right full>
         <div className="w-44 text-gray-800">
-          <div className="hover:font-semibold">
+          <div className="hover:font-semibold flex items-center">
             <input
               type="checkbox"
               id="0"
               checked={polizasContext.params.ramo?.length === 0 || false}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="0" className="pl-3">
+            <label htmlFor="0" className="pl-3 w-full">
               Todas
             </label>
           </div>
         </div>
         {ramos.map((ramo) => (
-          <div key={ramo.id} className="hover:font-semibold">
+          <div key={ramo.id} className="hover:font-semibold flex items-center">
             <input
               type="checkbox"
               id={ramo.id.toString()}
               checked={polizasContext.params.ramo?.includes(ramo.id) || false}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor={ramo.id.toString()} className="pl-3">
+            <label htmlFor={ramo.id.toString()} className="pl-3 w-full">
               {ramo.ramo}
             </label>
           </div>

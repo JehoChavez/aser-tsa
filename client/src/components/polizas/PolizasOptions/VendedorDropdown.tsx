@@ -81,19 +81,22 @@ const VendedorDropdown = () => {
       )}
       <Dropdown title="Vendedor" text right full>
         <div className="w-44 text-gray-800">
-          <div className="hover:font-semibold">
+          <div className="hover:font-semibold flex items-center">
             <input
               type="checkbox"
               id="0"
               checked={polizasContext.params.vendedor?.length === 0 || false}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="0" className="pl-3">
+            <label htmlFor="0" className="pl-3 w-full">
               Todas
             </label>
           </div>
           {vendedores.map((vendedor) => (
-            <div key={vendedor.id} className="hover:font-semibold">
+            <div
+              key={vendedor.id}
+              className="hover:font-semibold flex items-center"
+            >
               <input
                 type="checkbox"
                 id={vendedor.id.toString()}
@@ -102,7 +105,7 @@ const VendedorDropdown = () => {
                 }
                 onChange={handleCheckboxChange}
               />
-              <label htmlFor={vendedor.id.toString()} className="pl-3">
+              <label htmlFor={vendedor.id.toString()} className="pl-3 w-full">
                 {vendedor.nombre}
               </label>
             </div>
