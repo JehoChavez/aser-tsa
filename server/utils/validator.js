@@ -81,6 +81,7 @@ const vendedorSchema = joi.object({
 
 const clienteSchema = joi.object({
   tipoPersona: joi.string().valid("fisica", "moral"),
+  sexo: joi.string().valid("m", "f"),
   nombre: joi.string().required(),
   nacimiento: joi.alternatives().try(joi.string().isoDate(), joi.date()),
   rfc: joi.string().allow(""),
