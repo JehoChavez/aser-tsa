@@ -44,6 +44,18 @@ const ClienteInfo = ({ cliente }: { cliente: ClienteInterface }) => {
             <p className="inline-block font-semibold mr-1">Tipo:</p>
             <p className="inline-block">Persona {cliente?.tipoPersona}</p>
           </div>
+          {cliente.tipoPersona === "fisica" && (
+            <div>
+              <p className="inline-block font-semibold mr-1">Sexo:</p>
+              <p className="inline-block">
+                {cliente.sexo === "m"
+                  ? "Masculino"
+                  : cliente.sexo === "f"
+                  ? "Femenino"
+                  : null}
+              </p>
+            </div>
+          )}
           <div>
             <p className="inline-block font-semibold mr-1">
               {cliente.tipoPersona === "fisica"
