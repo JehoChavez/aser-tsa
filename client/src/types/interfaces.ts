@@ -146,6 +146,7 @@ export interface Estado {
 export interface ClienteInterface {
   id: number;
   tipoPersona: "fisica" | "moral";
+  sexo?: "m" | "f" | null;
   nombre: string;
   rfc?: string | null;
   correo?: string | null;
@@ -477,6 +478,7 @@ export interface EndososContextInterface {
 
 export interface PersonaSectionProps {
   tipoPersona?: "fisica" | "moral";
+  sexo?: "m" | "f" | null;
   nombre?: string;
   nacimiento?: string | null;
   rfc?: string | null;

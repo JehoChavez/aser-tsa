@@ -8,6 +8,7 @@ import moment from "moment";
 
 const PersonaFormSection = ({
   tipoPersona,
+  sexo,
   nombre,
   nacimiento,
   rfc,
@@ -20,7 +21,7 @@ const PersonaFormSection = ({
 
   return (
     <FormSection>
-      <div className="w-full md:w-1/4 md:pr-1 flex flex-col justify-end">
+      <div className="w-full md:w-1/5 md:pr-1 flex flex-col justify-end">
         <FormSelectInput
           name="tipoPersona"
           label="Tipo de Persona"
@@ -35,7 +36,19 @@ const PersonaFormSection = ({
           }}
         />
       </div>
-      <div className="w-full md:w-1/4 md:px-1 flex flex-col justify-end">
+      <div className="w-full md:w-1/5 md:pr-1 flex flex-col justify-end">
+        <FormSelectInput
+          name="sexo"
+          label="Sexo"
+          options={[
+            { value: "m", name: "Masculino" },
+            { value: "f", name: "Femenino" },
+          ]}
+          defaultVal={sexo as string | undefined}
+          disabled={tipo === "moral"}
+        />
+      </div>
+      <div className="w-full md:w-1/5 md:px-1 flex flex-col justify-end">
         <FormTextInput
           name="nombre"
           label="Nombre"
@@ -43,7 +56,7 @@ const PersonaFormSection = ({
           required
         />
       </div>
-      <div className="w-full md:w-1/4 md:px-1 flex flex-col justify-end">
+      <div className="w-full md:w-1/5 md:px-1 flex flex-col justify-end">
         <FormDateInput
           name="nacimiento"
           label={
@@ -55,7 +68,7 @@ const PersonaFormSection = ({
           }}
         />
       </div>
-      <div className="w-full md:w-1/4 md:pl-1 flex flex-col justify-end">
+      <div className="w-full md:w-1/5 md:pl-1 flex flex-col justify-end">
         <FormTextInput name="rfc" label="RFC" defaultValue={rfc || ""} />
       </div>
     </FormSection>

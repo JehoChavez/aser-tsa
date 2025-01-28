@@ -136,6 +136,7 @@ const ClienteForm = ({ cliente }: { cliente?: ClienteInterface }) => {
         <div>
           <PersonaFormSection
             tipoPersona={cliente?.tipoPersona}
+            sexo={cliente?.sexo}
             nombre={cliente?.nombre}
             nacimiento={cliente?.nacimiento}
             rfc={cliente?.rfc}
