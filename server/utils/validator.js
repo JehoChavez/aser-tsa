@@ -69,9 +69,9 @@ const agenteSchema = joi.object({
 
 const aseguradoraSchema = joi.object({
   aseguradora: joi.string().required(),
-  plazoPrimer: joi.number().integer().min(0),
-  plazoSubsecuentes: joi.number().integer().min(0),
-  comentarios: joi.string(),
+  plazoPrimer: joi.number().integer().min(0).empty("").default(0),
+  plazoSubsecuentes: joi.number().integer().min(0).empty("").default(0),
+  comentarios: joi.string().allow("").empty("").default(null),
 });
 
 const vendedorSchema = joi.object({
@@ -307,3 +307,5 @@ module.exports.validateClienteQuery = queryValidator(clienteQuerySchema);
 module.exports.validateLogin = bodyValidator(loginSchema);
 
 module.exports.validatePendientesQuery = queryValidator(pendientesQuerySchema);
+
+module.exports.aseguradoraSchema = aseguradoraSchema;
