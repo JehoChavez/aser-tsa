@@ -1,6 +1,9 @@
 const { Aseguradora, Sequelize } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
+const csv = require("csv-parser");
+const { Readable } = require("stream");
+const { aseguradoraSchema } = require("../utils/validator");
 
 module.exports.getAseguradoras = async (req, res) => {
   const listOfAseguradoras = await Aseguradora.findAll({
@@ -63,4 +66,49 @@ module.exports.updateAseguradora = async (req, res) => {
   const response = new CustomResponse(updated);
 
   res.status(response.status).json(response);
+};
+
+module.exports.uploadAseguradoras = async (req, res) => {
+  if (!req.file) throw new ExpressError("No se ha subido ningún archivo", 400);
+
+  const results = [];
+  const errors = [];
+
+  const stream = Readable.from(req.file.buffer.toString());
+
+  stream
+    .pipe(csv())
+    .on("data", (row) => {
+      const entry = {
+        aseguradora: row.aseguradora,
+        plazoPrimer: row.plazoPrimerPago,
+        plazoSubsecuentes: row.plazoPagosSubsecuentes,
+        comentarios: row.comentarios,
+      };
+      const { error, value } = aseguradoraSchema.validate(entry);
+
+      if (error) {
+        errors.push({ error: error.message, row });
+      } else {
+        results.push(value);
+      }
+    })
+    .on("end", async () => {
+      try {
+        await Aseguradora.bulkCreate(results);
+
+        const response = new CustomResponse(
+          { results, errors },
+          201,
+          "Aseguradoras subidas"
+        );
+
+        res.status(response.status).json(response);
+      } catch (error) {
+        throw new ExpressError(error);
+      }
+    })
+    .on("error", (error) => {
+      throw new ExpressError(error.message, 400);
+    });
 };

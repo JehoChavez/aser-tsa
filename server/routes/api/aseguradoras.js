@@ -7,11 +7,13 @@ const {
   postAseguradora,
   updateAseguradora,
   deleteAseguradora,
+  uploadAseguradoras,
 } = require("../../controllers/aseguradoras");
 const {
   validateGenericId,
   validateAseguradora,
 } = require("../../utils/validator");
+const upload = require("../../utils/uploadMiddleware");
 
 router
   .route("/")
@@ -23,4 +25,7 @@ router
   .get(validateGenericId, catchAsync(getAseguradora))
   .delete(validateGenericId, catchAsync(deleteAseguradora))
   .put(validateGenericId, validateAseguradora, catchAsync(updateAseguradora));
+
+router.post("/upload", upload.single("file"), catchAsync(uploadAseguradoras));
+
 module.exports = router;
