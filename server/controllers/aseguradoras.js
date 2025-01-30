@@ -74,7 +74,12 @@ module.exports.uploadAseguradoras = async (req, res) => {
   const results = [];
   const errors = [];
 
-  const stream = Readable.from(req.file.buffer.toString());
+  let csvString = req.file.buffer.toString("utf8");
+  if (csvString.charCodeAt(0) === 0xfeff) {
+    csvString = csvString.slice(1);
+  }
+
+  const stream = Readable.from(csvString);
 
   stream
     .pipe(csv())
