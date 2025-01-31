@@ -7,12 +7,14 @@ const {
   postAgente,
   updateAgente,
   deleteAgente,
+  uploadAgentes,
 } = require("../../controllers/agentes");
 const {
   validateIdArray,
   validateAgent,
   validateGenericId,
 } = require("../../utils/validator");
+const upload = require("../../utils/uploadMiddleware");
 
 router
   .route("/")
@@ -24,5 +26,7 @@ router
   .get(validateGenericId, catchAsync(getAgente))
   .put(validateGenericId, validateAgent, catchAsync(updateAgente))
   .delete(validateGenericId, catchAsync(deleteAgente));
+
+router.post("/upload", upload.single("file"), catchAsync(uploadAgentes));
 
 module.exports = router;

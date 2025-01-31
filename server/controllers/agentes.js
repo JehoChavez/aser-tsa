@@ -1,7 +1,10 @@
 const { Op } = require("sequelize");
-const { Agente, Aseguradora } = require("../models");
+const { Agente, Aseguradora, sequelize } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
+const csv = require("csv-parser");
+const { Readable } = require("stream");
+const { agenteSchema } = require("../utils/validator");
 
 module.exports.getAgentes = async (req, res) => {
   const { aseguradora } = req.query;
@@ -99,4 +102,75 @@ module.exports.deleteAgente = async (req, res) => {
   const response = new CustomResponse(agente);
 
   res.status(response.status).json(response);
+};
+
+module.exports.uploadAgentes = async (req, res) => {
+  if (!req.file) throw new ExpressError("No se ha subido ningún archivo", 400);
+
+  const results = [];
+  const errors = [];
+
+  let csvString = req.file.buffer.toString("utf8");
+  if (csvString.charCodeAt(0) === 0xfeff) {
+    csvString = csvString.slice(1);
+  }
+
+  const stream = Readable.from(csvString);
+
+  stream
+    .pipe(csv())
+    .on("data", async (row) => {
+      const t = await sequelize.transaction();
+
+      try {
+        const aseguradora = await Aseguradora.findOne(
+          {
+            where: {
+              aseguradora: {
+                [Op.like]: row.aseguradora,
+              },
+            },
+          },
+          { transaction: t }
+        );
+
+        if (!aseguradora) {
+          errors.push(`Aseguradora ${row.aseguradora} no encontrada`);
+        } else {
+          const entry = {
+            ...row,
+            aseguradoraId: aseguradora.id,
+          };
+
+          const { error } = agenteSchema.validate(entry);
+
+          if (error) {
+            console.log(error);
+            errors.push({ error: error.message, row });
+          } else {
+            results.push(entry);
+          }
+        }
+      } catch (error) {
+        await t.rollback();
+        errors.push(error.message);
+      }
+    })
+    .on("error", (error) => {
+      throw new ExpressError(error.message, 400);
+    })
+    .on("end", () => {
+      if (results.length === 0) {
+        const response = new CustomResponse(
+          { errors },
+          400,
+          "No se ha creado ningún agente"
+        );
+        res.status(response.status).json(response);
+      } else {
+        const response = new CustomResponse({ results, errors });
+
+        res.status(response.status).json(response);
+      }
+    });
 };

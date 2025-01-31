@@ -309,3 +309,5 @@ module.exports.validateLogin = bodyValidator(loginSchema);
 module.exports.validatePendientesQuery = queryValidator(pendientesQuerySchema);
 
 module.exports.aseguradoraSchema = aseguradoraSchema;
+
+module.exports.agenteSchema = agenteSchema;
