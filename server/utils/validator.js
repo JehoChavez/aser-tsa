@@ -63,7 +63,7 @@ const idArraySchema = joi.object({
 const agenteSchema = joi.object({
   clave: joi.number().positive().integer().min(1).required(),
   nombre: joi.string().required(),
-  comentarios: joi.string(),
+  comentarios: joi.string().allow("").empty("").default(null),
   aseguradoraId: joi.number().positive().integer().min(1).required(),
 });
 
