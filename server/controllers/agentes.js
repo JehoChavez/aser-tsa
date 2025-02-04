@@ -138,7 +138,7 @@ module.exports.uploadAgentes = async (req, res) => {
           row,
         });
       } else {
-        const entry = {
+        const { aseguradora: aseguradoraObj, ...entry } = {
           ...row,
           aseguradoraId: aseguradora.id,
         };
