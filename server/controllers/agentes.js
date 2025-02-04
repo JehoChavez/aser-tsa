@@ -117,49 +117,60 @@ module.exports.uploadAgentes = async (req, res) => {
 
   const stream = Readable.from(csvString);
 
+  const processRow = async (row) => {
+    const t = await sequelize.transaction();
+
+    try {
+      const aseguradora = await Aseguradora.findOne(
+        {
+          where: {
+            aseguradora: {
+              [Op.like]: row.aseguradora,
+            },
+          },
+        },
+        { transaction: t }
+      );
+
+      if (!aseguradora) {
+        errors.push({
+          error: `Aseguradora ${row.aseguradora} no encontrada`,
+          row,
+        });
+      } else {
+        const entry = {
+          ...row,
+          aseguradoraId: aseguradora.id,
+        };
+
+        const { error } = agenteSchema.validate(entry);
+
+        if (error) {
+          errors.push({ error: error.details[0].message, row });
+        } else {
+          results.push(entry);
+        }
+      }
+      await t.commit();
+    } catch (error) {
+      await t.rollback();
+      errors.push({ error: error.message, row });
+    }
+  };
+
+  const promises = [];
+
   stream
     .pipe(csv())
     .on("data", async (row) => {
-      const t = await sequelize.transaction();
-
-      try {
-        const aseguradora = await Aseguradora.findOne(
-          {
-            where: {
-              aseguradora: {
-                [Op.like]: row.aseguradora,
-              },
-            },
-          },
-          { transaction: t }
-        );
-
-        if (!aseguradora) {
-          errors.push(`Aseguradora ${row.aseguradora} no encontrada`);
-        } else {
-          const entry = {
-            ...row,
-            aseguradoraId: aseguradora.id,
-          };
-
-          const { error } = agenteSchema.validate(entry);
-
-          if (error) {
-            console.log(error);
-            errors.push({ error: error.message, row });
-          } else {
-            results.push(entry);
-          }
-        }
-      } catch (error) {
-        await t.rollback();
-        errors.push(error.message);
-      }
+      promises.push(processRow(row));
     })
     .on("error", (error) => {
       throw new ExpressError(error.message, 400);
     })
-    .on("end", () => {
+    .on("end", async () => {
+      await Promise.all(promises);
+
       if (results.length === 0) {
         const response = new CustomResponse(
           { errors },
