@@ -148,7 +148,23 @@ module.exports.uploadAgentes = async (req, res) => {
         if (error) {
           errors.push({ error: error.details[0].message, row });
         } else {
-          results.push(entry);
+          const existingAgente = await Agente.findOne({
+            where: {
+              clave: entry.clave,
+              aseguradoraId: aseguradora.id,
+            },
+          });
+          if (existingAgente) {
+            errors.push({
+              error: `Agente ${entry.clave} ya existente`,
+              row,
+            });
+          } else {
+            const agente = await aseguradora.createAgente(entry, {
+              transaction: t,
+            });
+            if (agente) results.push(agente);
+          }
         }
       }
       await t.commit();
