@@ -121,16 +121,14 @@ module.exports.uploadAgentes = async (req, res) => {
     const t = await sequelize.transaction();
 
     try {
-      const aseguradora = await Aseguradora.findOne(
-        {
-          where: {
-            aseguradora: {
-              [Op.like]: row.aseguradora,
-            },
+      const aseguradora = await Aseguradora.findOne({
+        where: {
+          aseguradora: {
+            [Op.like]: row.aseguradora,
           },
         },
-        { transaction: t }
-      );
+        transaction: t,
+      });
 
       if (!aseguradora) {
         errors.push({
