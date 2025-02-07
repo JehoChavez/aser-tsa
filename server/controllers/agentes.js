@@ -143,7 +143,7 @@ module.exports.uploadAgentes = async (req, res) => {
           aseguradoraId: aseguradora.id,
         };
 
-        const { error } = agenteSchema.validate(entry);
+        const { error, value } = agenteSchema.validate(entry);
 
         if (error) {
           errors.push({ error: error.details[0].message, row });
@@ -160,7 +160,7 @@ module.exports.uploadAgentes = async (req, res) => {
               row,
             });
           } else {
-            const agente = await aseguradora.createAgente(entry, {
+            const agente = await aseguradora.createAgente(value, {
               transaction: t,
             });
             if (agente) results.push(agente);
