@@ -151,6 +151,7 @@ module.exports.uploadAgentes = async (req, res) => {
               clave: entry.clave,
               aseguradoraId: aseguradora.id,
             },
+            transaction: t,
           });
           if (existingAgente) {
             errors.push({
