@@ -1,9 +1,10 @@
-const { Aseguradora, Sequelize } = require("../models");
+const { Aseguradora, Sequelize, sequelize } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 const csv = require("csv-parser");
 const { Readable } = require("stream");
 const { aseguradoraSchema } = require("../utils/validator");
+const { Op } = require("sequelize");
 
 module.exports.getAseguradoras = async (req, res) => {
   const listOfAseguradoras = await Aseguradora.findAll({
@@ -81,39 +82,75 @@ module.exports.uploadAseguradoras = async (req, res) => {
 
   const stream = Readable.from(csvString);
 
+  const processRow = async (row) => {
+    const entry = {
+      aseguradora: row.aseguradora,
+      plazoPrimer: row.plazoPrimerPago,
+      plazoSubsecuentes: row.plazoPagosSubsecuentes,
+      comentarios: row.comentarios,
+    };
+    const { error, value } = aseguradoraSchema.validate(entry);
+
+    if (error) {
+      errors.push({ error: error.message, row });
+    } else {
+      const t = await sequelize.transaction();
+
+      try {
+        const aseguradora = await Aseguradora.findOne({
+          where: {
+            aseguradora: {
+              [Op.like]: value.aseguradora,
+            },
+          },
+          transaction: t,
+        });
+
+        if (aseguradora) {
+          errors.push({
+            error: `Aseguradora ${value.aseguradora} ya existe`,
+            row,
+          });
+        } else {
+          const newAseguradora = await Aseguradora.create(value, {
+            transaction: t,
+          });
+
+          if (newAseguradora) results.push(newAseguradora);
+        }
+
+        await t.commit();
+      } catch (error) {
+        await t.rollback();
+        errors.push({ error: error.message, row });
+      }
+    }
+  };
+
+  const promises = [];
+
   stream
     .pipe(csv())
     .on("data", (row) => {
-      const entry = {
-        aseguradora: row.aseguradora,
-        plazoPrimer: row.plazoPrimerPago,
-        plazoSubsecuentes: row.plazoPagosSubsecuentes,
-        comentarios: row.comentarios,
-      };
-      const { error, value } = aseguradoraSchema.validate(entry);
-
-      if (error) {
-        errors.push({ error: error.message, row });
-      } else {
-        results.push(value);
-      }
-    })
-    .on("end", async () => {
-      try {
-        await Aseguradora.bulkCreate(results);
-
-        const response = new CustomResponse(
-          { results, errors },
-          201,
-          "Aseguradoras subidas"
-        );
-
-        res.status(response.status).json(response);
-      } catch (error) {
-        throw new ExpressError(error);
-      }
+      promises.push(processRow(row));
     })
     .on("error", (error) => {
       throw new ExpressError(error.message, 400);
+    })
+    .on("end", async () => {
+      await Promise.all(promises);
+
+      if (results.length === 0) {
+        const response = new CustomResponse(
+          { errors },
+          400,
+          "No se ha creado ninguna aseguradora"
+        );
+        res.status(response.status).json(response);
+      } else {
+        const response = new CustomResponse({ results, errors });
+
+        res.status(response.status).json(response);
+      }
     });
 };
