@@ -92,7 +92,7 @@ module.exports.uploadAseguradoras = async (req, res) => {
     const { error, value } = aseguradoraSchema.validate(entry);
 
     if (error) {
-      errors.push({ error: error.message, row });
+      errors.push({ error: error.details[0].message, row });
     } else {
       const t = await sequelize.transaction();
 
