@@ -76,7 +76,7 @@ const aseguradoraSchema = joi.object({
 
 const vendedorSchema = joi.object({
   nombre: joi.string().required(),
-  comentarios: joi.string(),
+  comentarios: joi.string().allow("").empty("").default(null),
 });
 
 const clienteSchema = joi.object({
@@ -311,3 +311,5 @@ module.exports.validatePendientesQuery = queryValidator(pendientesQuerySchema);
 module.exports.aseguradoraSchema = aseguradoraSchema;
 
 module.exports.agenteSchema = agenteSchema;
+
+module.exports.vendedorSchema = vendedorSchema;

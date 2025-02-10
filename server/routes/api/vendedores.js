@@ -7,11 +7,13 @@ const {
   deleteVendedor,
   updateVendedor,
   getVendedor,
+  uploadVendedores,
 } = require("../../controllers/vendedores");
 const {
   validateVendedor,
   validateGenericId,
 } = require("../../utils/validator");
+const upload = require("../../utils/uploadMiddleware");
 
 router
   .route("/")
@@ -23,5 +25,7 @@ router
   .get(validateGenericId, catchAsync(getVendedor))
   .delete(validateGenericId, catchAsync(deleteVendedor))
   .put(validateGenericId, validateVendedor, catchAsync(updateVendedor));
+
+router.post("/upload", upload.single("file"), catchAsync(uploadVendedores));
 
 module.exports = router;
