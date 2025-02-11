@@ -80,22 +80,45 @@ const vendedorSchema = joi.object({
 });
 
 const clienteSchema = joi.object({
-  tipoPersona: joi.string().valid("fisica", "moral"),
-  sexo: joi.string().valid("m", "f"),
+  tipoPersona: joi
+    .string()
+    .valid("fisica", "moral")
+    .allow("")
+    .empty("")
+    .default(null),
+  sexo: joi.string().valid("m", "f", "").empty("").default(null),
   nombre: joi.string().required(),
-  nacimiento: joi.alternatives().try(joi.string().isoDate(), joi.date()),
-  rfc: joi.string().allow(""),
-  calle: joi.string().allow(""),
-  exterior: joi.string().allow(""),
-  interior: joi.string().allow(""),
-  colonia: joi.string().allow(""),
-  codigoPostal: joi.number().integer().positive().allow("", null),
-  correo: joi.string().email().allow(""),
-  telefono: joi.string().allow(""),
-  empresa: joi.string().allow(""),
-  comentarios: joi.string().allow(""),
-  estadoId: joi.number().integer().min(0).max(32),
-  municipioId: joi.number().integer().min(0),
+  nacimiento: joi
+    .alternatives()
+    .try(joi.string().isoDate(), joi.date())
+    .allow("")
+    .empty("")
+    .default(null),
+  rfc: joi.string().allow("").empty("").default(null),
+  calle: joi.string().allow("").empty("").default(null),
+  exterior: joi.string().allow("").empty("").default(null),
+  interior: joi.string().allow("").empty("").default(null),
+  colonia: joi.string().allow("").empty("").default(null),
+  codigoPostal: joi
+    .number()
+    .integer()
+    .positive()
+    .allow("", null)
+    .empty("")
+    .default(null),
+  correo: joi.string().email().allow("").empty("").default(null),
+  telefono: joi.string().allow("").empty("").default(null),
+  empresa: joi.string().allow("").empty("").default(null),
+  comentarios: joi.string().allow("").empty("").default(null),
+  estadoId: joi
+    .number()
+    .integer()
+    .min(0)
+    .max(32)
+    .allow("")
+    .empty("")
+    .default(null),
+  municipioId: joi.number().integer().min(0).allow("").empty("").default(null),
 });
 
 const reciboSchema = joi.object({
