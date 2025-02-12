@@ -4,7 +4,6 @@ const ExpressError = require("../utils/ExpressError");
 const csv = require("csv-parser");
 const { Readable } = require("stream");
 const { aseguradoraSchema } = require("../utils/validator");
-const { Op } = require("sequelize");
 
 module.exports.getAseguradoras = async (req, res) => {
   const listOfAseguradoras = await Aseguradora.findAll({
@@ -99,9 +98,7 @@ module.exports.uploadAseguradoras = async (req, res) => {
       try {
         const aseguradora = await Aseguradora.findOne({
           where: {
-            aseguradora: {
-              [Op.like]: value.aseguradora,
-            },
+            aseguradora: value.aseguradora,
           },
           transaction: t,
         });

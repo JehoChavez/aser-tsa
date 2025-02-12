@@ -4,7 +4,6 @@ const CustomResponse = require("../utils/CustomResponse");
 const csv = require("csv-parser");
 const { Readable } = require("stream");
 const { vendedorSchema } = require("../utils/validator");
-const { Op } = require("sequelize");
 
 module.exports.getVendedores = async (req, res) => {
   const listOfVendedores = await Vendedor.findAll({
@@ -90,9 +89,7 @@ module.exports.uploadVendedores = async (req, res) => {
       try {
         const existingVendedor = await Vendedor.findOne({
           where: {
-            nombre: {
-              [Op.like]: value.nombre,
-            },
+            nombre: value.nombre,
           },
           transaction: t,
         });
