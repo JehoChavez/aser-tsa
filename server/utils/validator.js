@@ -175,7 +175,7 @@ const polizaSchema = joi.object({
       vendedorId: joi.number().integer().positive().required(),
       ramoId: joi.number().integer().positive().required(),
       renovacionId: joi.number().integer().positive(),
-      reexpedicioId: joi.number().integer().positive(),
+      reexpedicionId: joi.number().integer().positive(),
     })
     .required(),
   recibos: joi.array().items(reciboSchema).required(),
