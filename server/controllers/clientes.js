@@ -130,6 +130,8 @@ module.exports.updateCliente = async (req, res) => {
 };
 
 module.exports.uploadClientes = async (req, res) => {
+  if (!req.file) throw new ExpressError("No se ha subido ningún archivo", 400);
+
   const results = [];
   const errors = [];
 
