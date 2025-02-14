@@ -13,6 +13,7 @@ const {
   cambiarContratante,
   cancelarPoliza,
   anularCancelacion,
+  uploadPolizas,
 } = require("../../controllers/polizas");
 const { getPolizaRecibos } = require("../../controllers/recibos");
 const { getEndosos } = require("../../controllers/endosos");
@@ -24,6 +25,8 @@ const {
   validateClienteId,
   validateCancelacion,
 } = require("../../utils/validator");
+
+const upload = require("../../utils/uploadMiddleware");
 
 router
   .route("/")
@@ -70,5 +73,7 @@ router
 router
   .route("/:id/anular-cancelacion")
   .patch(validateGenericId, catchAsync(anularCancelacion));
+
+router.post("/upload", upload.single("file"), catchAsync(uploadPolizas));
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const { Op, where } = require("sequelize");
+const { Op } = require("sequelize");
 const {
   Poliza,
   Cliente,
@@ -13,6 +13,9 @@ const {
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 const getMexicoDate = require("../utils/getMexicoDate");
+const csv = require("csv-parser");
+const { Readable } = require("stream");
+const { uploadedPolizaSchema } = require("../utils/validator");
 
 module.exports.getPolizas = async (req, res) => {
   const {
@@ -567,4 +570,55 @@ module.exports.anularCancelacion = async (req, res) => {
   const response = new CustomResponse(anulada, 200);
 
   res.status(response.status).json(response);
+};
+
+module.exports.uploadPolizas = async (req, res) => {
+  if (!req.file) throw new ExpressError("No se ha subido ningún archivo", 400);
+
+  const results = [];
+  const errors = [];
+
+  let csvString = req.file.buffer.toString("utf8");
+  if (csvString.charCodeAt(0) === 0xfeff) {
+    csvString = csvString.slice(1);
+  }
+
+  const stream = Readable.from(csvString);
+
+  const processRow = async (row) => {
+    const { error, value } = uploadedPolizaSchema.validate(row);
+
+    if (error) {
+      errors.push({ error: error.details[0].message, row });
+    } else {
+      results.push(value);
+    }
+  };
+
+  const promises = [];
+
+  stream
+    .pipe(csv())
+    .on("data", (row) => {
+      promises.push(processRow(row));
+    })
+    .on("error", (error) => {
+      throw new ExpressError(error.message, 400);
+    })
+    .on("end", async () => {
+      await Promise.all(promises);
+
+      if (results.length === 0) {
+        const response = new CustomResponse(
+          { errors },
+          400,
+          "No se ha creado ninguna póliza"
+        );
+        res.status(response.status).json(response);
+      } else {
+        const response = new CustomResponse({ results, errors });
+
+        res.status(response.status).json(response);
+      }
+    });
 };
