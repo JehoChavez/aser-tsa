@@ -181,6 +181,169 @@ const polizaSchema = joi.object({
   recibos: joi.array().items(reciboSchema).required(),
 });
 
+const uploadedPolizaSchema = joi.object({
+  aseguradora: joi.string().required(),
+  claveAgente: joi.number().positive().integer().min(1).required(),
+  nombreAgente: joi.string().required(),
+  vendedor: joi.string().required(),
+  ramo: joi.string().required(),
+  cliente: joi.string().required(),
+  noPoliza: joi.string().required(),
+  emision: joi
+    .alternatives()
+    .try(
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
+      joi.date()
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  inicioVigencia: joi
+    .alternatives()
+    .try(
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
+      joi.date()
+    )
+    .required(),
+  finVigencia: joi
+    .alternatives()
+    .try(
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
+      joi.date()
+    )
+    .required(),
+  bienAsegurado: joi.string().required(),
+  primaNeta: joi.number().required(),
+  expedicion: joi.number().allow("").empty("").default(null),
+  financiamiento: joi.number().allow("").empty("").default(null),
+  otros: joi.number().allow("").empty("").default(null),
+  iva: joi.number().allow("").empty("").default(null),
+  primaTotal: joi.number().required(),
+  moneda: joi
+    .string()
+    .valid("MXN", "USD", "UDI")
+    .allow("")
+    .empty("")
+    .default("MXN"),
+  formaPago: joi.number().valid(1, 2, 4, 12),
+  comentarios: joi.string().allow("").empty("").default(null),
+  renuevaA: joi.string().allow("").empty("").default(null),
+  recibo1: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  recibo2: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  recibo3: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  recibo4: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  recibo5: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  recibo6: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  recibo7: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  recibo8: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  recibo9: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  recibo10: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  recibo11: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+  recibo12: joi
+    .alternatives()
+    .try(
+      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi.string().valid("pagado", "PAGADO")
+    )
+    .allow("")
+    .empty("")
+    .default(null),
+});
+
 const polizasQuerySchema = joi.object({
   noPoliza: joi.string(),
   page: joi.number(),
@@ -338,3 +501,5 @@ module.exports.agenteSchema = agenteSchema;
 module.exports.vendedorSchema = vendedorSchema;
 
 module.exports.clienteSchema = clienteSchema;
+
+module.exports.uploadedPolizaSchema = uploadedPolizaSchema;
