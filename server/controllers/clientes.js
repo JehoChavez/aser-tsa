@@ -205,7 +205,6 @@ module.exports.uploadClientes = async (req, res) => {
 
       await t.commit();
     } catch (error) {
-      console.log(error);
       await t.rollback();
       errors.push({ error: error.message, row });
     }
