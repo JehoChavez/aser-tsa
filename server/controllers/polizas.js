@@ -588,6 +588,95 @@ module.exports.uploadPolizas = async (req, res) => {
   const processRow = async (row) => {
     const { error, value } = uploadedPolizaSchema.validate(row);
 
+    const t = sequelize.transaction();
+
+    try {
+      let aseguradora = await Aseguradora.findOne({
+        where: { aseguradora: value.aseguradora },
+        transaction: t,
+      });
+
+      if (!aseguradora) {
+        aseguradora = await Aseguradora.create(
+          {
+            aseguradora: value.aseguradora,
+            plazoPrimer: 0,
+            plazoSubsecuentes: 0,
+          },
+          {
+            transaction: t,
+          }
+        );
+      }
+
+      let agente = await Agente.findOne({
+        where: { clave: value.agente },
+        transaction: t,
+      });
+
+      if (!agente) {
+        agente = await Agente.create(
+          {
+            clave: value.agente,
+            nombre: value.agente,
+            aseguradoraId: aseguradora.id,
+          },
+          {
+            transaction: t,
+          }
+        );
+      }
+
+      let vendedor = await Vendedor.findOne({
+        where: { nombre: value.vendedor },
+        transaction: t,
+      });
+
+      if (!vendedor) {
+        vendedor = await Vendedor.create(
+          {
+            nombre: value.vendedor,
+          },
+          {
+            transaction: t,
+          }
+        );
+      }
+
+      let ramo = await Ramo.findOne({
+        where: { ramo: value.ramo },
+        transaction: t,
+      });
+
+      if (!ramo) {
+        ramo = await Ramo.create(
+          {
+            ramo: value.ramo,
+          },
+          { transaction: t }
+        );
+      }
+
+      let cliente = await Cliente.findOne({
+        where: { nombre: value.cliente },
+        transaction: t,
+      });
+
+      if (!cliente) {
+        cliente = await Cliente.create(
+          {
+            nombre: value.cliente,
+          },
+          {
+            transaction: t,
+          }
+        );
+      }
+    } catch (error) {
+      await t.rollback();
+      errors.push({ error: error.message, row });
+    }
+
     if (error) {
       errors.push({ error: error.details[0].message, row });
     } else {
