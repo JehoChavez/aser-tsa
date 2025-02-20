@@ -16,6 +16,7 @@ const getMexicoDate = require("../utils/getMexicoDate");
 const csv = require("csv-parser");
 const { Readable } = require("stream");
 const { uploadedPolizaSchema } = require("../utils/validator");
+const moment = require("moment");
 
 module.exports.getPolizas = async (req, res) => {
   const {
@@ -588,7 +589,14 @@ module.exports.uploadPolizas = async (req, res) => {
   const processRow = async (row) => {
     const { error, value } = uploadedPolizaSchema.validate(row);
 
-    const t = sequelize.transaction();
+    if (value.emision) {
+      value.emision = value.emision.split("/").reverse().join("-");
+    }
+
+    value.inicioVigencia = value.inicioVigencia.split("/").reverse().join("-");
+    value.finVigencia = value.finVigencia.split("/").reverse().join("-");
+
+    const t = await sequelize.transaction();
 
     try {
       let aseguradora = await Aseguradora.findOne({
@@ -610,7 +618,7 @@ module.exports.uploadPolizas = async (req, res) => {
       }
 
       let agente = await Agente.findOne({
-        where: { clave: value.agente },
+        where: { clave: value.claveAgente },
         transaction: t,
       });
 
@@ -672,6 +680,99 @@ module.exports.uploadPolizas = async (req, res) => {
           }
         );
       }
+
+      const poliza = await Poliza.create(
+        {
+          clienteId: cliente.id,
+          aseguradoraId: aseguradora.id,
+          agenteId: agente.id,
+          vendedorId: vendedor.id,
+          ramoId: ramo.id,
+          noPoliza: value.noPoliza,
+          emision: value.emision,
+          inicioVigencia: value.inicioVigencia,
+          finVigencia: value.finVigencia,
+          bienAsegurado: value.bienAsegurado,
+          primaNeta: value.primaNeta,
+          expedicion: value.expedicion,
+          financiamiento: value.financiamiento,
+          otros: value.otros,
+          iva: value.iva,
+          primaTotal: value.primaTotal,
+          moneda: value.moneda,
+          formaPago: value.formaPago,
+          comentarios: value.comentarios,
+        },
+        {
+          transaction: t,
+        }
+      );
+
+      if (value.renuevaA) {
+        const renuevaA = await Poliza.findOne({
+          where: { noPoliza: value.renuevaA },
+          transaction: t,
+        });
+
+        if (renuevaA) {
+          renuevaA.renovacionId = poliza.id;
+          await renuevaA.save({ transaction: t });
+        }
+      }
+
+      for (let i = 0; i < value.formaPago; i++) {
+        const fechaInicio = moment(value.inicioVigencia).add(
+          (12 / value.formaPago) * i,
+          "months"
+        );
+        const fechaLimite = moment(fechaInicio).add(
+          i === 0 ? aseguradora.plazoPrimer : aseguradora.plazoSubsecuentes,
+          "days"
+        );
+
+        let fechaPago = value[`recibo${i + 1}`];
+
+        if (fechaPago === "PAGADO" || fechaPago === "pagado") {
+          fechaPago = moment().toDate();
+        } else if (fechaPago instanceof String) {
+          fechaPago = moment(fechaPago.split("/").reverse().join("-")).toDate();
+        } else {
+          fechaPago = null;
+        }
+
+        const primaNeta = value.primaNeta / value.formaPago;
+        const expedicion = i === 0 ? value.expedicion : 0;
+        const financiamiento = value.financiamiento
+          ? value.financiamiento / value.formaPago
+          : 0;
+        const otros = value.otros ? value.otros / value.formaPago : 0;
+        const iva = (primaNeta + expedicion + financiamiento + otros) * 0.16;
+        const primaTotal =
+          primaNeta + expedicion + financiamiento + iva + otros;
+
+        const recibo = await Recibo.create(
+          {
+            exhibicion: i + 1,
+            de: value.formaPago,
+            primaNeta,
+            expedicion,
+            financiamiento,
+            otros,
+            iva,
+            primaTotal,
+            fechaInicio: fechaInicio.toDate(),
+            fechaLimite: fechaLimite.toDate(),
+            fechaPago,
+            polizaId: poliza.id,
+          },
+          {
+            transaction: t,
+          }
+        );
+      }
+
+      await t.commit();
+      results.push(poliza);
     } catch (error) {
       await t.rollback();
       errors.push({ error: error.message, row });
@@ -679,8 +780,6 @@ module.exports.uploadPolizas = async (req, res) => {
 
     if (error) {
       errors.push({ error: error.details[0].message, row });
-    } else {
-      results.push(value);
     }
   };
 
