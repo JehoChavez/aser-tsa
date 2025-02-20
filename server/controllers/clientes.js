@@ -165,12 +165,13 @@ module.exports.uploadClientes = async (req, res) => {
         entry.estadoId = existingEstado.id;
       }
 
-      if (municipio && municipio instanceof String) {
+      if (estado && municipio && municipio instanceof String) {
         const existingMunicipio = await Municipio.findOne({
           where: {
             municipio: {
               [Op.like]: municipio,
             },
+            estadoId: estado.id,
           },
           transaction: t,
         });
