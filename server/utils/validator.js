@@ -230,7 +230,7 @@ const uploadedPolizaSchema = joi.object({
     .allow("")
     .empty("")
     .default("MXN"),
-  formaPago: joi.number().valid(1, 2, 4, 12),
+  formaPago: joi.number().valid(1, 2, 4, 12).default(1),
   comentarios: joi.string().allow("").empty("").default(null),
   renuevaA: joi.string().allow("").empty("").default(null),
   recibo1: joi
