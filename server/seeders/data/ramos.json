@@ -1,65 +1,65 @@
 [
   {
-    "ramo": "Default"
+    "ramo": "DEFAULT"
   },
   {
-    "ramo": "Autos Individual"
+    "ramo": "AUTOS INDIVIDUAL"
   },
   {
-    "ramo": "Autos Flotilla"
+    "ramo": "AUTOS FLOTILLA"
   },
   {
-    "ramo": "Camiones Individual"
+    "ramo": "CAMIONES INDIVIDUAL"
   },
   {
-    "ramo": "Camiones Flotilla"
+    "ramo": "CAMIONES FLOTILLA"
   },
   {
-    "ramo": "Pick Up Individual"
+    "ramo": "PICK UP INDIVIDUAL"
   },
   {
-    "ramo": "Pick Up Flotilla"
+    "ramo": "PICK UP FLOTILLA"
   },
   {
-    "ramo": "Moto Individual"
+    "ramo": "MOTO INDIVIDUAL"
   },
   {
-    "ramo": "Moto Flotilla"
+    "ramo": "MOTO FLOTILLA"
   },
   {
-    "ramo": "Gastos Médicos Mayores Individual"
+    "ramo": "GASTOS MEDICOS MAYORES INDIVIDUAL"
   },
   {
-    "ramo": "Gastos Médicos Mayores Colectivo"
+    "ramo": "GASTOS MEDICOS MAYORES COLECTIVO"
   },
   {
-    "ramo": "Gastos Médicos Menores Individual"
+    "ramo": "GASTOS MEDICOS MENORES INDIVIDUAL"
   },
   {
-    "ramo": "Gastos Médicos Menores Colectivo"
+    "ramo": "GASTOS MEDICOS MENORES COLECTIVO"
   },
   {
-    "ramo": "Vida Individual"
+    "ramo": "VIDA INDIVIDUAL"
   },
   {
-    "ramo": "Vida Colectivo"
+    "ramo": "VIDA COLECTIVO"
   },
   {
-    "ramo": "Hogar"
+    "ramo": "HOGAR"
   },
   {
-    "ramo": "Daños Empresarial"
+    "ramo": "DAÑOS EMPRESARIAL"
   },
   {
-    "ramo": "Viaje"
+    "ramo": "VIAJE"
   },
   {
-    "ramo": "Construcción"
+    "ramo": "CONSTRUCCION"
   },
   {
-    "ramo": "RC Profesional"
+    "ramo": "RC PROFESIONAL"
   },
   {
-    "ramo": "Otro"
+    "ramo": "OTRO"
   }
 ]
