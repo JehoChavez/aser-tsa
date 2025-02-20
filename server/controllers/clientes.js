@@ -144,7 +144,6 @@ module.exports.uploadClientes = async (req, res) => {
 
   const processRow = async (row) => {
     const { estado, municipio, ...entry } = row;
-    console.log(estado, municipio);
 
     if (entry.nacimiento) {
       entry.nacimiento = entry.nacimiento.split("/").reverse().join("-");
@@ -153,7 +152,7 @@ module.exports.uploadClientes = async (req, res) => {
     const t = await sequelize.transaction();
 
     try {
-      if (estado && estado instanceof String) {
+      if (estado && typeof estado === "string") {
         const existingEstado = await Estado.findOne({
           where: {
             estado: {
@@ -165,7 +164,7 @@ module.exports.uploadClientes = async (req, res) => {
 
         entry.estadoId = existingEstado.id;
 
-        if (existingEstado && municipio && municipio instanceof String) {
+        if (existingEstado && municipio && typeof municipio === "string") {
           const existingMunicipio = await Municipio.findOne({
             where: {
               municipio: {
