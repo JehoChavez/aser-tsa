@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       Municipio.belongsTo(models.Estado, {
         as: "estado",
         foreignKey: "estadoId",
+        onDelete: "CASCADE",
       });
     }
   }
@@ -14,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       municipio: {
         type: DataTypes.STRING,
         allowNull: true,
+      },
+      estadoId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
     },
     {
