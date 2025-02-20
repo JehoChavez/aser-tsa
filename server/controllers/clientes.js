@@ -144,6 +144,7 @@ module.exports.uploadClientes = async (req, res) => {
 
   const processRow = async (row) => {
     const { estado, municipio, ...entry } = row;
+    console.log(estado, municipio);
 
     if (entry.nacimiento) {
       entry.nacimiento = entry.nacimiento.split("/").reverse().join("-");
@@ -163,20 +164,20 @@ module.exports.uploadClientes = async (req, res) => {
         });
 
         entry.estadoId = existingEstado.id;
-      }
 
-      if (estado && municipio && municipio instanceof String) {
-        const existingMunicipio = await Municipio.findOne({
-          where: {
-            municipio: {
-              [Op.like]: municipio,
+        if (existingEstado && municipio && municipio instanceof String) {
+          const existingMunicipio = await Municipio.findOne({
+            where: {
+              municipio: {
+                [Op.like]: municipio,
+              },
+              estadoId: existingEstado.id,
             },
-            estadoId: estado.id,
-          },
-          transaction: t,
-        });
+            transaction: t,
+          });
 
-        entry.municipioId = existingMunicipio.id;
+          entry.municipioId = existingMunicipio.id;
+        }
       }
 
       const { error, value } = clienteSchema.validate(entry);
