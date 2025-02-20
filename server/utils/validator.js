@@ -184,7 +184,6 @@ const polizaSchema = joi.object({
 const uploadedPolizaSchema = joi.object({
   aseguradora: joi.string().required(),
   claveAgente: joi.number().positive().integer().min(1).required(),
-  nombreAgente: joi.string().required(),
   vendedor: joi.string().required(),
   ramo: joi.string().required(),
   cliente: joi.string().required(),
