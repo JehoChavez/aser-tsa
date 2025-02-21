@@ -185,6 +185,7 @@ const polizaSchema = joi.object({
 const uploadedPolizaSchema = joi.object({
   aseguradora: joi.string().required(),
   claveAgente: joi.number().positive().integer().min(1).required(),
+  nombreAgente: joi.string(),
   vendedor: joi.string().required(),
   ramo: joi.string().required(),
   cliente: joi.string().required(),
@@ -237,7 +238,9 @@ const uploadedPolizaSchema = joi.object({
   recibo1: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
@@ -246,7 +249,9 @@ const uploadedPolizaSchema = joi.object({
   recibo2: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
@@ -255,7 +260,9 @@ const uploadedPolizaSchema = joi.object({
   recibo3: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
@@ -264,7 +271,9 @@ const uploadedPolizaSchema = joi.object({
   recibo4: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
@@ -273,7 +282,9 @@ const uploadedPolizaSchema = joi.object({
   recibo5: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
@@ -282,7 +293,9 @@ const uploadedPolizaSchema = joi.object({
   recibo6: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
@@ -291,7 +304,9 @@ const uploadedPolizaSchema = joi.object({
   recibo7: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
@@ -300,7 +315,9 @@ const uploadedPolizaSchema = joi.object({
   recibo8: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
@@ -309,7 +326,9 @@ const uploadedPolizaSchema = joi.object({
   recibo9: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
@@ -318,7 +337,9 @@ const uploadedPolizaSchema = joi.object({
   recibo10: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
@@ -327,7 +348,9 @@ const uploadedPolizaSchema = joi.object({
   recibo11: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
@@ -336,7 +359,9 @@ const uploadedPolizaSchema = joi.object({
   recibo12: joi
     .alternatives()
     .try(
-      joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
+      joi
+        .string()
+        .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.string().valid("pagado", "PAGADO")
     )
     .allow("")
