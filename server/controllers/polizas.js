@@ -617,6 +617,33 @@ module.exports.uploadPolizas = async (req, res) => {
         );
       }
 
+      const existingPoliza = await Poliza.findOne({
+        where: {
+          noPoliza: value.noPoliza,
+          aseguradoraId: aseguradora.id,
+          [Op.or]: [
+            {
+              inicioVigencia: {
+                [Op.between]: [value.inicioVigencia, value.finVigencia],
+              },
+            },
+            {
+              finVigencia: {
+                [Op.between]: [value.inicioVigencia, value.finVigencia],
+              },
+            },
+          ],
+        },
+      });
+
+      if (existingPoliza) {
+        errors.push({
+          error: "Póliza ya existente",
+          row,
+        });
+        return;
+      }
+
       let agente = await Agente.findOne({
         where: { clave: value.claveAgente },
         transaction: t,
@@ -625,8 +652,8 @@ module.exports.uploadPolizas = async (req, res) => {
       if (!agente) {
         agente = await Agente.create(
           {
-            clave: value.agente,
-            nombre: value.agente,
+            clave: value.claveAgente,
+            nombre: value.nombreAgente,
             aseguradoraId: aseguradora.id,
           },
           {
@@ -734,7 +761,7 @@ module.exports.uploadPolizas = async (req, res) => {
 
         if (fechaPago === "PAGADO" || fechaPago === "pagado") {
           fechaPago = moment().toDate();
-        } else if (fechaPago instanceof String) {
+        } else if (typeof fechaPago === "string") {
           fechaPago = moment(fechaPago.split("/").reverse().join("-")).toDate();
         } else {
           fechaPago = null;
