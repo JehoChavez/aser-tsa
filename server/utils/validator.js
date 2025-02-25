@@ -185,7 +185,7 @@ const polizaSchema = joi.object({
 const uploadedPolizaSchema = joi.object({
   aseguradora: joi.string().required(),
   claveAgente: joi.number().positive().integer().min(1).required(),
-  nombreAgente: joi.string(),
+  nombreAgente: joi.string().allow("").empty("").default(null),
   vendedor: joi.string().required(),
   ramo: joi.string().required(),
   cliente: joi.string().required(),
@@ -221,10 +221,10 @@ const uploadedPolizaSchema = joi.object({
     .required(),
   bienAsegurado: joi.string().required(),
   primaNeta: joi.number().required(),
-  expedicion: joi.number().allow("").empty("").default(null),
-  financiamiento: joi.number().allow("").empty("").default(null),
-  otros: joi.number().allow("").empty("").default(null),
-  iva: joi.number().allow("").empty("").default(null),
+  expedicion: joi.number().allow(null).empty("").default(0),
+  financiamiento: joi.number().allow(null).empty("").default(0),
+  otros: joi.number().allow(null).empty("").default(0),
+  iva: joi.number().allow(null).empty("").default(0),
   primaTotal: joi.number().required(),
   moneda: joi
     .string()
