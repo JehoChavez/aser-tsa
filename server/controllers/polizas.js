@@ -589,6 +589,16 @@ module.exports.uploadPolizas = async (req, res) => {
   const processRow = async (row) => {
     const { error, value } = uploadedPolizaSchema.validate(row);
 
+    if (error) {
+      errors.push({ error: error.details[0].message, row });
+      return;
+    }
+
+    if (value.expedicion === "") value.expedicion = 0;
+    if (value.financiamiento === "") value.financiamiento = 0;
+    if (value.otros === "") value.otros = 0;
+    if (value.iva === "") value.iva = 0;
+
     if (value.moneda === "") value.moneda = "MXN";
 
     if (value.emision) {
@@ -805,10 +815,6 @@ module.exports.uploadPolizas = async (req, res) => {
     } catch (error) {
       await t.rollback();
       errors.push({ error: error.message, row });
-    }
-
-    if (error) {
-      errors.push({ error: error.details[0].message, row });
     }
   };
 
