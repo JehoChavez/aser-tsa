@@ -589,6 +589,8 @@ module.exports.uploadPolizas = async (req, res) => {
   const processRow = async (row) => {
     const { error, value } = uploadedPolizaSchema.validate(row);
 
+    if (value.moneda === "") value.moneda = "MXN";
+
     if (value.emision) {
       value.emision = value.emision.split("/").reverse().join("-");
     }
