@@ -691,7 +691,11 @@ module.exports.uploadPolizas = async (req, res) => {
       }
 
       let ramo = await Ramo.findOne({
-        where: { ramo: value.ramo },
+        where: {
+          ramo: {
+            [Op.like]: value.ramo,
+          },
+        },
         transaction: t,
       });
 
