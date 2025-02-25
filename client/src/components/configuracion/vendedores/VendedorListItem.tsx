@@ -76,9 +76,6 @@ const VendedorListItem = ({ vendedor }: { vendedor: VendedorInterface }) => {
           <h4 className="text-center text-3xl my-3 font-semibold">
             ¿Desea eliminar el vendedor {vendedor.nombre}?
           </h4>
-          <p className="text-center text-lg my-3">
-            Sus pólizas serán eliminadas
-          </p>
         </ConfirmModal>
       )}
       {error && (
