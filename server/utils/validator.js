@@ -228,7 +228,8 @@ const uploadedPolizaSchema = joi.object({
   primaTotal: joi.number().required(),
   moneda: joi
     .string()
-    .valid("MXN", "USD", "UDI")
+    .uppercase()
+    .valid("MXN", "USD", "UDI", "mxn", "usd", "udi")
     .allow("")
     .empty("")
     .default("MXN"),
