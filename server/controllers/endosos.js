@@ -169,14 +169,30 @@ module.exports.uploadEndosos = async (req, res) => {
       return;
     }
 
+    const t = await sequelize.transaction();
+
     const poliza = await Poliza.findOne({
       where: {
         noPoliza: value.poliza,
       },
+      transaction: t,
     });
 
     if (!poliza) {
       errors.push({ error: "Póliza no encontrada", row });
+      return;
+    }
+
+    const existingEndoso = await Endoso.findOne({
+      where: {
+        endoso: value.endoso,
+        polizaId: poliza.id,
+      },
+      transaction: t,
+    });
+
+    if (existingEndoso) {
+      errors.push({ error: "Endoso ya existe", row });
       return;
     }
   };
