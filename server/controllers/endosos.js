@@ -195,6 +195,37 @@ module.exports.uploadEndosos = async (req, res) => {
       errors.push({ error: "Endoso ya existe", row });
       return;
     }
+
+    if (value.expedicion === "") value.expedicion = 0;
+    if (value.financiamiento === "") value.financiamiento = 0;
+    if (value.otros === "") value.otros = 0;
+    if (value.iva === "") value.iva = 0;
+
+    if (value.emision) {
+      value.emision = value.emision.split("/").reverse().join("-");
+    }
+
+    value.inicioVigencia = value.inicioVigencia.split("/").reverse().join("-");
+    value.finVigencia = value.finVigencia.split("/").reverse().join("-");
+
+    const endoso = await Endoso.create(
+      {
+        polizaId: poliza.id,
+        endoso: value.endoso,
+        emision: value.emision,
+        inicioVigencia: value.inicioVigencia,
+        finVigencia: value.finVigencia,
+        tipo: value.tipo,
+        primaNeta: value.primaNeta,
+        expedicion: value.expedicion,
+        financiamiento: value.financiamient,
+        otros: value.otros,
+        iva: value.iva,
+        primaTotal: value.primaTotal,
+        concepto: value.concepto,
+      },
+      { transaction: t }
+    );
   };
 
   const promises = [];
