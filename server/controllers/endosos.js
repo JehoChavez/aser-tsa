@@ -171,61 +171,69 @@ module.exports.uploadEndosos = async (req, res) => {
 
     const t = await sequelize.transaction();
 
-    const poliza = await Poliza.findOne({
-      where: {
-        noPoliza: value.poliza,
-      },
-      transaction: t,
-    });
+    try {
+      const poliza = await Poliza.findOne({
+        where: {
+          noPoliza: value.poliza,
+        },
+        transaction: t,
+      });
 
-    if (!poliza) {
-      errors.push({ error: "Póliza no encontrada", row });
-      return;
+      if (!poliza) {
+        errors.push({ error: "Póliza no encontrada", row });
+        return;
+      }
+
+      const existingEndoso = await Endoso.findOne({
+        where: {
+          endoso: value.endoso,
+          polizaId: poliza.id,
+        },
+        transaction: t,
+      });
+
+      if (existingEndoso) {
+        errors.push({ error: "Endoso ya existe", row });
+        return;
+      }
+
+      if (value.expedicion === "") value.expedicion = 0;
+      if (value.financiamiento === "") value.financiamiento = 0;
+      if (value.otros === "") value.otros = 0;
+      if (value.iva === "") value.iva = 0;
+
+      if (value.emision) {
+        value.emision = value.emision.split("/").reverse().join("-");
+      }
+
+      value.inicioVigencia = value.inicioVigencia
+        .split("/")
+        .reverse()
+        .join("-");
+      value.finVigencia = value.finVigencia.split("/").reverse().join("-");
+
+      const endoso = await Endoso.create(
+        {
+          polizaId: poliza.id,
+          endoso: value.endoso,
+          emision: value.emision,
+          inicioVigencia: value.inicioVigencia,
+          finVigencia: value.finVigencia,
+          tipo: value.tipo,
+          primaNeta: value.primaNeta,
+          expedicion: value.expedicion,
+          financiamiento: value.financiamient,
+          otros: value.otros,
+          iva: value.iva,
+          primaTotal: value.primaTotal,
+          concepto: value.concepto,
+        },
+        { transaction: t }
+      );
+    } catch (error) {
+      await t.rollback();
+      errors.push({ error: error.message, row });
     }
-
-    const existingEndoso = await Endoso.findOne({
-      where: {
-        endoso: value.endoso,
-        polizaId: poliza.id,
-      },
-      transaction: t,
-    });
-
-    if (existingEndoso) {
-      errors.push({ error: "Endoso ya existe", row });
-      return;
-    }
-
-    if (value.expedicion === "") value.expedicion = 0;
-    if (value.financiamiento === "") value.financiamiento = 0;
-    if (value.otros === "") value.otros = 0;
-    if (value.iva === "") value.iva = 0;
-
-    if (value.emision) {
-      value.emision = value.emision.split("/").reverse().join("-");
-    }
-
-    value.inicioVigencia = value.inicioVigencia.split("/").reverse().join("-");
-    value.finVigencia = value.finVigencia.split("/").reverse().join("-");
-
-    const endoso = await Endoso.create(
-      {
-        polizaId: poliza.id,
-        endoso: value.endoso,
-        emision: value.emision,
-        inicioVigencia: value.inicioVigencia,
-        finVigencia: value.finVigencia,
-        tipo: value.tipo,
-        primaNeta: value.primaNeta,
-        expedicion: value.expedicion,
-        financiamiento: value.financiamient,
-        otros: value.otros,
-        iva: value.iva,
-        primaTotal: value.primaTotal,
-        concepto: value.concepto,
-      },
-      { transaction: t }
-    );
   };
 
   const promises = [];
