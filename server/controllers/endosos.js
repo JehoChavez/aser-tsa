@@ -207,11 +207,19 @@ module.exports.uploadEndosos = async (req, res) => {
         value.emision = value.emision.split("/").reverse().join("-");
       }
 
-      value.inicioVigencia = value.inicioVigencia
-        .split("/")
-        .reverse()
-        .join("-");
-      value.finVigencia = value.finVigencia.split("/").reverse().join("-");
+      if (!value.inicioVigencia) {
+        value.inicioVigencia = poliza.inicioVigencia;
+      } else {
+        value.inicioVigencia = value.inicioVigencia
+          .split("/")
+          .reverse()
+          .join("-");
+      }
+      if (!value.finVigencia) {
+        value.finVigencia = poliza.finVigencia;
+      } else {
+        value.finVigencia = value.finVigencia.split("/").reverse().join("-");
+      }
 
       const endoso = await Endoso.create(
         {

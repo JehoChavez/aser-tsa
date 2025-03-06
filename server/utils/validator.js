@@ -460,7 +460,10 @@ const uploadedEndosoSchema = joi.object({
         .string()
         .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.date()
-    ),
+    )
+    .allow("")
+    .empty("")
+    .default(null),
   finVigencia: joi
     .alternatives()
     .try(
@@ -468,7 +471,10 @@ const uploadedEndosoSchema = joi.object({
         .string()
         .pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/),
       joi.date()
-    ),
+    )
+    .allow("")
+    .empty("")
+    .default(null),
   tipo: joi.string().uppercase().valid("A", "B", "D"),
   primaNeta: joi.number().required(),
   expedicion: joi.number().allow(null).empty("").default(0),
