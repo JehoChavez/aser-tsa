@@ -240,7 +240,9 @@ module.exports.uploadEndosos = async (req, res) => {
 
       const monthDiff = Math.ceil(reciboFin.diff(reciboInicio, "months", true));
 
-      for (let i = 0; i < poliza.formaPago; i++) {
+      const nrOfRecibos = Math.ceil((monthDiff * poliza.formaPago) / 12);
+
+      for (let i = 0; i < nrOfRecibos; i++) {
         let fechaInicio = moment(poliza.inicioVigencia).add(
           12 / poliza.formaPago
         );
