@@ -232,20 +232,33 @@ module.exports.uploadEndosos = async (req, res) => {
         { transaction: t }
       );
 
-      const reciboInicio = moment(value.inicioVigencia)
+      const polizaInicio = moment(poliza.inicioVigencia)
         .hour(0)
         .minute(0)
         .second(0);
-      const reciboFin = moment(value.finVigencia).hour(0).minute(0).second(0);
 
-      const monthDiff = Math.ceil(reciboFin.diff(reciboInicio, "months", true));
+      const endosoInicio = moment(value.inicioVigencia)
+        .hour(0)
+        .minute(0)
+        .second(0);
+      const endosoFin = moment(value.finVigencia).hour(0).minute(0).second(0);
+
+      const monthDiff = Math.ceil(endosoFin.diff(endosoInicio, "months", true));
 
       const nrOfRecibos = Math.ceil((monthDiff * poliza.formaPago) / 12);
 
+      const monthsSinceInicio = Math.floor(
+        endosoInicio.diff(polizaInicio, "months", true)
+      );
+
       for (let i = 0; i < nrOfRecibos; i++) {
-        let fechaInicio = moment(poliza.inicioVigencia).add(
-          12 / poliza.formaPago
-        );
+        let fechaInicio = polizaInicio
+          .clone()
+          .add(monthsSinceInicio + (12 / poliza.formaPago) * i, "months");
+        if (i === 0) {
+          fechaInicio = endosoInicio;
+        }
+        results.push({ i, fechaInicio });
       }
     } catch (error) {
       await t.rollback();
