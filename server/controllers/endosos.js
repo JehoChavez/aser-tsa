@@ -6,6 +6,7 @@ const ExpressError = require("../utils/ExpressError");
 const { uploadedEndosoSchema } = require("../utils/validator");
 const csv = require("csv-parser");
 const { Readable } = require("stream");
+const moment = require("moment");
 
 // Get endosos by poliza
 module.exports.getEndosos = async (req, res) => {
@@ -230,6 +231,20 @@ module.exports.uploadEndosos = async (req, res) => {
         },
         { transaction: t }
       );
+
+      const reciboInicio = moment(value.inicioVigencia)
+        .hour(0)
+        .minute(0)
+        .second(0);
+      const reciboFin = moment(value.finVigencia).hour(0).minute(0).second(0);
+
+      const monthDiff = Math.ceil(reciboFin.diff(reciboInicio, "months", true));
+
+      for (let i = 0; i < poliza.formaPago; i++) {
+        let fechaInicio = moment(poliza.inicioVigencia).add(
+          12 / poliza.formaPago
+        );
+      }
     } catch (error) {
       await t.rollback();
       errors.push({ error: error.message, row });
