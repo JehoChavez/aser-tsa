@@ -1,6 +1,6 @@
 // Some functions are imported in polizas router
 // Polizas controller already has a lot of code
-const { Endoso, Poliza, Recibo, sequelize } = require("../models");
+const { Endoso, Poliza, Recibo, Aseguradora, sequelize } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 const { uploadedEndosoSchema } = require("../utils/validator");
@@ -177,6 +177,13 @@ module.exports.uploadEndosos = async (req, res) => {
         where: {
           noPoliza: value.poliza,
         },
+        include: [
+          {
+            model: Aseguradora,
+            as: "aseguradora",
+            attributes: ["plazoPrimer", "plazoSubsecuentes"],
+          },
+        ],
         transaction: t,
       });
 
@@ -266,8 +273,56 @@ module.exports.uploadEndosos = async (req, res) => {
         if (i === 0) {
           fechaInicio = endosoInicio;
         }
-        results.push({ i, fechaInicio });
+        const fechaLimite = moment(fechaInicio).add(
+          i === 0
+            ? poliza.aseguradora.plazoPrimer
+            : poliza.aseguradora.plazoSubsecuentes,
+          "days"
+        );
+
+        let fechaPago = value[`recibo${i + 1}`];
+
+        if (fechaPago === "PAGADO" || fechaPago === "pagado") {
+          fechaPago = moment().toDate();
+        } else if (typeof fechaPago === "string") {
+          fechaPago = moment(fechaPago.split("/").reverse().join("-")).toDate();
+        } else {
+          fechaPago = null;
+        }
+
+        const primaNeta = value.primaNeta / nrOfRecibos;
+        const expedicion = i === 0 ? value.expedicion : 0;
+        const financiamiento = value.financiamiento
+          ? value.financiamiento / nrOfRecibos
+          : 0;
+        const otros = value.otros ? value.otros / nrOfRecibos : 0;
+        const iva = (primaNeta + expedicion + financiamiento + otros) * 0.16;
+        const primaTotal =
+          primaNeta + expedicion + financiamiento + iva + otros;
+
+        const recibo = await Recibo.create(
+          {
+            exhibicion: i + 1,
+            de: poliza.formaPago,
+            primaNeta,
+            expedicion,
+            financiamiento,
+            otros,
+            iva,
+            primaTotal,
+            fechaInicio: fechaInicio.toDate(),
+            fechaLimite: fechaLimite.toDate(),
+            fechaPago,
+            polizaId: poliza.id,
+          },
+          {
+            transaction: t,
+          }
+        );
       }
+
+      await t.commit();
+      results.push(poliza);
     } catch (error) {
       await t.rollback();
       errors.push({ error: error.message, row });
