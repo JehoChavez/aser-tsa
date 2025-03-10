@@ -314,6 +314,7 @@ module.exports.uploadEndosos = async (req, res) => {
             fechaLimite: fechaLimite.toDate(),
             fechaPago,
             polizaId: poliza.id,
+            endosoId: endoso.id,
           },
           {
             transaction: t,
