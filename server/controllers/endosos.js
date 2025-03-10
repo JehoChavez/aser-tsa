@@ -303,7 +303,7 @@ module.exports.uploadEndosos = async (req, res) => {
         const recibo = await Recibo.create(
           {
             exhibicion: i + 1,
-            de: poliza.formaPago,
+            de: nrOfRecibos,
             primaNeta,
             expedicion,
             financiamiento,
