@@ -414,7 +414,7 @@ export interface FormRecibosContextInterface {
 }
 
 export interface ReciboListItemProps {
-  reciboIndex: number;
+  recibo: Recibo;
   onReciboChange: (exhibicion: number, updated: Recibo) => void;
 }
 

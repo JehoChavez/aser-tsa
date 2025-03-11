@@ -2,17 +2,10 @@ import { ReciboListItemProps } from "../../../types/interfaces";
 import ListItem from "../../utils/ListItem";
 import FormNumberInput from "../../utils/FormNumberInput";
 import FormDateInput from "../../utils/FormDateInput";
-import { ChangeEvent, useEffect, useState, useContext } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import moment from "moment";
-import { FormRecibosContext } from "../../../store/form-recibos-context";
 
-const ReciboListItem = ({
-  reciboIndex,
-  onReciboChange,
-}: ReciboListItemProps) => {
-  const formRecibosContext = useContext(FormRecibosContext);
-  const recibo = formRecibosContext.recibos[reciboIndex];
-
+const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
   const diff = moment(recibo.fechaLimite).diff(
     moment(recibo.fechaInicio),
     "days"
@@ -63,6 +56,10 @@ const ReciboListItem = ({
     reciboState.fechaInicio,
     reciboState.fechaLimite,
   ]);
+
+  useEffect(() => {
+    setRecibo(recibo);
+  }, [recibo]);
 
   const dateInputChangeHandler = (date: Date, name: string) => {
     setRecibo((prev) => ({
