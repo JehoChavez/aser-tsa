@@ -44,6 +44,23 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
                 "months"
               );
 
+      if (endoso && i === 0) {
+        const reciboFin = inicioVigencia
+          .clone()
+          .add(
+            monthsSinceInicio + (12 / formRecibosContext.formaPago) * (i + 1),
+            "months"
+          );
+
+        const endosoDaysDiff = moment(
+          formRecibosContext.endosoFinVigencia
+        ).diff(reciboInicio, "days");
+        const reciboDaysDiff = reciboFin.diff(reciboInicio, "days");
+
+        const reciboPrimaNeta =
+          (reciboDaysDiff * primas.primaNeta) / endosoDaysDiff;
+      }
+
       const iva =
         primas.iva === 0
           ? 0
