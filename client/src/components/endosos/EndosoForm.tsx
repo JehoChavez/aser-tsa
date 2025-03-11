@@ -102,8 +102,7 @@ const EndosoForm = ({
   };
 
   const onInicioVigenciaChange = (date: Date) => {
-    const newDate = new Date(date.setDate(date.getDate() + 1));
-    setEndosoInicioVigencia(newDate);
+    setEndosoInicioVigencia(date);
   };
   const onFinVigenciaChange = (date: Date) => {
     setEndosoFinVigencia(date);
