@@ -21,6 +21,14 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
     const recibos: Recibo[] = [];
     const inicioVigencia = moment(formRecibosContext.polizaInicioVigencia);
 
+    const endosoInicioVigencia = endoso
+      ? moment(formRecibosContext.endosoInicioVigencia)
+      : null;
+
+    const monthsSinceInicio = Math.floor(
+      endosoInicioVigencia?.diff(inicioVigencia, "months", true) || 0
+    );
+
     const subtotal =
       (primas.primaNeta + primas.financiamiento + primas.otros) /
       formRecibosContext.nrOfRecibos;
@@ -31,7 +39,10 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
           ? moment(formRecibosContext.endosoInicioVigencia)
           : inicioVigencia
               .clone()
-              .add((12 / formRecibosContext.formaPago) * i, "months");
+              .add(
+                monthsSinceInicio + (12 / formRecibosContext.formaPago) * i,
+                "months"
+              );
 
       const iva =
         primas.iva === 0
@@ -119,7 +130,7 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
       <div className="h-1/4 w-full bg-neutral-100 overflow-y-auto">
         {formRecibosContext.recibos.map((recibo, index) => (
           <ReciboListItem
-            reciboIndex={index}
+            recibo={recibo}
             onReciboChange={updateRecibo}
             key={index}
           />
