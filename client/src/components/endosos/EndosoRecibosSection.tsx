@@ -115,7 +115,7 @@ const EndosoRecibosSection = ({ endosoId }: { endosoId: number }) => {
       >
         {isLoading && <Loading />}
         {recibos.map((recibo) => (
-          <PolizaReciboListItem recibo={recibo} key={recibo.id} />
+          <PolizaReciboListItem recibo={recibo} key={recibo.id} isEndoso />
         ))}
       </PolizaRecibosContext.Provider>
     </div>
