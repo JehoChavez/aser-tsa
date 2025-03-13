@@ -29,9 +29,9 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
       endosoInicioVigencia?.diff(inicioVigencia, "months", true) || 0
     );
 
-    const subtotal =
-      (primas.primaNeta + primas.financiamiento + primas.otros) /
-      formRecibosContext.nrOfRecibos;
+    let primaNeta = primas.primaNeta;
+    let financiamiento = primas.financiamiento;
+    let otros = primas.otros;
 
     for (let i = 0; i < formRecibosContext.nrOfRecibos; i++) {
       const reciboInicio =
@@ -44,42 +44,59 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
                 "months"
               );
 
-      if (endoso && i === 0) {
-        const reciboFin = inicioVigencia
-          .clone()
-          .add(
-            monthsSinceInicio + (12 / formRecibosContext.formaPago) * (i + 1),
-            "months"
-          );
+      let reciboPrimaNeta = primaNeta / formRecibosContext.nrOfRecibos;
+      const expedicion = i === 0 ? primas.expedicion : 0;
+      let reciboFinanciamiento =
+        financiamiento / formRecibosContext.nrOfRecibos;
+      let reciboOtros = otros / formRecibosContext.nrOfRecibos;
 
-        const endosoDaysDiff = moment(
-          formRecibosContext.endosoFinVigencia
-        ).diff(reciboInicio, "days");
-        const reciboDaysDiff = reciboFin.diff(reciboInicio, "days");
+      if (endoso) {
+        if (i === 0) {
+          const reciboFin = inicioVigencia
+            .clone()
+            .add(
+              monthsSinceInicio + (12 / formRecibosContext.formaPago) * (i + 1),
+              "months"
+            );
 
-        const reciboPrimaNeta =
-          (reciboDaysDiff * primas.primaNeta) / endosoDaysDiff;
+          const endosoDaysDiff = moment(
+            formRecibosContext.endosoFinVigencia
+          ).diff(reciboInicio, "days");
+          const reciboDaysDiff = reciboFin.diff(reciboInicio, "days");
+
+          reciboPrimaNeta = (reciboDaysDiff * primaNeta) / endosoDaysDiff;
+          reciboFinanciamiento =
+            (reciboDaysDiff * financiamiento) / endosoDaysDiff;
+          reciboOtros = (reciboDaysDiff * otros) / endosoDaysDiff;
+
+          primaNeta -= reciboPrimaNeta;
+          financiamiento -= reciboFinanciamiento;
+          otros -= reciboOtros;
+        } else {
+          reciboPrimaNeta = primaNeta / (formRecibosContext.nrOfRecibos - 1);
+          reciboFinanciamiento =
+            financiamiento / (formRecibosContext.nrOfRecibos - 1);
+          reciboOtros = otros / (formRecibosContext.nrOfRecibos - 1);
+        }
       }
+
+      const subtotal = reciboPrimaNeta + reciboFinanciamiento + reciboOtros;
 
       const iva =
         primas.iva === 0
           ? 0
           : i === 0
-          ? (subtotal + primas.expedicion / formRecibosContext.nrOfRecibos) *
-            0.16
+          ? (subtotal + expedicion) * 0.16
           : subtotal * 0.16;
-      const primaTotal =
-        i === 0
-          ? subtotal + primas.expedicion / formRecibosContext.nrOfRecibos + iva
-          : subtotal + iva;
+      const primaTotal = i === 0 ? subtotal + expedicion + iva : subtotal + iva;
 
       const recibo: Recibo = {
         exhibicion: i + 1,
         de: formRecibosContext.nrOfRecibos,
-        primaNeta: primas.primaNeta / formRecibosContext.nrOfRecibos,
-        expedicion: i === 0 ? primas.expedicion : 0,
-        financiamiento: primas.financiamiento / formRecibosContext.nrOfRecibos,
-        otros: primas.otros / formRecibosContext.nrOfRecibos,
+        primaNeta: reciboPrimaNeta,
+        expedicion,
+        financiamiento: reciboFinanciamiento,
+        otros: reciboOtros,
         iva: iva,
         primaTotal: primaTotal,
         fechaInicio: reciboInicio.format("YYYY-MM-DD"),
