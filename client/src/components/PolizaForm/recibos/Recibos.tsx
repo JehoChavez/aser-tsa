@@ -29,6 +29,10 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
       endosoInicioVigencia?.diff(inicioVigencia, "months", true) || 0
     );
 
+    const pastRecibos = Math.ceil(
+      (monthsSinceInicio * formRecibosContext.formaPago) / 12
+    );
+
     let primaNeta = primas.primaNeta;
     let financiamiento = primas.financiamiento;
     let otros = primas.otros;
@@ -40,7 +44,7 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
           : inicioVigencia
               .clone()
               .add(
-                monthsSinceInicio + (12 / formRecibosContext.formaPago) * i,
+                (pastRecibos + i) * (12 / formRecibosContext.formaPago),
                 "months"
               );
 
@@ -55,7 +59,7 @@ const Recibos = ({ endoso }: { endoso?: boolean }) => {
           const reciboFin = inicioVigencia
             .clone()
             .add(
-              monthsSinceInicio + (12 / formRecibosContext.formaPago) * (i + 1),
+              (pastRecibos + 1) * (12 / formRecibosContext.formaPago),
               "months"
             );
 
