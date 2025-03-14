@@ -266,14 +266,22 @@ module.exports.uploadEndosos = async (req, res) => {
         endosoInicio.diff(polizaInicio, "months", true)
       );
 
+      const pastRecibos = Math.ceil(
+        (monthsSinceInicio * poliza.formaPago) / 12
+      );
+
+      let primaNeta = value.primaNeta;
+      let financiamiento = value.financiamiento;
+      let otros = value.otros;
+
       for (let i = 0; i < nrOfRecibos; i++) {
-        let fechaInicio = polizaInicio
+        let reciboInicio = polizaInicio
           .clone()
-          .add(monthsSinceInicio + (12 / poliza.formaPago) * i, "months");
+          .add((pastRecibos + i) * (12 / poliza.formaPago), "months");
         if (i === 0) {
-          fechaInicio = endosoInicio;
+          reciboInicio = endosoInicio;
         }
-        const fechaLimite = moment(fechaInicio).add(
+        const fechaLimite = moment(reciboInicio).add(
           i === 0
             ? poliza.aseguradora.plazoPrimer
             : poliza.aseguradora.plazoSubsecuentes,
@@ -290,27 +298,54 @@ module.exports.uploadEndosos = async (req, res) => {
           fechaPago = null;
         }
 
-        const primaNeta = value.primaNeta / nrOfRecibos;
+        let reciboPrimaNeta = primaNeta / nrOfRecibos;
         const expedicion = i === 0 ? value.expedicion : 0;
-        const financiamiento = value.financiamiento
-          ? value.financiamiento / nrOfRecibos
-          : 0;
-        const otros = value.otros ? value.otros / nrOfRecibos : 0;
-        const iva = (primaNeta + expedicion + financiamiento + otros) * 0.16;
+        let reciboFinanciamiento = financiamiento / nrOfRecibos;
+        let reciboOtros = otros / nrOfRecibos;
+
+        if (i === 0) {
+          const reciboFin = polizaInicio
+            .clone()
+            .add((pastRecibos + 1) * (12 / poliza.formaPago), "months");
+
+          const endosoDaysDiff = endosoFin.diff(reciboInicio, "days");
+          const reciboDaysDiff = reciboFin.diff(reciboInicio, "days");
+
+          reciboPrimaNeta = (reciboDaysDiff * primaNeta) / endosoDaysDiff;
+          reciboFinanciamiento =
+            (reciboDaysDiff * financiamiento) / endosoDaysDiff;
+          reciboOtros = (reciboDaysDiff * otros) / endosoDaysDiff;
+
+          primaNeta -= reciboPrimaNeta;
+          financiamiento -= reciboFinanciamiento;
+          otros -= reciboOtros;
+        } else {
+          reciboPrimaNeta = primaNeta / (nrOfRecibos - 1);
+          reciboFinanciamiento = financiamiento / (nrOfRecibos - 1);
+          reciboOtros = otros / (nrOfRecibos - 1);
+        }
+
+        const iva =
+          (reciboPrimaNeta + expedicion + reciboFinanciamiento + reciboOtros) *
+          0.16;
         const primaTotal =
-          primaNeta + expedicion + financiamiento + iva + otros;
+          reciboPrimaNeta +
+          expedicion +
+          reciboFinanciamiento +
+          iva +
+          reciboOtros;
 
         const recibo = await Recibo.create(
           {
             exhibicion: i + 1,
             de: nrOfRecibos,
-            primaNeta,
+            primaNeta: reciboPrimaNeta,
             expedicion,
-            financiamiento,
-            otros,
+            financiamiento: reciboFinanciamiento,
+            otros: reciboOtros,
             iva,
             primaTotal,
-            fechaInicio: fechaInicio.toDate(),
+            fechaInicio: reciboInicio.toDate(),
             fechaLimite: fechaLimite.toDate(),
             fechaPago,
             polizaId: poliza.id,
@@ -323,7 +358,7 @@ module.exports.uploadEndosos = async (req, res) => {
       }
 
       await t.commit();
-      results.push(poliza);
+      results.push(endoso);
     } catch (error) {
       await t.rollback();
       errors.push({ error: error.message, row });
