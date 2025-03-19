@@ -4,7 +4,6 @@ import FormNumberInput from "../../utils/FormNumberInput";
 import FormDateInput from "../../utils/FormDateInput";
 import { ChangeEvent, useEffect, useState } from "react";
 import moment from "moment";
-import ActionButton from "../../utils/ActionButton";
 
 const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
   // Compute the constant day difference between fechaLimite and fechaInicio from the prop.
@@ -15,77 +14,85 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
 
   const [localRecibo, setLocalRecibo] = useState(recibo);
 
-  // Sync local state when the recibo prop changes.
-  useEffect(() => {
-    setLocalRecibo(recibo);
-  }, [recibo]);
-
-  // Recompute primaTotal and fechaLimite whenever one of the dependent fields changes.
-  useEffect(() => {
-    setLocalRecibo((prev) => {
-      const sub =
-        (prev.primaNeta || 0) +
-        (prev.expedicion || 0) +
-        (prev.financiamiento || 0) +
-        (prev.otros || 0);
-      const newPrimaTotal = sub + (prev.iva || 0);
-      const newFechaLimite = moment(prev.fechaInicio)
-        .add(diff, "days")
-        .format("YYYY-MM-DD");
-
-      // Only update if something changed.
-      if (
-        prev.primaTotal !== newPrimaTotal ||
-        prev.fechaLimite !== newFechaLimite
-      ) {
-        return {
-          ...prev,
-          primaTotal: newPrimaTotal,
-          fechaLimite: newFechaLimite,
-        };
-      }
-      return prev;
-    });
-  }, [
-    localRecibo.primaNeta,
-    localRecibo.expedicion,
-    localRecibo.financiamiento,
-    localRecibo.otros,
-    localRecibo.iva,
-    localRecibo.fechaInicio,
-    diff,
-  ]);
-
-  const recalculateIva = () => {
-    const sub =
-      (localRecibo.primaNeta || 0) +
-      (localRecibo.expedicion || 0) +
-      (localRecibo.financiamiento || 0) +
-      (localRecibo.otros || 0);
-    const newIva = sub * 0.16;
-    const newPrimaTotal = sub + newIva;
-
+  const updateReciboPrimas = () => {
+    const { primaNeta, expedicion, financiamiento, otros } = localRecibo;
+    const subtotalSum =
+      (primaNeta || 0) +
+      (expedicion || 0) +
+      (financiamiento || 0) +
+      (otros || 0);
     setLocalRecibo((prev) => ({
       ...prev,
-      iva: newIva,
-      primaTotal: newPrimaTotal,
+      iva: subtotalSum * 0.16,
+      primaTotal: subtotalSum + subtotalSum * 0.16,
     }));
   };
 
-  // Notify the parent when key values change.
-  useEffect(() => {
-    onReciboChange(localRecibo.exhibicion, localRecibo);
-  }, [localRecibo.primaTotal, localRecibo.fechaLimite]);
-
+  // Input change handlers.
   const numberInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value ? parseFloat(e.target.value) : 0;
-    setLocalRecibo((prev) => ({ ...prev, [e.target.name]: value }));
+    const { name, value } = e.target;
+    setLocalRecibo((prev) => ({
+      ...prev,
+      [name]: parseFloat(value) || 0,
+    }));
   };
 
   const dateInputChangeHandler = (date: Date, name: string) => {
     const formattedDate = moment(date).format("YYYY-MM-DD");
     setLocalRecibo((prev) => ({ ...prev, [name]: formattedDate }));
   };
+
+  // Sync local state when the recibo prop changes.
+  useEffect(() => {
+    setLocalRecibo(recibo);
+  }, [recibo]);
+
+  // Update the recibo whenever the user changes the input values.
+  useEffect(() => {
+    updateReciboPrimas();
+  }, [
+    localRecibo.primaNeta,
+    localRecibo.expedicion,
+    localRecibo.financiamiento,
+    localRecibo.otros,
+  ]);
+
+  // Update the recibo whenever the iva changes.
+  useEffect(() => {
+    const { primaNeta, expedicion, financiamiento, otros } = localRecibo;
+    const subtotalSum =
+      (primaNeta || 0) +
+      (expedicion || 0) +
+      (financiamiento || 0) +
+      (otros || 0);
+    setLocalRecibo((prev) => ({
+      ...prev,
+      primaTotal: subtotalSum + (localRecibo.iva || 0),
+    }));
+  }, [localRecibo.iva]);
+
+  // Recompute fechaLimite whenever fechaInicio changes.
+  useEffect(() => {
+    setLocalRecibo((prev) => {
+      const newFechaLimite = moment(prev.fechaInicio)
+        .add(diff, "days")
+        .format("YYYY-MM-DD");
+
+      // Only update if something changed.
+      if (prev.fechaLimite !== newFechaLimite) {
+        return {
+          ...prev,
+          fechaLimite: newFechaLimite,
+        };
+      }
+      return prev;
+    });
+  }, [localRecibo.fechaInicio, diff]);
+
+  // Notify the parent component whenever the recibo changes.
+  useEffect(() => {
+    onReciboChange(localRecibo.exhibicion, localRecibo);
+  }, [localRecibo.primaTotal, localRecibo.fechaLimite]);
 
   return (
     <ListItem>
@@ -124,30 +131,12 @@ const ReciboListItem = ({ recibo, onReciboChange }: ReciboListItemProps) => {
           />
         </span>
         <span className="px-1 flex">
-          <div className="w-3/4">
-            <FormNumberInput
-              name="iva"
-              id={`${localRecibo.exhibicion}_iva`}
-              value={localRecibo.iva}
-              onChange={numberInputChangeHandler}
-            />
-          </div>
-          <ActionButton onClick={recalculateIva} title="Recalcular IVA">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-arrow-repeat"
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9" />
-              <path
-                fillRule="evenodd"
-                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"
-              />
-            </svg>
-          </ActionButton>
+          <FormNumberInput
+            name="iva"
+            id={`${localRecibo.exhibicion}_iva`}
+            value={localRecibo.iva}
+            onChange={numberInputChangeHandler}
+          />
         </span>
         <span className="px-1">
           <FormNumberInput
