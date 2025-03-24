@@ -138,7 +138,7 @@ const EndosoForm = ({
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
           setIsAuthenticated(false);
-        } else if (error.response?.data.status === "endoso ya existe") {
+        } else if (error.response?.data.message === "endoso ya existe") {
           setExiste(true);
         } else {
           setError(true);
