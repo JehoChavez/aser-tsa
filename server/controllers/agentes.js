@@ -83,8 +83,10 @@ module.exports.postAgente = async (req, res) => {
 
     const response = new CustomResponse(newAgente, 201);
 
+    await t.commit();
     res.status(response.status).json(response);
   } catch (error) {
+    await t.rollback();
     const response = new CustomResponse(error.message, 500, error.message);
     res.status(response.status).json(response);
   }
