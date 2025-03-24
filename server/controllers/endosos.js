@@ -42,44 +42,58 @@ module.exports.postEndoso = async (req, res) => {
   const endosoData = req.body.endoso;
   const recibosData = req.body.recibos;
 
-  const poliza = await Poliza.findByPk(endosoData.polizaId);
-
-  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
-
-  // Set recibos polizaId to the poliza ID and endoso recibos to recibosData
-  if (recibosData) {
-    endosoData.recibos = recibosData.map((recibo) => {
-      recibo.polizaId = poliza.id;
-      return recibo;
+  const t = await sequelize.transaction();
+  try {
+    const poliza = await Poliza.findByPk(endosoData.polizaId, {
+      transaction: t,
     });
+
+    if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
+    // Set recibos polizaId to the poliza ID and endoso recibos to recibosData
+    if (recibosData) {
+      endosoData.recibos = recibosData.map((recibo) => {
+        recibo.polizaId = poliza.id;
+        return recibo;
+      });
+    }
+
+    // Check if endoso already exists
+    const existingEndoso = await Endoso.findOne({
+      where: {
+        endoso: endosoData.endoso,
+        polizaId: endosoData.polizaId,
+      },
+      transaction: t,
+    });
+
+    if (existingEndoso) throw new ExpressError("endoso ya existe", 400);
+
+    const options =
+      endosoData.tipo === "B"
+        ? {
+            transaction: t,
+          }
+        : {
+            include: {
+              model: Recibo,
+              as: "recibos",
+            },
+            transaction: t,
+          };
+
+    // Create endoso and recibos
+    const endoso = await Endoso.create(endosoData, options);
+
+    const response = new CustomResponse(endoso, 201);
+
+    await t.commit();
+    res.status(response.status).json(response);
+  } catch (error) {
+    await t.rollback();
+    const response = new CustomResponse(error.message, 500, error.message);
+    res.status(response.status).json(response);
   }
-
-  // Check if endoso already exists
-  const existingEndoso = await Endoso.findOne({
-    where: {
-      endoso: endosoData.endoso,
-      polizaId: endosoData.polizaId,
-    },
-  });
-
-  if (existingEndoso) throw new ExpressError("endoso ya existe", 400);
-
-  const options =
-    endosoData.tipo === "B"
-      ? null
-      : {
-          include: {
-            model: Recibo,
-            as: "recibos",
-          },
-        };
-
-  // Create endoso and recibos
-  const endoso = await Endoso.create(endosoData, options);
-
-  const response = new CustomResponse(endoso, 201);
-
-  res.status(response.status).json(response);
 };
 
 module.exports.deleteEndoso = async (req, res) => {
