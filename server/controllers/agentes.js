@@ -59,25 +59,35 @@ module.exports.getAgente = async (req, res) => {
 };
 
 module.exports.postAgente = async (req, res) => {
-  // Check if agente already exists
-  const existingAgent = await Agente.findOne({
-    where: {
-      clave: req.body.clave,
-      aseguradoraId: req.body.aseguradoraId,
-    },
-  });
+  const t = await sequelize.transaction();
 
-  if (existingAgent) throw new ExpressError("agente ya existente", 400);
+  try {
+    // Check if agente already exists
+    const existingAgent = await Agente.findOne({
+      where: {
+        clave: req.body.clave,
+        aseguradoraId: req.body.aseguradoraId,
+      },
+      transaction: t,
+    });
 
-  const aseguradora = await Aseguradora.findByPk(req.body.aseguradoraId);
+    if (existingAgent) throw new ExpressError("agente ya existente", 400);
 
-  if (!aseguradora) throw new ExpressError("aseguradora no encontrada", 404);
+    const aseguradora = await Aseguradora.findByPk(req.body.aseguradoraId, {
+      transaction: t,
+    });
 
-  const newAgente = await Agente.create(req.body);
+    if (!aseguradora) throw new ExpressError("aseguradora no encontrada", 404);
 
-  const response = new CustomResponse(newAgente, 201);
+    const newAgente = await Agente.create(req.body);
 
-  res.status(response.status).json(response);
+    const response = new CustomResponse(newAgente, 201);
+
+    res.status(response.status).json(response);
+  } catch (error) {
+    const response = new CustomResponse(error.message, 500, error.message);
+    res.status(response.status).json(response);
+  }
 };
 
 module.exports.updateAgente = async (req, res) => {
