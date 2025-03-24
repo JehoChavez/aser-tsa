@@ -1,7 +1,13 @@
 import ActionButton from "./ActionButton";
 import Modal from "./Modal";
 
-const ErrorModal = ({ onClick }: { onClick?: () => void }) => {
+const ErrorModal = ({
+  message,
+  onClick,
+}: {
+  message?: String;
+  onClick?: () => void;
+}) => {
   return (
     <Modal size="small">
       <div className="w-full flex justify-center mt-3 text-red-700">
@@ -17,7 +23,9 @@ const ErrorModal = ({ onClick }: { onClick?: () => void }) => {
         </svg>
       </div>
       <h4 className="text-center text-3xl mt-3">Algo salió mal</h4>
-      <p className="text-center text-lg">Intenta de nuevo más tarde</p>
+      <p className="text-center text-lg">
+        {message || "Intenta de nuevo más tarde"}
+      </p>
       <div className="w-full flex justify-center mt-2">
         <ActionButton onClick={onClick} color="blue" size="lg">
           OK
