@@ -32,6 +32,7 @@ const AgenteFormDialog = ({
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [message, setMessage] = useState<undefined | String>(undefined);
 
   const fetchAseguradoras = useCallback(async () => {
     try {
@@ -72,6 +73,9 @@ const AgenteFormDialog = ({
           setIsAuthenticated(false);
         }
         setError(true);
+        if (error.response?.data.message === "agente ya existente") {
+          setMessage("El agente ya existe");
+        }
       }
     } finally {
       setIsLoading(false);
@@ -133,6 +137,7 @@ const AgenteFormDialog = ({
       )}
       {error && (
         <ErrorModal
+          message={message}
           onClick={() => {
             setError(false);
           }}
