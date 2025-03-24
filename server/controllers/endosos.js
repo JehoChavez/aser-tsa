@@ -112,17 +112,17 @@ module.exports.updateEndoso = async (req, res) => {
   const endosoData = req.body.endoso;
   const recibosData = req.body.recibos;
 
-  const endoso = await Endoso.findByPk(req.params.id);
-
-  if (!endoso) throw new ExpressError("endoso no encontrado", 404);
-
-  const poliza = await Poliza.findByPk(endosoData.polizaId);
-
-  if (!poliza) throw new ExpressError("poliza no encontrada", 404);
-
   const t = await sequelize.transaction();
 
   try {
+    const endoso = await Endoso.findByPk(req.params.id);
+
+    if (!endoso) throw new ExpressError("endoso no encontrado", 404);
+
+    const poliza = await Poliza.findByPk(endosoData.polizaId);
+
+    if (!poliza) throw new ExpressError("poliza no encontrada", 404);
+
     // Delete recibos
     await Recibo.destroy({
       where: {
@@ -158,8 +158,12 @@ module.exports.updateEndoso = async (req, res) => {
     res.status(response.status).json(response);
   } catch (error) {
     await t.rollback();
-
-    throw new ExpressError();
+    const response = new CustomResponse(
+      error.message,
+      error.status || 500,
+      error.message
+    );
+    res.status(response.status).json(response);
   }
 };
 
