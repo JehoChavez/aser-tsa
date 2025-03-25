@@ -323,6 +323,7 @@ export interface IconTextButtonInterface {
   textColor?: string;
   hover?: string;
   onClick?: () => void;
+  onRightClick?: () => void;
 }
 
 export interface FormInputProps {
