@@ -9,6 +9,7 @@ import AseguradorasList from "./AseguradorasList";
 import ButtonPortal from "../ButtonPortal";
 import IconTextButton from "../../utils/IconTextButton";
 import AseguradoraFormDialog from "./AseguradoraFormDialog";
+import UploadButton from "../UploadButton";
 
 const AseguradorasView = () => {
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
@@ -19,6 +20,7 @@ const AseguradorasView = () => {
   const [isError, setIsError] = useState(false);
 
   const [showDialog, setShowDialog] = useState(false);
+  const [showUploadButton, setShowUploadButton] = useState(false);
 
   const fetchAseguradoras = useCallback(async () => {
     setIsLoading(true);
@@ -40,6 +42,14 @@ const AseguradorasView = () => {
     }
   }, []);
 
+  const handleClick = () => {
+    setShowDialog(true);
+  };
+
+  const handleRightClick = () => {
+    setShowUploadButton((prevState) => !prevState);
+  };
+
   useEffect(() => {
     fetchAseguradoras();
   }, []);
@@ -57,25 +67,35 @@ const AseguradorasView = () => {
         />
       )}
       <ButtonPortal>
-        <IconTextButton
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-plus-circle-fill"
-              viewBox="0 0 16 16"
-            >
-              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-            </svg>
-          }
-          width="w-full"
-          height="h-full"
-          onClick={() => setShowDialog(true)}
-        >
-          Nueva
-        </IconTextButton>
+        <div className="flex flex-col align-center mt-2">
+          <IconTextButton
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-plus-circle-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+              </svg>
+            }
+            width="w-full"
+            height="h-full"
+            onClick={handleClick}
+            onRightClick={handleRightClick}
+          >
+            Nueva
+          </IconTextButton>
+          {showUploadButton && (
+            <UploadButton
+              onClick={() => {
+                console.log("carga masiva");
+              }}
+            />
+          )}
+        </div>
       </ButtonPortal>
       <AseguradorasContext.Provider value={{ aseguradoras, fetchAseguradoras }}>
         {showDialog && (
