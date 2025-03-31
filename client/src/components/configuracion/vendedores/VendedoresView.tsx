@@ -10,6 +10,7 @@ import ButtonPortal from "../ButtonPortal";
 import IconTextButton from "../../utils/IconTextButton";
 import VendedorFormDialog from "./VendedorFormDialog";
 import UploadButton from "../UploadButton";
+import MassiveUploadDialog from "../MassiveUploadDialog";
 
 const VendedoresView = () => {
   const [vendedores, setVendedores] = useState<VendedorInterface[]>([]);
@@ -21,6 +22,8 @@ const VendedoresView = () => {
 
   const [showDialog, setShowDialog] = useState(false);
   const [showUploadButton, setShowUploadButton] = useState(false);
+
+  const [showMassiveUpload, setShowMassiveUpload] = useState(false);
 
   const fetchVendedores = useCallback(async () => {
     setIsLoading(true);
@@ -47,6 +50,10 @@ const VendedoresView = () => {
 
   const handleRightClick = () => {
     setShowUploadButton((prevState) => !prevState);
+  };
+
+  const handleUploadClick = () => {
+    setShowMassiveUpload(true);
   };
 
   useEffect(() => {
@@ -88,13 +95,7 @@ const VendedoresView = () => {
           >
             Nuevo
           </IconTextButton>
-          {showUploadButton && (
-            <UploadButton
-              onClick={() => {
-                console.log("carga masiva");
-              }}
-            />
-          )}
+          {showUploadButton && <UploadButton onClick={handleUploadClick} />}
         </div>
       </ButtonPortal>
       <VendedoresContext.Provider value={{ vendedores, fetchVendedores }}>
@@ -102,6 +103,12 @@ const VendedoresView = () => {
           <VendedorFormDialog
             onCancel={() => setShowDialog(false)}
             onSuccess={() => setShowDialog(false)}
+          />
+        )}
+        {showMassiveUpload && (
+          <MassiveUploadDialog
+            type="vendedores"
+            onClose={() => setShowMassiveUpload(false)}
           />
         )}
         <VendedoresList />

@@ -10,6 +10,7 @@ import ButtonPortal from "../ButtonPortal";
 import IconTextButton from "../../utils/IconTextButton";
 import AseguradoraFormDialog from "./AseguradoraFormDialog";
 import UploadButton from "../UploadButton";
+import MassiveUploadDialog from "../MassiveUploadDialog";
 
 const AseguradorasView = () => {
   const [aseguradoras, setAseguradoras] = useState<AseguradoraInterface[]>([]);
@@ -21,6 +22,8 @@ const AseguradorasView = () => {
 
   const [showDialog, setShowDialog] = useState(false);
   const [showUploadButton, setShowUploadButton] = useState(false);
+
+  const [showMassiveUpload, setShowMassiveUpload] = useState(false);
 
   const fetchAseguradoras = useCallback(async () => {
     setIsLoading(true);
@@ -48,6 +51,10 @@ const AseguradorasView = () => {
 
   const handleRightClick = () => {
     setShowUploadButton((prevState) => !prevState);
+  };
+
+  const handleUploadClick = () => {
+    setShowMassiveUpload(true);
   };
 
   useEffect(() => {
@@ -88,18 +95,18 @@ const AseguradorasView = () => {
           >
             Nueva
           </IconTextButton>
-          {showUploadButton && (
-            <UploadButton
-              onClick={() => {
-                console.log("carga masiva");
-              }}
-            />
-          )}
+          {showUploadButton && <UploadButton onClick={handleUploadClick} />}
         </div>
       </ButtonPortal>
       <AseguradorasContext.Provider value={{ aseguradoras, fetchAseguradoras }}>
         {showDialog && (
           <AseguradoraFormDialog onCancel={() => setShowDialog(false)} />
+        )}
+        {showMassiveUpload && (
+          <MassiveUploadDialog
+            type="aseguradoras"
+            onClose={() => setShowMassiveUpload(false)}
+          />
         )}
         <AseguradorasList />
       </AseguradorasContext.Provider>

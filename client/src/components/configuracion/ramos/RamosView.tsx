@@ -10,6 +10,7 @@ import ButtonPortal from "../ButtonPortal";
 import IconTextButton from "../../utils/IconTextButton";
 import RamoFormDialog from "./RamoFormDialog";
 import UploadButton from "../UploadButton";
+import MassiveUploadDialog from "../MassiveUploadDialog";
 
 const RamosView = () => {
   const [ramos, setRamos] = useState<RamoInterface[]>([]);
@@ -21,6 +22,8 @@ const RamosView = () => {
 
   const [showDialog, setShowDialog] = useState(false);
   const [showUploadButton, setShowUploadButton] = useState(false);
+
+  const [showMassiveUpload, setShowMassiveUpload] = useState(false);
 
   const fetchRamos = useCallback(async () => {
     setIsLoading(true);
@@ -47,6 +50,10 @@ const RamosView = () => {
 
   const handleRightClick = () => {
     setShowUploadButton((prevState) => !prevState);
+  };
+
+  const handleUploadClick = () => {
+    setShowMassiveUpload(true);
   };
 
   useEffect(() => {
@@ -87,13 +94,7 @@ const RamosView = () => {
           >
             Nuevo
           </IconTextButton>
-          {showUploadButton && (
-            <UploadButton
-              onClick={() => {
-                console.log("carga masiva");
-              }}
-            />
-          )}
+          {showUploadButton && <UploadButton onClick={handleUploadClick} />}
         </div>
       </ButtonPortal>
       <RamosContext.Provider value={{ ramos, fetchRamos }}>
@@ -101,6 +102,12 @@ const RamosView = () => {
           <RamoFormDialog
             onCancel={() => setShowDialog(false)}
             onSuccess={() => setShowDialog(false)}
+          />
+        )}
+        {showMassiveUpload && (
+          <MassiveUploadDialog
+            type="ramos"
+            onClose={() => setShowMassiveUpload(false)}
           />
         )}
         <RamosList />

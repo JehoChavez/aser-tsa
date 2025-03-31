@@ -9,6 +9,7 @@ import ButtonPortal from "../ButtonPortal";
 import IconTextButton from "../../utils/IconTextButton";
 import AgenteFormDialog from "./AgenteFormDialog";
 import UploadButton from "../UploadButton";
+import MassiveUploadDialog from "../MassiveUploadDialog";
 
 const AgentesView = () => {
   const [agentes, setAgentes] = useState<AgenteInterface[]>([]);
@@ -21,6 +22,8 @@ const AgentesView = () => {
 
   const [showDialog, setShowDialog] = useState(false);
   const [showUploadButton, setShowUploadButton] = useState(false);
+
+  const [showMassiveUpload, setShowMassiveUpload] = useState(false);
 
   const fetchAgentes = useCallback(async () => {
     setIsLoading(true);
@@ -48,6 +51,10 @@ const AgentesView = () => {
 
   const handleRightClick = () => {
     setShowUploadButton((prevState) => !prevState);
+  };
+
+  const handleUploadClick = () => {
+    setShowMassiveUpload(true);
   };
 
   useEffect(() => {
@@ -87,13 +94,7 @@ const AgentesView = () => {
           >
             Nuevo
           </IconTextButton>
-          {showUploadButton && (
-            <UploadButton
-              onClick={() => {
-                console.log("carga masiva");
-              }}
-            />
-          )}
+          {showUploadButton && <UploadButton onClick={handleUploadClick} />}
         </div>
       </ButtonPortal>
       <AgentesContext.Provider
@@ -110,6 +111,12 @@ const AgentesView = () => {
           <AgenteFormDialog
             onCancel={() => setShowDialog(false)}
             onSuccess={() => setShowDialog(false)}
+          />
+        )}
+        {showMassiveUpload && (
+          <MassiveUploadDialog
+            type="agentes"
+            onClose={() => setShowMassiveUpload(false)}
           />
         )}
         <AgentesList />
