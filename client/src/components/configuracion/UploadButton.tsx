@@ -1,8 +1,14 @@
 import IconTextButton from "../utils/IconTextButton";
 
-const UploadButton = ({ onClick }: { onClick: () => void }) => {
+const UploadButton = ({
+  onClick,
+  onRightClick,
+}: {
+  onClick: () => void;
+  onRightClick: () => void;
+}) => {
   return (
-    <div className="w-full my-2">
+    <div className="w-full">
       <IconTextButton
         icon={
           <svg
@@ -19,6 +25,7 @@ const UploadButton = ({ onClick }: { onClick: () => void }) => {
         }
         width="w-full"
         onClick={onClick}
+        onRightClick={onRightClick}
       >
         Carga Masiva
       </IconTextButton>
