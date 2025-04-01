@@ -1,3 +1,5 @@
+import ActionButton from "../utils/ActionButton";
+
 const Response = ({ results, errors }: { results: any[]; errors: any[] }) => {
   const resultsString = JSON.stringify(results, null, 2);
   const errorsString = JSON.stringify(errors, null, 2);
@@ -16,6 +18,15 @@ const Response = ({ results, errors }: { results: any[]; errors: any[] }) => {
           <pre className="bg-gray-100 p-2 rounded border border-gray-300 overflow-auto">
             {errorsString}
           </pre>
+        </div>
+        <div className="flex justify-end mt-4">
+          <ActionButton
+            size="lg"
+            color="blue"
+            onClick={() => window.location.reload()}
+          >
+            Cerrar
+          </ActionButton>
         </div>
       </div>
     </div>
