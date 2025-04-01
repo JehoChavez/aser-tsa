@@ -63,7 +63,7 @@ const MassiveUploadDialog = ({
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
-    <Modal size={response ? "medium" : "small"} closeBtn onClose={onClose}>
+    <Modal size={response ? "large" : "small"} closeBtn onClose={onClose}>
       <h3 className="text-2xl bg-blue-950 text-neutral-50 rounded p-2">
         Carga masiva de {type}
       </h3>
