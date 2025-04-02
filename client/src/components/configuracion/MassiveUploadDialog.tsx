@@ -10,7 +10,14 @@ const MassiveUploadDialog = ({
   type,
   onClose,
 }: {
-  type: "aseguradoras" | "agentes" | "vendedores" | "ramos";
+  type:
+    | "aseguradoras"
+    | "agentes"
+    | "vendedores"
+    | "ramos"
+    | "polizas"
+    | "clientes"
+    | "endosos";
   onClose: () => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
