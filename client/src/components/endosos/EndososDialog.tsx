@@ -9,6 +9,8 @@ import { Navigate } from "react-router-dom";
 import EndosoForm from "./EndosoForm";
 import { AseguradoraInterface, EndosoInterface } from "../../types/interfaces";
 import Endoso from "./Endoso";
+import UploadButton from "../configuracion/UploadButton";
+import MassiveUploadDialog from "../configuracion/MassiveUploadDialog";
 
 const EndososDialog = ({
   polizaId,
@@ -42,6 +44,17 @@ const EndososDialog = ({
   const [endosoToShow, setEndosoToShow] = useState<EndosoInterface | null>(
     null
   );
+
+  const [showUploadButton, setShowUploadButton] = useState(false);
+  const [showMassiveUpload, setShowMassiveUpload] = useState(false);
+
+  const handleRightClick = () => {
+    setShowUploadButton((prevState) => !prevState);
+  };
+
+  const handleUploadClick = () => {
+    setShowMassiveUpload(true);
+  };
 
   const fetchEndosos = async () => {
     setIsLoading(true);
@@ -81,6 +94,12 @@ const EndososDialog = ({
         onClose();
       }}
     >
+      {showMassiveUpload && (
+        <MassiveUploadDialog
+          type="endosos"
+          onClose={() => setShowMassiveUpload(false)}
+        />
+      )}
       <h2 className="w-full text-center text-2xl bg-blue-950 text-gray-100 font-bold p-1">
         ENDOSOS {noPoliza}
       </h2>
@@ -129,33 +148,45 @@ const EndososDialog = ({
             <div className="p-2">
               <h3 className="mb-2 text-neutral-900">Crear</h3>
               <div className="flex flex-col md:flex-row">
-                <ActionButton
-                  color="blue"
-                  onClick={() => {
-                    setShowForm(true);
-                    setEndosoType("A");
-                  }}
-                >
-                  Endoso A
-                </ActionButton>
-                <ActionButton
-                  color="blue"
-                  onClick={() => {
-                    setShowForm(true);
-                    setEndosoType("B");
-                  }}
-                >
-                  Endoso B
-                </ActionButton>
-                <ActionButton
-                  color="blue"
-                  onClick={() => {
-                    setShowForm(true);
-                    setEndosoType("D");
-                  }}
-                >
-                  Endoso D
-                </ActionButton>
+                {showUploadButton ? (
+                  <UploadButton
+                    onClick={handleUploadClick}
+                    onRightClick={handleRightClick}
+                  />
+                ) : (
+                  <>
+                    <ActionButton
+                      color="blue"
+                      onClick={() => {
+                        setShowForm(true);
+                        setEndosoType("A");
+                      }}
+                      onRightClick={handleRightClick}
+                    >
+                      Endoso A
+                    </ActionButton>
+                    <ActionButton
+                      color="blue"
+                      onClick={() => {
+                        setShowForm(true);
+                        setEndosoType("B");
+                      }}
+                      onRightClick={handleRightClick}
+                    >
+                      Endoso B
+                    </ActionButton>
+                    <ActionButton
+                      color="blue"
+                      onClick={() => {
+                        setShowForm(true);
+                        setEndosoType("D");
+                      }}
+                      onRightClick={handleRightClick}
+                    >
+                      Endoso D
+                    </ActionButton>
+                  </>
+                )}
               </div>
             </div>
             {isLoading ? (
