@@ -128,6 +128,7 @@ export interface ActionButtonInterface {
   disabled?: boolean;
   full?: boolean;
   children: ReactNode;
+  onRightClick?: () => void;
 }
 
 export interface Municipio {

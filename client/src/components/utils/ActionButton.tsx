@@ -8,6 +8,7 @@ const ActionButton = ({
   size,
   disabled,
   full,
+  onRightClick,
 }: ActionButtonInterface) => {
   let colorClassnames =
     "bg-gray-100 border-blue-950 text-blue-950 hover:bg-gray-300 active:bg-gray-600 shadow active:text-white disabled:hover:bg-gray-100 disabled:active:bg-gray-100 disabled:active:text-blue-950";
@@ -31,6 +32,12 @@ const ActionButton = ({
       onClick={() => {
         if (onClick && !disabled) {
           onClick();
+        }
+      }}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        if (onRightClick && !disabled) {
+          onRightClick();
         }
       }}
       disabled={disabled}
