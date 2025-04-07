@@ -8,7 +8,7 @@ const UploadButton = ({
   onRightClick: () => void;
 }) => {
   return (
-    <div className="w-full">
+    <div className="w-full max-w-40">
       <IconTextButton
         icon={
           <svg
