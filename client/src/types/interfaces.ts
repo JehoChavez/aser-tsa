@@ -458,7 +458,8 @@ export interface SuccessModalProps {
     | "clienteEliminado"
     | "guardado"
     | "editado"
-    | "eliminado";
+    | "eliminado"
+    | "contraseña";
   onOk: () => void;
 }
 
