@@ -342,6 +342,11 @@ export interface FormTextInputProps extends FormInputProps {
   onChange?: () => void;
 }
 
+export interface FormPasswordProps extends FormInputProps {
+  errorMessage?: string;
+  autoComplete: "on" | "off" | "new-password";
+}
+
 export interface FormNumberInputProps extends FormInputProps {
   value?: number;
   defaultVal?: number;
