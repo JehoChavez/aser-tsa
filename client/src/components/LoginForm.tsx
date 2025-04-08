@@ -1,6 +1,7 @@
 import { FormEvent, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
+import FormPasswordInput from "./utils/FormPasswordInput";
 
 const LoginForm = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -53,7 +54,7 @@ const LoginForm = () => {
         onSubmit={formSubmitHandler}
         className="flex flex-col items-center justify-center text-lg w-72 px-2"
       >
-        <label htmlFor="password" className="w-full text-left mb-1">
+        {/* <label htmlFor="password" className="w-full text-left mb-1">
           Contraseña
         </label>
         <div className="flex items-center w-full">
@@ -88,7 +89,15 @@ const LoginForm = () => {
           }`}
         >
           Contraseña incorrecta
-        </p>
+        </p> */}
+        <FormPasswordInput
+          name="password"
+          id="password"
+          label="Contraseña"
+          autoComplete="on"
+          errorMessage={isIncorrect ? "Contraseña Incorrecta" : undefined}
+          ref={passwordRef}
+        />
         <button className="my-5 w-full h-9 bg-blue-950 text-white hover:bg-indigo-950 hover:text-gray-100">
           ACCEDER
         </button>
