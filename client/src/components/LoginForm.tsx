@@ -9,11 +9,6 @@ const LoginForm = () => {
   const [isError, setIsError] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const [showPassword, setShowPassword] = useState(false);
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
-
   const formSubmitHandler = async (event: FormEvent) => {
     event.preventDefault();
 
