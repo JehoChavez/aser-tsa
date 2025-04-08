@@ -2,9 +2,9 @@ const ConfigHeader = ({
   selectedView,
   setSelectedView,
 }: {
-  selectedView: "aseguradoras" | "vendedores" | "ramos" | "agentes";
+  selectedView: "aseguradoras" | "vendedores" | "ramos" | "agentes" | "acceso";
   setSelectedView: (
-    view: "aseguradoras" | "vendedores" | "ramos" | "agentes"
+    view: "aseguradoras" | "vendedores" | "ramos" | "agentes" | "acceso"
   ) => void;
 }) => {
   return (
@@ -54,12 +54,19 @@ const ConfigHeader = ({
         >
           Ramos
         </p>
+        <p
+          className={`rounded-md ${
+            selectedView === "acceso" ? "bg-indigo-950" : "hover:bg-blue-900"
+          } px-3 mx-2 py-2 text-sm font-medium text-white hover:cursor-pointer`}
+          onClick={() => {
+            setSelectedView("acceso");
+          }}
+        >
+          Acceso
+        </p>
       </div>
       <div className="w-full md:w-40 flex justify-end pt-2 md:pt-0">
-        <div
-          id="button-portal-root"
-          className="w-40 h-10 md:h-full"
-        ></div>
+        <div id="button-portal-root" className="w-40 h-10 md:h-full"></div>
       </div>
     </div>
   );

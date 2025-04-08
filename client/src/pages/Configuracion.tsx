@@ -5,10 +5,11 @@ import AseguradorasView from "../components/configuracion/aseguradoras/Asegurado
 import VendedoresView from "../components/configuracion/vendedores/VendedoresView";
 import AgentesView from "../components/configuracion/agentes/AgentesView";
 import RamosView from "../components/configuracion/ramos/RamosView";
+import AccesoView from "../components/configuracion/acceso/AccesoView";
 
 const Configuracion = () => {
   const [selectedView, setSelectedView] = useState<
-    "aseguradoras" | "vendedores" | "ramos" | "agentes"
+    "aseguradoras" | "vendedores" | "ramos" | "agentes" | "acceso"
   >("aseguradoras");
 
   return (
@@ -32,7 +33,7 @@ const Configuracion = () => {
       <ConfigHeader
         selectedView={selectedView}
         setSelectedView={(
-          view: "aseguradoras" | "vendedores" | "ramos" | "agentes"
+          view: "aseguradoras" | "vendedores" | "ramos" | "agentes" | "acceso"
         ) => setSelectedView(view)}
       />
       {selectedView === "aseguradoras" ? (
@@ -43,6 +44,8 @@ const Configuracion = () => {
         <VendedoresView />
       ) : selectedView === "ramos" ? (
         <RamosView />
+      ) : selectedView === "acceso" ? (
+        <AccesoView />
       ) : null}
     </div>
   );
