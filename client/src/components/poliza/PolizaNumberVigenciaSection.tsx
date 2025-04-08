@@ -19,7 +19,7 @@ const PolizaNumberVigenciaSection = ({
       </div>
       <div className="md:w-1/4 m-1">
         <LabelAndData label="Fecha de Emisión">
-          {emision.split("-").reverse().join("-")}
+          {emision && emision.split("-").reverse().join("-")}
         </LabelAndData>
       </div>
       <div className="md:w-1/4 m-1">
