@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import Modal from "../utils/Modal";
 import axios, { AxiosError } from "axios";
 import { Navigate, Link } from "react-router-dom";
-import { ClienteInterface, ClientesSearchParams } from "../../types/interfaces";
+import { ClienteInterface } from "../../types/interfaces";
 import SearchInput from "../utils/SearchInput";
 import Loading from "../utils/Loading";
 import ListItem from "../utils/ListItem";
@@ -22,7 +22,7 @@ const SelectClienteModal = ({
   const [selected, setSelected] = useState<number | null>(null);
 
   const fetchClientes = useCallback(async () => {
-    const params: ClientesSearchParams = {};
+    const params: { nombre?: string } = {};
     if (nombre) {
       params.nombre = nombre;
     }
