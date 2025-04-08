@@ -4,9 +4,13 @@ const ExpressError = require("../utils/ExpressError");
 
 module.exports.login = async (req, res) => {
   const inputPassword = req.body.password;
-  const hashedPassword = process.env.HASHED_PASSWORD;
 
   try {
+    const { AuthConfig } = require("../models");
+    const config = await AuthConfig.findOne({ where: { id: 1 } });
+    if (!config) throw new ExpressError("Aurh config not found", 500);
+    const hashedPassword = config.hashedPassword;
+
     const match = await bcrypt.compare(inputPassword, hashedPassword);
 
     if (match) {
