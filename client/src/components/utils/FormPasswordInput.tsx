@@ -22,6 +22,7 @@ const FormPasswordInput = forwardRef(
             autoComplete={autoComplete}
             id={id ? id : name}
             ref={ref}
+            required
             className="h-8 p-1 bg-neutral-100 border-gray-400 rounded focus:ring-blue-400 focus:ring-2 disabled:bg-opacity-80 disabled:border-opacity-80"
           />
           <svg
