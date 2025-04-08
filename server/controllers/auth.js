@@ -51,3 +51,31 @@ module.exports.checkSession = (req, res) => {
     res.json(response);
   }
 };
+
+module.exports.changePassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+
+  try {
+    const { AuthConfig } = require("../models");
+    const config = await AuthConfig.findOne({ where: { id: 1 } });
+    if (!config) throw new ExpressError("Aurh config not found", 500);
+
+    const isValid = await bcrypt.compare(
+      currentPassword,
+      config.hashedPassword
+    );
+    if (!isValid) {
+      return res
+        .status(403)
+        .json(new CustomResponse(null, 403, "incorrect current password"));
+    }
+
+    const newHashedPassword = await bcrypt.hash(newPassword, 10);
+    config.hashedPassword = newHashedPassword;
+    await config.save();
+
+    res.status(200).json(new CustomResponse(null, 200, "password updated"));
+  } catch (error) {
+    res.status(500).json(new CustomResponse("Error updating password", 500));
+  }
+};
