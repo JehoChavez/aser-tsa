@@ -1,9 +1,5 @@
 import { createContext } from "react";
-import {
-  CalendarContextInterface,
-  CustomEvent,
-  DateRange,
-} from "../types/interfaces";
+import { CalendarContextInterface } from "../types/interfaces";
 import moment from "moment";
 
 export const defaultCalendarContextValue: CalendarContextInterface = {
@@ -26,10 +22,10 @@ export const defaultCalendarContextValue: CalendarContextInterface = {
   dayPendientes: null,
   hasError: false,
   fetchPendientes: async () => {},
-  changeRange: (range: DateRange) => {},
-  selectDay: (event: CustomEvent) => {},
+  changeRange: () => {},
+  selectDay: () => {},
   closePendientesModal: () => {},
-  onPay: (id: number) => {},
+  onPay: () => {},
 };
 
 export const CalendarContext: React.Context<CalendarContextInterface> =
