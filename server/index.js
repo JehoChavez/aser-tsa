@@ -10,6 +10,7 @@ const CustomResponse = require("./utils/CustomResponse");
 const markPolizasVencidas = require("./utils/markPolizasVencidas");
 const deleteOldPolizas = require("./utils/deleteOldPolizas");
 const isAuthenticated = require("./utils/isAuthenticated");
+const path = require("path");
 
 app.use(helmet());
 
@@ -96,9 +97,12 @@ app.use("/api/recibos", recibosRouter);
 app.use("/api/pendientes", pendientesRouter);
 app.use("/auth", authRouter);
 
-// Handling not specified routes
-app.all("*", (req, res, next) => {
-  next(new ExpressError("Not Found", 404));
+
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
+// Serve the frontend
+app.all("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
 // Error handler
