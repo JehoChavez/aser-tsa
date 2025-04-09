@@ -7,7 +7,13 @@ import SuccessModal from "../../utils/SuccessModal";
 import ErrorModal from "../../utils/ErrorModal";
 import Loading from "../../utils/Loading";
 
-const CambiarContratanteBtn = ({ id, disabled }: { id: number, disabled?: boolean }) => {
+const CambiarContratanteBtn = ({
+  id,
+  disabled,
+}: {
+  id: number;
+  disabled?: boolean;
+}) => {
   const [showModal, setShowModal] = useState(false);
 
   const [success, setSuccess] = useState(false);
@@ -26,8 +32,9 @@ const CambiarContratanteBtn = ({ id, disabled }: { id: number, disabled?: boolea
 
     try {
       setClienteId(clienteIdInner);
+      const baseUrl = import.meta.env.VITE_API_URL;
       const response = await axios.patch(
-        `http://localhost:3000/api/polizas/${id}/cambiar-contratante`,
+        `${baseUrl}/polizas/${id}/cambiar-contratante`,
         { clienteId: clienteIdInner },
         { withCredentials: true }
       );

@@ -32,8 +32,9 @@ const PolizaCambiarContratanteButton = ({
 
     try {
       setClienteId(clienteIdInner);
+      const baseUrl = import.meta.env.VITE_API_URL;
       const response = await axios.patch(
-        `http://localhost:3000/api/polizas/${id}/cambiar-contratante`,
+        `${baseUrl}/polizas/${id}/cambiar-contratante`,
         { clienteId: clienteIdInner },
         { withCredentials: true }
       );

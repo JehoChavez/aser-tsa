@@ -59,8 +59,9 @@ const EndososDialog = ({
   const fetchEndosos = async () => {
     setIsLoading(true);
     try {
+      const baseUrl = import.meta.env.VITE_API_URL;
       const response = await axios.get(
-        `http://localhost:3000/api/polizas/${polizaId}/endosos`,
+        `${baseUrl}/polizas/${polizaId}/endosos`,
         {
           withCredentials: true,
         }

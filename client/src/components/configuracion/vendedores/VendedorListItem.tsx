@@ -31,8 +31,9 @@ const VendedorListItem = ({ vendedor }: { vendedor: VendedorInterface }) => {
     setIsLoading(true);
 
     try {
+      const baseUrl = import.meta.env.VITE_API_URL;
       const response = await axios.delete(
-        `http://localhost:3000/api/vendedores/${vendedor.id}`,
+        `${baseUrl}/vendedores/${vendedor.id}`,
         { withCredentials: true }
       );
       if (response.data.status === 200) {

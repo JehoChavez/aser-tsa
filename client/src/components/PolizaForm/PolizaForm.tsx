@@ -129,33 +129,28 @@ const PolizaForm = ({
     setSubtotal(value);
   };
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const aseguradorasResponse = await axios.get(
-        "http://localhost:3000/api/aseguradoras",
-        {
-          withCredentials: true,
-        }
-      );
+      const aseguradorasResponse = await axios.get(`${baseUrl}/aseguradoras`, {
+        withCredentials: true,
+      });
       setAseguradoras(aseguradorasResponse.data.content);
       setAseguradora(aseguradorasResponse.data.content[0]);
 
-      const agentesResponse = await axios.get(
-        "http://localhost:3000/api/agentes",
-        {
-          withCredentials: true,
-        }
-      );
+      const agentesResponse = await axios.get(`${baseUrl}/agentes`, {
+        withCredentials: true,
+      });
       setAgentes(agentesResponse.data.content);
 
-      const vendedoresResponse = await axios.get(
-        "http://localhost:3000/api/vendedores",
-        { withCredentials: true }
-      );
+      const vendedoresResponse = await axios.get(`${baseUrl}/vendedores`, {
+        withCredentials: true,
+      });
       setVendedores(vendedoresResponse.data.content);
 
-      const ramosResponse = await axios.get("http://localhost:3000/api/ramos", {
+      const ramosResponse = await axios.get(`${baseUrl}/ramos`, {
         withCredentials: true,
       });
       setRamos(ramosResponse.data.content);
@@ -178,11 +173,9 @@ const PolizaForm = ({
   const postPoliza = async (payload: PostPolizaPayload) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/polizas",
-        payload,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${baseUrl}/polizas`, payload, {
+        withCredentials: true,
+      });
       if (response.data.status === 201) {
         setSuccess(true);
       }
@@ -205,7 +198,7 @@ const PolizaForm = ({
     setIsLoading(true);
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/polizas/${idParam}`,
+        `${baseUrl}/polizas/${idParam}`,
         payload,
         { withCredentials: true }
       );
@@ -229,7 +222,7 @@ const PolizaForm = ({
     setIsLoading(true);
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/polizas/${idParam}/renovar`,
+        `${baseUrl}/polizas/${idParam}/renovar`,
         payload,
         { withCredentials: true }
       );
@@ -253,7 +246,7 @@ const PolizaForm = ({
     setIsLoading(true);
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/polizas/${idParam}/reexpedir`,
+        `${baseUrl}/polizas/${idParam}/reexpedir`,
         payload,
         { withCredentials: true }
       );

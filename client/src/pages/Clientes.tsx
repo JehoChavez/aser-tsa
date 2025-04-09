@@ -28,7 +28,8 @@ const Clientes = () => {
   const fetchClientes = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/api/clientes", {
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${baseUrl}/clientes`, {
         params,
         withCredentials: true,
       });

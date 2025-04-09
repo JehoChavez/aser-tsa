@@ -9,11 +9,11 @@ const Root = () => {
 
   useEffect(() => {
     const checkSession = async () => {
+      const baseAuthUrl = import.meta.env.VITE_AUTH_URL;
       try {
-        const response = await axios.get(
-          "http://localhost:3000/auth/check-session",
-          { withCredentials: true }
-        );
+        const response = await axios.get(`${baseAuthUrl}/check-session`, {
+          withCredentials: true,
+        });
         const authStatus = response.data.content.isAuthenticated;
         setIsAuthenticated((prevStatus) =>
           prevStatus !== authStatus ? authStatus : prevStatus

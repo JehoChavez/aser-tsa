@@ -15,8 +15,9 @@ const LoginForm = () => {
     const password = passwordRef.current?.value;
 
     try {
+      const baseAuthUrl = import.meta.env.VITE_AUTH_URL;
       await axios.post(
-        "http://localhost:3000/auth/login",
+        `${baseAuthUrl}/login`,
         {
           password,
         },

@@ -31,10 +31,10 @@ const AgenteListItem = ({ agente }: { agente: AgenteInterface }) => {
     setIsLoading(true);
 
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/agentes/${agente.id}`,
-        { withCredentials: true }
-      );
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.delete(`${baseUrl}/agentes/${agente.id}`, {
+        withCredentials: true,
+      });
       if (response.data.status === 200) {
         setShowConfirmDialog(false);
         setDeleteSuccess(true);

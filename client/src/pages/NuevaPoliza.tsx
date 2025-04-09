@@ -18,10 +18,10 @@ const NuevaPoliza = () => {
   const fetchCliente = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:3000/api/clientes/${clienteId}`,
-        { withCredentials: true }
-      );
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${baseUrl}/clientes/${clienteId}`, {
+        withCredentials: true,
+      });
       setCliente(response.data.content);
       setIsLoading(false);
     } catch (error) {

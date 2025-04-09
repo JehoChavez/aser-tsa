@@ -34,8 +34,9 @@ const CancelarButton = ({
     setIsLoading(true);
 
     try {
+      const baseUrl = import.meta.env.VITE_API_URL;
       const response = await axios.patch(
-        `http://localhost:3000/api/polizas/${id}/cancelar`,
+        `${baseUrl}/polizas/${id}/cancelar`,
         { fechaCancelacion: date },
         { withCredentials: true }
       );

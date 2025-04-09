@@ -20,8 +20,9 @@ const RamoDropdown = () => {
 
   const fetchRamos = useCallback(async () => {
     setIsLoading(true);
+    const baseUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await axios.get("http://localhost:3000/api/ramos", {
+      const response = await axios.get(`${baseUrl}/ramos`, {
         withCredentials: true,
       });
       setRamos(response.data.content);

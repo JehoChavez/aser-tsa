@@ -37,6 +37,8 @@ const Calendario = () => {
   const [hasError, setHasError] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const fetchPendientes = async () => {
     const rangePendientes: PendientesInterface = {
       cobranza: [],
@@ -45,7 +47,7 @@ const Calendario = () => {
     // Convert dates to iso date strings (api expects string)
     try {
       setIsLoading(true);
-      const response = await axios.get("http://localhost:3000/api/pendientes", {
+      const response = await axios.get(`${baseUrl}/pendientes`, {
         params: {
           desde: range.start,
           hasta: range.end,
@@ -106,7 +108,7 @@ const Calendario = () => {
     try {
       setIsLoading(true);
       await axios.patch(
-        `http://localhost:3000/api/recibos/${id}/pagar`,
+        `${baseUrl}/recibos/${id}/pagar`,
         {
           fechaPago: date,
         },

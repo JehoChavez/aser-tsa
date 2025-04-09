@@ -28,7 +28,8 @@ const VendedoresView = () => {
   const fetchVendedores = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/api/vendedores", {
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${baseUrl}/vendedores`, {
         withCredentials: true,
       });
       setVendedores(response.data.content);

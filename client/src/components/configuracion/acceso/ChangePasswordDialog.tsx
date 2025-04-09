@@ -21,13 +21,11 @@ const ChangePasswordDialog = ({ onClose }: { onClose: () => void }) => {
 
     try {
       setIsLoading(true);
-      const response = await axios.post(
-        "http://localhost:3000/auth/change-password",
-        {
-          currentPassword,
-          newPassword,
-        }
-      );
+      const baseAuthUrl = import.meta.env.VITE_AUTH_URL;
+      const response = await axios.post(`${baseAuthUrl}/change-password`, {
+        currentPassword,
+        newPassword,
+      });
       if (response.status === 200) {
         setSuccess(true);
       }

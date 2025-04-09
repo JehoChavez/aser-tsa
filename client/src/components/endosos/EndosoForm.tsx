@@ -122,14 +122,14 @@ const EndosoForm = ({
     setSubtotal(value);
   };
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const postEndoso = async (payload: PostEndosoPayload) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/endosos",
-        payload,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${baseUrl}/endosos`, payload, {
+        withCredentials: true,
+      });
       if (response.data.status === 201) {
         setSuccess(true);
         endososContext.fetchEndosos();
@@ -153,7 +153,7 @@ const EndosoForm = ({
     setIsLoading(true);
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/endosos/${endoso?.id}`,
+        `${baseUrl}/endosos/${endoso?.id}`,
         payload,
         { withCredentials: true }
       );

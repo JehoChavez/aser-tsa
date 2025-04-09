@@ -17,12 +17,10 @@ const Cliente = () => {
 
   const fetchCliente = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/api/clientes/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${baseUrl}/clientes/${id}`, {
+        withCredentials: true,
+      });
       setCliente(response.data.content);
       setIsLoading(false);
     } catch (error) {

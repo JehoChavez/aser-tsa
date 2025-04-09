@@ -27,14 +27,14 @@ const VendedorFormDialog = ({
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const postVendedor = useCallback(async (payload: VendedorInterface) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/vendedores",
-        payload,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${baseUrl}/vendedores`, payload, {
+        withCredentials: true,
+      });
       if (response.status === 201) {
         setSuccess(true);
       }
@@ -55,7 +55,7 @@ const VendedorFormDialog = ({
       setIsLoading(true);
       try {
         const response = await axios.put(
-          `http://localhost:3000/api/vendedores/${vendedor?.id}`,
+          `${baseUrl}/vendedores/${vendedor?.id}`,
           payload,
           { withCredentials: true }
         );

@@ -31,10 +31,10 @@ const EliminarClienteButton = ({
     setIsLoading(true);
 
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/clientes/${id}`,
-        { withCredentials: true }
-      );
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.delete(`${baseUrl}/clientes/${id}`, {
+        withCredentials: true,
+      });
       if (response.data.status === 200) {
         setShowConfirmDialog(false);
         setDeleteSuccess(true);

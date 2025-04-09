@@ -20,8 +20,9 @@ const VendedorDropdown = () => {
 
   const fetchVendedores = useCallback(async () => {
     setIsLoading(true);
+    const baseUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await axios.get("http://localhost:3000/api/vendedores", {
+      const response = await axios.get(`${baseUrl}/vendedores`, {
         withCredentials: true,
       });
       setVendedores(response.data.content);

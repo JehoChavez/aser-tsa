@@ -23,12 +23,10 @@ const DeleteEndosoButton = ({ id }: { id: number }) => {
   const deleteEndoso = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/endosos/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.delete(`${baseUrl}/endosos/${id}`, {
+        withCredentials: true,
+      });
       if (response.data.status === 200) {
         setSuccess(true);
       }

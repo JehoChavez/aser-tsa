@@ -31,10 +31,10 @@ const RamoListItem = ({ ramo }: { ramo: RamoInterface }) => {
     setIsLoading(true);
 
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/ramos/${ramo.id}`,
-        { withCredentials: true }
-      );
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.delete(`${baseUrl}/ramos/${ramo.id}`, {
+        withCredentials: true,
+      });
       if (response.data.status === 200) {
         setShowConfirmDialog(false);
         setDeleteSuccess(true);

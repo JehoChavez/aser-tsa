@@ -17,11 +17,13 @@ const EndosoRecibosSection = ({ endosoId }: { endosoId: number }) => {
 
   const [hasError, setHasError] = useState(false);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const fetchRecibos = async () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/endosos/${endosoId}/recibos`,
+        `${baseUrl}/endosos/${endosoId}/recibos`,
         { withCredentials: true }
       );
       setRecibos(response.data.content);
@@ -45,7 +47,7 @@ const EndosoRecibosSection = ({ endosoId }: { endosoId: number }) => {
     setIsLoading(true);
     try {
       await axios.patch(
-        `http://localhost:3000/api/recibos/${id}/pagar`,
+        `${baseUrl}/recibos/${id}/pagar`,
         {
           fechaPago: date,
         },
@@ -70,7 +72,7 @@ const EndosoRecibosSection = ({ endosoId }: { endosoId: number }) => {
     setIsLoading(true);
     try {
       await axios.patch(
-        `http://localhost:3000/api/recibos/${id}/anular-pago`,
+        `${baseUrl}/recibos/${id}/anular-pago`,
         {},
         { withCredentials: true }
       );

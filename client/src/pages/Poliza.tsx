@@ -29,8 +29,9 @@ const Poliza = () => {
   const fetchPoliza = useCallback(async () => {
     setIsLoading(true);
     try {
+      const baseUrl = import.meta.env.VITE_API_URL;
       const response = await axios.get<{ content: PolizaInterface }>(
-        `http://localhost:3000/api/polizas/${polizaId}`,
+        `${baseUrl}/polizas/${polizaId}`,
         { withCredentials: true }
       );
       setPoliza(response.data.content);

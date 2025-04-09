@@ -40,8 +40,9 @@ const MassiveUploadDialog = ({
       const uploadData = new FormData();
       uploadData.append("file", file);
 
+      const baseUrl = import.meta.env.VITE_API_URL;
       const request = await axios.post(
-        `http://localhost:3000/api/${type}/upload`,
+        `${baseUrl}/${type}/upload`,
         uploadData,
         {
           withCredentials: true,

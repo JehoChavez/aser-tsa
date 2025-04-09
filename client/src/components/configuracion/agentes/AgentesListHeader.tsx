@@ -18,12 +18,10 @@ const AgentesListHeader = () => {
   const fetchAseguradoras = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/aseguradoras",
-        {
-          withCredentials: true,
-        }
-      );
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${baseUrl}/aseguradoras`, {
+        withCredentials: true,
+      });
       setAseguradoras(response.data.content);
     } catch (error) {
       setIsError(true);

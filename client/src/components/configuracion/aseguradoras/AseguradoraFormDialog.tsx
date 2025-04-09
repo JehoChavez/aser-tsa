@@ -28,14 +28,14 @@ const AseguradoraFormDialog = ({
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const postAseguradora = useCallback(async (payload: AseguradoraInterface) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/aseguradoras",
-        payload,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${baseUrl}/aseguradoras`, payload, {
+        withCredentials: true,
+      });
       if (response.status === 201) {
         setSuccess(true);
       }
@@ -56,7 +56,7 @@ const AseguradoraFormDialog = ({
       setIsLoading(true);
       try {
         const response = await axios.put(
-          `http://localhost:3000/api/aseguradoras/${aseguradora?.id}`,
+          `${baseUrl}/aseguradoras/${aseguradora?.id}`,
           payload,
           { withCredentials: true }
         );

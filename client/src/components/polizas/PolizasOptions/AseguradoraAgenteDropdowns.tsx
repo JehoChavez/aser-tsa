@@ -22,13 +22,13 @@ const AseguradoraDropdown = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
   const fetchAseguradoras = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/aseguradoras",
-        { withCredentials: true }
-      );
+      const response = await axios.get(`${baseUrl}/aseguradoras`, {
+        withCredentials: true,
+      });
       setAseguradoras(response.data.content);
     } catch (error) {
       setIsError(true);
@@ -45,7 +45,7 @@ const AseguradoraDropdown = () => {
   const fetchAgentes = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/api/agentes", {
+      const response = await axios.get(`${baseUrl}/agentes`, {
         params: { aseguradora: polizasContext.params.aseguradora },
         withCredentials: true,
       });

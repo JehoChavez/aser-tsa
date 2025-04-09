@@ -11,8 +11,9 @@ const Navbar = () => {
   const logOutHandler = async () => {
     setHasLoggedOut(null);
     try {
+      const baseAuthUrl = import.meta.env.VITE_AUTH_URL;
       const response = await axios.post(
-        "http://localhost:3000/auth/logout",
+        `${baseAuthUrl}/logout`,
         {},
         { withCredentials: true }
       );

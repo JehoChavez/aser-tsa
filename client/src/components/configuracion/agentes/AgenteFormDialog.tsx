@@ -34,12 +34,13 @@ const AgenteFormDialog = ({
   const [error, setError] = useState(false);
   const [message, setMessage] = useState<undefined | String>(undefined);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const fetchAseguradoras = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/aseguradoras",
-        { withCredentials: true }
-      );
+      const response = await axios.get(`${baseUrl}/aseguradoras`, {
+        withCredentials: true,
+      });
       if (response.status === 200) {
         setAseguradoras(response.data.content);
       }
@@ -59,11 +60,9 @@ const AgenteFormDialog = ({
   const postAgente = useCallback(async (payload: AgenteInterface) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/agentes",
-        payload,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${baseUrl}/agentes`, payload, {
+        withCredentials: true,
+      });
       if (response.status === 201) {
         setSuccess(true);
       }
@@ -87,7 +86,7 @@ const AgenteFormDialog = ({
       setIsLoading(true);
       try {
         const response = await axios.put(
-          `http://localhost:3000/api/agentes/${agente?.id}`,
+          `${baseUrl}/agentes/${agente?.id}`,
           payload,
           { withCredentials: true }
         );

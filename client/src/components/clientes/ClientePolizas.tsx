@@ -29,7 +29,8 @@ const ClientePolizas = ({ id }: { id: number }) => {
   const fetchPolizas = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/api/polizas", {
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${baseUrl}/polizas`, {
         params,
         withCredentials: true,
       });

@@ -28,7 +28,8 @@ const AgentesView = () => {
   const fetchAgentes = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/api/agentes", {
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${baseUrl}/agentes`, {
         withCredentials: true,
         params: { aseguradoraIds },
       });

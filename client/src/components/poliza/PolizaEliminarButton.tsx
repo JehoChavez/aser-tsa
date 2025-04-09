@@ -29,10 +29,10 @@ const PolizaEliminarButton = ({
     setIsLoading(true);
 
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/polizas/${id}`,
-        { withCredentials: true }
-      );
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.delete(`${baseUrl}/polizas/${id}`, {
+        withCredentials: true,
+      });
       if (response.data.status === 200) {
         setShowModal(false);
         setDeleteSuccess(true);

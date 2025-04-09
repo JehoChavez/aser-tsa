@@ -33,11 +33,13 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
   if (editNavigate) return <Navigate to={`/polizas/${poliza.id}/editar`} />;
   if (renovarNavigate) return <Navigate to={`/polizas/${poliza.id}/renovar`} />;
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const fetchRecibos = async () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/polizas/${poliza.id}/recibos`,
+        `${baseUrl}/polizas/${poliza.id}/recibos`,
         { withCredentials: true }
       );
       setRecibos(response.data.content);
@@ -58,7 +60,7 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
     setIsLoading(true);
     try {
       await axios.patch(
-        `http://localhost:3000/api/recibos/${id}/pagar`,
+        `${baseUrl}/recibos/${id}/pagar`,
         {
           fechaPago: date,
         },
@@ -84,7 +86,7 @@ const EstadoAcciones = ({ poliza }: { poliza: PolizaInterface }) => {
     setIsLoading(true);
     try {
       await axios.patch(
-        `http://localhost:3000/api/recibos/${id}/anular-pago`,
+        `${baseUrl}/recibos/${id}/anular-pago`,
         {},
         { withCredentials: true }
       );

@@ -5,11 +5,10 @@ import { FormEvent } from "react";
 import ActionButton from "../../utils/ActionButton";
 import { Link } from "react-router-dom";
 import { ClienteInterface } from "../../../types/interfaces";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Loading from "../../utils/Loading";
 import Modal from "../../utils/Modal";
 import { useState } from "react";
-import { AxiosError } from "axios";
 import SuccessModal from "../../utils/SuccessModal";
 import { Navigate } from "react-router-dom";
 import ErrorModal from "../../utils/ErrorModal";
@@ -23,16 +22,14 @@ const ClienteForm = ({ cliente }: { cliente?: ClienteInterface }) => {
   const [successNavigate, setSuccessNavigate] = useState(false);
   const [error, setError] = useState(false);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const createCliente = async (payload: ClienteInterface) => {
     try {
       setIsLoading(true);
-      const response = await axios.post(
-        "http://localhost:3000/api/clientes",
-        payload,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post(`${baseUrl}/clientes`, payload, {
+        withCredentials: true,
+      });
       if (response.status === 201) {
         setSuccess(true);
         setClienteId(response.data.content.id);
@@ -54,7 +51,7 @@ const ClienteForm = ({ cliente }: { cliente?: ClienteInterface }) => {
     try {
       setIsLoading(true);
       const response = await axios.put(
-        `http://localhost:3000/api/clientes/${cliente?.id}`,
+        `${baseUrl}/clientes/${cliente?.id}`,
         payload,
         {
           withCredentials: true,

@@ -28,10 +28,12 @@ const DomicilioSection = ({
   const [estadoId, setEstadoId] = useState<number>(estado || 0);
   const [municipios, setMunicipios] = useState<Municipio[]>([]);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const fetchEstados = async () => {
     try {
       setIsEstadosLoading(true);
-      const response = await axios.get("http://localhost:3000/api/estados", {
+      const response = await axios.get(`${baseUrl}/estados`, {
         withCredentials: true,
       });
       setEstados([{ id: 0, estado: "Seleccione" }, ...response.data.content]);
@@ -54,7 +56,7 @@ const DomicilioSection = ({
       try {
         setIsMunicipiosLoading(true);
         const response = await axios.get(
-          `http://localhost:3000/api/estados/${estadoId}/municipios`,
+          `${baseUrl}/estados/${estadoId}/municipios`,
           {
             withCredentials: true,
           }

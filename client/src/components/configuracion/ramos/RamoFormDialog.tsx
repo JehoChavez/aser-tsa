@@ -27,14 +27,14 @@ const RamoFormDialog = ({
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const postRamo = useCallback(async (payload: RamoInterface) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/ramos",
-        payload,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${baseUrl}/ramos`, payload, {
+        withCredentials: true,
+      });
       if (response.status === 201) {
         setSuccess(true);
       }
@@ -55,7 +55,7 @@ const RamoFormDialog = ({
       setIsLoading(true);
       try {
         const response = await axios.put(
-          `http://localhost:3000/api/ramos/${ramo?.id}`,
+          `${baseUrl}/ramos/${ramo?.id}`,
           payload,
           { withCredentials: true }
         );

@@ -27,11 +27,13 @@ const PolizaRecibosSection = ({
 
   const [hasError, setHasError] = useState(false);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   const fetchRecibos = async () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/polizas/${polizaId}/recibos`,
+        `${baseUrl}/polizas/${polizaId}/recibos`,
         { withCredentials: true }
       );
       setRecibos(response.data.content);
@@ -51,7 +53,7 @@ const PolizaRecibosSection = ({
     setIsLoading(true);
     try {
       await axios.patch(
-        `http://localhost:3000/api/recibos/${id}/pagar`,
+        `${baseUrl}/recibos/${id}/pagar`,
         {
           fechaPago: date,
         },
@@ -76,7 +78,7 @@ const PolizaRecibosSection = ({
     setIsLoading(true);
     try {
       await axios.patch(
-        `http://localhost:3000/api/recibos/${id}/anular-pago`,
+        `${baseUrl}/recibos/${id}/anular-pago`,
         {},
         { withCredentials: true }
       );

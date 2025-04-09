@@ -19,10 +19,10 @@ const ReexpedirPoliza = () => {
   const fetchPoliza = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:3000/api/polizas/${polizaId}`,
-        { withCredentials: true }
-      );
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${baseUrl}/polizas/${polizaId}`, {
+        withCredentials: true,
+      });
       setPoliza(response.data.content);
       setCliente(response.data.content.cliente);
       setIsLoading(false);

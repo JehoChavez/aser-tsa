@@ -28,7 +28,8 @@ const RamosView = () => {
   const fetchRamos = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/api/ramos", {
+      const baseUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${baseUrl}/ramos`, {
         withCredentials: true,
       });
       setRamos(response.data.content);
