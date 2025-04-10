@@ -1,15 +1,5 @@
 const { Op } = require("sequelize");
-const {
-  Poliza,
-  Cliente,
-  Aseguradora,
-  Agente,
-  Vendedor,
-  Ramo,
-  Recibo,
-  Endoso,
-  sequelize,
-} = require("../models");
+const { Poliza, Recibo, sequelize } = require("../models");
 const CustomResponse = require("../utils/CustomResponse");
 const ExpressError = require("../utils/ExpressError");
 
