@@ -5,7 +5,6 @@ const session = require("express-session");
 const cors = require("cors");
 const helmet = require("helmet");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
-const ExpressError = require("./utils/ExpressError");
 const CustomResponse = require("./utils/CustomResponse");
 const markPolizasVencidas = require("./utils/markPolizasVencidas");
 const deleteOldPolizas = require("./utils/deleteOldPolizas");
@@ -61,7 +60,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: false, // Set to true if using https
       maxAge: 1000 * 60 * 60 * 3,
     },
   })
