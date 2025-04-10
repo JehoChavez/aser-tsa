@@ -45,10 +45,10 @@ module.exports.logout = (req, res) => {
 module.exports.checkSession = (req, res) => {
   if (req.session.isAuthenticated) {
     const response = new CustomResponse({ isAuthenticated: true }, 200);
-    res.json(response);
+    res.status(200).json(response);
   } else {
     const response = new CustomResponse({ isAuthenticated: false }, 200);
-    res.json(response);
+    res.status(401).json(response);
   }
 };
 
