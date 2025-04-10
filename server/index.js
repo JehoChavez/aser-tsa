@@ -83,6 +83,7 @@ const polizasRouter = require("./routes/api/polizas");
 const endososRouter = require("./routes/api/endosos");
 const recibosRouter = require("./routes/api/recibos");
 const pendientesRouter = require("./routes/api/pendientes");
+const reporteRouter = require("./routes/api/reporte");
 const authRouter = require("./routes/auth");
 app.use("/api/estados", estadosRouter);
 app.use("/api/ramos", ramosRouter);
@@ -94,6 +95,7 @@ app.use("/api/polizas", polizasRouter);
 app.use("/api/endosos", endososRouter);
 app.use("/api/recibos", recibosRouter);
 app.use("/api/pendientes", pendientesRouter);
+app.use("/api/reporte", reporteRouter);
 app.use("/auth", authRouter);
 
 app.use(express.static(path.join(__dirname, "../client/dist")));

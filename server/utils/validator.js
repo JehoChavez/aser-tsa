@@ -409,6 +409,15 @@ const polizasQuerySchema = joi.object({
     ),
 });
 
+const reporteQuerySchema = joi.object({
+  desde: joi.alternatives().try(joi.string().isoDate(), joi.date()),
+  hasta: joi.alternatives().try(joi.string().isoDate(), joi.date()),
+  aseguradora: joi.array().items(joi.number().integer().positive()),
+  agente: joi.array().items(joi.number().integer().positive()),
+  vendedor: joi.array().items(joi.number().integer().positive()),
+  ramo: joi.array().items(joi.number().integer().positive()),
+});
+
 const endosoSchema = joi.object({
   endoso: joi
     .object({
@@ -697,6 +706,8 @@ module.exports.validateClienteQuery = queryValidator(clienteQuerySchema);
 module.exports.validateLogin = bodyValidator(loginSchema);
 
 module.exports.validatePendientesQuery = queryValidator(pendientesQuerySchema);
+
+module.exports.validateReporteQuery = queryValidator(reporteQuerySchema);
 
 module.exports.aseguradoraSchema = aseguradoraSchema;
 
