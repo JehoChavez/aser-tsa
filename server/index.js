@@ -97,7 +97,6 @@ app.use("/api/recibos", recibosRouter);
 app.use("/api/pendientes", pendientesRouter);
 app.use("/auth", authRouter);
 
-
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
 // Serve the frontend
