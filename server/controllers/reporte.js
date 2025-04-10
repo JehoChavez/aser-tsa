@@ -70,7 +70,7 @@ module.exports.getReporte = async (req, res) => {
 
   try {
     // Get emitted policies count
-    const polizasCount = await Poliza.count({
+    const polizasEmitidas = await Poliza.count({
       where: {
         ...filter,
         emision: dateFilter,
@@ -78,8 +78,68 @@ module.exports.getReporte = async (req, res) => {
       transaction: t,
     });
 
+    // Get emitted premiums count
+    const primaNetaEmitida = await Poliza.sum("primaNeta", {
+      where: {
+        ...filter,
+        emision: dateFilter,
+      },
+      transaction: t,
+    });
+
+    const primaTotalEmitida = await Poliza.sum("primaTotal", {
+      where: {
+        ...filter,
+        emision: dateFilter,
+      },
+      transaction: t,
+    });
+
+    // Get charged premiums count
+    const primaNetaCobrada = await Recibo.sum("Recibo.primaNeta", {
+      where: {
+        fechaPago: dateFilter,
+      },
+      include: [
+        {
+          model: Poliza,
+          as: "poliza",
+          required: true,
+          where: {
+            ...filter,
+          },
+          attributes: [],
+        },
+      ],
+      transaction: t,
+    });
+
+    const primaTotalCobrada = await Recibo.sum("Recibo.primaTotal", {
+      where: {
+        fechaPago: dateFilter,
+      },
+      include: [
+        {
+          model: Poliza,
+          as: "poliza",
+          required: true,
+          where: {
+            ...filter,
+          },
+          attributes: [],
+        },
+      ],
+      transaction: t,
+    });
+
     const response = new CustomResponse(
-      { polizasEmitidas: polizasCount },
+      {
+        polizasEmitidas: polizasEmitidas,
+        primaNetaEmitida: primaNetaEmitida,
+        primaTotalEmitida: primaTotalEmitida,
+        primaNetaCobrada: primaNetaCobrada,
+        primaTotalCobrada: primaTotalCobrada,
+      },
       200,
       undefined,
       undefined
