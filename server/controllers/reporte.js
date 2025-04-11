@@ -6,7 +6,7 @@ const ExpressError = require("../utils/ExpressError");
 module.exports.getReporte = async (req, res) => {
   const { desde, hasta, aseguradora, agente, vendedor, ramo } = req.query;
 
-  const filter = [];
+  const filter = {};
 
   const dateFilter = {};
 
@@ -22,38 +22,30 @@ module.exports.getReporte = async (req, res) => {
 
   // Filter by aseguradora IDs
   if (aseguradora) {
-    filter.push({
-      aseguradoraId: {
-        [Op.in]: aseguradora,
-      },
-    });
+    filter.aseguradoraId = {
+      [Op.in]: aseguradora,
+    };
   }
 
   // Filter by agente IDs
   if (agente) {
-    filter.push({
-      agenteId: {
-        [Op.in]: agente,
-      },
-    });
+    filter.agenteId = {
+      [Op.in]: agente,
+    };
   }
 
   // Filter by vendedor IDs
   if (vendedor) {
-    filter.push({
-      vendedorId: {
-        [Op.in]: vendedor,
-      },
-    });
+    filter.vendedorId = {
+      [Op.in]: vendedor,
+    };
   }
 
   // Filter by ramo IDs
   if (ramo) {
-    filter.push({
-      ramoId: {
-        [Op.in]: ramo,
-      },
-    });
+    filter.ramoId = {
+      [Op.in]: ramo,
+    };
   }
 
   const t = await sequelize.transaction();
