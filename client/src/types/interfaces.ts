@@ -315,6 +315,29 @@ export interface PolizasParamsInterface {
     | null;
 }
 
+export interface ReporteInterface {
+  polizasEmitidas: number;
+  primaNetaEmitida: number | null;
+  primaTotalEmitida: number | null;
+  primaNetaCobrada: number | null;
+  primaTotalCobrada: number | null;
+}
+export interface ReporteParamsInterface {
+  desde: string | Date | null;
+  hasta: string | Date | null;
+  aseguradora: number[] | null;
+  agente: number[] | null;
+  vendedor: number[] | null;
+  ramo: number[] | null;
+}
+
+export interface ReporteContextInterface {
+  reporte: ReporteInterface | null;
+  params: ReporteParamsInterface;
+  fetchReporte: () => Promise<void>;
+  setParams: (params: ReporteParamsInterface) => void;
+}
+
 export interface IconTextButtonInterface {
   icon: ReactNode;
   children: ReactNode;
